@@ -6,4 +6,5 @@ Social Media For Tuebingen
 
 Database : Markus Holder (OlderHolder)  
 Authentication: Emil Moldovan
+
 User: Aya Afaghani, Julia Egyed, Luke Vallon
