@@ -8,3 +8,4 @@ Database : Markus Holder
 Authentication: Emil Moldovan
 
 User: Aya Afaghani, Julia Egyed, Luke Vallon
+Admin: Lukas Lorentz, Benno
