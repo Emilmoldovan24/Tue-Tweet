@@ -21,20 +21,22 @@ CREATE TABLE users (
   user_id        INT           AUTO_INCREMENT PRIMARY KEY,
   username       VARCHAR(20)   NOT NULL,
   email          VARCHAR(50)   UNIQUE NOT NULL,
-  user_password  VARCHAR(20)   NOT NULL,
+  user_password  VARCHAR(60)   NOT NULL,
   profile_bio    VARCHAR(255)  DEFAULT NULL,
   profile_img    BLOB          DEFAULT NULL,
+  is_admin       BOOLEAN       NOT NULL,
+  remember_token VARCHAR(100)  DEFAULT NULL,
   created_at     TIMESTAMP  
 );
 
 /*
 filling of users for exercise purposes
 */
-INSERT INTO users ( username, email, user_password, profile_bio, profile_img, created_at) 
-VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL, '2023-05-09 12:56:21'),
-      ( "Name2", "user2@yahoo.de", 12345, "blablabla", NULL, '2023-05-09 12:57:21'),
-      ( "Name3", "user3@yahoo.de", 12345, "blablabla", NULL, '2023-05-09 12:58:21'),
-      ( "Name4", "user4@yahoo.de", 12345, "blablabla", NULL, '2023-05-09 12:59:21');
+INSERT INTO users ( username, email, user_password, profile_bio, profile_img, is_admin, remember_token, created_at) 
+VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL, true, NULL, '2023-05-09 12:56:21'),
+      ( "Name2", "user2@yahoo.de", 12345, "blablabla", NULL, false, NULL, '2023-05-09 12:57:21'),
+      ( "Name3", "user3@yahoo.de", 12345, "blablabla", NULL, false, NULL, '2023-05-09 12:58:21'),
+      ( "Name4", "user4@yahoo.de", 12345, "blablabla", NULL, false, NULL, '2023-05-09 12:59:21');
 
 
 -- Create of Table tweets
