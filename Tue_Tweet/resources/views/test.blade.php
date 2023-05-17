@@ -23,11 +23,14 @@
           //ein upgrade statement verändert. 
 
           //nächste 2 Zeilen auskommentieren (ein insert funktioniert hier nur einmal da die email unique ist)
+          
           # DB::insert('insert into users(username, email, user_password, profile_bio, profile_img, created_at) 
           # values(?,?,?,?,?,?)', ['peter', 'peter@aol.de', 1111, 'ich zeig euch wies geht :-)', NULL ,$currentTimestamp]);
 
           DB::insert('insert into tweets(user_id, tweet, img, created_at) 
           values(?,?,?,?)',[2, 'Hallo das ist ein Tweet', NULL ,$currentTimestamp]);
+          
+
 
 
           // Mit folgender Art kann man die Userid des erstellten eintrags an eine variable binden
