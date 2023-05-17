@@ -20,3 +20,33 @@ Route::get('/', function () {
 Route::get('/Test', function() {
     return view('test');
 });
+
+Route::get('/feed', function() {
+    return view('feed');
+});
+
+Route::get('/feed', [
+    'uses' => 'App\Http\Controllers\UserController@getFeed',
+    'as' => 'feed'
+]);
+
+Route::post('/postTweet', [
+    'uses' => 'App\Http\Controllers\UserController@postTweet',
+    'as' => 'postTweet']);
+
+Route::post('/signup', [
+    'uses' => 'App\Http\Controllers\UserController@postSignUp',
+    'as' => 'signup']);
+    
+Route::post('/signin', [
+    'uses' => 'App\Http\Controllers\UserController@postSignIn',
+    'as' => 'signin']);
+
+
+
+#unused
+Route::get('/dashboard', [
+    'uses' => 'App\Http\Controllers\UserController@getDashboard',
+    'as' => 'dashboard'
+]);
+
