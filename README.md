@@ -5,6 +5,7 @@ Task: Social Media for Uni Tuebingen
 
 ## Features
 Our current state of the app can create and log in users. After the sign-in or sign-up, we come to our dashboard where we can create tweets.
+We have a route and a view for the Profile but it still needs to be connected to the database.
 
 ## Responsibilities
 
