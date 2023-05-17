@@ -1,6 +1,10 @@
 # Tue-Tweet
-Social Media For Tuebingen
+![WhatsApp Bild 2023-05-16 um 12 32 57](https://github.com/Emilmoldovan24/Tue-Tweet/assets/116385114/87d7b163-8d3f-4b92-8a0c-942f7de1fd76)
 
+Task: Social Media for Uni Tuebingen 
+
+## Features
+Our current state of the app can create and log in users. After the sign-in or sign-up, we come to our dashboard where we can create tweets.
 
 ## Responsibilities
 
