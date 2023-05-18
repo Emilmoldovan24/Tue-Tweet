@@ -45,19 +45,14 @@ class UserController extends Controller {
 
     
     public function postSignIn(Request $request) {
-
-
+        $this->validate($request, [
+            'email' => 'required', 
+            'password' => 'required'
+        ]);
         if (Auth::guard('web')->attempt(['email' => $request['email'], 'password' => $request['password']])){
-
-            global $currentUserID;
-            $currentUserID = DB::select('select user_id from users where email = ?', [$request['email']]);
-
-            return redirect()->route('feed');
-        } else {
-
-            #TODO das soll eigentlich wieder zu welcome leiten aber idk how
-            return redirect()->route('/');
+            return redirect()->route('feed'); // geht noch nicht, wird nicht gescheit aus der datenbank ausgelesen, fällt immer in den else zustand
         }
+        else {return redirect()->back();};
         
     }
 
