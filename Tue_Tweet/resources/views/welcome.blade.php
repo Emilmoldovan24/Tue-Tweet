@@ -32,12 +32,12 @@
                     <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email">
                 </div>
                 <div class="form-group">
-                    <label for="first_name"> Your User Name </label>
-                    <input class="form-control @error('first_name') is-invalid @enderror" type="text" name="first_name" id="first_name">
+                    <label for="username"> Your User Name </label>
+                    <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username">
                 </div>
                 <div class="form-group">
-                    <label for="password"> Your Password </label>
-                    <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password">
+                    <label for="user_password"> Your Password </label>
+                    <input class="form-control @error('user_password') is-invalid @enderror" type="password" name="user_password" id="user_password">
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
                 <input type="hidden" name="_token" value="{{  Session::token() }}">
@@ -55,8 +55,8 @@
                     <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email">
                 </div>
                 <div class="form-group">
-                    <label for="password"> Your Password </label>
-                    <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password"> 
+                    <label for="user_password"> Your Password </label>
+                    <input class="form-control @error('user_password') is-invalid @enderror" type="password" name="user_password" id="user_password"> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
                 <input type="hidden" name="_token" value="{{  Session::token() }}">

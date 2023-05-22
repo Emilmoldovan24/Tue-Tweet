@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
     public function getDashboard(){
@@ -22,24 +23,32 @@ class UserController extends Controller {
 
         $this->validate($request, [
             'email' => 'email|unique:users', //nach dem doppelpunkt, sagt es dass es in der users Datenbank unique sein soll
-            'first_name' => 'required|max:120',
-            'password' => 'required|min:4'
+            'username' => 'required|max:120',
+            'user_password' => 'required|min:4'
         ]);
         $email = $request['email'];
-        $username = $request['first_name'];
-        $password = bcrypt($request['password']);
+        $username = $request['username'];
+        $user_password = bcrypt($request['user_password']);
 
+        $user = new User();
+        $user->email = $email;
+        $user->username = $username;
+        $user->user_password = $user_password;
+
+        $user->save();
+
+        Auth::login($user);
         #TODO automatische user_id zuordnen (habe schon markus gefragt)
-        DB::insert('insert into users(username, email, user_password, profile_bio, profile_img, is_admin, remember_token, created_at) 
-          values(?,?,?,?,?,?,?,?)',[$username, $email, $password, NULL, NULL, 0, NULL, $currentTimestamp]);
+        /*DB::insert('insert into users(username, email, user_password, profile_bio, profile_img, is_admin, remember_token, created_at) 
+          values(?,?,?,?,?,?,?,?)',[$username, $email, $user_password, NULL, NULL, 0, NULL, $currentTimestamp]);
 
 
 
         #TODO globale user_id variable übergeben
         global $currentUserID;
         $currentUserID = DB::select('select user_id from users where email = ?', [$email]);
-
-        return redirect()->route('feed');
+*/
+        return redirect()->route('dashboard');
 
     }
 
@@ -47,12 +56,17 @@ class UserController extends Controller {
     public function postSignIn(Request $request) {
         $this->validate($request, [
             'email' => 'required', 
-            'password' => 'required'
+            'user_password' => 'required'
         ]);
-        if (Auth::guard('web')->attempt(['email' => $request['email'], 'password' => $request['password']])){
-            return redirect()->route('feed'); // geht noch nicht, wird nicht gescheit aus der datenbank ausgelesen, fällt immer in den else zustand
-        }
-        else {return redirect()->back();};
+        $user = User::where('email', $request->email)->first();
+
+    if ($user && Hash::check($request->user_password, $user->user_password)) {
+        // Benutzer gefunden und Passwort ist korrekt
+        return redirect()->route('dashboard');
+    } else {
+        // Benutzer nicht gefunden oder Passwort ist falsch
+        return redirect()->back();
+    }
         
     }
 
