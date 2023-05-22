@@ -30,8 +30,16 @@ class UserController extends Controller {
         $username = $request['username'];
         $user_password = bcrypt($request['user_password']);
 
-        /*#TODO automatische user_id zuordnen (habe schon markus gefragt)
-        DB::insert('insert into users(username, email, user_password, profile_bio, profile_img, is_admin, remember_token, created_at) 
+        $user = new User();
+        $user->email = $email;
+        $user->username = $username;
+        $user->user_password = $user_password;
+
+        $user->save();
+
+        Auth::login($user);
+        #TODO automatische user_id zuordnen (habe schon markus gefragt)
+        /*DB::insert('insert into users(username, email, user_password, profile_bio, profile_img, is_admin, remember_token, created_at) 
           values(?,?,?,?,?,?,?,?)',[$username, $email, $user_password, NULL, NULL, 0, NULL, $currentTimestamp]);
 
 
