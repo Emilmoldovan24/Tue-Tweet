@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,25 @@ Route::get('/Profile', function() {
 Route::get('/feed', function() {
     return view('feed');
 });
+
+Route::get('/adminLogin', [
+    'uses' => 'App\Http\Controllers\AdminController@getAdminLogIn',
+    'as' => 'adminLogin'
+]);
+Route::get('/adminFeed', [
+    'uses' => 'App\Http\Controllers\AdminController@getAdminFeed',
+    'as' => 'adminFeed'
+]);
+
+Route::post('/adminSingup', [
+    'uses' => 'App\Http\Controllers\AdminController@postAdminSignUp',
+    'as' => 'adminSingup']);
+
+Route::post('/adminLogin', [
+    'uses' => 'App\Http\Controllers\AdminController@postAdminLogIn',
+    'as' => 'adminLogin']);
+
+Route::get('tweet-delete/{id}',[AdminController::class,'deleteTweet'])->name('tweet.delete');
 
 Route::get('/feed', [
     'uses' => 'App\Http\Controllers\UserController@getFeed',
