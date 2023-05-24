@@ -75,6 +75,21 @@ Route::post('/signin', [
     'uses' => 'App\Http\Controllers\UserController@postSignIn',
     'as' => 'signin']);
 
+Route::post('/retweet', [
+    'uses' => 'App\Http\Controllers\UserController@postRetweet',
+    'as' => 'retweet']);
+
+Route::post('/comment', [
+    'uses' => 'App\Http\Controllers\UserController@postComment',
+    'as' => 'comment']);
+
+Route::post('/like', [
+    'uses' => 'App\Http\Controllers\UserController@postLike',
+    'as' => 'like']);
+
+Route::get('/logout', [
+    'uses' => 'App\Http\Controllers\UserController@getLogout',
+    'as' => 'logout']);
 
 
 #Test-side
