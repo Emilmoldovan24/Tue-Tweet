@@ -48,7 +48,7 @@ class UserController extends Controller {
         global $currentUserID;
         $currentUserID = DB::select('select user_id from users where email = ?', [$email]);
 */
-        return redirect()->route('dashboard');
+        return redirect()->route('feed');
 
     }
 
@@ -62,7 +62,7 @@ class UserController extends Controller {
 
     if ($user && Hash::check($request->user_password, $user->user_password)) {
         // Benutzer gefunden und Passwort ist korrekt
-        return redirect()->route('dashboard');
+        return redirect()->route('feed');
     } else {
         // Benutzer nicht gefunden oder Passwort ist falsch
         return redirect()->back();
