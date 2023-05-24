@@ -18,26 +18,28 @@ set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION
 -- profile_img -> self-selected profile picture
 -- created_at  -> Time when the user was created
 CREATE TABLE users (
-  id             INT           AUTO_INCREMENT PRIMARY KEY,
-  username       VARCHAR(20)   NOT NULL,
-  email          VARCHAR(50)   UNIQUE NOT NULL,
-  user_password  VARCHAR(60)   NOT NULL,
-  profile_bio    VARCHAR(255)  DEFAULT NULL,
-  profile_img    BLOB          DEFAULT NULL,
-  remember_token VARCHAR(100)  DEFAULT NULL,
-  created_at     TIMESTAMP ,
-  updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+  id                INT           AUTO_INCREMENT PRIMARY KEY,
+  username          VARCHAR(30)   UNIQUE NOT NULL,
+  email             VARCHAR(50)   UNIQUE NOT NULL,
+  user_password     VARCHAR(60)   NOT NULL,
+  profile_bio       VARCHAR(255)  DEFAULT NULL,
+  profile_img       BLOB          DEFAULT NULL,
+  visibility        BOOLEAN       DEFAULT TRUE,
+  remember_token    VARCHAR(100)  DEFAULT NULL,
+  email_verified_at DATETIME      DEFAULT NULL,
+  created_at        TIMESTAMP ,
+  updated_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
 );
 
 /*
 filling of users for exercise purposes
 */
 
-INSERT INTO users ( username, email, user_password, profile_bio, profile_img,  remember_token, created_at, updated_at) 
-VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
-      ( "Name2", "user2@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21'),
-      ( "Name3", "user3@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
-      ( "Name4", "user4@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:59:21','2023-05-09 12:59:21');
+INSERT INTO users ( username, email, user_password, profile_bio, profile_img, visibility , remember_token, created_at, updated_at) 
+VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
+      ( "Name2", "user2@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21'),
+      ( "Name3", "user3@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
+      ( "Name4", "user4@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:59:21','2023-05-09 12:59:21');
 
 -- Create of Table admins
 -- table users contains the following information :
@@ -51,7 +53,7 @@ VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 
 -- created_at  -> Time when the user was created
 CREATE TABLE admins (
   admin_id       INT           AUTO_INCREMENT PRIMARY KEY,
-  adminname      VARCHAR(20)   NOT NULL,
+  adminname      VARCHAR(30)   UNIQUE NOT NULL,
   email          VARCHAR(50)   UNIQUE NOT NULL,
   user_password  VARCHAR(60)   NOT NULL,
   profile_bio    VARCHAR(255)  DEFAULT NULL,
@@ -65,7 +67,7 @@ CREATE TABLE admins (
 filling of users for exercise purposes
 */
 INSERT INTO admins ( adminname, email, user_password, profile_bio, profile_img,  remember_token, created_at , updated_at) 
-VALUES( "Admin1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21' ),
+VALUES( "Admin1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
       ( "Admin2", "user2@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21');
 
 
@@ -80,6 +82,7 @@ CREATE TABLE tweets (
   tweet_id    INT         AUTO_INCREMENT PRIMARY KEY,
   user_id     INT         NOT NULL,
   tweet       TEXT(240)   NOT NULL,
+  visibility  BOOLEAN     DEFAULT TRUE,
   img         TEXT        DEFAULT NULL,
   created_at  TIMESTAMP
 );
@@ -87,11 +90,11 @@ CREATE TABLE tweets (
 /*
 filling of tweets for exercise purposes
 */
-INSERT INTO tweets ( user_id, tweet, img, created_at) 
-VALUES( 1, "First Tweet",  NULL, '2023-05-09 14:56:21'),
-      ( 1, "Second Tweet",  NULL, '2023-05-09 14:57:21'),
-      ( 2, "Welcome to Tue-Tweet Tweet",  NULL, '2023-05-09 15:01:21'),
-      ( 1, "Test",  NULL, '2023-05-09 15:57:21');
+INSERT INTO tweets ( user_id, tweet, visibility , img, created_at) 
+VALUES( 1, "First Tweet", TRUE,  NULL, '2023-05-09 14:56:21'),
+      ( 1, "Second Tweet",TRUE,  NULL, '2023-05-09 14:57:21'),
+      ( 2, "Welcome to Tue-Tweet Tweet",TRUE,  NULL, '2023-05-09 15:01:21'),
+      ( 1, "Test", TRUE,  NULL, '2023-05-09 15:57:21');
 
 -- Create of Table comments
 -- table comments contains the following information :
@@ -105,15 +108,16 @@ CREATE TABLE comments (
   user_id     INT        NOT NULL,
   tweet_id    INT        NOT NULL,
   comment     TEXT(240)  NOT NULL,
+  visibility  BOOLEAN    DEFAULT TRUE,
   created_at  TIMESTAMP
 );
 
 /*
 filling of comments for exercise purposes
 */
-INSERT INTO comments ( user_id, tweet_id, comment, created_at) 
-VALUES( 1, 2, "comment to tweet 2", '2023-05-09 15:56:21'),
-      ( 3, 4, "comment to tweet 1", '2023-05-09 15:57:21');
+INSERT INTO comments ( user_id, tweet_id, comment, visibility, created_at) 
+VALUES( 1, 2, "comment to tweet 2", TRUE, '2023-05-09 15:56:21'),
+      ( 3, 4, "comment to tweet 1", TRUE,'2023-05-09 15:57:21');
 
 
 -- Create of Table reetweets
@@ -128,15 +132,16 @@ CREATE TABLE retweets (
   user_id      INT         NOT NULL,
   tweet_id     INT         NOT NULL,
   retweet_text TEXT(240)   NOT NULL,
+  visibility   BOOLEAN     DEFAULT TRUE, 
   created_at   TIMESTAMP
 );
 
 /*
 filling of retweets for exercise purposes
 */
-INSERT INTO retweets ( user_id, tweet_id, retweet_text, created_at) 
-VALUES( 1, 3, "retweet to tweet 3", '2023-05-09 18:56:21'),
-      ( 2, 2, "retweet to tweet 2", '2023-05-09 19:57:21');
+INSERT INTO retweets ( user_id, tweet_id, retweet_text, visibility, created_at) 
+VALUES( 1, 3, "retweet to tweet 3", TRUE, '2023-05-09 18:56:21'),
+      ( 2, 2, "retweet to tweet 2", TRUE, '2023-05-09 19:57:21');
 
 -- Create of Table likes
 -- table likes contains the following information :
@@ -148,6 +153,7 @@ CREATE TABLE likes (
   like_id    INT         AUTO_INCREMENT PRIMARY KEY,
   user_id    INT         NOT NULL,
   tweet_id   INT         NOT NULL,
+  visibility BOOLEAN     DEFAULT TRUE,
   created_at TIMESTAMP
 );
 
@@ -168,6 +174,7 @@ CREATE TABLE follows (
   follow_id         INT        AUTO_INCREMENT PRIMARY KEY,
   follow_user_id    INT        NOT NULL,
   following_user_id INT        NOT NULL,
+  visibility        BOOLEAN    DEFAULT TRUE,
   created_at        TIMESTAMP
 );
 
