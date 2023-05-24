@@ -24,8 +24,12 @@
 								<h4 class="mb-4 mt-0">Contact detail</h4>
 								<!-- First Name -->
 								<div class="col-md-6">
-									<label class="form-label">First Name *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="First name" value="Scaralet">
+									<?php
+									$id = Auth::id();
+									$results = DB::table('users')->where('id', $id)->value('username');
+									echo '<label class="form-label">First Name *</label>';
+									echo '<input type="text" class="form-control" placeholder="" aria-label="First name" value='.$results.'>';
+									?>
 								</div>
 								<!-- Last name -->
 								<div class="col-md-6">
