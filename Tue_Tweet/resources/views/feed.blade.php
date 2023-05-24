@@ -31,9 +31,9 @@
         
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
- 
         #TODO $currentUser benutzen
         function postTweet(){
+
             DB::insert('insert into tweets(user_id, tweet, img, created_at) 
             values(?,?,?,?)',[1, 'Hallo das ist ein Tweet', NULL ,$currentTimestamp]);
         }

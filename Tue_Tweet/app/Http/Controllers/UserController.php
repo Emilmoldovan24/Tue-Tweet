@@ -62,6 +62,7 @@ class UserController extends Controller {
 
     if ($user && Hash::check($request->user_password, $user->user_password)) {
         // Benutzer gefunden und Passwort ist korrekt
+        Auth::login($user);
         return redirect()->route('feed');
     } else {
         // Benutzer nicht gefunden oder Passwort ist falsch
@@ -74,9 +75,10 @@ class UserController extends Controller {
     public function postTweet(Request $request){
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+        $id = Auth::id();
 
         DB::insert('insert into tweets(user_id, tweet, img, created_at) 
-        values(?,?,?,?)',[1, $request["tweet"], NULL ,$currentTimestamp]);
+        values(?,?,?,?)',[$id, $request["tweet"], NULL ,$currentTimestamp]);
 
         return redirect()->route('feed');
     }
