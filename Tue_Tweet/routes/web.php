@@ -30,6 +30,11 @@ Route::get('/Profile', function() {
     return view('profile');
 });
 
+Route::get('/Profile', [
+    'uses' => 'App\Http\Controllers\FeedController@getProfile',
+    'as' => 'profile'
+]);
+
 Route::get('/feed', function() {
     return view('feed');
 });
@@ -72,7 +77,7 @@ Route::post('/signin', [
 
 
 
-#unused
+#Test-side
 Route::get('/dashboard', [
     'uses' => 'App\Http\Controllers\UserController@getDashboard',
     'as' => 'dashboard'

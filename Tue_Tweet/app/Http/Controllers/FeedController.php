@@ -6,6 +6,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller {
 }
+class FeedController extends Controller {
+    
+    public function getProfile() {
+        return view('profile');
+    }
+    
+}
 
 
 

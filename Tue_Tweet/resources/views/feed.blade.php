@@ -23,7 +23,10 @@
             </form>
         </div>
 
-    
+        <form action="{{ route('profile') }}" method="GET">
+            <button type="submit" class="btn btn-primary"> Profile </button>
+        </form>
+        <br>
     
     
 
