@@ -18,7 +18,7 @@ set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION
 -- profile_img -> self-selected profile picture
 -- created_at  -> Time when the user was created
 CREATE TABLE users (
-  user_id        INT           AUTO_INCREMENT PRIMARY KEY,
+  id             INT           AUTO_INCREMENT PRIMARY KEY,
   username       VARCHAR(20)   NOT NULL,
   email          VARCHAR(50)   UNIQUE NOT NULL,
   user_password  VARCHAR(60)   NOT NULL,
@@ -177,29 +177,29 @@ CREATE TABLE follows (
  Foreign Key from tweets to users
 */
 ALTER TABLE tweets
-ADD CONSTRAINT FK_tweets_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT FK_tweets_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
 /*
  Foreign Key from comments to users and tweets
 */
 ALTER TABLE comments
-ADD CONSTRAINT FK_comments_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT FK_comments_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT FK_comments_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id) ON DELETE CASCADE ON UPDATE CASCADE;
 /*
  Foreign Key from follows to users and users
 */
 ALTER TABLE follows
-ADD CONSTRAINT FK_follow_users FOREIGN KEY (follow_user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT FK_following_users FOREIGN KEY (following_user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT FK_follow_users FOREIGN KEY (follow_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT FK_following_users FOREIGN KEY (following_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
 /*
  Foreign Key from retweets to users and tweets
 */
 ALTER TABLE retweets
-ADD CONSTRAINT FK_retweets_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT FK_retweets_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT FK_retweets_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*
  Foreign Key from likes to users and tweets
 */
 ALTER TABLE likes
-ADD CONSTRAINT FK_likes_users FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT FK_likes_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT FK_likes_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id) ON DELETE CASCADE ON UPDATE CASCADE;
