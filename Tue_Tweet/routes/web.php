@@ -18,6 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/welcome', [
+    'uses' => 'App\Http\Controllers\UserController@getwelcome',
+    'as' => 'welcome'
+]);
+
+
 Route::get('/landing', function () {
     return view('landing');
 });
