@@ -34,20 +34,47 @@
         
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
-        #TODO $currentUser benutzen
-        function postTweet(){
-
-            DB::insert('insert into tweets(user_id, tweet, img, created_at) 
-            values(?,?,?,?)',[1, 'Hallo das ist ein Tweet', NULL ,$currentTimestamp]);
-        }
 
         $users = DB::select('select * from tweets ');
-            foreach ($users as $user) {
-                        echo $user->tweet.'<br>';
-                        echo $user->user_id.'<br>';
-                        echo $user->created_at.'<br>';
+            foreach ($users as $tweet) {
+                        echo $tweet->tweet.'<br>';
+                        echo $tweet->user_id.'<br>';
+                        echo $tweet->created_at.'<br>';
                         echo '<br>';
                         echo '<br>';
+
+                        #TODO: Kommentare anzeigen (evtl ausklappen mit button)
+                        
+                        // Count Comments
+                        $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
+                        echo $comments . ' Comments';
+
+                        // Comment Button 
+                        echo '<form action=comment method="POST">';
+                        echo csrf_field();
+                        echo '<input type="hidden" name="tweet_id" value="'.$tweet->tweet_id.'">';
+                        echo '<input type="text" name="comment" id="comment">';
+                        echo '<button type="submit" class="btn btn-primary"> Comment </button>';
+                        echo '</form>';
+
+                        echo '<div class="row d-flex justify-content-between">';
+
+                        // Count Likes
+                        $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+                        echo $likes;
+
+                        // Like Button
+                        # TODO: man kann mehrmals liken
+                        echo '<form action=like method="POST">';
+                        echo csrf_field();
+                        echo '<button type="submit" class="btn btn-primary"> <3 </button>';
+                        echo '<input type="hidden" name="tweet_id" value="'.$tweet->tweet_id.'">';
+                        echo '</form>';
+
+                        echo '</div>';
+
+                        echo '<br>';
+                        echo '<br>';  
                     }
 
     ?>

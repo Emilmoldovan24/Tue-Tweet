@@ -17,6 +17,11 @@ class UserController extends Controller {
         return view('feed');
     }
 
+    public function getLogout(){
+        Auth::logout();
+        return redirect()->route('/');
+    }
+
     public function postSignUp(Request $request) {
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
@@ -65,7 +70,7 @@ class UserController extends Controller {
         Auth::login($user);
         return redirect()->route('feed');
     } else {
-        // Benutzer nicht gefunden oder Passwort ist falsch
+        // Benutzer nicht gefunden oder Passwort ist falsch  
         return redirect()->back();
     }
         
@@ -79,6 +84,31 @@ class UserController extends Controller {
 
         DB::insert('insert into tweets(user_id, tweet, img, created_at) 
         values(?,?,?,?)',[$id, $request["tweet"], NULL ,$currentTimestamp]);
+
+        return redirect()->route('feed');
+    }
+
+    public function postComment(Request $request){
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+
+        $id = Auth::id();
+
+        DB::insert('insert into comments(user_id, tweet_id, comment, created_at) 
+        values(?,?,?,?)',[$id, $request["tweet_id"], $request["comment"], $currentTimestamp]);
+
+        return redirect()->route('feed');
+    }
+
+    public function postLike(Request $request){
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+
+        $id = Auth::id();
+
+        DB::insert('insert into likes(user_id, tweet_id, created_at) 
+        values(?,?,?)',[$id, $request["tweet_id"], $currentTimestamp]);
 
         return redirect()->route('feed');
     }
