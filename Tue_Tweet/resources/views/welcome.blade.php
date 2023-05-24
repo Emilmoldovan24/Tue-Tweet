@@ -62,5 +62,15 @@
                 <input type="hidden" name="_token" value="{{  Session::token() }}">
             </form>
         </div>
+
+
+        <!--Admin Button-->
+        <div class="col-md-4 col-md-offset-4">
+        <form action="{{ route('adminLogin') }}" method="GET">
+            <button type="submit" class="btn btn-primary"> Admin? </button>
+        </form>
+        </div>
+
+        
     </div>
 @endsection

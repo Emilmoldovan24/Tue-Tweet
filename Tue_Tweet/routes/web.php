@@ -26,9 +26,6 @@ Route::get('/Test', function() {
     return view('test');
 });
 
-Route::get('/Profile', function() {
-    return view('profile');
-});
 
 Route::get('/Profile', [
     'uses' => 'App\Http\Controllers\FeedController@getProfile',
