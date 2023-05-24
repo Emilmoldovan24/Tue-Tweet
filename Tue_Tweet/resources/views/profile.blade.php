@@ -123,3 +123,7 @@
 	</div>
 	</div>
 </div>
+
+<form action="{{ route('feed') }}" method="GET">
+	<button type="submit" class="btn btn-primary"> BackToFeed </button>
+</form>
