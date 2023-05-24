@@ -31,20 +31,23 @@
 									echo '<input type="text" class="form-control" placeholder="" aria-label="First name" value='.$results.'>';
 									?>
 								</div>
-								<!-- Last name -->
-								<div class="col-md-6">
-									<label class="form-label">Last Name *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Last name" value="Doe">
-								</div>
-								<!-- Mobile number -->
-								<div class="col-md-6">
-									<label class="form-label">Mobile number *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Phone number" value="+91 9852 8855 252">
-								</div>
 								<!-- Email -->
 								<div class="col-md-6">
-									<label for="inputEmail4" class="form-label">Email *</label>
-									<input type="email" class="form-control" id="inputEmail4" value="example@homerealty.com">
+									<?php 
+									$id = Auth::id();
+									$results = DB::table('users')->where('id', $id)->value('email');
+									echo '<label for="inputEmail4" class="form-label">Email *</label>';
+									echo '<input type="email" class="form-control" id="inputEmail4" value='.$results.'>';
+									?>
+								</div>
+								<!-- Bio -->
+								<div class="col-md-6">
+									<?php
+									$id = Auth::id();
+									$results = DB::table('users')->where('id', $id)->value('profile_bio');
+									echo '<label class="form-label">Bio *</label>';
+									echo '<input type="text" class="form-control" placeholder="" aria-label="Bio" value='.$results.'>';
+									?>
 								</div>
 
 							</div> <!-- Row END -->
@@ -72,26 +75,6 @@
 					</div>
 				</div> <!-- Row END -->
 
-				<!-- Social media detail -->
-				<div class="row mb-5 gx-5">
-					<div class="col-xxl-6 mb-5 mb-xxl-0">
-						<div class="bg-secondary-soft px-4 py-5 rounded">
-							<div class="row g-3">
-								<h4 class="mb-4 mt-0">Social media detail</h4>
-								<!-- Facebook -->
-								<div class="col-md-6">
-									<label class="form-label"><i class="fab fa-fw fa-facebook me-2 text-facebook"></i>Facebook *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Facebook" value="http://www.facebook.com">
-								</div>
-								<!-- Instragram -->
-								<div class="col-md-6">
-									<label class="form-label"><i class="fab fa-fw fa-instagram text-instagram me-2"></i>Instagram *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Instragram" value="http://www.instragram.com">
-								</div>
-								
-							</div> <!-- Row END -->
-						</div>
-					</div>
 
 					<!-- change password -->
 					<div class="col-xxl-6">
