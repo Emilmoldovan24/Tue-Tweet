@@ -5,8 +5,8 @@ PHP Version 8.2.4
 Server: 127.0.0.1 via TCP/IP
 User: root
 Database Schema for the Tue-Tweet project
-
 */
+set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 -- Create of Table users
 -- table users contains the following information :
 
@@ -25,17 +25,19 @@ CREATE TABLE users (
   profile_bio    VARCHAR(255)  DEFAULT NULL,
   profile_img    BLOB          DEFAULT NULL,
   remember_token VARCHAR(100)  DEFAULT NULL,
-  created_at     TIMESTAMP  
+  created_at     TIMESTAMP ,
+  updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
 );
 
 /*
 filling of users for exercise purposes
 */
-INSERT INTO users ( username, email, user_password, profile_bio, profile_img,  remember_token, created_at) 
-VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:56:21'),
-      ( "Name2", "user2@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:57:21'),
-      ( "Name3", "user3@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:58:21'),
-      ( "Name4", "user4@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:59:21');
+
+INSERT INTO users ( username, email, user_password, profile_bio, profile_img,  remember_token, created_at, updated_at) 
+VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
+      ( "Name2", "user2@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21'),
+      ( "Name3", "user3@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
+      ( "Name4", "user4@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:59:21','2023-05-09 12:59:21');
 
 -- Create of Table admins
 -- table users contains the following information :
@@ -55,15 +57,16 @@ CREATE TABLE admins (
   profile_bio    VARCHAR(255)  DEFAULT NULL,
   profile_img    BLOB          DEFAULT NULL,
   remember_token VARCHAR(100)  DEFAULT NULL,
-  created_at     TIMESTAMP  
+  created_at     TIMESTAMP ,
+  updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP 
 );
 
 /*
 filling of users for exercise purposes
 */
-INSERT INTO admins ( adminname, email, user_password, profile_bio, profile_img,  remember_token, created_at) 
-VALUES( "Admin1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:56:21'),
-      ( "Admin2", "user2@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:57:21');
+INSERT INTO admins ( adminname, email, user_password, profile_bio, profile_img,  remember_token, created_at , updated_at) 
+VALUES( "Admin1", "user1@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21' ),
+      ( "Admin2", "user2@yahoo.de", 12345, "blablabla", NULL,  NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21');
 
 
 -- Create of Table tweets
