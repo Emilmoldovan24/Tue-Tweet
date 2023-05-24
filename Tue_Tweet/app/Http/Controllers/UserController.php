@@ -13,13 +13,17 @@ class UserController extends Controller {
         return view('dashboard');
     }    
 
+    public function getwelcome(){
+        return view('welcome');
+    }
+
     public function getFeed(){
         return view('feed');
     }
 
     public function getLogout(){
         Auth::logout();
-        return redirect()->route('/');
+        return redirect()->route('welcome');
     }
 
     public function postSignUp(Request $request) {
@@ -43,16 +47,7 @@ class UserController extends Controller {
         $user->save();
 
         Auth::login($user);
-        #TODO automatische user_id zuordnen (habe schon markus gefragt)
-        /*DB::insert('insert into users(username, email, user_password, profile_bio, profile_img, is_admin, remember_token, created_at) 
-          values(?,?,?,?,?,?,?,?)',[$username, $email, $user_password, NULL, NULL, 0, NULL, $currentTimestamp]);
 
-
-
-        #TODO globale user_id variable übergeben
-        global $currentUserID;
-        $currentUserID = DB::select('select user_id from users where email = ?', [$email]);
-*/
         return redirect()->route('feed');
 
     }

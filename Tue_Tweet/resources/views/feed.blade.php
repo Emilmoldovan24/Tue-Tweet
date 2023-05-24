@@ -26,6 +26,9 @@
         <form action="{{ route('profile') }}" method="GET">
             <button type="submit" class="btn btn-primary"> Profile </button>
         </form>
+        <form action="{{ route('logout') }}" method="GET">
+            <button type="submit" class="btn btn-primary"> Logout </button>
+        </form>
         <br>
     
     
