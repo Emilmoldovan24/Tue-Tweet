@@ -100,13 +100,13 @@ class UserController extends Controller {
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
 
-        $id = Auth::id();
-        if (DB::table('likes')->where('user_id', $id)->doesntExist()){
+        $tweet_id = $request['tweet_id'];
+        if (DB::table('likes')->where('tweet_id', $tweet_id)->doesntExist()){
             DB::insert('insert into likes(user_id, tweet_id, created_at) 
-            values(?,?,?)',[$id, $request["tweet_id"], $currentTimestamp]);
+            values(?,?,?)',[$tweet_id, $request["tweet_id"], $currentTimestamp]);
 
         } else {
-            DB::table('likes')->where('user_id', $id)->delete();
+            DB::table('likes')->where('user_id', $tweet_id)->delete();
         }
         
 
