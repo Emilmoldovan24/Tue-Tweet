@@ -14,8 +14,10 @@
         margin: 6px 7%;
     }
     .home-header {
-        background: rgb(222,218,218);
-        background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);
+         /* background: rgb(222,218,218);
+        background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);  */
+        background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(209,123,149,1) 0%, rgba(63,106,144,1) 65%);
     }
     .home-header .row{
         padding-top: 50px;
@@ -27,10 +29,10 @@
     .home-header .promo-text-box h1{
         margin-bottom: 25px;
     }
-    .home-header .btn-primary {
+    .home-header .btn-light {
         font-size: 20px;
         margin: 20px;
-        color: white;
+        color: black;
         letter-spacing: 1px;
     }
     .home-header .lead-form{
@@ -61,7 +63,7 @@
                               <!-- Button trigger modal -->
                           
                               <form action="{{ route('signup') }}" method="GET">
-            <button type="submit" class="btn btn-primary"> Sign up now! </button>
+            <button type="submit" class="btn btn-light"> Sign up now! </button>
         </form>
 
                     </div>
@@ -88,7 +90,7 @@
  <input class="form-control @error('user_password') is-invalid @enderror" type="password" name="user_password" id="user_password"> 
   </div>
      </div>
-     <button type="submit" class="btn btn-primary"> Submit </button>
+     <button type="submit" class="btn btn-light"> Submit </button>
     <input type="hidden" name="_token" value="{{  Session::token() }}">
 </form>
 
@@ -142,7 +144,7 @@
    <!--Admin Button-->
    <div class="col-md-4 col-md-offset-4">
         <form action="{{ route('adminLogin') }}" method="GET">
-            <button type="submit" class="btn btn-primary"> Admin? </button>
+            <button type="submit" class="btn btn-light"> Admin? </button>
         </form>
         </div>
 

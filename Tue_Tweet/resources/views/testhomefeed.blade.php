@@ -162,21 +162,42 @@ color: #9a9a9a;
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">Hello, Mark!</h5>
-        <p class="card-text">@MarkStark</p>
+      <?php
+									$id = Auth::id();
+									$results = DB::table('users')->where('id', $id)->value('username');
+                  echo '<h5 class="card-title">Hello '.$results.'</h5>'
+									?>
+        <!-- Ändern <p class="card-text">@MarkStark</p> -->
       </div>
     </div>
   </div>
 </div>
 
+<form action="{{ route('profile') }}" method="GET">
+            <button type="submit" class="btn btn-light"> Profile </button>
+        </form>
+        <br>
+        <form action="{{ route('logout') }}" method="GET">
+            <button type="submit" class="btn btn-light"> Logout </button>
+        </form>
+<br>
+<form action="{{ route('dashboard') }}" method="GET">
+            <button type="submit" class="btn btn-light"> Settings </button>
+        </form>
+        <br>
 <!-- MENU -->
-<div class="card" style="width: 6rem;">
+<!-- <div class="card" style="width: 6rem;">
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Home</li>
     <li class="list-group-item">Profile</li>
     <li class="list-group-item">Settings</li>
   </ul>
-</div>
+</div> -->
+
+
+        
+
+
 <h4>Share whats on your mind!</h4>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Tweet!
