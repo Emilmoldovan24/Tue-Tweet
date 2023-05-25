@@ -28,6 +28,11 @@ Route::get('/landing', function () {
     return view('landing');
 });
 
+
+Route::get('/signup', function () {
+    return view('signup');
+});
+
 Route::get('/Test', function() {
     return view('test');
 });
