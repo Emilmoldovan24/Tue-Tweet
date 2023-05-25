@@ -28,6 +28,9 @@ Route::get('/landing', function () {
     return view('landing');
 });
 
+Route::get('/home', function () {
+    return view('testhomefeed');
+});
 
 Route::get('/signup', function () {
     return view('signup');
