@@ -56,12 +56,12 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="promo-text-box">
-                        <h1>Sign up and join the community!</h1>
-                        <p>On Tue-Tweet, you find all your friends from Uni Tuebingen. </p>
+                        <h1>Already member of the community?</h1>
+                        <p>Back to the Log-in Page! </p>
                               <!-- Button trigger modal -->
-                          
-                              <form action="{{ route('signup') }}" method="GET">
-            <button type="submit" class="btn btn-primary"> Sign up now! </button>
+                              
+                              <form action="{{ route('welcome') }}" method="GET">
+            <button type="submit" class="btn btn-primary"> Sign in </button>
         </form>
 
                     </div>
@@ -74,13 +74,19 @@
 
 
                         <!-- SIGN IN !-->
-    <form action="{{ route('signin')}}" method="POST">
+    <form action="{{ route('signup')}}" method="POST">
   <div class="mb-3">
   <div class="form-group">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" aria-describedby="emailHelp"> <!-- emailhelp? !-->
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
+  </div>
+  <div class="mb-3">
+    <div class="form-group">
+    <label for="username"> Your User Name </label>
+   <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username">
+    </div>
   </div>
   <div class="mb-3">
     <div class="form-group">
@@ -91,6 +97,9 @@
      <button type="submit" class="btn btn-primary"> Submit </button>
     <input type="hidden" name="_token" value="{{  Session::token() }}">
 </form>
+
+    
+
 
 
 
@@ -139,71 +148,10 @@
             
         </div>
 
-   <!--Admin Button-->
-   <div class="col-md-4 col-md-offset-4">
-        <form action="{{ route('adminLogin') }}" method="GET">
-            <button type="submit" class="btn btn-primary"> Admin? </button>
-        </form>
-        </div>
-
     </section>
 
     
 
-
-
-
-
-
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Sign up</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <form>
-      <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Full Name</label>
-    <input type="text" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Username</label>
-    <input type="text" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Select Gender</label> <br>
-    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    Male
-  </label>
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-  <label class="form-check-label" for="flexRadioDefault2">
-   Female
-  </label>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Date of Birth</label>
-    <input type="date" class="form-control" id="exampleInputPassword1">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-      </div>
-   
-    </div>
-  </div>
-</div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   </body>
