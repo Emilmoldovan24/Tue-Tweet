@@ -90,6 +90,10 @@ Route::post('/retweet', [
     'uses' => 'App\Http\Controllers\UserController@postRetweet',
     'as' => 'retweet']);
 
+Route::post('/createRetweet', [
+    'uses' => 'App\Http\Controllers\UserController@postCreateRetweet',
+    'as' => 'createRetweet']);
+
 Route::post('/comment', [
     'uses' => 'App\Http\Controllers\UserController@postComment',
     'as' => 'comment']);

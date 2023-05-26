@@ -114,4 +114,19 @@ class UserController extends Controller {
 
         return redirect()->route('feed');
     }
+
+    // no possibility to retweet a retweet !!
+    public function postRetweet(Request $request){
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+        $id = Auth::id();
+
+        $tweet_id = $request['tweet_id'];
+
+        DB::insert('insert into retweets(user_id, tweet_id, retweet_text, created_at) 
+        values(?,?,?,?',[$id, $request["tweet_id"], $request["retweet_text"], $currentTimestamp]);
+    
+        return redirect()->route('feed');
+    }
+
 }

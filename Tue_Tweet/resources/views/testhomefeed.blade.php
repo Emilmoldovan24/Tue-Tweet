@@ -260,11 +260,13 @@ color: #9a9a9a;
 
 
 <!-- Modal -->
+<form action="{{ route('postTweet')}}" method="POST">
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
 
+      
       <div class="write-post-container">
             <div class="user-profile">
                 <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
@@ -275,7 +277,8 @@ color: #9a9a9a;
             </div>
         
        <div class="post-input-container">
-        <textarea rows="3" placeholder="Whats on your mind?"></textarea>
+        <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet" value="{{Request::old('tweet')}}"></textarea>
+        <!-- <input type="text" name="tweet" id="tweet" value="{{Request::old('tweet')}}"> -->
   <div class="add-post-links">
     <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> Post Image / Video</a>
     <div class="input-group mb-3">
@@ -288,12 +291,13 @@ color: #9a9a9a;
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Post</button>
+        <button type="submit" class="btn btn-primary"> Post </button>
+        <input type="hidden" name="_token" value="{{  Session::token() }}">
       </div>
     </div>
   </div>
 </div>
-
+</form>
 
   </div>
 </div>
