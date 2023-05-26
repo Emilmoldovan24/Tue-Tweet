@@ -46,7 +46,8 @@ class UserController extends Controller {
 
         $user->save();
 
-        Auth::login($user);
+        $usr = User::where('email', $request->email)->first();
+        Auth::login($usr);
 
         return redirect()->route('feed');
 
