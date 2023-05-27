@@ -28,6 +28,10 @@ Route::get('/landing', function () {
     return view('landing');
 });
 
+Route::get('/uiplay', function () {
+    return view('uiplay');
+});
+
 Route::get('/home', function () {
     return view('testhomefeed');
 });
