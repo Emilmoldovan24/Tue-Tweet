@@ -128,6 +128,37 @@ color: #9a9a9a;
 .card.mb-3{
     align-items: center;
 }
+
+.post-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+
+  .activity-icons div {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-top: 10px;
+  }
+
+  .like-btn {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-top: 10px;
+  }
+
+  .activity-icons div i {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px;
+  }
+
+  .post-row a {
+    color: black;
+  }
   </style>
   <body>
   <nav class="navbar bg-dark" data-bs-theme="dark">
@@ -239,9 +270,55 @@ color: #9a9a9a;
                     
                         echo '<br>';
                             
-echo '</div>';}
-?>     
+                        echo '<div class="post-row">';
+                        echo '<div class="activity-icons">';
+                        echo '<!-- like Button-->';
+                        echo '<div>';
+                        echo '<div class="like-btn">';
+                        echo '<button type="button" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>234</button>';
+                        echo '</div>';
+                        echo '</div>';
+                        
+                        echo '<div><!-- comment button -->';
+                        echo '<div class="btn-group dropend">';
+                        echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
+                        echo 'aria-expanded="false">';
+                        echo '<i class="fa-regular fa-comment"></i>22';
+                        echo '</button>';
+                        echo '<ul class="dropdown-menu">';
+                        echo '<li><a class="dropdown-item" href="#">Show comments</a></li>';
+                        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add';
+                        echo ' comment</a></li>';
+                        echo '</ul>';
+                        echo '</div>';
+                        echo '</div>';
+                        
+                        
+                        echo '<div><!-- Retweet button -->';
+                        echo '<div class="btn-group dropend">';
+                        echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
+                        echo 'aria-expanded="false">';
+                        echo '<i class="fa-solid fa-retweet"></i>45';
+                        echo '</button>';
+                        echo '<ul class="dropdown-menu">';
+                        echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
+                        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
+                        echo '</li>';
+                        echo '</ul>';
+                        echo '</div>';
+                        echo '</div>';
+                        
+                        echo '</div>';
+                       
+                        echo '</div>';
+                        
+                        echo '</div>';}
+                        
+                        ?>     
 
+<div class="d-grid gap-2 col-6 mx-auto">
+        <button type="button" class="btn btn-light yx-auto">Load more</button>
+      </div>
     </div>
    
     
