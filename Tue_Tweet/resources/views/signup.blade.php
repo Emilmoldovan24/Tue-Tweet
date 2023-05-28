@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Sign Up!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   </head>
   <style>
@@ -50,8 +50,27 @@
 
   </style>
   <body>
+
+
     <section class="home-header">
         <h1 class="logo">Tue-Tweet</h1> 
+
+        {{-- Design! Fehlermeldungen --}}
+        @section('content')
+        @if (count($errors) > 0) 
+            <div class='row'>
+            <div class="col">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>
+                            {{$error}}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif
+
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -78,14 +97,14 @@
   <div class="mb-3">
   <div class="form-group">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" aria-describedby="emailHelp"> <!-- emailhelp? !-->
+    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" aria-describedby="emailHelp" value=" {{ Request::old('email') }}"> <!-- emailhelp? !-->
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
   </div>
   <div class="mb-3">
     <div class="form-group">
     <label for="username"> Your User Name </label>
-   <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username">
+   <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username" value=" {{ Request::old('username') }}">
     </div>
   </div>
   <div class="mb-3">
