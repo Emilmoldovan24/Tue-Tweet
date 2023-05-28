@@ -31,8 +31,8 @@ class UserController extends Controller {
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
 
         $this->validate($request, [
-            'email' => 'email|unique:users', //nach dem doppelpunkt, sagt es dass es in der users Datenbank unique sein soll
-            'username' => 'required|max:120',
+            'email' => 'required|email|unique:users', //nach dem doppelpunkt, sagt es dass es in der users Datenbank unique sein soll
+            'username' => 'required|max:120|unique:users',
             'user_password' => 'required|min:4'
         ]);
         $email = $request['email'];
@@ -58,7 +58,8 @@ class UserController extends Controller {
         $this->validate($request, [
             'email' => 'required', 
             'user_password' => 'required'
-        ]);
+        ]); 
+        
         $user = User::where('email', $request->email)->first();
 
     if ($user && Hash::check($request->user_password, $user->user_password)) {
@@ -67,13 +68,19 @@ class UserController extends Controller {
         return redirect()->route('feed');
     } else {
         // Benutzer nicht gefunden oder Passwort ist falsch  
-        return redirect()->back();
+        return redirect()->back()->withErrors(['user_password' => 'Check if the password or email is correct.'])->withInput();
     }
         
     }
 
 
     public function postTweet(Request $request){
+
+        // Leere Tweets abfangen
+        $request->validate([
+            'tweet' => 'required',
+        ]);
+
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
         $id = Auth::id();
@@ -117,6 +124,7 @@ class UserController extends Controller {
 
     // no possibility to retweet a retweet !!
     public function postRetweet(Request $request){
+
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
         $id = Auth::id();
