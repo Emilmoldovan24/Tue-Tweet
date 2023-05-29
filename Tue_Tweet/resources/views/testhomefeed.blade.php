@@ -67,7 +67,6 @@
                         echo $likes;
 
                         // Like Button
-                        # TODO: man kann mehrmals liken
                         echo '<form action=like method="POST">';
                         echo csrf_field();
                         echo '<button type="submit" class="btn btn-primary"> <3 </button>';

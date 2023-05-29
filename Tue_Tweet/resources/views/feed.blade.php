@@ -272,12 +272,25 @@ color: #9a9a9a;
                             
                         echo '<div class="post-row">';
                         echo '<div class="activity-icons">';
+
+
+                        // Count Likes
+                        $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+
+                        // Like Button
                         echo '<!-- like Button-->';
                         echo '<div>';
+                        echo '<form action=like method="POST">';
+                        echo csrf_field();
                         echo '<div class="like-btn">';
-                        echo '<button type="button" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>234</button>';
+                        echo '<button type="submit" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>'.$likes.'</button>';
+                        echo '<input type="hidden" name="tweet_id" value="'.$tweet->tweet_id.'">';
                         echo '</div>';
+                        echo '</form>';
                         echo '</div>';
+
+
+
                         
                         echo '<div><!-- comment button -->';
                         echo '<div class="btn-group dropend">';
