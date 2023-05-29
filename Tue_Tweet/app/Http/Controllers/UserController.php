@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
@@ -8,27 +9,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller {
-    public function getDashboard(){
+class UserController extends Controller
+{
+    public function getDashboard()
+    {
         return view('dashboard');
-    }    
+    }
 
-    public function getwelcome(){
+    public function getwelcome()
+    {
         return view('welcome');
     }
 
-    public function getFeed(){
+    public function getFeed()
+    {
         return view('feed');
     }
 
-    public function getLogout(){
+    public function getLogout()
+    {
         Auth::logout();
         return redirect()->route('welcome');
     }
 
-    public function postSignUp(Request $request) {
+    public function postSignUp(Request $request)
+    {
         $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
 
         $this->validate($request, [
             'email' => 'required|email|unique:users', //nach dem doppelpunkt, sagt es dass es in der users Datenbank unique sein soll
@@ -50,31 +57,31 @@ class UserController extends Controller {
         Auth::login($usr);
 
         return redirect()->route('feed');
-
     }
 
-    
-    public function postSignIn(Request $request) {
+
+    public function postSignIn(Request $request)
+    {
         $this->validate($request, [
-            'email' => 'required', 
+            'email' => 'required',
             'user_password' => 'required'
-        ]); 
-        
+        ]);
+
         $user = User::where('email', $request->email)->first();
 
-    if ($user && Hash::check($request->user_password, $user->user_password)) {
-        // Benutzer gefunden und Passwort ist korrekt
-        Auth::login($user);
-        return redirect()->route('feed');
-    } else {
-        // Benutzer nicht gefunden oder Passwort ist falsch  
-        return redirect()->back()->withErrors(['user_password' => 'Check if the password or email is correct.'])->withInput();
-    }
-        
+        if ($user && Hash::check($request->user_password, $user->user_password)) {
+            // Benutzer gefunden und Passwort ist korrekt
+            Auth::login($user);
+            return redirect()->route('feed');
+        } else {
+            // Benutzer nicht gefunden oder Passwort ist falsch  
+            return redirect()->back()->withErrors(['user_password' => 'Check if the password or email is correct.'])->withInput();
+        }
     }
 
 
-    public function postTweet(Request $request){
+    public function postTweet(Request $request)
+    {
 
         // Leere Tweets abfangen
         $request->validate([
@@ -82,59 +89,78 @@ class UserController extends Controller {
         ]);
 
         $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $id = Auth::id();
 
         DB::insert('insert into tweets(user_id, tweet, img, created_at) 
-        values(?,?,?,?)',[$id, $request["tweet"], NULL ,$currentTimestamp]);
+        values(?,?,?,?)', [$id, $request["tweet"], NULL, $currentTimestamp]);
 
         return redirect()->route('feed');
     }
 
-    public function postComment(Request $request){
+    public function postComment(Request $request)
+    {
         $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
 
         $id = Auth::id();
 
         DB::insert('insert into comments(user_id, tweet_id, comment, created_at) 
-        values(?,?,?,?)',[$id, $request["tweet_id"], $request["comment"], $currentTimestamp]);
+        values(?,?,?,?)', [$id, $request["tweet_id"], $request["comment"], $currentTimestamp]);
 
         return redirect()->route('feed');
     }
 
-    public function postLike(Request $request){
+    public function postLike(Request $request)
+    {
 
         $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $id = Auth::id();
 
         $tweet_id = $request['tweet_id'];
-        if (DB::table('likes')->where('tweet_id', $tweet_id)->where('user_id', $id)->doesntExist()){
+        if (DB::table('likes')->where('tweet_id', $tweet_id)->where('user_id', $id)->doesntExist()) {
             DB::insert('insert into likes(user_id, tweet_id, created_at) 
-            values(?,?,?)',[$id, $request["tweet_id"], $currentTimestamp]);
-
+            values(?,?,?)', [$id, $request["tweet_id"], $currentTimestamp]);
         } else {
             DB::delete('delete from likes where user_id = ? and tweet_id = ?', [$id, $tweet_id]);
         }
-        
+
 
         return redirect()->route('feed');
     }
 
     // no possibility to retweet a retweet !!
-    public function postRetweet(Request $request){
+    public function postRetweet(Request $request)
+    {
 
         $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $id = Auth::id();
 
         $tweet_id = $request['tweet_id'];
 
         DB::insert('insert into retweets(user_id, tweet_id, retweet_text, created_at) 
-        values(?,?,?,?',[$id, $request["tweet_id"], $request["retweet_text"], $currentTimestamp]);
-    
+        values(?,?,?,?', [$id, $request["tweet_id"], $request["retweet_text"], $currentTimestamp]);
+
         return redirect()->route('feed');
     }
 
+    // Store Image
+    public function storeImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+        ]);
+
+        $image = time() . '.' . $request->image->extension();
+
+        $id = Auth::id();
+        $image = "data:image/png;base64," . base64_encode(file_get_contents($banane));
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['profile_img' => $image]);
+
+        return redirect()->route('welcome');
+    }
 }

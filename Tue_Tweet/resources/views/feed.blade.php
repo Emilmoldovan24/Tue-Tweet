@@ -1,17 +1,19 @@
 <!Doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    
-  </head>
-  <style>
-    body{
-        background: lightgrey;
-    }
-.navbar.bg-dark{
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+</head>
+<style>
+  body {
+    background: lightgrey;
+  }
+
+  .navbar.bg-dark {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,77 +21,86 @@
     position: sticky;
     top: 0;
     z-index: 100;
-}
-.post-input-container {
-padding-left: 55px;
-padding-top: 20px;
-}
-    .post-input-container textarea {
-        width: 100%;
-        resize: none;
-        border-bottom: 10px solid #grey;
-        border: 0;
-        outline: 0;  
-        background: transparent;
-+       
-    }
+  }
 
-    .container{
-        display: flex;
-        justify-content: space-between;
-        padding: 13px 5%;
-    }
+  .post-input-container {
+    padding-left: 55px;
+    padding-top: 20px;
+  }
 
-    .left-sidebar{
-background: lightgrey;
-flex-basis: 25%;
-position: sticky;
-top: 70px;
-align-self: flex-start;
-    }
+  .post-input-container textarea {
+    width: 100%;
+    resize: none;
+    border-bottom: 10px solid #grey;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    +
+  }
 
-    .right-sidebar{
- background: lightgrey;
-flex-basis: 25%;
-position: sticky;
-top: 70px;
-align-self: flex-start;
-    }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 5%;
+  }
 
-    .main-content{
-        flex-basis: 47%;
-        align-self: flex-start;
-        background: lightgrey;
-    }
-.write-post-container{
+  .left-sidebar {
+    background: lightgrey;
+    flex-basis: 25%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+  }
+
+  .right-sidebar {
+    background: lightgrey;
+    flex-basis: 25%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+  }
+
+  .main-content {
+    flex-basis: 47%;
+    align-self: flex-start;
+    background: lightgrey;
+  }
+
+  .write-post-container {
     width: 100%;
     background: white;
     border-radius: 6px;
     padding: 20px;
     columns: #626262;
-}
-.user-profile{
+  }
+
+  .user-profile {
     display: flex;
     align-items: center;
-}
-.user-profile img{
+  }
+
+  .user-profile img {
     width: 45px;
     border-radius: 50%;
     margin-right: 10px;
-}
-.user-profile p{
+  }
+
+  .user-profile p {
     margin-bottom: -5px;
     font-weight: 500;
     color: #626262;
-}
-.user-profile small{
+  }
+
+  .user-profile small {
     font-size: 12px;
-}
-.add-post-links{
+  }
+
+  .add-post-links {
     display: flex;
     margin-top: 10px;
-}
-.add-post-links a{
+  }
+
+  .add-post-links a {
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -97,39 +108,45 @@ align-self: flex-start;
     margin-right: 30px;
     font-size: 13px;
     margin-top: 10px;
-}
-.fa-solid.fa-camera.fa-2xl{
+  }
+
+  .fa-solid.fa-camera.fa-2xl {
     margin-right: 3px;
 
-}
-.post-container{
+  }
+
+  .post-container {
     width: 100%;
     background: #fff;
     border-radius: 6px;
     padding: 20px;
     color: #626262;
     margin: 20px 0;
-}
-.user-profile span{
-font-size: 13px;
-color: #9a9a9a;
-}
-.post-text{
+  }
+
+  .user-profile span {
+    font-size: 13px;
+    color: #9a9a9a;
+  }
+
+  .post-text {
     color: black;
     margin: 15px 0;
     font-size: 15px;
-}
-.post-img{
+  }
+
+  .post-img {
     width: 100%;
     height: 500px;
     border-radius: 4px;
     margin-bottom: 5px;
-}
-.card.mb-3{
-    align-items: center;
-}
+  }
 
-.post-row {
+  .card.mb-3 {
+    align-items: center;
+  }
+
+  .post-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -159,65 +176,66 @@ color: #9a9a9a;
   .post-row a {
     color: black;
   }
-  </style>
-  <body>
+</style>
+
+<body>
   <nav class="navbar bg-dark" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
-    <!--CONTAINER START-->
-    <div class="container">
-        
- 
-
-  <!--COLUMN 1 (LEFT-SIDEBAR-->
-<div class="col-3">
-
-
-  
-    
-<div class="left-sidebar">
-
-
-
-<div class="card mb-3" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" class="img-fluid" alt="...">
+    <div class="container-fluid">
+      <a class="navbar-brand">Navbar</a>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
-      <?php
-									$id = Auth::id();
-									$results = DB::table('users')->where('id', $id)->value('username');
-                  echo '<h5 class="card-title">Hello '.$results.'</h5>'
-									?>
-        <!-- Ändern <p class="card-text">@MarkStark</p> -->
-      </div>
-    </div>
-  </div>
-</div>
+  </nav>
 
-<form action="{{ route('profile') }}" method="GET">
-            <button type="submit" class="btn btn-light"> Profile </button>
+  <!--CONTAINER START-->
+  <div class="container">
+
+
+
+    <!--COLUMN 1 (LEFT-SIDEBAR-->
+    <div class="col-3">
+
+
+
+
+      <div class="left-sidebar">
+
+
+
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" class="img-fluid" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <?php
+                $id = Auth::id();
+                $results = DB::table('users')->where('id', $id)->value('username');
+                echo '<h5 class="card-title">Hello ' . $results . '</h5>'
+                ?>
+                <!-- Ändern <p class="card-text">@MarkStark</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form action="{{ route('profile') }}" method="GET">
+          <button type="submit" class="btn btn-light"> Profile </button>
         </form>
         <br>
         <form action="{{ route('logout') }}" method="GET">
-            <button type="submit" class="btn btn-light"> Logout </button>
-        </form>
-<br>
-<form action="{{ route('dashboard') }}" method="GET">
-            <button type="submit" class="btn btn-light"> Settings </button>
+          <button type="submit" class="btn btn-light"> Logout </button>
         </form>
         <br>
-<!-- MENU -->
-<!-- <div class="card" style="width: 6rem;">
+        <form action="{{ route('dashboard') }}" method="GET">
+          <button type="submit" class="btn btn-light"> Settings </button>
+        </form>
+        <br>
+        <!-- MENU -->
+        <!-- <div class="card" style="width: 6rem;">
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Home</li>
     <li class="list-group-item">Profile</li>
@@ -226,203 +244,205 @@ color: #9a9a9a;
 </div> -->
 
 
-        
 
 
-<h4>Share whats on your mind!</h4>
+
+        <h4>Share whats on your mind!</h4>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Tweet!
-                        </button>
+          Tweet!
+        </button>
+      </div>
+
     </div>
-    
-    </div>
-<!-- MIDDLE-BAR-FEED -->
+    <!-- MIDDLE-BAR-FEED -->
 
 
     <div class="main-content">
 
-    
 
-     
+
+
       <?php
-      $users = DB::select('select * from tweets ');
+      $users = DB::select('select * from tweets order by created_at desc  ');
       foreach ($users as $tweet) {
         $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
-        $id= $tweet->user_id;
-             $username= DB::table('users')->where('id', $id)->value('username');
-        echo'<div class="post-container">';
-          echo '<div class="user-profile">';
-            echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
-                echo'<div>';
-                  echo '<p>'.$username.'</p>';
-                  echo '<span>'.$tweet->created_at.'</span>';
-                    echo '</div>';
-                    echo' </div>';
-        
-       
-
-        $users = DB::select('select * from tweets ');
-            
-            
-                        echo $tweet->tweet.'<br>';
-                        
-                    
-                        echo '<br>';
-                            
-                        echo '<div class="post-row">';
-                        echo '<div class="activity-icons">';
-
-
-                        // Count Likes
-                        $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
-
-                        // Like Button
-                        echo '<!-- like Button-->';
-                        echo '<div>';
-                        echo '<form action=like method="POST">';
-                        echo csrf_field();
-                        echo '<div class="like-btn">';
-                        echo '<button type="submit" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>'.$likes.'</button>';
-                        echo '<input type="hidden" name="tweet_id" value="'.$tweet->tweet_id.'">';
-                        echo '</div>';
-                        echo '</form>';
-                        echo '</div>';
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+        $id = $tweet->user_id;
+        $username = DB::table('users')->where('id', $id)->value('username');
+        echo '<div class="post-container">';
+        echo '<div class="user-profile">';
+        echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
+        echo '<div>';
+        echo '<p>' . $username . '</p>';
+        echo '<span>' . $tweet->created_at . '</span>';
+        echo '</div>';
+        echo ' </div>';
 
 
 
-                        
-                        echo '<div><!-- comment button -->';
-                        echo '<div class="btn-group dropend">';
-                        echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
-                        echo 'aria-expanded="false">';
-                        echo '<i class="fa-regular fa-comment"></i>22';
-                        echo '</button>';
-                        echo '<ul class="dropdown-menu">';
-                        echo '<li><a class="dropdown-item" href="#">Show comments</a></li>';
-                        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add';
-                        echo ' comment</a></li>';
-                        echo '</ul>';
-                        echo '</div>';
-                        echo '</div>';
-                        
-                        
-                        echo '<div><!-- Retweet button -->';
-                        echo '<div class="btn-group dropend">';
-                        echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
-                        echo 'aria-expanded="false">';
-                        echo '<i class="fa-solid fa-retweet"></i>45';
-                        echo '</button>';
-                        echo '<ul class="dropdown-menu">';
-                        echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
-                        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
-                        echo '</li>';
-                        echo '</ul>';
-                        echo '</div>';
-                        echo '</div>';
-                        
-                        echo '</div>';
-                       
-                        echo '</div>';
-                        
-                        echo '</div>';}
-                        
-                        ?>     
+        $users = DB::select('select * from tweets order by created_at desc');
 
-<div class="d-grid gap-2 col-6 mx-auto">
+
+        echo $tweet->tweet . '<br>';
+
+
+        echo '<br>';
+
+        echo '<div class="post-row">';
+        echo '<div class="activity-icons">';
+
+
+        // Count Likes
+        $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+
+        // Like Button
+        echo '<!-- like Button-->';
+        echo '<div>';
+        echo '<form action=like method="POST">';
+        echo csrf_field();
+        echo '<div class="like-btn">';
+        echo '<button type="submit" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+        echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+        echo '</div>';
+        echo '</form>';
+        echo '</div>';
+
+
+
+
+        echo '<div><!-- comment button -->';
+        echo '<div class="btn-group dropend">';
+        echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
+        echo 'aria-expanded="false">';
+        echo '<i class="fa-regular fa-comment"></i>22';
+        echo '</button>';
+        echo '<ul class="dropdown-menu">';
+        echo '<li><a class="dropdown-item" href="#">Show comments</a></li>';
+        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add';
+        echo ' comment</a></li>';
+        echo '</ul>';
+        echo '</div>';
+        echo '</div>';
+
+
+        echo '<div><!-- Retweet button -->';
+        echo '<div class="btn-group dropend">';
+        echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
+        echo 'aria-expanded="false">';
+        echo '<i class="fa-solid fa-retweet"></i>45';
+        echo '</button>';
+        echo '<ul class="dropdown-menu">';
+        echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
+        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
+        echo '</li>';
+        echo '</ul>';
+        echo '</div>';
+        echo '</div>';
+
+        echo '</div>';
+
+        echo '</div>';
+
+        echo '</div>';
+      }
+
+      ?>
+
+      <div class="d-grid gap-2 col-6 mx-auto">
         <button type="button" class="btn btn-light yx-auto">Load more</button>
       </div>
     </div>
-   
-    
-<!-- RIGHT SIDE-BAR -->
 
 
-<div class="right-sidebar">
+    <!-- RIGHT SIDE-BAR -->
+
+
+    <div class="right-sidebar">
 
 
 
-        <h1>Notifications</h1>
-        <div class="card mb-3" style="width: 12rem;">
-  <img class="card-img-top" src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Follow Request</h5>
-    <p class="card-text">Max Mustermann wants to follow you!</p>
-    <a href="#" class="btn btn-primary">Accept</a>
-    <a href="#" class="btn btn-secondary">Decline</a>
-  </div>
-</div>
-<div class="card mb-3" style="width: 12rem; margin-top: 20px;">
-  <img class="card-img-top" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Comment-Response</h5>
-    <p class="card-text">Lea responded to your comment. Go see it!</p>
-    <a href="#" class="btn btn-primary">Go to Post</a>
-  </div>
-</div>
+      <h1>Notifications</h1>
+      <div class="card mb-3" style="width: 12rem;">
+        <img class="card-img-top" src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Follow Request</h5>
+          <p class="card-text">Max Mustermann wants to follow you!</p>
+          <a href="#" class="btn btn-primary">Accept</a>
+          <a href="#" class="btn btn-secondary">Decline</a>
+        </div>
+      </div>
+      <div class="card mb-3" style="width: 12rem; margin-top: 20px;">
+        <img class="card-img-top" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Comment-Response</h5>
+          <p class="card-text">Lea responded to your comment. Go see it!</p>
+          <a href="#" class="btn btn-primary">Go to Post</a>
+        </div>
+      </div>
 
-</div>
+    </div>
 
 
-<!-- Modal -->
-<form action="{{ route('postTweet')}}" method="POST">
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
+    <!-- Modal -->
+    <form action="{{ route('postTweet')}}" method="POST">
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
 
-      
-      <div class="write-post-container">
-            <div class="user-profile">
-                <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                <div>
+
+              <div class="write-post-container">
+                <div class="user-profile">
+                  <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
+                  <div>
                     <p>Mark</p>
                     <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
                     {{-- Design! Fehlermeldungen --}}
                     @section('content')
-                    @if (count($errors) > 0) 
-                        <div class='row'>
-                          <div class="col">
-                            <ul>
-                              @foreach ($errors->all() as $error)
-                                <li>
-                                  {{$error}}
-                                </li>
-                              @endforeach
-                            </ul>
-                          </div>
-                        </div>
-                      @endif
+                    @if (count($errors) > 0)
+                    <div class='row'>
+                      <div class="col">
+                        <ul>
+                          @foreach ($errors->all() as $error)
+                          <li>
+                            {{$error}}
+                          </li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    </div>
+                    @endif
+                  </div>
                 </div>
+
+                <div class="post-input-container">
+                  <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet" value="{{Request::old('tweet')}}"></textarea>
+                  <!-- <input type="text" name="tweet" id="tweet" value="{{Request::old('tweet')}}"> -->
+                  <div class="add-post-links">
+                    <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> Post Image / Video</a>
+                    <div class="input-group mb-3">
+                      <input type="file" class="form-control" id="inputGroupFile01" accept="image/jpeg, image/png, image/gif">
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             </div>
-        
-       <div class="post-input-container">
-        <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet" value="{{Request::old('tweet')}}"></textarea>
-        <!-- <input type="text" name="tweet" id="tweet" value="{{Request::old('tweet')}}"> -->
-  <div class="add-post-links">
-    <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> Post Image / Video</a>
-    <div class="input-group mb-3">
-  <input type="file" class="form-control" id="inputGroupFile01" accept="image/jpeg, image/png, image/gif">
-</div>
-
-  </div>
-    </div>
-    </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary"> Post </button>
+              <input type="hidden" name="_token" value="{{  Session::token() }}">
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary"> Post </button>
-        <input type="hidden" name="_token" value="{{  Session::token() }}">
-      </div>
-    </div>
-  </div>
-</div>
-</form>
+    </form>
 
   </div>
-</div>
+  </div>
 
-    <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</body>
+
 </html>

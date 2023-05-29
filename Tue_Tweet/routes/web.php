@@ -40,7 +40,7 @@ Route::get('/signup', function () {
     return view('signup');
 });
 
-Route::get('/Test', function() {
+Route::get('/Test', function () {
     return view('test');
 });
 
@@ -50,7 +50,7 @@ Route::get('/Profile', [
     'as' => 'profile'
 ]);
 
-Route::get('/feed', function() {
+Route::get('/feed', function () {
     return view('feed');
 });
 
@@ -65,13 +65,15 @@ Route::get('/adminFeed', [
 
 Route::post('/adminSingup', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminSignUp',
-    'as' => 'adminSingup']);
+    'as' => 'adminSingup'
+]);
 
 Route::post('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminLogIn',
-    'as' => 'adminLogin']);
+    'as' => 'adminLogin'
+]);
 
-Route::get('tweet-delete/{id}',[AdminController::class,'deleteTweet'])->name('tweet.delete');
+Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');
 
 Route::get('/feed', [
     'uses' => 'App\Http\Controllers\UserController@getFeed',
@@ -80,35 +82,48 @@ Route::get('/feed', [
 
 Route::post('/postTweet', [
     'uses' => 'App\Http\Controllers\UserController@postTweet',
-    'as' => 'postTweet']);
+    'as' => 'postTweet'
+]);
 
 Route::post('/signup', [
     'uses' => 'App\Http\Controllers\UserController@postSignUp',
-    'as' => 'signup']);
-    
+    'as' => 'signup'
+]);
+
 Route::post('/signin', [
     'uses' => 'App\Http\Controllers\UserController@postSignIn',
-    'as' => 'signin']);
+    'as' => 'signin'
+]);
+
+Route::post('/storeImage', [
+    'uses' => 'App\Http\Controllers\UserController@storeImage',
+    'as' => 'storeImage'
+]);
 
 Route::post('/retweet', [
     'uses' => 'App\Http\Controllers\UserController@postRetweet',
-    'as' => 'retweet']);
+    'as' => 'retweet'
+]);
 
 Route::post('/createRetweet', [
     'uses' => 'App\Http\Controllers\UserController@postCreateRetweet',
-    'as' => 'createRetweet']);
+    'as' => 'createRetweet'
+]);
 
 Route::post('/comment', [
     'uses' => 'App\Http\Controllers\UserController@postComment',
-    'as' => 'comment']);
+    'as' => 'comment'
+]);
 
 Route::post('/like', [
     'uses' => 'App\Http\Controllers\UserController@postLike',
-    'as' => 'like']);
+    'as' => 'like'
+]);
 
 Route::get('/logout', [
     'uses' => 'App\Http\Controllers\UserController@getLogout',
-    'as' => 'logout']);
+    'as' => 'logout'
+]);
 
 
 #Test-side
@@ -116,4 +131,3 @@ Route::get('/dashboard', [
     'uses' => 'App\Http\Controllers\UserController@getDashboard',
     'as' => 'dashboard'
 ]);
-

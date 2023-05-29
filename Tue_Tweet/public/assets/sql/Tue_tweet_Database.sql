@@ -23,7 +23,7 @@ CREATE TABLE users (
   email             VARCHAR(50)   UNIQUE NOT NULL,
   user_password     VARCHAR(60)   NOT NULL,
   profile_bio       VARCHAR(255)  DEFAULT NULL,
-  profile_img       BLOB          DEFAULT NULL,
+  profile_img       LONGBLOB      DEFAULT NULL,
   visibility        BOOLEAN       DEFAULT TRUE,
   remember_token    VARCHAR(100)  DEFAULT NULL,
   email_verified_at DATETIME      DEFAULT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE admins (
   email          VARCHAR(50)   UNIQUE NOT NULL,
   user_password  VARCHAR(60)   NOT NULL,
   profile_bio    VARCHAR(255)  DEFAULT NULL,
-  profile_img    BLOB          DEFAULT NULL,
+  profile_img    LONGBLOB      DEFAULT NULL,
   remember_token VARCHAR(100)  DEFAULT NULL,
   created_at     TIMESTAMP ,
   updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP 
@@ -83,7 +83,7 @@ CREATE TABLE tweets (
   user_id     INT         NOT NULL,
   tweet       TEXT(240)   NOT NULL,
   visibility  BOOLEAN     DEFAULT TRUE,
-  img         TEXT        DEFAULT NULL,
+  img         LONGBLOB    DEFAULT NULL,
   created_at  TIMESTAMP
 );
 
