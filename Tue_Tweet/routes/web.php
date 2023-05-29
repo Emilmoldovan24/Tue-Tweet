@@ -127,7 +127,7 @@ Route::get('/logout', [
 
 
 #Test-side
-Route::get('/dashboard', [
-    'uses' => 'App\Http\Controllers\UserController@getDashboard',
-    'as' => 'dashboard'
+Route::get('/settings', [
+    'uses' => 'App\Http\Controllers\UserController@getsettings',
+    'as' => 'settings'
 ]);
