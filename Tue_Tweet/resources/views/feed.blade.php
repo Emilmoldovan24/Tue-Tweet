@@ -290,28 +290,39 @@ color: #9a9a9a;
                         echo '</div>';
 
 
+                        // Count Comments
+                        $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
 
-                        
-                        echo '<div><!-- comment button -->';
+                        // Comment Button 
+                        echo '<!-- comment button -->';
+                        echo '<div>';
+                        //echo '<form action=comment method="POST">';
+                        //echo csrf_field();
                         echo '<div class="btn-group dropend">';
                         echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
                         echo 'aria-expanded="false">';
-                        echo '<i class="fa-regular fa-comment"></i>22';
+                        echo '<i class="fa-regular fa-comment"></i>'.$comments.'';
                         echo '</button>';
+                        echo '<input type="hidden" name="tweet_id" value="'.$tweet->tweet_id.'">';
+                        // echo '<input type="text" name="comment" id="comment">';
                         echo '<ul class="dropdown-menu">';
                         echo '<li><a class="dropdown-item" href="#">Show comments</a></li>';
                         echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add';
                         echo ' comment</a></li>';
                         echo '</ul>';
                         echo '</div>';
+                        //echo '</form>';
                         echo '</div>';
                         
-                        
+                        // Count Retweets
+                        $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
+
+                        // Retweet Button
                         echo '<div><!-- Retweet button -->';
                         echo '<div class="btn-group dropend">';
                         echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
                         echo 'aria-expanded="false">';
-                        echo '<i class="fa-solid fa-retweet"></i>45';
+                        echo '<i class="fa-solid fa-retweet"></i>'.$retweets.'';
                         echo '</button>';
                         echo '<ul class="dropdown-menu">';
                         echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
