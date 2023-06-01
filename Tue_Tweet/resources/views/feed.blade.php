@@ -301,7 +301,14 @@
         echo '<form action=like method="POST">';
         echo csrf_field();
         echo '<div class="like-btn">';
-        echo '<button type="submit" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+        
+        // like button turns red if user has liked the tweet
+        if (DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('user_id', Auth::id())->exists()) {
+          echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+        }
+        else{
+          echo '<button type="submit" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+        }
         echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
         echo '</div>';
         echo '</form>';
