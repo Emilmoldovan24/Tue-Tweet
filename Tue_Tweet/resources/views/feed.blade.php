@@ -11,8 +11,9 @@
 </head>
 <style>
 body {
-     background: rgb(2, 0, 36);
-    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); 
+  background-color: #DCDCDC;
+    /* background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
 }
 
@@ -339,7 +340,7 @@ body {
         </div>
         <!-- MIDDLE-BAR-FEED -->
 
-
+        <!-- DEMO RETWEET -->
         <div class="main-content">
 
             <div class="post-container">
@@ -379,6 +380,8 @@ body {
                 </div>
 
 
+
+
       <script> 
 
         // toggles the display of the comments when the user clicks on the comments button
@@ -397,180 +400,9 @@ body {
 
       </script>
 
-      <?php
-      $tweets = DB::select('select * from tweets order by created_at desc  ');
-      foreach ($tweets as $tweet) {
-        $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
-        $id = $tweet->user_id;
-        $username = DB::table('users')->where('id', $id)->value('username');
-        echo '<div class="post-container">';
-        echo '<div class="user-profile">';
-        echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
-        echo '<div>';
-        echo '<p>' . $username . '</p>';
-        echo '<span>' . $tweet->created_at . '</span>';
-        echo '</div>';
-        echo ' </div>';
 
 
-
-
-                <div class="post-row">
-                    <div class="activity-icons">
-                        <!-- like Button-->
-                        <div>
-                            <div class="like-btn">
-                                <button type="button" class="btn btn-dark"><i
-                                        class="fa-regular fa-heart"></i>234</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <!-- comment button -->
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-regular fa-comment"></i>22
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Show comments</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#CommentModal">Add
-                                            comment</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <!-- Retweet button -->
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-retweet"></i>45
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Just Retweet</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#QuoteModal">Quote</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        // Activity Icons
-        echo '<div class="post-row">';
-        echo '<div clss="align-items-right">';
-        echo '<div class="activity-icons">';
-
-
-        // Count Likes Comments and Retweets
-        $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
-        $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
-        $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
-
-        // Like Button
-        echo '<!-- like Button-->';
-        echo '<div>';
-        echo '<form action=like method="POST">';
-        echo csrf_field();
-        echo '<div class="like-btn">';
-
-        // like button turns red if user has liked the tweet
-        if (DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('user_id', Auth::id())->exists()) {
-          echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-        }
-        else{
-          echo '<button type="submit" class="btn btn-secondary"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-        }
-        echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
-        echo '</div>';
-        echo '</form>';
-        echo '</div>';
-
-        // Comment Button
-        // display comments if button is clicked
-        echo '<!-- comment button -->';
-        echo '<div>';
-        echo '<div class="comment-btn">';
-        echo '<button onclick="displayComments('.$tweet->tweet_id.')" class="btn btn-secondary"';
-        echo 'aria-expanded="false">';
-        echo '<i class="fa-regular fa-comment"></i>' . $numComments . '';
-        echo '</button>';
-        echo '</div>';
-        echo '</div>';
-
-        // Retweet Button
-        echo '<div><!-- Retweet button -->';
-        echo '<div class="btn-group dropend">';
-        echo '<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"';
-        echo 'aria-expanded="false">';
-        echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
-        echo '</button>';
-        echo '<ul class="dropdown-menu">';
-        echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
-        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
-        echo '</li>';
-        echo '</ul>';
-        echo '</div>';
-        echo '</div>';
-
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-
-
-        // Comments
-        echo '<div class="comments" id="comments' . $tweet->tweet_id . '" hidden>';
-        echo '<br>';
-        echo '<br>';
-        
-        echo '<div class="comment-container">';
-
-        //list comments
-        $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->get();
-        foreach ($comments as $comment) {
-          $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
-          echo '<div class="comment">';
-          echo '<div class="user-profile">';
-          # TODO add user profile picture
-          echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
-          echo '<div>';
-          echo '<p>' . $commentUsername . '</p>';
-          echo '<span>' . $comment->created_at . '</span>';
-          echo '</div>';
-          echo '</div>';
-          echo '<p>' . $comment->comment . '</p>';
-          echo '</div>';
-        }
-
-          echo '</div>';
-
-          
-          // comment input field
-          echo '<div class="comment-input">';
-          echo '<form action=postComment method="POST">';
-          echo csrf_field();
-          echo '<div class="input-group mb-3">';
-          echo '<input type="text" name="comment" id="comment" class="form-control" placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">';
-          echo '<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>';
-          echo '</div>';
-          echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
-          echo '</form>';
-          echo '</div>';
-
-        echo '</div>';
-        echo '</div>';
-      }
-
-      ?>
+     
 
       <div class="d-grid gap-2 col-6 mx-auto">
         <button type="button" class="btn btn-light yx-auto">Load more</button>
@@ -671,86 +503,134 @@ body {
             </div>
 
 
-            <?php
+<?php
       $users = DB::select('select * from tweets ');
       foreach ($users as $tweet) {
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
         $id= $tweet->user_id;
              $username= DB::table('users')->where('id', $id)->value('username');
+
+        // Tweet header
         echo'<div class="post-container">';
-        echo '<div class="post-row">';
-          echo '<div class="user-profile">';
+          echo '<div class="post-row">';
+            echo '<div class="user-profile">';
+              #TODO: get the right profile picture from database
+              echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
+              echo '<div>';
+                echo '<p>'.$username.'</p>';
+                echo '<span>'.$tweet->created_at.'</span>';
+              echo '</div>';
+            echo '</div>';
+                  
+            echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
+            echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+          echo '</div>';
+                
+          // Tweet content
+          echo $tweet->tweet.'<br>';
+
+
+          // Activity Icons
+          echo '<div class="post-row">';
+          echo '<div class="activity-icons">';
+
+          
+          // Count Likes Comments and Retweets
+          $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+          $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
+          $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
+
+
+          // Like Button
+          echo '<div>';
+          echo '<form action=like method="POST">';
+          echo csrf_field();
+          echo '<div class="like-btn">';
+
+          // like button turns red if user has liked the tweet
+          if (DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('user_id', Auth::id())->exists()) {
+            echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+          } else{
+            echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+          }
+          echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+          echo '</div>';
+          echo '</form>';
+          echo '</div>';
+
+
+          // Comment Button
+          // display comments if button is clicked
+          echo '<!-- comment button -->';
+          echo '<div>';
+          echo '<div class="comment-btn">';
+          echo '<button onclick="displayComments('.$tweet->tweet_id.')" class="btn btn-dark"';
+          echo 'aria-expanded="false">';
+          echo '<i class="fa-regular fa-comment"></i>' . $numComments . '';
+          echo '</button>';
+          echo '</div>';
+          echo '</div>';
+
+          // Retweet Button
+          echo '<div><!-- Retweet button -->';
+          echo '<div class="btn-group dropend">';
+          echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
+          echo 'aria-expanded="false">';
+          echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
+          echo '</button>';
+          echo '<ul class="dropdown-menu">';
+          echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
+          echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
+          echo '</li>';
+          echo '</ul>';
+          echo '</div>';
+          echo '</div>';
+
+          echo '</div>';
+          echo '</div>';
+
+
+          // Comments
+          echo '<div class="comments" id="comments' . $tweet->tweet_id . '" hidden>';
+          echo '<br>';
+          echo '<br>';
+          
+          echo '<div class="comment-container">';
+          //list comments
+          $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->get();
+          foreach ($comments as $comment) {
+            $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
+            echo '<div class="comment">';
+            echo '<div class="user-profile">';
+            # TODO add user profile picture
             echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
-                echo'<div>';
-                  echo '<p>'.$username.'</p>';
-                  echo '<span>'.$tweet->created_at.'</span>';
-                  echo '</div>';
-                  echo '</div>';
-                    
-                  echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
-                  echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
-                    echo '</div>';
-                    
-                    
+            echo '<div>';
+            echo '<p>' . $commentUsername . '</p>';
+            echo '<span>' . $comment->created_at . '</span>';
+            echo '</div>';
+            echo '</div>';
+            echo '<p>' . $comment->comment . '</p>';
+            echo '</div>';
+          }
 
-        
-       
+            // comment input field
+            echo '<div class="comment-input">';
+            echo '<form action=postComment method="POST">';
+            echo csrf_field();
+            echo '<div class="input-group mb-3">';
+            echo '<input type="text" name="comment" id="comment" class="form-control" placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">';
+            echo '<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>';
+            echo '</div>';
+            echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+            echo '</form>';
+            echo '</div>';
 
-        $users = DB::select('select * from tweets ');
-            
-            
-                        echo $tweet->tweet.'<br>';
-                        
-                        
-                    
-           
-                            
-                        echo '<div class="post-row">';
-                        echo '<div class="activity-icons">';
-                        echo '<!-- like Button-->';
-                        echo '<div>';
-                        echo '<div class="like-btn">';
-                        echo '<button type="button" class="btn btn-dark"><i class="fa-regular fa-heart"></i>234</button>';
-                        echo '</div>';
-                        echo '</div>';
-                        
-                        echo '<div><!-- comment button -->';
-                        echo '<div class="btn-group dropend">';
-                        echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
-                        echo 'aria-expanded="false">';
-                        echo '<i class="fa-regular fa-comment"></i>22';
-                        echo '</button>';
-                        echo '<ul class="dropdown-menu">';
-                        echo '<li><a class="dropdown-item" href="#">Show comments</a></li>';
-                        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add';
-                        echo ' comment</a></li>';
-                        echo '</ul>';
-                        echo '</div>';
-                        echo '</div>';
-                        
-                        
-                        echo '<div><!-- Retweet button -->';
-                        echo '<div class="btn-group dropend">';
-                        echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
-                        echo 'aria-expanded="false">';
-                        echo '<i class="fa-solid fa-retweet"></i>45';
-                        echo '</button>';
-                        echo '<ul class="dropdown-menu">';
-                        echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
-                        echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
-                        echo '</li>';
-                        echo '</ul>';
-                        echo '</div>';
-                        echo '</div>';
-                        
-                        echo '</div>';
-                       
-                        echo '</div>';
-                        
-                        echo '</div>';}
-                        
-                        ?>
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+        }  
+            ?>
 
             <div class="d-grid gap-2 col-6 mx-auto">
                 <button type="button" class="btn btn-light yx-auto">Load more</button>
