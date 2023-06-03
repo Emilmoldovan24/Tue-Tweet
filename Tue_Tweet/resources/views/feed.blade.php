@@ -276,14 +276,6 @@
           }
         }
 
-
-        function my_displayComments(tweet_id) {
-          let element = document.getElementById("comments"+tweet_id);
-          alert(element);
-            element.style.display="none";
-            alert("I will hide the comments now");
-          }
-
       </script>
 
       <?php
@@ -373,14 +365,15 @@
         echo '</div>';
         echo '</div>';
 
-        # TODO display comments if button is clicked
+
+        // Comments
         echo '<div class="comments" id="comments' . $tweet->tweet_id . '" hidden>';
         echo '<br>';
         echo '<br>';
         
         echo '<div class="comment-container">';
 
-          //list comments
+        //list comments
         $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->get();
         foreach ($comments as $comment) {
           $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
