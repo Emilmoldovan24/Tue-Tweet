@@ -106,13 +106,13 @@ Route::post('/retweet', [
 ]);
 
 Route::post('/createRetweet', [
-    'uses' => 'App\Http\Controllers\UserController@postCreateRetweet',
+    'uses' => 'App\Http\Controllers\UserController@createRetweet',
     'as' => 'createRetweet'
 ]);
 
-Route::post('/comment', [
+Route::post('/postComment', [
     'uses' => 'App\Http\Controllers\UserController@postComment',
-    'as' => 'comment'
+    'as' => 'postComment'
 ]);
 
 Route::post('/like', [
