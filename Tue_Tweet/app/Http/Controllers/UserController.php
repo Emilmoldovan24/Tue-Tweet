@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function getDashboard()
+    public function getSettings()
     {
-        return view('dashboard');
+        return view('settings');
     }
 
     public function getwelcome()
