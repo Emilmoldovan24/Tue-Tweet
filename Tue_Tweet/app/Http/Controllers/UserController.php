@@ -147,20 +147,14 @@ class UserController extends Controller
     }
 
     // Store Image
-    public function storeImage(Request $request)
+    public function postImage(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
-        ]);
-
-        $image = time() . '.' . $request->image->extension();
-
         $id = Auth::id();
-        $image = "data:image/png;base64," . base64_encode(file_get_contents($banane));
+        $image =  base64_encode(file_get_contents($request->file('img')->path()));
         DB::table('users')
             ->where('id', $id)
             ->update(['profile_img' => $image]);
 
-        return redirect()->route('welcome');
+        return redirect()->route('profile');
     }
 }

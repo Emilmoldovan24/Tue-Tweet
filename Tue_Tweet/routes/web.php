@@ -95,9 +95,9 @@ Route::post('/signin', [
     'as' => 'signin'
 ]);
 
-Route::post('/storeImage', [
-    'uses' => 'App\Http\Controllers\UserController@storeImage',
-    'as' => 'storeImage'
+Route::post('/postImage', [
+    'uses' => 'App\Http\Controllers\UserController@postImage',
+    'as' => 'postImage'
 ]);
 
 Route::post('/retweet', [

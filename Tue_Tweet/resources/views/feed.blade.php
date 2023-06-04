@@ -5,245 +5,246 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
 </head>
 <style>
-body {
-  background-color: #DCDCDC;
-    /* background: rgb(2, 0, 36);
+    body {
+        background-color: #DCDCDC;
+        /* background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
-}
+    }
 
-.navbar.bg-dark {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 5%;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+    .navbar.bg-dark {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
 
-.post-input-container {
-    padding-left: 55px;
-    padding-top: 20px;
-}
+    .post-input-container {
+        padding-left: 55px;
+        padding-top: 20px;
+    }
 
-.post-input-container textarea {
-    width: 100%;
-    resize: none;
-    border-bottom: 10px solid #grey;
-    border: 0;
-    outline: 0;
-    background: transparent;
-}
+    .post-input-container textarea {
+        width: 100%;
+        resize: none;
+        border-bottom: 10px solid #grey;
+        border: 0;
+        outline: 0;
+        background: transparent;
+    }
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    padding: 13px 5%;
-}
+    .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 5%;
+    }
 
-.left-sidebar {
-  margin: 20px 0;
-    flex-basis: 25%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
-    
-}
+    .left-sidebar {
+        margin: 20px 0;
+        flex-basis: 25%;
+        position: sticky;
+        top: 70px;
+        align-self: flex-start;
 
-.right-sidebar {
-  margin: 20px 0;
-    flex-basis: 25%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
-}
+    }
 
-.main-content {
-    flex-basis: 47%;
-    align-self: flex-start;
-}
+    .right-sidebar {
+        margin: 20px 0;
+        flex-basis: 25%;
+        position: sticky;
+        top: 70px;
+        align-self: flex-start;
+    }
 
-.write-post-container {
-    width: 100%;
-    background: white;
-    border-radius: 6px;
-    padding: 20px;
-    columns: #626262;
-}
+    .main-content {
+        flex-basis: 47%;
+        align-self: flex-start;
+    }
 
-.user-profile {
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-}
+    .write-post-container {
+        width: 100%;
+        background: white;
+        border-radius: 6px;
+        padding: 20px;
+        columns: #626262;
+    }
 
-.user-profile img {
-    width: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+    .user-profile {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+    }
 
-.user-profile p {
-    margin-bottom: -5px;
-    font-weight: 500;
-    color: #626262;
-}
+    .user-profile img {
+        width: 45px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 
-.user-profile small {
-    font-size: 12px;
-}
+    .user-profile p {
+        margin-bottom: -5px;
+        font-weight: 500;
+        color: #626262;
+    }
 
-.add-post-links {
-    display: flex;
-    margin-top: 10px;
-}
+    .user-profile small {
+        font-size: 12px;
+    }
 
-.add-post-links a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: #626262;
-    margin-right: 30px;
-    font-size: 13px;
-    margin-top: 10px;
-}
+    .add-post-links {
+        display: flex;
+        margin-top: 10px;
+    }
 
-.fa-solid.fa-camera.fa-2xl {
-    margin-right: 3px;
-}
+    .add-post-links a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        color: #626262;
+        margin-right: 30px;
+        font-size: 13px;
+        margin-top: 10px;
+    }
 
-.post-container {
-    width: 100%;
-    background: #fff;
-    border-radius: 6px;
-    padding: 20px;
-    color: #626262;
-    margin: 20px 0;
-}
+    .fa-solid.fa-camera.fa-2xl {
+        margin-right: 3px;
+    }
 
-.user-profile span {
-    font-size: 13px;
-    color: #9a9a9a;
-}
+    .post-container {
+        width: 100%;
+        background: #fff;
+        border-radius: 6px;
+        padding: 20px;
+        color: #626262;
+        margin: 20px 0;
+    }
 
-.post-text-just-retweet {
-    color: #1DA1F2;
-    font-family: 'Helvetica Neue Bold', Arial, sans-serif;
-    margin: 15px 0;
-    font-size: 15px;
-}
+    .user-profile span {
+        font-size: 13px;
+        color: #9a9a9a;
+    }
 
-.post-img {
-    width: 100%;
-    height: 500px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-}
+    .post-text-just-retweet {
+        color: #1DA1F2;
+        font-family: 'Helvetica Neue Bold', Arial, sans-serif;
+        margin: 15px 0;
+        font-size: 15px;
+    }
 
-.card.mb-3 {
-    align-items: center;
-}
+    .post-img {
+        width: 100%;
+        height: 500px;
+        border-radius: 4px;
+        margin-bottom: 5px;
+    }
 
-.post-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+    .card.mb-3 {
+        align-items: center;
+    }
 
-.activity-icons div {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 20px;
-    margin-top: 10px;
-}
+    .post-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-.like-btn {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 20px;
-    margin-top: 10px;
-}
+    .activity-icons div {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
 
-.activity-icons div i {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 5px;
-}
+    .like-btn {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
 
-.post-row a {
-    color: black;
-}
+    .activity-icons div i {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 5px;
+    }
 
-.retweet-text {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 1px;
+    .post-row a {
+        color: black;
+    }
 
-}
+    .retweet-text {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 1px;
 
-.tweetbox-profile span {
-    font-size: 13px;
-    color: #9a9a9a;
-    margin-left: 10px;
-}
+    }
 
-.tweetbox-profile p {
-    margin-top: 14px;
-    font-weight: 500;
-    color: #626262;
+    .tweetbox-profile span {
+        font-size: 13px;
+        color: #9a9a9a;
+        margin-left: 10px;
+    }
 
-}
+    .tweetbox-profile p {
+        margin-top: 14px;
+        font-weight: 500;
+        color: #626262;
 
-.tweetbox-profile {
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #626262;
-    margin: 5px 0;
-    text-align: center;
-    justify-content: space-between;
-}
+    }
 
-.tweetbox-profile img {
-    width: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+    .tweetbox-profile {
+        padding-left: 10px;
+        padding-right: 10px;
+        color: #626262;
+        margin: 5px 0;
+        text-align: center;
+        justify-content: space-between;
+    }
 
-.retweet div {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    .tweetbox-profile img {
+        width: 45px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 
-}
+    .retweet div {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
 
-.retweet {
-    border-radius: 6px;
-    border: 2px solid;
-}
+    }
 
-#pictureBox img {
-    max-width: 50%;
-    max-height: 50%;
-}
+    .retweet {
+        border-radius: 6px;
+        border: 2px solid;
+    }
 
-#pictureBox {
-    display: flex;
-    border-color: black;
-    border: 2px solid;
-    border-radius: 5px;
-}
-.list-group-item i {
-  margin-right: 20px;
-}
-.list-group-item a {
-  padding-right: 130px;
-}
+    #pictureBox img {
+        max-width: 50%;
+        max-height: 50%;
+    }
+
+    #pictureBox {
+        display: flex;
+        border-color: black;
+        border: 2px solid;
+        border-radius: 5px;
+    }
+
+    .list-group-item i {
+        margin-right: 20px;
+    }
+
+    .list-group-item a {
+        padding-right: 130px;
+    }
 </style>
 
 <body>
@@ -275,16 +276,19 @@ body {
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                                class="img-fluid" alt="...">
+                            <?php
+                            $id = Auth::id();
+                            $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                            echo '<img src=data:image/png;base64,' . $userImg . ' height="100px" width="150px" alt="...">'
+                            ?>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <?php
-									$id = Auth::id();
-									$results = DB::table('users')->where('id', $id)->value('username');
-                  echo '<h5 class="card-title">Hello '.$results.'</h5>'
-									?>
+                                $id = Auth::id();
+                                $results = DB::table('users')->where('id', $id)->value('username');
+                                echo '<h5 class="card-title">Hello ' . $results . '</h5>'
+                                ?>
                                 <!-- Ändern <p class="card-text">@MarkStark</p> -->
                             </div>
                         </div>
@@ -292,31 +296,31 @@ body {
                 </div>
 
                 <div class="card">
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-    <form action="{{ route('feed') }}" method="GET">
-                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
-                </form>
-    </li>
-    <li class="list-group-item">
-    <form action="{{ route('profile') }}" method="GET">
-                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile </a></button>
-                </form>
-    </li>
-    <li class="list-group-item">
-    <form action="{{ route('settings') }}" method="GET">
-                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
-                </form>
-    </li>
-    <li class="list-group-item">
-    <form action="{{ route('logout') }}" method="GET">
-                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
-                </form>
-                </li>
-  </ul>
-</div>
-<br>
-             
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <form action="{{ route('feed') }}" method="GET">
+                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
+                            </form>
+                        </li>
+                        <li class="list-group-item">
+                            <form action="{{ route('profile') }}" method="GET">
+                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile </a></button>
+                            </form>
+                        </li>
+                        <li class="list-group-item">
+                            <form action="{{ route('settings') }}" method="GET">
+                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
+                            </form>
+                        </li>
+                        <li class="list-group-item">
+                            <form action="{{ route('logout') }}" method="GET">
+                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <br>
+
 
                 <!-- MENU -->
                 <!-- <div class="card" style="width: 6rem;">
@@ -346,16 +350,18 @@ body {
             <div class="post-container">
                 <div class="post-row">
                     <div class="user-profile">
-                        <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                            alt="">
+                        <?php
+                        $id = Auth::id();
+                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+                        ?>
                         <div>
                             <p>Mark</p>
                             <span>May 3 2023, 2:30 pm</span>
                         </div>
                     </div>
                     <div class="menu-btn-stranger">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Report Tweet</a></li>
                             <li><a class="dropdown-item" href="#">Follow / Unfollow @...</a></li>
@@ -369,8 +375,11 @@ body {
 
                 <div class="retweet">
                     <div class="tweetbox-profile">
-                        <img src="https://images.unsplash.com/photo-1514425623522-e08e404b4a03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80"
-                            alt="...">
+                        <?php
+                        $id = Auth::id();
+                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+                        ?>
                         <div>
                             <p>Dagmar</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -382,32 +391,30 @@ body {
 
 
 
-      <script> 
+                <script>
+                    // toggles the display of the comments when the user clicks on the comments button
+                    function displayComments(tweet_id) {
+                        let element = document.getElementById("comments" + tweet_id);
+                        element.removeAttribute("hidden");
 
-        // toggles the display of the comments when the user clicks on the comments button
-        function displayComments(tweet_id) {
-          let element = document.getElementById("comments"+tweet_id);
-          element.removeAttribute("hidden");
-
-          if (element.style.display == "none" || element.style.display == "") {
-            // show
-            element.style.display="block";
-          } else {
-            // hide
-            element.style.display="none";
-          }
-        }
-
-      </script>
+                        if (element.style.display == "none" || element.style.display == "") {
+                            // show
+                            element.style.display = "block";
+                        } else {
+                            // hide
+                            element.style.display = "none";
+                        }
+                    }
+                </script>
 
 
 
-     
 
-      <div class="d-grid gap-2 col-6 mx-auto">
-        <button type="button" class="btn btn-light yx-auto">Load more</button>
-      </div>
-    </div>
+
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="button" class="btn btn-light yx-auto">Load more</button>
+                </div>
+            </div>
 
 
 
@@ -416,31 +423,36 @@ body {
             <div class="post-container">
                 <div class="post-row">
                     <div class="user-profile">
-                        <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                            alt="">
+                        <?php
+                        $id = Auth::id();
+                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+                        ?>
                         <div>
                             <p>Mark</p>
                             <span>May 3 2023, 2:30 pm</span>
                         </div>
                     </div>
                     <div class="menu-btn-own">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Delete-Tweet</a></li>
                             <li><a class="dropdown-item" href="#">Change Privacy</a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </div>
-                    
+
                 </div>
 
                 <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> Mark Retweeted</p>
 
                 <div class="retweet">
                     <div class="tweetbox-profile">
-                        <img src="https://images.unsplash.com/photo-1514425623522-e08e404b4a03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80"
-                            alt="...">
+                        <?php
+                        $id = Auth::id();
+                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+                        ?>
                         <div>
                             <p>Dagmar</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -458,22 +470,19 @@ body {
                         <!-- like Button-->
                         <div>
                             <div class="like-btn">
-                                <button type="button" class="btn btn-dark"><i
-                                        class="fa-regular fa-heart"></i>234</button>
+                                <button type="button" class="btn btn-dark"><i class="fa-regular fa-heart"></i>234</button>
                             </div>
                         </div>
 
                         <div>
                             <!-- comment button -->
                             <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-regular fa-comment"></i>22
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Show comments</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#CommentModal">Add
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add
                                             comment</a></li>
                                 </ul>
                             </div>
@@ -483,14 +492,12 @@ body {
                         <div>
                             <!-- Retweet button -->
                             <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-retweet"></i>45
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Just Retweet</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#QuoteModal">Quote</a>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>
                                     </li>
                                 </ul>
                             </div>
@@ -503,133 +510,133 @@ body {
             </div>
 
 
-<?php
-      $users = DB::select('select * from tweets ');
-      foreach ($users as $tweet) {
-        $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
-        $id= $tweet->user_id;
-             $username= DB::table('users')->where('id', $id)->value('username');
+            <?php
+            $users = DB::select('select * from tweets order by created_at desc');
+            foreach ($users as $tweet) {
+                $currentTimeString = time();
+                $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+                $id = $tweet->user_id;
+                $username = DB::table('users')->where('id', $id)->value('username');
+                $userImg = DB::table('users')->where('id', $id)->value('profile_img');
 
-        // Tweet header
-        echo'<div class="post-container">';
-          echo '<div class="post-row">';
-            echo '<div class="user-profile">';
-              #TODO: get the right profile picture from database
-              echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
-              echo '<div>';
-                echo '<p>'.$username.'</p>';
-                echo '<span>'.$tweet->created_at.'</span>';
-              echo '</div>';
-            echo '</div>';
-                  
-            echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
-            echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
-          echo '</div>';
-                
-          // Tweet content
-          echo $tweet->tweet.'<br>';
+                // Tweet header
+                echo '<div class="post-container">';
+                echo '<div class="post-row">';
+                echo '<div class="user-profile">';
+                echo '<img src=  data:image/png;base64,' . $userImg . '>';
+                echo '<div>';
+                echo '<p>' . $username . '</p>';
+                echo '<span>' . $tweet->created_at . '</span>';
+                echo '</div>';
+                echo '</div>';
 
+                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
+                echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                echo '</div>';
 
-          // Activity Icons
-          echo '<div class="post-row">';
-          echo '<div class="activity-icons">';
-
-          
-          // Count Likes Comments and Retweets
-          $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
-          $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
-          $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
+                // Tweet content
+                echo $tweet->tweet . '<br>';
 
 
-          // Like Button
-          echo '<div>';
-          echo '<form action=like method="POST">';
-          echo csrf_field();
-          echo '<div class="like-btn">';
-
-          // like button turns red if user has liked the tweet
-          if (DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('user_id', Auth::id())->exists()) {
-            echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-          } else{
-            echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-          }
-          echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
-          echo '</div>';
-          echo '</form>';
-          echo '</div>';
+                // Activity Icons
+                echo '<div class="post-row">';
+                echo '<div class="activity-icons">';
 
 
-          // Comment Button
-          // display comments if button is clicked
-          echo '<!-- comment button -->';
-          echo '<div>';
-          echo '<div class="comment-btn">';
-          echo '<button onclick="displayComments('.$tweet->tweet_id.')" class="btn btn-dark"';
-          echo 'aria-expanded="false">';
-          echo '<i class="fa-regular fa-comment"></i>' . $numComments . '';
-          echo '</button>';
-          echo '</div>';
-          echo '</div>';
-
-          // Retweet Button
-          echo '<div><!-- Retweet button -->';
-          echo '<div class="btn-group dropend">';
-          echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
-          echo 'aria-expanded="false">';
-          echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
-          echo '</button>';
-          echo '<ul class="dropdown-menu">';
-          echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
-          echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
-          echo '</li>';
-          echo '</ul>';
-          echo '</div>';
-          echo '</div>';
-
-          echo '</div>';
-          echo '</div>';
+                // Count Likes Comments and Retweets
+                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
+                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
 
 
-          // Comments
-          echo '<div class="comments" id="comments' . $tweet->tweet_id . '" hidden>';
-          echo '<br>';
-          echo '<br>';
-          
-          echo '<div class="comment-container">';
-          //list comments
-          $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->get();
-          foreach ($comments as $comment) {
-            $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
-            echo '<div class="comment">';
-            echo '<div class="user-profile">';
-            # TODO add user profile picture
-            echo '<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">';
-            echo '<div>';
-            echo '<p>' . $commentUsername . '</p>';
-            echo '<span>' . $comment->created_at . '</span>';
-            echo '</div>';
-            echo '</div>';
-            echo '<p>' . $comment->comment . '</p>';
-            echo '</div>';
-          }
+                // Like Button
+                echo '<div>';
+                echo '<form action=like method="POST">';
+                echo csrf_field();
+                echo '<div class="like-btn">';
 
-            // comment input field
-            echo '<div class="comment-input">';
-            echo '<form action=postComment method="POST">';
-            echo csrf_field();
-            echo '<div class="input-group mb-3">';
-            echo '<input type="text" name="comment" id="comment" class="form-control" placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">';
-            echo '<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>';
-            echo '</div>';
-            echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
-            echo '</form>';
-            echo '</div>';
+                // like button turns red if user has liked the tweet
+                if (DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('user_id', Auth::id())->exists()) {
+                    echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                } else {
+                    echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                }
+                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+                echo '</div>';
+                echo '</form>';
+                echo '</div>';
 
-          echo '</div>';
-          echo '</div>';
-          echo '</div>';
-        }  
+
+                // Comment Button
+                // display comments if button is clicked
+                echo '<!-- comment button -->';
+                echo '<div>';
+                echo '<div class="comment-btn">';
+                echo '<button onclick="displayComments(' . $tweet->tweet_id . ')" class="btn btn-dark"';
+                echo 'aria-expanded="false">';
+                echo '<i class="fa-regular fa-comment"></i>' . $numComments . '';
+                echo '</button>';
+                echo '</div>';
+                echo '</div>';
+
+                // Retweet Button
+                echo '<div><!-- Retweet button -->';
+                echo '<div class="btn-group dropend">';
+                echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
+                echo 'aria-expanded="false">';
+                echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
+                echo '</button>';
+                echo '<ul class="dropdown-menu">';
+                echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
+                echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
+                echo '</li>';
+                echo '</ul>';
+                echo '</div>';
+                echo '</div>';
+
+                echo '</div>';
+                echo '</div>';
+
+
+                // Comments
+                echo '<div class="comments" id="comments' . $tweet->tweet_id . '" hidden>';
+                echo '<br>';
+                echo '<br>';
+
+                echo '<div class="comment-container">';
+                //list comments
+                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->get();
+                foreach ($comments as $comment) {
+                    $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
+                    $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                    echo '<div class="comment">';
+                    echo '<div class="user-profile">';
+                    echo '<img src=  data:image/png;base64,' . $userImg . '>';
+                    echo '<div>';
+                    echo '<p>' . $commentUsername . '</p>';
+                    echo '<span>' . $comment->created_at . '</span>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<p>' . $comment->comment . '</p>';
+                    echo '</div>';
+                }
+
+                // comment input field
+                echo '<div class="comment-input">';
+                echo '<form action=postComment method="POST">';
+                echo csrf_field();
+                echo '<div class="input-group mb-3">';
+                echo '<input type="text" name="comment" id="comment" class="form-control" placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">';
+                echo '<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>';
+                echo '</div>';
+                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+                echo '</form>';
+                echo '</div>';
+
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
             ?>
 
             <div class="d-grid gap-2 col-6 mx-auto">
@@ -645,11 +652,9 @@ body {
 
 
 
-            
+
             <div class="card mb-3" style="width: 12rem;">
-                <img class="card-img-top"
-                    src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    alt="Card image cap">
+                <img class="card-img-top" src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Follow Request</h5>
                     <p class="card-text">Max Mustermann wants to follow you!</p>
@@ -658,9 +663,7 @@ body {
                 </div>
             </div>
             <div class="card mb-3" style="width: 12rem; margin-top: 20px;">
-                <img class="card-img-top"
-                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    alt="Card image cap">
+                <img class="card-img-top" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Comment-Response</h5>
                     <p class="card-text">Lea responded to your comment. Go see it!</p>
@@ -673,8 +676,7 @@ body {
 
         <!-- Post-Tweet-Modal -->
         <form action="{{ route('postTweet')}}" method="POST">
-            <div class="modal fade" id="PostTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="PostTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -682,23 +684,20 @@ body {
 
                             <div class="write-post-container">
                                 <div class="user-profile">
-                                    <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                                        alt="">
+                                    <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
                                     <div>
                                         <?php
-                  echo '<p>'.$results.'</p>';
-									?>
+                                        echo '<p>' . $results . '</p>';
+                                        ?>
                                         <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
                                     </div>
                                 </div>
 
                                 <div class="post-input-container">
-                                    <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet"
-                                        value="{{Request::old('tweet')}}"></textarea>
+                                    <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet" value="{{Request::old('tweet')}}"></textarea>
                                     <div id="pictureBox"></div>
                                     <div class="add-post-links">
-                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> <button type="button"
-                                                id="pictureBtn" class="btn btn-primary">Choose Picture</button></a>
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a>
 
                                     </div>
                                 </div>
@@ -723,12 +722,11 @@ body {
 
                         <div class="write-post-container">
                             <div class="user-profile">
-                                <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                                    alt="">
+                                <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
                                 <div>
                                     <?php
-                  echo '<p>'.$results.'</p>';
-									?>
+                                    echo '<p>' . $results . '</p>';
+                                    ?>
                                     <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
                                 </div>
                             </div>
@@ -758,12 +756,11 @@ body {
 
                         <div class="write-post-container">
                             <div class="user-profile">
-                                <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                                    alt="">
+                                <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
                                 <div>
                                     <?php
-                  echo '<p>'.$results.'</p>';
-									?>
+                                    echo '<p>' . $results . '</p>';
+                                    ?>
                                     <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
                                 </div>
                             </div>
@@ -787,26 +784,25 @@ body {
     </div>
     </div>
     <script>
-    document.getElementById('pictureBtn').addEventListener('click', function() {
-        var input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*';
-        input.onchange = function(event) {
-            var image = document.createElement('img');
-            image.src = URL.createObjectURL(event.target.files[0]);
-            document.getElementById('pictureBox').appendChild(image);
-        };
-        input.click();
-    });
+        document.getElementById('pictureBtn').addEventListener('click', function() {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(event) {
+                var image = document.createElement('img');
+                image.src = URL.createObjectURL(event.target.files[0]);
+                document.getElementById('pictureBox').appendChild(image);
+            };
+            input.click();
+        });
     </script>
     <script>
-    $(".PostTweetModal").on("hidden.bs.modal", function() {
-        $(".modal-body").html("");
-    });
+        $(".PostTweetModal").on("hidden.bs.modal", function() {
+            $(".modal-body").html("");
+        });
     </script>
     <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
 </body>
 

@@ -60,17 +60,16 @@ My Profile
 									<h4 class="mb-4 mt-0">Upload your profile photo</h4>
 									<div class="text-center">
 										<!-- Image upload -->
-										<div class="square position-relative display-2 mb-3">
-											<i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
-										</div>
-										<!-- Button -->
+										<div class="col-md-4 col-md-offset-4">
+											<form action="/postImage" method="POST" enctype="multipart/form-data">
 
-										<div class="row">
-											<form action="storeImage" method="POST" enctype="multipart/form-data">
-												<div class="col-md-6">
-													<input type="file" name="image" class="form-control" accept=".jpg,.jpeg,.png,.gif">
-													<button type="submit" class="btn btn-success">Upload</button>
+												<div class="form-group">
+													<label for="img"> Upload your Profile Picture </label>
+													<input type="file" name="img" id="img" value="{{Request::old('img')}}">
 												</div>
+
+												<button type="submit" class="btn btn-primary"> Upload </button>
+												<input type="hidden" name="_token" value="{{  Session::token() }}">
 											</form>
 										</div>
 										<!-- Content -->
