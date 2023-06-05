@@ -690,6 +690,23 @@
                                         echo '<p>' . $results . '</p>';
                                         ?>
                                         <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                        
+                                        {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                        @section('content')
+                                        @if (count($errors) > 0) 
+                                            <div class='row'>
+                                                <div class="col">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>
+                                                                {{$error}}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    
                                     </div>
                                 </div>
 
