@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Sign In!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
@@ -16,9 +16,9 @@
     margin: 6px 7%;
 }
 
-.home-header {
-    /* background: rgb(222,218,218);
-        background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);  
+/**.home-header {
+    background: rgb(222,218,218);
+    background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);  
     background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%);
 
@@ -74,13 +74,30 @@
 
 body {
     color: white;
-}
+}*/
 </style>
 
 <body>
 
     <section class="home-header">
         <h1 class="logo">Tue-Tweet</h1>
+        
+        {{-- Design! Fehlermeldungen --}}
+        @section('content')
+        @if (count($errors) > 0) 
+            <div class='row'>
+            <div class="col">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>
+                            {{$error}}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif 
+
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -108,7 +125,7 @@ body {
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                                     <input class="form-control @error('email') is-invalid @enderror" type="text"
-                                        name="email" id="email" aria-describedby="emailHelp"> <!-- emailhelp? !-->
+                                        name="email" id="email" value="{{ Request::old('email') }}" aria-describedby="emailHelp"> <!-- emailhelp? !-->
                                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
                                     </div>
                                 </div>
