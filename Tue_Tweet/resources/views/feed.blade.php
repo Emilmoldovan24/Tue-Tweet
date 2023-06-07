@@ -279,7 +279,12 @@
                             <?php
                             $id = Auth::id();
                             $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                            echo '<img src=data:image/png;base64,' . $userImg . ' height="100px" width="150px" alt="...">'
+                            if (is_null($userImg)){
+                                echo '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" height="100px" width="150px" alt="...">';
+                            } else{
+                                echo '<img src=data:image/png;base64,' . $userImg . ' height="100px" width="150px" alt="...">';
+                            }
+                            
                             ?>
                         </div>
                         <div class="col-md-8">
@@ -353,7 +358,7 @@
                         <?php
                         $id = Auth::id();
                         $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
                         ?>
                         <div>
                             <p>Mark</p>
@@ -378,7 +383,7 @@
                         <?php
                         $id = Auth::id();
                         $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);  
                         ?>
                         <div>
                             <p>Dagmar</p>
@@ -405,6 +410,16 @@
                             element.style.display = "none";
                         }
                     }
+
+                        $(document).ready(function()
+                        {
+                            $(".default_picture").on("error", function(){
+                                $(this).attr('src', "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+                            });
+                        });
+
+
+                        
                 </script>
 
 
@@ -426,8 +441,14 @@
                         <?php
                         $id = Auth::id();
                         $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
                         ?>
+
+                        <!--
+                        #TODO Wäre besser, funktioniert leider aber nicht
+                        <img src=<?PHP app('App\Http\Controllers\UserController')->getUserImg($userImg); ?> alt='' />
+                        -->
+
                         <div>
                             <p>Mark</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -451,7 +472,8 @@
                         <?php
                         $id = Auth::id();
                         $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">'
+
+                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
                         ?>
                         <div>
                             <p>Dagmar</p>
@@ -518,12 +540,13 @@
                 $id = $tweet->user_id;
                 $username = DB::table('users')->where('id', $id)->value('username');
                 $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
 
                 // Tweet header
                 echo '<div class="post-container">';
                 echo '<div class="post-row">';
                 echo '<div class="user-profile">';
-                echo '<img src=  data:image/png;base64,' . $userImg . '>';
+                echo $userImgHtml;
                 echo '<div>';
                 echo '<p>' . $username . '</p>';
                 echo '<span>' . $tweet->created_at . '</span>';
@@ -611,7 +634,7 @@
                     $userImg = DB::table('users')->where('id', $id)->value('profile_img');
                     echo '<div class="comment">';
                     echo '<div class="user-profile">';
-                    echo '<img src=  data:image/png;base64,' . $userImg . '>';
+                    echo $userImgHtml;
                     echo '<div>';
                     echo '<p>' . $commentUsername . '</p>';
                     echo '<span>' . $comment->created_at . '</span>';
