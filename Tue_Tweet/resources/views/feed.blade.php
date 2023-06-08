@@ -446,7 +446,7 @@
 
                         <!--
                         #TODO Wäre besser, funktioniert leider aber nicht
-                        <img src=<?PHP //app('App\Http\Controllers\UserController')->getUserImg($userImg); ?> alt='' />
+                        <img src=<?PHP app('App\Http\Controllers\UserController')->getUserImg($userImg); ?> alt='' />
                         -->
 
                         <div>
@@ -548,10 +548,7 @@
                 echo '<div class="user-profile">';
                 echo $userImgHtml;
                 echo '<div>';
-                //echo '<p>' . $username . '</p>';
-               
-                // link to user profile
-                echo '<a href="/' . $username . '">' . $username . '</a>';
+                echo '<p>' . $username . '</p>';
                 echo '<span>' . $tweet->created_at . '</span>';
                 echo '</div>';
                 echo '</div>';
