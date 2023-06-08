@@ -75,4 +75,12 @@ class AdminController extends Controller
 
         return redirect()->route('adminFeed');
     }
+
+    public function hideTweet(Request $request){
+        
+        $id = $request->id;
+        DB::update("update tweets set visibility = 0 where tweet_id = '$id'");
+        
+        return redirect()->route('adminFeed');
+    }
 }
