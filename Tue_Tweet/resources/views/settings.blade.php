@@ -6,6 +6,31 @@ My Profile
 <div>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 
+	<div class="col-xxl-4">
+		<div class="bg-secondary-soft px-4 py-5 rounded">
+			<div class="row g-3">
+				<h4 class="mb-4 mt-0">Upload your profile photo</h4>
+				<div class="text-center">
+					<!-- Image upload -->
+					<div class="col-md-4 col-md-offset-4">
+						<form action="/postImage" method="POST" enctype="multipart/form-data">
+
+							<div class="form-group">
+								<label for="img"> Upload your Profile Picture </label>
+								<input type="file" name="img" id="img" value="{{Request::old('img')}}">
+							</div>
+
+							<button type="submit" class="btn btn-primary"> Upload </button>
+							<input type="hidden" name="_token" value="{{  Session::token() }}">
+						</form>
+					</div>
+					<!-- Content -->
+					<p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span>Minimum size 300px x 300px</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -54,30 +79,7 @@ My Profile
 							</div>
 						</div>
 						<!-- Upload profile -->
-						<div class="col-xxl-4">
-							<div class="bg-secondary-soft px-4 py-5 rounded">
-								<div class="row g-3">
-									<h4 class="mb-4 mt-0">Upload your profile photo</h4>
-									<div class="text-center">
-										<!-- Image upload -->
-										<div class="col-md-4 col-md-offset-4">
-											<form action="/postImage" method="POST" enctype="multipart/form-data">
-
-												<div class="form-group">
-													<label for="img"> Upload your Profile Picture </label>
-													<input type="file" name="img" id="img" value="{{Request::old('img')}}">
-												</div>
-
-												<button type="submit" class="btn btn-primary"> Upload </button>
-												<input type="hidden" name="_token" value="{{  Session::token() }}">
-											</form>
-										</div>
-										<!-- Content -->
-										<p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span>Minimum size 300px x 300px</p>
-									</div>
-								</div>
-							</div>
-						</div>
+						
 					</div> <!-- Row END -->
 
 
