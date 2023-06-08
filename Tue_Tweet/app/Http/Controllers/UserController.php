@@ -155,7 +155,7 @@ class UserController extends Controller
             ->where('id', $id)
             ->update(['profile_img' => $image]);
 
-        return redirect()->route('profile');
+        return redirect()->route('feed');
     }
 
     //ist das gut wenn man das so macht?
