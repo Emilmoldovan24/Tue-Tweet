@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +46,7 @@ Route::get('/Test', function () {
 
 
 Route::get('/Profile', [
-    'uses' => 'App\Http\Controllers\FeedController@getProfile',
+    'uses' => 'App\Http\Controllers\ProfileController@show',
     'as' => 'profile'
 ]);
 
@@ -125,6 +125,7 @@ Route::get('/logout', [
     'as' => 'logout'
 ]);
 
+Route::get('/{id}', [ProfileController::class, 'getProfile'])->name('userProfile');
 
 #Test-side
 Route::get('/settings', [
