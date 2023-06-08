@@ -548,7 +548,7 @@
                 echo '<div class="user-profile">';
                 echo $userImgHtml;
                 echo '<div>';
-                echo '<p>' . $username . '</p>';
+                echo '<a href="profile/' . $username . '">' . $username . '</a>';
                 echo '<span>' . $tweet->created_at . '</span>';
                 echo '</div>';
                 echo '</div>';
