@@ -127,6 +127,10 @@ Route::get('/logout', [
     'as' => 'logout'
 ]);
 
+Route::get('profile/{username}', [
+    'uses' => 'App\Http\Controllers\ProfileController@getProfile',
+    'as' => 'userProfile'
+]);
 
 #Test-side
 Route::get('/settings', [
