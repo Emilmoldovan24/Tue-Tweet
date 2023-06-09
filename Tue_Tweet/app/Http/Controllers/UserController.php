@@ -155,24 +155,39 @@ class UserController extends Controller
             ->where('id', $id)
             ->update(['profile_img' => $image]);
 
-        return redirect()->route('feed');
+        return redirect()->route('settings');
+    }
+
+    // Update Profile Biography
+    public function postBio(Request $request)
+    {
+        $id = Auth::id();
+        dd($request);
+        $bio =  $request->bio;
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['profile_bio' => $bio]);
+
+        return redirect()->route('settings');
     }
 
     //ist das gut wenn man das so macht?
-    public function getUserImgHtml($userImg){
-        if (is_null($userImg)){
+    public function getUserImgHtml($userImg)
+    {
+        if (is_null($userImg)) {
             // $userImgHtml = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">';
-            $userImgHtml ='<img src="https://de.meming.world/images/de/thumb/b/bc/Mike_Wazowski-Sulley_Face_Swap.jpg/300px-Mike_Wazowski-Sulley_Face_Swap.jpg">'; // :)
-        } else{
-            $userImgHtml ='<img src=data:image/png;base64,' . $userImg . '>';
+            $userImgHtml = '<img src="https://de.meming.world/images/de/thumb/b/bc/Mike_Wazowski-Sulley_Face_Swap.jpg/300px-Mike_Wazowski-Sulley_Face_Swap.jpg">'; // :)
+        } else {
+            $userImgHtml = '<img src=data:image/png;base64,' . $userImg . '>';
         }
         return $userImgHtml;
     }
 
-    public function getUserImg($userImg){
-        if (is_null($userImg)){
+    public function getUserImg($userImg)
+    {
+        if (is_null($userImg)) {
             $ret = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
-        } else{
+        } else {
             $ret = 'data:image/png;base64,' . $userImg;
         }
         return $ret;

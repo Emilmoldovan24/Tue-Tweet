@@ -9,7 +9,7 @@ My Profile
 	<div class="col-xxl-4">
 		<div class="bg-secondary-soft px-4 py-5 rounded">
 			<div class="row g-3">
-				<h4 class="mb-4 mt-0">Upload your profile photo</h4>
+				<h4 class="mb-4 mt-0"> Upload your profile photo </h4>
 				<div class="text-center">
 					<!-- Image upload -->
 					<div class="col-md-4 col-md-offset-4">
@@ -30,7 +30,30 @@ My Profile
 			</div>
 		</div>
 	</div>
-	
+
+	<div class="col-xxl-4">
+		<div class="bg-secondary-soft px-4 py-5 rounded">
+			<div class="row g-3">
+				<h4 class="mb-4 mt-0">Upload your profile Biography</h4>
+				<div class="text-center">
+					<!-- Profil Bio -->
+					<div class="col-md-4 col-md-offset-4">
+						<form action="/postBio" method="POST" enctype="multipart/form-data">
+
+							<div class="form-group">
+								<label for="bio"> Upload your Profile Text</label>
+								<input type="text" name="bio" id="bio" value="{{Request::old('bio')}}">
+							</div>
+
+							<button type="submit" class="btn btn-primary"> Upload </button>
+							<input type="hidden" name="_token" value="{{  Session::token() }}">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -79,7 +102,7 @@ My Profile
 							</div>
 						</div>
 						<!-- Upload profile -->
-						
+
 					</div> <!-- Row END -->
 
 

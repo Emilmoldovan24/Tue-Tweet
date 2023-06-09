@@ -102,6 +102,11 @@ Route::post('/postImage', [
     'as' => 'postImage'
 ]);
 
+Route::post('/postBio', [
+    'uses' => 'App\Http\Controllers\UserController@postBio',
+    'as' => 'postBio'
+]);
+
 Route::post('/retweet', [
     'uses' => 'App\Http\Controllers\UserController@postRetweet',
     'as' => 'retweet'
