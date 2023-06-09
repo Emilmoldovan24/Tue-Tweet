@@ -7,6 +7,6 @@
     <title>TestSeite</title>
 </head>
 <body>
-    <h1> Test </h1>
+    <h1> User: {{$username}} </h1>
 </body>
 </html>

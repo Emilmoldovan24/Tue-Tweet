@@ -142,10 +142,14 @@ Route::get('/logout', [
     'as' => 'logout'
 ]);
 
-Route::get('profile/{username}', [
+Route::get('/{username}', [
     'uses' => 'App\Http\Controllers\ProfileController@getProfile',
     'as' => 'userProfile'
 ]);
+
+Route::get('profile/{username}', function($username){
+    return view('profile', ['username' => $username]);
+});
 
 #Test-side
 Route::get('/settings', [
