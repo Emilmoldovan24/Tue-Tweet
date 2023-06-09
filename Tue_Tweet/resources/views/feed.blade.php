@@ -294,7 +294,6 @@
                                 $results = DB::table('users')->where('id', $id)->value('username');
                                 echo '<h5 class="card-title">Hello ' . $results . '</h5>'
                                 ?>
-                                <!-- Ändern <p class="card-text">@MarkStark</p> -->
                             </div>
                         </div>
                     </div>
@@ -308,7 +307,7 @@
                             </form>
                         </li>
                         <li class="list-group-item">
-                            <form action="{{ route('profile') }}" method="GET">
+                        <form action=<?php echo "'profile/" . $results . "'";?> method="GET">
                                 <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile </a></button>
                             </form>
                         </li>
