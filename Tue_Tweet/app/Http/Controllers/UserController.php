@@ -162,7 +162,7 @@ class UserController extends Controller
     public function postBio(Request $request)
     {
         $id = Auth::id();
-        dd($request);
+        #dd($request);
         $bio =  $request->bio;
         DB::table('users')
             ->where('id', $id)
