@@ -84,7 +84,7 @@ class UserController extends Controller
     public function postTweet(Request $request)
     {
 
-        // Leere Tweets abfangen
+        // Leere Tweets abfangen & Bilder-Regeln
         $request->validate([
             'tweet' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Validierungsregeln für das Bild
@@ -106,6 +106,11 @@ class UserController extends Controller
     // Post Comment
     public function postComment(Request $request)
     {
+        // Muss man glaub nicht optisch darstellen, wenn ihr wollte gibt Julia bescheid
+        $request->validate([
+            'comment' => 'required'
+        ]);
+
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
 
@@ -159,6 +164,10 @@ class UserController extends Controller
     // Store Image
     public function postImage(Request $request)
     {
+        $request->validate([
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
         $id = Auth::id();
 
         $image =  base64_encode(file_get_contents($request->file('img')->path()));
@@ -173,6 +182,10 @@ class UserController extends Controller
     // Update Profile Biography
     public function postBio(Request $request)
     {
+        $request->validate([
+            'bio' => 'required|max:50'
+        ]);
+
         $id = Auth::id();
         #dd($request);
         $bio =  $request->bio;
@@ -187,6 +200,10 @@ class UserController extends Controller
     //Update Username
     public function postUsername(Request $request)
     {
+        $request->validate([
+            'username' => 'required|max:120|unique:users'
+        ]);
+
         $id = Auth::id();
         #dd($request);
         $username =  $request->username;
@@ -201,6 +218,10 @@ class UserController extends Controller
     //Update Email
     public function postEmail(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email|unique:users'
+        ]);
+
         $id = Auth::id();
         #dd($request);
         $email =  $request->email;
