@@ -14,8 +14,21 @@ My Profile settings
 					<h3>Settings</h3>
 					<hr>
 				</div>
-
-	
+				{{-- Design! Fehlermeldungen --}}
+				@section('content')
+				@if (count($errors) > 0) 
+					<div class='row'>
+					<div class="col">
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>
+									{{$error}}
+								</li>
+							@endforeach
+						</ul>
+					</div>
+				</div>
+				@endif
 	<!-- upload profile picture--> 
 	<div class="col-xxl-4">
 		<div class="bg-secondary-soft px-4 py-5 rounded">
@@ -28,7 +41,7 @@ My Profile settings
 
 							<div class="form-group">
 								<label for="img"> New Profile Picture </label>
-								<input type="file" name="img" id="img" value="{{Request::old('img')}}">
+								<input class="form-control @error('img') is-invalid @enderror" type="file" name="img" id="img" value="{{Request::old('img')}}">
 							</div>
 
 							<button type="submit" class="btn btn-primary"> Upload </button>
@@ -54,7 +67,7 @@ My Profile settings
 
 							<div class="form-group">
 								<label for="bio"> New Profile Bio</label>
-								<input type="text" name="bio" id="bio" value="{{Request::old('bio')}}">
+								<input class="form-control @error('bio') is-invalid @enderror" type="text" name="bio" id="bio" value="{{Request::old('bio')}}">
 							</div>
 
 							<button type="submit" class="btn btn-primary"> Upload </button>
@@ -79,7 +92,7 @@ My Profile settings
 
 							<div class="form-group">
 								<label for="bio"> New Username</label>
-								<input type="text" name="username" id="username" value="{{Request::old('username')}}">
+								<input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username" value="{{Request::old('username')}}">
 							</div>
 
 							<button type="submit" class="btn btn-primary"> Upload </button>
@@ -104,7 +117,7 @@ My Profile settings
 
 							<div class="form-group">
 								<label for="bio"> New Email</label>
-								<input type="text" name="email" id="email" value="{{Request::old('email')}}">
+								<input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" value="{{Request::old('email')}}">
 							</div>
 
 							<button type="submit" class="btn btn-primary"> Upload </button>
