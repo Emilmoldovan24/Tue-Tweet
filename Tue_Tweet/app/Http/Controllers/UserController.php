@@ -80,24 +80,30 @@ class UserController extends Controller
     }
 
 
+    // Post Tweet
     public function postTweet(Request $request)
     {
 
         // Leere Tweets abfangen
         $request->validate([
             'tweet' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Validierungsregeln für das Bild
         ]);
 
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $id = Auth::id();
 
+        $image =  base64_encode(file_get_contents($request->file('img')->path()));
+
         DB::insert('insert into tweets(user_id, tweet, img, created_at) 
-        values(?,?,?,?)', [$id, $request["tweet"], NULL, $currentTimestamp]);
+        values(?,?,?,?)', [$id, $request["tweet"], $image, $currentTimestamp]);
 
         return redirect()->route('feed');
     }
 
+
+    // Post Comment
     public function postComment(Request $request)
     {
         $currentTimeString = time();
@@ -111,6 +117,8 @@ class UserController extends Controller
         return redirect()->route('feed');
     }
 
+
+    // Post Like
     public function postLike(Request $request)
     {
 
@@ -131,6 +139,7 @@ class UserController extends Controller
     }
 
     
+    // Post Retweet
     public function postRetweet(Request $request)
     {
 
@@ -146,10 +155,12 @@ class UserController extends Controller
         return redirect()->route('feed');
     }
 
+
     // Store Image
     public function postImage(Request $request)
     {
         $id = Auth::id();
+
         $image =  base64_encode(file_get_contents($request->file('img')->path()));
         DB::table('users')
             ->where('id', $id)
@@ -157,6 +168,7 @@ class UserController extends Controller
 
         return redirect()->route('settings');
     }
+
 
     // Update Profile Biography
     public function postBio(Request $request)
@@ -171,6 +183,7 @@ class UserController extends Controller
         return redirect()->route('settings');
     }
 
+
     //Update Username
     public function postUsername(Request $request)
     {
@@ -183,6 +196,7 @@ class UserController extends Controller
 
         return redirect()->route('settings');
     }
+
 
     //Update Email
     public function postEmail(Request $request)
@@ -202,13 +216,13 @@ class UserController extends Controller
     public function getUserImgHtml($userImg)
     {
         if (is_null($userImg)) {
-            // $userImgHtml = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">';
-            $userImgHtml = '<img src="https://de.meming.world/images/de/thumb/b/bc/Mike_Wazowski-Sulley_Face_Swap.jpg/300px-Mike_Wazowski-Sulley_Face_Swap.jpg">'; // :)
+            $userImgHtml = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">';
         } else {
             $userImgHtml = '<img src=data:image/png;base64,' . $userImg . '>';
         }
         return $userImgHtml;
     }
+
 
     public function getUserImg($userImg)
     {

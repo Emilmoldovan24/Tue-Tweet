@@ -40,6 +40,10 @@ Route::get('/signup', function () {
     return view('signup');
 });
 
+Route::get('/settings', function() {
+    return view('settings');
+});
+
 Route::get('/Test', function () {
     return view('test');
 });

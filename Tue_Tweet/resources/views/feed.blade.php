@@ -558,8 +558,17 @@
                 echo '</div>';
 
                 // Tweet content
+                echo '<div class="tweet-content">';
                 echo $tweet->tweet . '<br>';
 
+                //Tweet image
+                if (!is_null($tweet->img)){
+                    $tweetImg = app('App\Http\Controllers\UserController')->getUserImgHtml($tweet->img);
+                    // echo $tweetImg;
+                    echo '<img class="img-fluid" src=data:image/png;base64,' . $tweet->img . '>';
+                    // echo $tweet->img;
+                }
+                echo '</div>';
 
                 // Activity Icons
                 echo '<div class="post-row">';
@@ -698,7 +707,7 @@
 
 
         <!-- Post-Tweet-Modal -->
-        <form action="{{ route('postTweet')}}" method="POST">
+        <form action="{{ route('postTweet')}}" method="POST" enctype="multipart/form-data">
             <div class="modal fade" id="PostTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -737,8 +746,12 @@
                                     <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet" value="{{Request::old('tweet')}}"></textarea>
                                     <div id="pictureBox"></div>
                                     <div class="add-post-links">
-                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a>
-
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> 
+                                        <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
+                                        <div class="form-group">
+                                            <label for="img"> Upload Picture </label>
+                                            <input type="file" name="img" id="img" value="{{Request::old('img')}}"></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
