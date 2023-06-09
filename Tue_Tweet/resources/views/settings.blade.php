@@ -1,11 +1,22 @@
 @extends('layouts.master')
 @section('title')
-My Profile
+My Profile settings
 @endsection
 
 <div>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<!-- Page title -->
+				<div class="my-5">
+					<h3>Settings</h3>
+					<hr>
+				</div>
+
+	
+	<!-- upload profile picture--> 
 	<div class="col-xxl-4">
 		<div class="bg-secondary-soft px-4 py-5 rounded">
 			<div class="row g-3">
@@ -16,7 +27,7 @@ My Profile
 						<form action="/postImage" method="POST" enctype="multipart/form-data">
 
 							<div class="form-group">
-								<label for="img"> Upload your Profile Picture </label>
+								<label for="img"> New Profile Picture </label>
 								<input type="file" name="img" id="img" value="{{Request::old('img')}}">
 							</div>
 
@@ -24,12 +35,13 @@ My Profile
 							<input type="hidden" name="_token" value="{{  Session::token() }}">
 						</form>
 					</div>
-					<!-- Content -->
-					<p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span>Minimum size 300px x 300px</p>
+					
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- upload bio--> 
 
 	<div class="col-xxl-4">
 		<div class="bg-secondary-soft px-4 py-5 rounded">
@@ -41,7 +53,7 @@ My Profile
 						<form action="/postBio" method="POST" enctype="multipart/form-data">
 
 							<div class="form-group">
-								<label for="bio"> Upload your Profile Text</label>
+								<label for="bio"> New Profile Bio</label>
 								<input type="text" name="bio" id="bio" value="{{Request::old('bio')}}">
 							</div>
 
@@ -54,15 +66,58 @@ My Profile
 		</div>
 	</div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<!-- Page title -->
-				<div class="my-5">
-					<h3>Settings</h3>
-					<hr>
+	<!-- upload username--> 
+	
+	<div class="col-xxl-4">
+		<div class="bg-secondary-soft px-4 py-5 rounded">
+			<div class="row g-3">
+				<h4 class="mb-4 mt-0">Change your username</h4>
+				<div class="text-center">
+					<!-- Profil username-->
+					<div class="col-md-4 col-md-offset-4">
+						<form action="/postUsername" method="POST" enctype="multipart/form-data">
+
+							<div class="form-group">
+								<label for="bio"> New Username</label>
+								<input type="text" name="username" id="username" value="{{Request::old('username')}}">
+							</div>
+
+							<button type="submit" class="btn btn-primary"> Upload </button>
+							<input type="hidden" name="_token" value="{{  Session::token() }}">
+						</form>
+					</div>
 				</div>
-				<!-- Form START -->
+			</div>
+		</div>
+	</div>
+
+	<!-- upload email --> 
+	
+	<div class="col-xxl-4">
+		<div class="bg-secondary-soft px-4 py-5 rounded">
+			<div class="row g-3">
+				<h4 class="mb-4 mt-0">Change your Email</h4>
+				<div class="text-center">
+					<!-- Profil email -->
+					<div class="col-md-4 col-md-offset-4">
+						<form action="/postEmail" method="POST" enctype="multipart/form-data">
+
+							<div class="form-group">
+								<label for="bio"> New Email</label>
+								<input type="text" name="email" id="email" value="{{Request::old('email')}}">
+							</div>
+
+							<button type="submit" class="btn btn-primary"> Upload </button>
+							<input type="hidden" name="_token" value="{{  Session::token() }}">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+				{{-- <!-- Form START -->
 				<form class="file-upload">
 					<div class="row mb-5 gx-5">
 						<!-- Contact detail -->
@@ -128,7 +183,7 @@ My Profile
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> --}}
 			</div> <!-- Row END -->
 			<!-- button -->
 			<div class="gap-3 d-md-flex justify-content-md-end text-center">

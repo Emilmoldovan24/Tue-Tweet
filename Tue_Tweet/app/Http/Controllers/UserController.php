@@ -171,6 +171,33 @@ class UserController extends Controller
         return redirect()->route('settings');
     }
 
+    //Update Username
+    public function postUsername(Request $request)
+    {
+        $id = Auth::id();
+        #dd($request);
+        $username =  $request->username;
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['username' => $username]);
+
+        return redirect()->route('settings');
+    }
+
+    //Update Email
+    public function postEmail(Request $request)
+    {
+        $id = Auth::id();
+        #dd($request);
+        $email =  $request->email;
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['email' => $email]);
+
+        return redirect()->route('settings');
+    }
+
+
     //ist das gut wenn man das so macht?
     public function getUserImgHtml($userImg)
     {

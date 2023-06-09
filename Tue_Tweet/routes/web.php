@@ -107,6 +107,16 @@ Route::post('/postBio', [
     'as' => 'postBio'
 ]);
 
+Route::post('/postUsername', [
+    'uses' => 'App\Http\Controllers\UserController@postUsername',
+    'as' => 'postUsername'
+]);
+
+Route::post('/postEmail', [
+    'uses' => 'App\Http\Controllers\UserController@postEmail',
+    'as' => 'postEmail'
+]);
+
 Route::post('/retweet', [
     'uses' => 'App\Http\Controllers\UserController@postRetweet',
     'as' => 'retweet'
