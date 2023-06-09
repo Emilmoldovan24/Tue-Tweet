@@ -130,7 +130,7 @@ class UserController extends Controller
         return redirect()->route('feed');
     }
 
-    // no possibility to retweet a retweet !!
+    
     public function postRetweet(Request $request)
     {
 
