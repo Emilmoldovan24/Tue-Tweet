@@ -80,6 +80,7 @@
         margin-bottom: 6px;
         display: flex;
         align-items: center;
+        
     }
 
     .user-profile img {
@@ -92,6 +93,7 @@
         margin-bottom: -5px;
         font-weight: 500;
         color: #626262;
+        margin-right: 20px;
     }
 
     .user-profile small {
@@ -272,7 +274,7 @@
             <div class="left-sidebar">
 
 
-
+           
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
@@ -299,30 +301,29 @@
                     </div>
                 </div>
 
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
+          
+                <div class="list-group">
+               
+                      
+                            
+
                             <form action="{{ route('feed') }}" method="GET">
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
+                            <button type="submit" class="list-group-item list-group-item-action active"><i class="fa-solid fa-house"></i><a> Home </a></button>
                             </form>
-                        </li>
-                        <li class="list-group-item">
-                        <form action=<?php echo "'profile/" . $results . "'";?> method="GET">
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile </a></button>
+                            <form action=<?php echo "'profile/" . $results . "'";?> method="GET">
+                                <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-user"></i><a> Profile </a></button>
                             </form>
-                        </li>
-                        <li class="list-group-item">
                             <form action="{{ route('settings') }}" method="GET">
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
+                                <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
                             </form>
-                        </li>
-                        <li class="list-group-item">
                             <form action="{{ route('logout') }}" method="GET">
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+                                <button type="submit"class="list-group-item list-group-item-action"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
                             </form>
-                        </li>
-                    </ul>
-                </div>
+</div>
+
+
+
+               
                 <br>
 
 
@@ -355,8 +356,10 @@
                 <div class="post-row">
                     <div class="user-profile">
                     <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                        <div>
-                            <p>Mark</p>
+                    <div style="display: inline-block;">
+
+                  
+                    <p style="margin-right: 10px;">Mark &bull; </span>
                             <span>May 3 2023, 2:30 pm</span>
                         </div>
                     </div>
@@ -523,8 +526,17 @@
                 echo '<div class="post-row">';
                 echo '<div class="user-profile">';
                 echo $userImgHtml;
-                echo '<div>';
-                echo '<a href="profile/' . $username . '">' . $username . '</a>';
+
+               
+                
+               // echo '<p style="margin-right: 10px;">Mark &bull; </span>';
+               // echo '<span>May 3 2023, 2:30 pm</span>';
+               // echo '</div>';
+                
+
+                echo '<div style="display: inline-block;">';
+                echo '<a style="margin-right: 3px;" href="profile/' . $username . '">' . $username . '</a>';
+                echo '<a> &bull; </a>';
                 echo '<span>' . $tweet->created_at . '</span>';
                 echo '</div>';
                 echo '</div>';
