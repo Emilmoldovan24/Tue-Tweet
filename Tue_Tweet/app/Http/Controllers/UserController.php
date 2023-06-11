@@ -8,12 +8,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     public function getSettings()
     {
         return view('settings');
+    }
+
+    public function getVerify()
+    {
+        return view('verify');
     }
 
     public function getwelcome()
@@ -55,8 +62,9 @@ class UserController extends Controller
 
         $usr = User::where('email', $request->email)->first();
         Auth::login($usr);
+        Mail::to($email)->send(new WelcomeMail());
 
-        return redirect()->route('feed');
+        return redirect()->route('feed');//anstatt feed view erstmal mail verifizieren
     }
 
 

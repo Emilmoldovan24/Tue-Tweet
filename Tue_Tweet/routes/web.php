@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -159,4 +162,12 @@ Route::get('profile/{username}', function($username){
 Route::get('/settings', [
     'uses' => 'App\Http\Controllers\UserController@getsettings',
     'as' => 'settings'
+]);
+
+//Routes for mailing
+
+
+Route::get('/verify', [
+    'uses' => 'App\Http\Controllers\UserController@getVerify',
+    'as' => 'verify'
 ]);
