@@ -354,11 +354,7 @@
             <div class="post-container">
                 <div class="post-row">
                     <div class="user-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
+                    <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
                         <div>
                             <p>Mark</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -379,11 +375,7 @@
 
                 <div class="retweet">
                     <div class="tweetbox-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);  
-                        ?>
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
                         <div>
                             <p>Dagmar</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -437,17 +429,7 @@
             <div class="post-container">
                 <div class="post-row">
                     <div class="user-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
-
-                        <!--
-                        #TODO Wäre besser, funktioniert leider aber nicht
-                        <img src=<?PHP app('App\Http\Controllers\UserController')->getUserImg($userImg); ?> alt='' />
-                        -->
-
+                        <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
                         <div>
                             <p>Mark</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -468,12 +450,7 @@
 
                 <div class="retweet">
                     <div class="tweetbox-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
                         <div>
                             <p>Dagmar</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -715,7 +692,13 @@
 
                             <div class="write-post-container">
                                 <div class="user-profile">
-                                    <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
+                                    <?php 
+                                        $id = Auth::id();
+                                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                                        $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+                                        echo $userImgHtml;
+                                    ?>
+                                    <!--<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt=""> -->
                                     <div>
                                         <?php
                                         echo '<p>' . $results . '</p>';
