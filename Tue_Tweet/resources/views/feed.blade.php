@@ -748,7 +748,6 @@
                                         <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> 
                                         <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
                                         <div class="form-group">
-                                            <label for="img"> Upload Picture </label>
                                             <input type="file" name="img" id="img" value="{{Request::old('img')}}"></a>
                                         </div>
                                     </div>
