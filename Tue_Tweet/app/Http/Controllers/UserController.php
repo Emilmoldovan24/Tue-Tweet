@@ -62,7 +62,7 @@ class UserController extends Controller
 
         $usr = User::where('email', $request->email)->first();
         Auth::login($usr);
-        //Mail::to($email)->send(new WelcomeMail());
+        Mail::to($email)->send(new WelcomeMail());
 
         return redirect()->route('feed');//anstatt feed view erstmal mail verifizieren
     }
