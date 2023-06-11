@@ -102,7 +102,11 @@ class UserController extends Controller
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $id = Auth::id();
 
+        if(! is_null($request['img'])){
         $image =  base64_encode(file_get_contents($request->file('img')->path()));
+        } else {
+            $image = null;
+        }
 
         DB::insert('insert into tweets(user_id, tweet, img, created_at) 
         values(?,?,?,?)', [$id, $request["tweet"], $image, $currentTimestamp]);
