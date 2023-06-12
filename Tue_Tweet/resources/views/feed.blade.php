@@ -546,8 +546,10 @@
                 echo '</div>';
 
                 // Tweet content
-                echo '<div class="tweet-content">';
-                echo $tweet->tweet . '<br>';
+                if (!is_null($tweet->tweet)) { // Validation fängt es schon ab, dennoch so besser
+                    echo '<div class="tweet-content">';
+                    echo $tweet->tweet . '<br>';
+                }
 
                 //Tweet image
                 if (!is_null($tweet->img)){
