@@ -134,23 +134,40 @@ class UserController extends Controller
     {
 
         // Leere Tweets abfangen & Bilder-Regeln
+
         $request->validate([
-            'tweet' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Validierungsregeln für das Bild
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        
 
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $id = Auth::id();
 
-        if(! is_null($request['img'])){
-        $image =  base64_encode(file_get_contents($request->file('img')->path()));
+        if(is_null($request['tweet'])) {
+            if(is_null($request['img'])) {
+                $request->validate([
+                    'image' => 'required',
+                    'tweet' => 'required'
+                ]);
+            } else {
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'  
+                ]);
+                $image =  base64_encode(file_get_contents($request->file('img')->path()));
+                DB::insert('insert into tweets(user_id, tweet, img, created_at) 
+                values(?,?,?,?)', [$id, "", $image, $currentTimestamp]); // null statt "" hat nicht geklappt? Unschön
+            }
         } else {
-            $image = null;
+            if(! is_null($request['img'])){
+                $image =  base64_encode(file_get_contents($request->file('img')->path()));
+            } else {
+                $image = null;
+            }
+            DB::insert('insert into tweets(user_id, tweet, img, created_at) 
+            values(?,?,?,?)', [$id, $request["tweet"], $image, $currentTimestamp]);
         }
-
-        DB::insert('insert into tweets(user_id, tweet, img, created_at) 
-        values(?,?,?,?)', [$id, $request["tweet"], $image, $currentTimestamp]);
+        
 
         return redirect()->route('feed');
     }
