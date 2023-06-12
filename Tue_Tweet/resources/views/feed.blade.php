@@ -80,7 +80,7 @@
         margin-bottom: 6px;
         display: flex;
         align-items: center;
-        
+
     }
 
     .user-profile img {
@@ -274,19 +274,19 @@
             <div class="left-sidebar">
 
 
-           
+
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <?php
                             $id = Auth::id();
                             $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                            if (is_null($userImg)){
+                            if (is_null($userImg)) {
                                 echo '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" height="100px" width="150px" alt="...">';
-                            } else{
+                            } else {
                                 echo '<img src=data:image/png;base64,' . $userImg . ' height="100px" width="150px" alt="...">';
                             }
-                            
+
                             ?>
                         </div>
                         <div class="col-md-8">
@@ -301,29 +301,29 @@
                     </div>
                 </div>
 
-          
+
                 <div class="list-group">
-               
-                      
-                            
-
-                            <form action="{{ route('feed') }}" method="GET">
-                            <button type="submit" class="list-group-item list-group-item-action active"><i class="fa-solid fa-house"></i><a> Home </a></button>
-                            </form>
-                            <form action=<?php echo "'profile/" . $results . "'";?> method="GET">
-                                <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-user"></i><a> Profile </a></button>
-                            </form>
-                            <form action="{{ route('settings') }}" method="GET">
-                                <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
-                            </form>
-                            <form action="{{ route('logout') }}" method="GET">
-                                <button type="submit"class="list-group-item list-group-item-action"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
-                            </form>
-</div>
 
 
 
-               
+
+                    <form action="{{ route('feed') }}" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action active"><i class="fa-solid fa-house"></i><a> Home </a></button>
+                    </form>
+                    <form action=<?php echo "'profile/" . $results . "'"; ?> method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-user"></i><a> Profile </a></button>
+                    </form>
+                    <form action="{{ route('settings') }}" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
+                    </form>
+                    <form action="{{ route('logout') }}" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+                    </form>
+                </div>
+
+
+
+
                 <br>
 
 
@@ -355,12 +355,12 @@
             <div class="post-container">
                 <div class="post-row">
                     <div class="user-profile">
-                    <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                    <div style="display: inline-block;">
+                        <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
+                        <div style="display: inline-block;">
 
-                  
-                    <p style="margin-right: 10px;">Mark &bull; </span>
-                            <span>May 3 2023, 2:30 pm</span>
+
+                            <p style="margin-right: 10px;">Mark &bull; </span>
+                                <span>May 3 2023, 2:30 pm</span>
                         </div>
                     </div>
                     <div class="menu-btn-stranger">
@@ -405,15 +405,11 @@
                         }
                     }
 
-                        $(document).ready(function()
-                        {
-                            $(".default_picture").on("error", function(){
-                                $(this).attr('src', "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
-                            });
+                    $(document).ready(function() {
+                        $(".default_picture").on("error", function() {
+                            $(this).attr('src', "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
                         });
-
-
-                        
+                    });
                 </script>
 
 
@@ -453,7 +449,7 @@
 
                  <div class="retweet">
                     <div class="tweetbox-profile">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
                         <div>
                             <p>Dagmar</p>
                             <span>May 3 2023, 2:30 pm</span>
@@ -512,7 +508,7 @@
 
 
             <?php
-            $users = DB::select('select * from tweets order by created_at desc');
+            $users = DB::select('select * from tweets where deleted_at is null  order by created_at desc');
             foreach ($users as $tweet) {
                 $currentTimeString = time();
                 $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
@@ -527,12 +523,12 @@
                 echo '<div class="user-profile">';
                 echo $userImgHtml;
 
-               
-                
-               // echo '<p style="margin-right: 10px;">Mark &bull; </span>';
-               // echo '<span>May 3 2023, 2:30 pm</span>';
-               // echo '</div>';
-                
+
+
+                // echo '<p style="margin-right: 10px;">Mark &bull; </span>';
+                // echo '<span>May 3 2023, 2:30 pm</span>';
+                // echo '</div>';
+
 
                 echo '<div style="display: inline-block;">';
                 echo '<a style="margin-right: 3px;" href="profile/' . $username . '">' . $username . '</a>';
@@ -552,7 +548,7 @@
                 }
 
                 //Tweet image
-                if (!is_null($tweet->img)){
+                if (!is_null($tweet->img)) {
                     $tweetImg = app('App\Http\Controllers\UserController')->getUserImgHtml($tweet->img);
                     // echo $tweetImg;
                     echo '<img class="img-fluid" src=data:image/png;base64,' . $tweet->img . '>';
@@ -706,11 +702,11 @@
 
                             <div class="write-post-container">
                                 <div class="user-profile">
-                                    <?php 
-                                        $id = Auth::id();
-                                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                                        $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                                        echo $userImgHtml;
+                                    <?php
+                                    $id = Auth::id();
+                                    $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                                    $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+                                    echo $userImgHtml;
                                     ?>
                                     <!--<img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt=""> -->
                                     <div>
@@ -718,23 +714,23 @@
                                         echo '<p>' . $results . '</p>';
                                         ?>
                                         <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
-                                        
+
                                         {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
                                         @section('content')
-                                        @if (count($errors) > 0) 
-                                            <div class='row'>
-                                                <div class="col">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                            <li>
-                                                                {{$error}}
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
+                                        @if (count($errors) > 0)
+                                        <div class='row'>
+                                            <div class="col">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                    <li>
+                                                        {{$error}}
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
                                             </div>
+                                        </div>
                                         @endif
-                                    
+
                                     </div>
                                 </div>
 
@@ -742,90 +738,91 @@
                                     <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet" value="{{Request::old('tweet')}}"></textarea>
                                     <div id="pictureBox"></div>
                                     <div class="add-post-links">
-                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i> 
-                                        <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
-                                        <div class="form-group">
-                                            <input type="file" name="img" id="img" value="{{Request::old('img')}}"></a>
-                                        </div>
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i>
+                                            <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
+                                            <div class="form-group">
+                                                <input type="file" name="img" id="img" value="{{Request::old('img')}}">
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary"> Post </button>
-                            <input type="hidden" name="_token" value="{{  Session::token() }}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-
-
-        <!-- Comment Modal -->
-        <div class="modal fade" id="CommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-
-                        <div class="write-post-container">
-                            <div class="user-profile">
-                                <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                                <div>
-                                    <?php
-                                    echo '<p>' . $results . '</p>';
-                                    ?>
-                                    <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
-                                </div>
-                            </div>
-
-                            <div class="post-input-container">
-                                <textarea rows="3" placeholder="Add a comment to this tweet"></textarea>
-
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Comment</button>
+                        <button type="submit" class="btn btn-primary"> Post </button>
+                        <input type="hidden" name="_token" value="{{  Session::token() }}">
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
+    </form>
 
 
+    <!-- Comment Modal -->
+    <div class="modal fade" id="CommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
 
-
-        <!-- Quote Retweet Modal -->
-        <div class="modal fade" id="QuoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-
-                        <div class="write-post-container">
-                            <div class="user-profile">
-                                <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                                <div>
-                                    <?php
-                                    echo '<p>' . $results . '</p>';
-                                    ?>
-                                    <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
-                                </div>
-                            </div>
-
-                            <div class="post-input-container">
-                                <textarea rows="3" placeholder="Add a comment to your quote"></textarea>
-
+                    <div class="write-post-container">
+                        <div class="user-profile">
+                            <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
+                            <div>
+                                <?php
+                                echo '<p>' . $results . '</p>';
+                                ?>
+                                <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
                             </div>
                         </div>
+
+                        <div class="post-input-container">
+                            <textarea rows="3" placeholder="Add a comment to this tweet"></textarea>
+
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Retweet</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Comment</button>
                 </div>
             </div>
         </div>
+    </div>
+
+
+
+
+    <!-- Quote Retweet Modal -->
+    <div class="modal fade" id="QuoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <div class="write-post-container">
+                        <div class="user-profile">
+                            <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
+                            <div>
+                                <?php
+                                echo '<p>' . $results . '</p>';
+                                ?>
+                                <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                            </div>
+                        </div>
+
+                        <div class="post-input-container">
+                            <textarea rows="3" placeholder="Add a comment to your quote"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Retweet</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
