@@ -79,7 +79,7 @@
                         <p>Back to the Log-in Page! </p>
                               <!-- Button trigger modal -->
                               
-                              <form action="{{ route('welcome') }}" method="GET">
+        <form action="{{ route('welcome') }}" method="GET">
             <button type="submit" class="btn btn-primary"> Sign in </button>
         </form>
 
@@ -93,7 +93,7 @@
 
 
                         <!-- SIGN IN !-->
-    <form action="{{ route('signup')}}" method="POST">
+    <form action='{{ route("postVerify") }}' method="POST">
   <div class="mb-3">
   <div class="form-group">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
