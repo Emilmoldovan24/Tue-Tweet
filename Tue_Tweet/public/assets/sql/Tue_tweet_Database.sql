@@ -228,7 +228,7 @@ CREATE TRIGGER update_tweets_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at <> OLD.deleted_at THEN
+    IF  NEW.deleted_at IS NOT NULL THEN
         UPDATE tweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -238,7 +238,7 @@ CREATE TRIGGER update_comments_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at <> OLD.deleted_at THEN
+    IF NEW.deleted_at IS NOT NULL  THEN
         UPDATE comments SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -248,7 +248,7 @@ CREATE TRIGGER update_likes_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at <> OLD.deleted_at THEN
+    IF NEW.deleted_at IS NOT NULL  THEN
         UPDATE likes SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -258,7 +258,7 @@ CREATE TRIGGER update_retweets_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at <> OLD.deleted_at THEN
+    IF NEW.deleted_at IS NOT NULL  THEN
         UPDATE retweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -267,7 +267,7 @@ CREATE TRIGGER update_follows_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at <> OLD.deleted_at THEN
+    IF NEW.deleted_at IS NOT NULL  THEN
         UPDATE follows SET deleted_at = NEW.deleted_at WHERE follow_id = NEW.id;
     END IF;
 END;
@@ -276,7 +276,7 @@ CREATE TRIGGER update_tweets_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
+    IF NEW.visibility IS NOT NULL  THEN
         UPDATE tweets SET visibility = NEW.visibility WHERE user_id = NEW.id;
     END IF;
 END;
@@ -285,7 +285,7 @@ CREATE TRIGGER update_comments_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
+    IF NEW.visibility IS NOT NULL  THEN
         UPDATE comments SET visibility = NEW.visibility WHERE user_id = NEW.id;
     END IF;
 END;
@@ -294,7 +294,7 @@ CREATE TRIGGER update_likes_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
+    IF NEW.visibility IS NOT NULL  THEN
         UPDATE likes SET visibility = NEW.visibility WHERE user_id = NEW.id;
     END IF;
 END;
@@ -303,7 +303,7 @@ CREATE TRIGGER update_retweets_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
+    IF NEW.visibility IS NOT NULL  THEN
         UPDATE retweets SET visibility = NEW.visibility WHERE user_id = NEW.id;
     END IF;
 END;
@@ -312,7 +312,7 @@ CREATE TRIGGER update_follows_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
+    IF NEW.visibility IS NOT NULL  THEN
         UPDATE follows SET visibility = NEW.visibility WHERE follow_id = NEW.id;
     END IF;
 END;
