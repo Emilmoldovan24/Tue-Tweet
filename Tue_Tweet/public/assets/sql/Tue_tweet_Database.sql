@@ -18,7 +18,7 @@ set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION
 -- profile_img -> self-selected profile picture
 -- created_at  -> Time when the user was created
 CREATE TABLE users (
-  id                INT           AUTO_INCREMENT PRIMARY KEY,
+  id                INT           AUTO_INCREMENT PRIMARY KEY ,
   username          VARCHAR(30)   UNIQUE NOT NULL,
   email             VARCHAR(50)   UNIQUE NOT NULL,
   user_password     VARCHAR(60)   NOT NULL,
@@ -28,18 +28,19 @@ CREATE TABLE users (
   remember_token    VARCHAR(100)  DEFAULT NULL,
   email_verified_at DATETIME      DEFAULT NULL,
   created_at        TIMESTAMP ,
-  updated_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
-);
+  updated_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  deleted_at        TIMESTAMP     NULL DEFAULT NULL
+ );
 
 /*
 filling of users for exercise purposes
 */
 
 INSERT INTO users ( username, email, user_password, profile_bio, profile_img, visibility , remember_token, created_at, updated_at) 
-VALUES( "Name1", "user1@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
-      ( "Name2", "user2@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21'),
-      ( "Name3", "user3@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
-      ( "Name4", "user4@yahoo.de", 12345, "blablabla", NULL, TRUE, NULL, '2023-05-09 12:59:21','2023-05-09 12:59:21');
+VALUES( "Name1", "user1@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
+      ( "Name2", "user2@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21'),
+      ( "Name3", "user3@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
+      ( "Name4", "user4@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:59:21','2023-05-09 12:59:21');
 
 -- Create of Table admins
 -- table users contains the following information :
@@ -60,7 +61,7 @@ CREATE TABLE admins (
   profile_img    LONGBLOB      DEFAULT NULL,
   remember_token VARCHAR(100)  DEFAULT NULL,
   created_at     TIMESTAMP ,
-  updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP 
+  updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP    
 );
 
 /*
@@ -83,7 +84,8 @@ CREATE TABLE tweets (
   tweet       TEXT(240)   NOT NULL,
   visibility  BOOLEAN     DEFAULT TRUE,
   img         LONGBLOB    DEFAULT NULL,
-  created_at  TIMESTAMP
+  created_at  TIMESTAMP,
+  deleted_at  TIMESTAMP   NULL DEFAULT NULL
 );
 
 /*
@@ -108,7 +110,8 @@ CREATE TABLE comments (
   tweet_id    INT        NOT NULL,
   comment     TEXT(240)  NOT NULL,
   visibility  BOOLEAN    DEFAULT TRUE,
-  created_at  TIMESTAMP
+  created_at  TIMESTAMP,
+  deleted_at  TIMESTAMP  NULL DEFAULT NULL
 );
 
 /*
@@ -127,12 +130,13 @@ VALUES( 1, 2, "comment to tweet 2", TRUE, '2023-05-09 15:56:21'),
 -- retweet_text  -> text for the retweet
 -- created_at    -> Time at which retweets were made
 CREATE TABLE retweets (
-  retweet_id   INT         AUTO_INCREMENT  PRIMARY KEY,
+  retweet_id   INT         AUTO_INCREMENT Primary Key,
   user_id      INT         NOT NULL,
   tweet_id     INT         NOT NULL,
   retweet_text TEXT(240)   NOT NULL,
   visibility   BOOLEAN     DEFAULT TRUE, 
-  created_at   TIMESTAMP
+  created_at   TIMESTAMP,
+  deleted_at   TIMESTAMP   NULL DEFAULT NULL
 );
 
 /*
@@ -153,7 +157,8 @@ CREATE TABLE likes (
   user_id    INT         NOT NULL,
   tweet_id   INT         NOT NULL,
   visibility BOOLEAN     DEFAULT TRUE,
-  created_at TIMESTAMP
+  created_at TIMESTAMP,
+  deleted_at TIMESTAMP   NULL DEFAULT NULL
 );
 
 /*
@@ -174,8 +179,10 @@ CREATE TABLE follows (
   follow_user_id    INT        NOT NULL,
   following_user_id INT        NOT NULL,
   visibility        BOOLEAN    DEFAULT TRUE,
-  created_at        TIMESTAMP
+  created_at        TIMESTAMP,
+  deleted_at        TIMESTAMP     NULL DEFAULT NULL
 );
+
 
 -- Constraints for the Tables
 
@@ -184,18 +191,21 @@ CREATE TABLE follows (
 */
 ALTER TABLE tweets
 ADD CONSTRAINT FK_tweets_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*
  Foreign Key from comments to users and tweets
 */
 ALTER TABLE comments
 ADD CONSTRAINT FK_comments_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT FK_comments_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*
  Foreign Key from follows to users and users
 */
 ALTER TABLE follows
 ADD CONSTRAINT FK_follow_users FOREIGN KEY (follow_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT FK_following_users FOREIGN KEY (following_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*
  Foreign Key from retweets to users and tweets
 */
@@ -209,3 +219,115 @@ ADD CONSTRAINT FK_retweets_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet
 ALTER TABLE likes
 ADD CONSTRAINT FK_likes_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT FK_likes_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+/*
+ Trigger for Cascading the Updates on users
+*/
+CREATE TRIGGER update_tweets_deleted_at
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.deleted_at <> OLD.deleted_at THEN
+        UPDATE tweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
+    END IF;
+END;
+
+
+CREATE TRIGGER update_comments_deleted_at
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.deleted_at <> OLD.deleted_at THEN
+        UPDATE comments SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
+    END IF;
+END;
+
+ 
+CREATE TRIGGER update_likes_deleted_at
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.deleted_at <> OLD.deleted_at THEN
+        UPDATE likes SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
+    END IF;
+END;
+
+
+CREATE TRIGGER update_retweets_deleted_at
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.deleted_at <> OLD.deleted_at THEN
+        UPDATE retweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_follows_deleted_at
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.deleted_at <> OLD.deleted_at THEN
+        UPDATE follows SET deleted_at = NEW.deleted_at WHERE follow_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_tweets_visibility
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.visibility <> OLD.visibility THEN
+        UPDATE tweets SET visibility = NEW.visibility WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_comments_visibility
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.visibility <> OLD.visibility THEN
+        UPDATE comments SET visibility = NEW.visibility WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_likes_visibility
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.visibility <> OLD.visibility THEN
+        UPDATE likes SET visibility = NEW.visibility WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_retweets_visibility
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.visibility <> OLD.visibility THEN
+        UPDATE retweets SET visibility = NEW.visibility WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_follows_visibility
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.visibility <> OLD.visibility THEN
+        UPDATE follows SET visibility = NEW.visibility WHERE follow_id = NEW.id;
+    END IF;
+END;
+
+/*
+ Event that checks once a day whether deleted_at is older than 30 days
+*/
+SET GLOBAL event_scheduler = ON;
+
+DROP EVENT IF EXISTS delete_old_rows_event;
+CREATE EVENT delete_old_rows_event
+ON SCHEDULE
+  EVERY 1 DAY
+  STARTS CURRENT_TIMESTAMP + INTERVAL 1 DAY
+DO
+  DELETE FROM users WHERE deleted_at < (CURDATE() - INTERVAL 30 DAY);
+
+
