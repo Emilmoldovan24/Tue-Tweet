@@ -17,12 +17,20 @@
             background-color: lightgrey;
             
         }
-        .card-img-top {
+        .profile-img {
+       
+       width:100%;
+       max-width: 200px;
+       margin-top: 10px;
+            border-radius: 50%;
+   
+       }
+     /*    .card-img-top {
             margin-top: 10px;
             max-height: 80%;
             max-width: 80%;
             border-radius: 50%;
-        }
+        } */
         .card {
             align-items: center;
         }
@@ -266,8 +274,14 @@ align-items: left;
         border-radius: 6px;
         border: 2px solid;
     }
-
   
+     .pos-f-t {
+        width: 300px;
+  height: 60px;
+
+    } 
+  
+ 
 
   
     </style>
@@ -324,7 +338,7 @@ align-items: left;
                             if (is_null($userImg)){
                                 echo '<img class="card-img-top" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="...">';
                             } else{
-                                echo '<img src=data:image/png;base64,' . $userImg . ' alt="...">';
+                                echo '<img class="profile-img" src=data:image/png;base64,' . $userImg . ' alt="...">';
                             }
                             
                             ?>
@@ -356,7 +370,7 @@ align-items: left;
 </div>
 
           
-        <div class="col-6">
+        <div class="col-5">
 
             <div class="middle-side">
                 
@@ -545,7 +559,7 @@ align-items: left;
               
                   <div class="bg-dark p-4">
               
-                  <div class="card" style="width: 18rem;">
+                  <div class="card" style="width: 15rem;">
                 <div class="card-body">
                 <div style="display: inline-block;">
                   <img class="card-img-noti" src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80"  width="56" height="56" alt="Card image cap">
@@ -556,7 +570,7 @@ align-items: left;
               </div>
               
               
-              <div class="card" style="width: 18rem;">
+              <div class="card" style="width: 15rem;">
                 <div class="card-body">
                 
                   <img class="card-img-noti" src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"  width="56" height="56" alt="Card image cap">
@@ -567,7 +581,7 @@ align-items: left;
                 </div>
               </div>
                
-              <div class="card" style="width: 18rem;">
+              <div class="card" style="width: 15rem;">
                 <div class="card-body">
                 <div style="display: inline-block;">
                   <img class="card-img-noti" src="https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2lybHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=700&q=60"  width="56" height="56" alt="Card image cap">
