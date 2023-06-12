@@ -318,7 +318,7 @@ align-items: left;
             </form>
 </nav>
 
-    <h1> User: {{$username}} </h1>
+    {{-- <h1> User: {{$username}} </h1> --}}
    
 <div class="container">
 <!-- <img class="titelbild" src="https://civis.eu/storage/files/picture-univeristy-tubingen.jpg" alt=""> -->
@@ -349,11 +349,31 @@ align-items: left;
                                 $results = DB::table('users')->where('id', $id)->value('username');
                                 echo '<h5 class="card-title">Hello @' . $results . '</h5>'
                                 ?>
-    <p class="card-text">Ich studiere Informatik im (xy). Semester.</p>
+    <p class="card-text">
+        {{--Ich studiere Informatik im (xy). Semester.--}}
+        <?php
+        $id = Auth::id();
+        $userBio = DB::table('users')->where('id', $id)->value('profile_bio');
+        if (is_null($userBio)) {
+            echo '<a href="' . route('settings') . '">Create your bio</a>'; // Weiß nicht ob man hier dann noch angemeldet bleibt, muss man testen!
+        } else {
+            echo $userBio;
+        }
+        ?>
+    </p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><i class="fa-solid fa-location-dot"></i> Tübingen</li>
-    <li class="list-group-item"><i class="fa-solid fa-calendar"></i> Joined at 29.3.2023</li>
+    {{--<li class="list-group-item"><i class="fa-solid fa-location-dot"></i> Tübingen</li>--}}
+    <li class="list-group-item"><i class="fa-solid fa-calendar"></i> 
+        <?php
+        use Carbon\Carbon;
+
+        $id = Auth::id();
+        $userJoined = DB::table('users')->where('id', $id)->value('created_at');
+        $createdDate = Carbon::parse($userJoined)->format('d.m.Y H:i:s');
+        echo $createdDate;
+        ?>
+    </li>
     <li class="list-group-item"><a href="#"> 48 following</a></li>
     <li class="list-group-item"><a href="#"> 22 followers</a></li>
   </ul>
@@ -376,8 +396,8 @@ align-items: left;
                 
 
 
-            <div class="post-container">
-                <div class="post-row">
+            {{--<div class="post-container">
+                 <div class="post-row">
                     <div class="user-profile">
                         <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
                         <div>
@@ -407,9 +427,161 @@ align-items: left;
                         </div>
                     </div>
                     <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div>
+                </div>  --}}
 
 
+                {{-- eigenes Feed anzeigen. Design ist bisschen verschoben? --}}
+                <?php
+            $userId = Auth::id();
+            $tweets = DB::table('tweets')->where('user_id', $userId)->orderBy('created_at', 'desc')->get();
+
+            foreach ($tweets as $tweet) {
+                $currentTimeString = time();
+                $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+                $id = $tweet->user_id;
+                $username = DB::table('users')->where('id', $id)->value('username');
+                $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+
+                // Tweet header
+                echo '<div class="post-container">';
+                echo '<div class="post-row">';
+                echo '<div class="user-profile">';
+                echo $userImgHtml;
+
+               
+                
+               // echo '<p style="margin-right: 10px;">Mark &bull; </span>';
+               // echo '<span>May 3 2023, 2:30 pm</span>';
+               // echo '</div>';
+                
+
+                echo '<div style="display: inline-block;">';
+                echo '<a style="margin-right: 3px;" href="profile/' . $username . '">' . $username . '</a>';
+                echo '<a> &bull; </a>';
+                echo '<span>' . $tweet->created_at . '</span>';
+                echo '</div>';
+                echo '</div>';
+
+                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
+                echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                echo '</div>';
+
+                // Tweet content
+                if (!is_null($tweet->tweet)) { // Validation fängt es schon ab, dennoch so besser
+                    echo '<div class="tweet-content">';
+                    echo $tweet->tweet . '<br>';
+                }
+
+                //Tweet image
+                if (!is_null($tweet->img)){
+                    $tweetImg = app('App\Http\Controllers\UserController')->getUserImgHtml($tweet->img);
+                    // echo $tweetImg;
+                    echo '<img class="img-fluid" src=data:image/png;base64,' . $tweet->img . '>';
+                    // echo $tweet->img;
+                }
+                echo '</div>';
+
+                // Activity Icons
+                echo '<div class="post-row">';
+                echo '<div class="activity-icons">';
+
+
+                // Count Likes Comments and Retweets
+                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
+                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
+
+
+                // Like Button
+                echo '<div>';
+                echo '<form action=like method="POST">';
+                echo csrf_field();
+                echo '<div class="like-btn">';
+
+                // like button turns red if user has liked the tweet
+                if (DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('user_id', Auth::id())->exists()) {
+                    echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                } else {
+                    echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                }
+                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+                echo '</div>';
+                echo '</form>';
+                echo '</div>';
+
+
+                // Comment Button
+                // display comments if button is clicked
+                echo '<!-- comment button -->';
+                echo '<div>';
+                echo '<div class="comment-btn">';
+                echo '<button onclick="displayComments(' . $tweet->tweet_id . ')" class="btn btn-dark"';
+                echo 'aria-expanded="false">';
+                echo '<i class="fa-regular fa-comment"></i>' . $numComments . '';
+                echo '</button>';
+                echo '</div>';
+                echo '</div>';
+
+                // Retweet Button
+                echo '<div><!-- Retweet button -->';
+                echo '<div class="btn-group dropend">';
+                echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
+                echo 'aria-expanded="false">';
+                echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
+                echo '</button>';
+                echo '<ul class="dropdown-menu">';
+                echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
+                echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
+                echo '</li>';
+                echo '</ul>';
+                echo '</div>';
+                echo '</div>';
+
+                echo '</div>';
+                echo '</div>';
+
+
+                // Comments
+                echo '<div class="comments" id="comments' . $tweet->tweet_id . '" hidden>';
+                echo '<br>';
+                echo '<br>';
+
+                echo '<div class="comment-container">';
+                //list comments
+                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->get();
+                foreach ($comments as $comment) {
+                    $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
+                    $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                    echo '<div class="comment">';
+                    echo '<div class="user-profile">';
+                    echo $userImgHtml;
+                    echo '<div>';
+                    echo '<p>' . $commentUsername . '</p>';
+                    echo '<span>' . $comment->created_at . '</span>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<p>' . $comment->comment . '</p>';
+                    echo '</div>';
+                }
+
+                // comment input field
+                echo '<div class="comment-input">';
+                echo '<form action=postComment method="POST">';
+                echo csrf_field();
+                echo '<div class="input-group mb-3">';
+                echo '<input type="text" name="comment" id="comment" class="form-control" placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">';
+                echo '<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>';
+                echo '</div>';
+                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+                echo '</form>';
+                echo '</div>';
+
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
 
 
 
@@ -460,8 +632,8 @@ align-items: left;
 
 
                
-            <div class="post-container">
-                <div class="post-row">
+            {{--<div class="post-container">
+                 <div class="post-row">
                     <div class="user-profile">
                         <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
                         <div>
@@ -491,7 +663,7 @@ align-items: left;
                         </div>
                     </div>
                     <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div>
+                </div> 
 
 
 
@@ -539,7 +711,7 @@ align-items: left;
 
                 </div>
 
-            </div>
+            </div>--}}
 
 
 
