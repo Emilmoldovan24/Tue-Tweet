@@ -43,6 +43,10 @@ Route::get('/signup', function () {
     return view('signup');
 });
 
+Route::get('/verify', function () {
+    return view('verify');
+});
+
 Route::get('/settings', function() {
     return view('settings');
 });
@@ -158,16 +162,23 @@ Route::get('profile/{username}', function($username){
     return view('profile', ['username' => $username]);
 });
 
-#Test-side
 Route::get('/settings', [
     'uses' => 'App\Http\Controllers\UserController@getsettings',
     'as' => 'settings'
 ]);
 
 //Routes for mailing
-
-
-Route::get('/verify', [
-    'uses' => 'App\Http\Controllers\UserController@getVerify',
-    'as' => 'verify'
+Route::post('/signUp', [
+    'uses' => 'App\Http\Controllers\UserController@signUp',
+    'as' => 'signUp'
 ]);
+
+
+Route::post('/verify', [
+    'uses' => 'App\Http\Controllers\UserController@postVerify',
+    'as' => 'postVerify'
+]);
+
+Route::get('verify/{usr_data}', function($usr_data){
+    return view('verify', ['usr_data' => $usr_data]);
+});

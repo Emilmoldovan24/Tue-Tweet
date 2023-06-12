@@ -39,6 +39,47 @@ class UserController extends Controller
         return redirect()->route('welcome');
     }
 
+    
+    public function postVerify(Request $request){
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        $this->validate($request, [
+            'email' => 'required|email|unique:users', 
+            'username' => 'required|max:120|unique:users',
+            'user_password' => 'required|min:4'
+        ]);
+
+        $username_ = $request['username'];
+        $email_ = $request['email'];
+        $user_password_ = bcrypt($request['user_password']);
+
+        $usr_data = array('username' => $username_, 'email' => $email_, 'user_password' => $user_password_);
+
+        return view('verify',compact('usr_data'));
+    }
+
+    public function signUp(Request $request){
+
+        $email = $request['email'];
+        $username = $request['username'];
+        $user_password = $request['user_password'];
+
+        $user = new User();
+        $user->email = $email;
+        $user->username = $username;
+        $user->user_password = $user_password;
+
+        $user->save();
+
+        $usr = User::where('email', $email)->first();
+        Auth::login($usr);
+        //Mail::to($email)->send(new WelcomeMail());
+
+        return redirect()->route('feed');//anstatt feed view erstmal mail verifizieren
+    }
+
     public function postSignUp(Request $request)
     {
         $currentTimeString = time();
