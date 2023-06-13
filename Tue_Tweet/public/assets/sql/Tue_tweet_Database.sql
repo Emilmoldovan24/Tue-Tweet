@@ -228,7 +228,7 @@ CREATE TRIGGER update_tweets_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at IS NOT NULL THEN
+    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE tweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -238,7 +238,7 @@ CREATE TRIGGER update_comments_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at IS NOT NULL THEN
+    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL  THEN
         UPDATE comments SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -248,7 +248,7 @@ CREATE TRIGGER update_likes_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at IS NOT NULL THEN
+    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE likes SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -258,7 +258,7 @@ CREATE TRIGGER update_retweets_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at IS NOT NULL THEN
+    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE retweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
     END IF;
 END;
@@ -267,7 +267,7 @@ CREATE TRIGGER update_follows_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.deleted_at IS NOT NULL THEN
+    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE follows SET deleted_at = NEW.deleted_at WHERE follow_id = NEW.id;
     END IF;
 END;
