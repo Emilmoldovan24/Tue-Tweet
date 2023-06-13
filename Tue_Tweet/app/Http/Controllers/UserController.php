@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
@@ -169,7 +170,7 @@ class UserController extends Controller
         }
         
 
-        return redirect()->route('feed');
+        return Redirect::back();
     }
 
 
@@ -189,7 +190,7 @@ class UserController extends Controller
         DB::insert('insert into comments(user_id, tweet_id, comment, created_at) 
         values(?,?,?,?)', [$id, $request["tweet_id"], $request["comment"], $currentTimestamp]);
 
-        return redirect()->route('feed');
+        return Redirect::back();
     }
 
 
@@ -210,7 +211,7 @@ class UserController extends Controller
         }
 
 
-        return redirect()->route('feed');
+        return Redirect::back();
     }
 
     
@@ -227,7 +228,7 @@ class UserController extends Controller
         DB::insert('insert into retweets(user_id, tweet_id, retweet_text, created_at) 
         values(?,?,?,?', [$id, $request["tweet_id"], $request["retweet_text"], $currentTimestamp]);
 
-        return redirect()->route('feed');
+        return Redirect::back();
     }
 
 

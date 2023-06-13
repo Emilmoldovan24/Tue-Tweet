@@ -153,12 +153,13 @@ Route::get('/logout', [
     'as' => 'logout'
 ]);
 
+/*
 Route::get('/{username}', [
     'uses' => 'App\Http\Controllers\ProfileController@getProfile',
     'as' => 'userProfile'
-]);
+]);*/
 
-Route::get('profile/{username}', function($username){
+Route::get('/{username}', function($username){
     return view('profile', ['username' => $username]);
 });
 
