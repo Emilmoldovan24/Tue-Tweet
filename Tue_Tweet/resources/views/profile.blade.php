@@ -35,6 +35,7 @@
         } */
     .card {
         align-items: center;
+        margin-top: 20px;
     }
 
     .card-body {
@@ -55,12 +56,6 @@
 
     .navbar {
         color: white;
-    }
-
-    .titelbild {
-        width: 1000px;
-        height: 500px;
-
     }
 
     .list-group {
@@ -290,6 +285,17 @@
         height: 60px;
 
     }
+    .navbar.navbar-expand-lg {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        margin-bottom: 20px;
+    }
+    
     </style>
 </head>
 
@@ -323,10 +329,7 @@
                 </form>
             </div>
         </div>
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+    
     </nav>
 
     <div class="container">
@@ -367,7 +370,7 @@
         use Carbon\Carbon;
         $userJoined = DB::table('users')->where('id', $profile_id)->value('created_at');
         $createdDate = Carbon::parse($userJoined)->format('d.m.Y H:i:s');
-        echo $createdDate;
+        echo '<a>  Joined at ' . $createdDate . '</a>';
         ?>
                             </li>
 
@@ -391,41 +394,6 @@
             <div class="col-5">
 
                 <div class="middle-side">
-
-
-
-                    {{--<div class="post-container">
-                 <div class="post-row">
-                    <div class="user-profile">
-                        <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                        <div>
-                            <p>Mark</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <div class="menu-btn-own">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Delete-Tweet</a></li>
-                            <li><a class="dropdown-item" href="#">Change Privacy</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> Mark Retweeted</p>
-
-                <div class="retweet">
-                    <div class="tweetbox-profile">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
-                        <div>
-                            <p>Dagmar</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div>  --}}
 
                     <script>
                     // toggles the display of the comments when the user clicks on the comments button
@@ -476,9 +444,15 @@
                 echo '<span>' . $tweet->created_at . '</span>';
                 echo '</div>';
                 echo '</div>';
-
+                echo '<div class="menu-btn-own">';
                 echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
                 echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                echo '<ul class="dropdown-menu">';
+                echo '<li><a class="dropdown-item" href="#">Delete-Tweet</a></li>';
+                echo '<li><a class="dropdown-item" href="#">Change Privacy</a></li>';
+                echo '<li><a class="dropdown-item" href="#">Something else here</a></li>';
+                echo '</ul>';
+                echo '</div>';
                 echo '</div>';
 
                 // Tweet content
@@ -538,17 +512,11 @@
                 echo '</div>';
 
                 // Retweet Button
-                echo '<div><!-- Retweet button -->';
+                echo '<div>';
                 echo '<div class="btn-group dropend">';
-                echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
-                echo 'aria-expanded="false">';
-                echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
-                echo '</button>';
-                echo '<ul class="dropdown-menu">';
-                echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
-                echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
-                echo '</li>';
-                echo '</ul>';
+                echo '<button type="button" class="btn btn-dark">';
+                echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '</button>';
+               
                 echo '</div>';
                 echo '</div>';
 
@@ -601,92 +569,7 @@
 
 
 
-                {{--<div class="post-container">
-                 <div class="post-row">
-                    <div class="user-profile">
-                        <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                        <div>
-                            <p>Mark</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <div class="menu-btn-own">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Delete-Tweet</a></li>
-                            <li><a class="dropdown-item" href="#">Change Privacy</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
 
-                </div>
-
-                <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> Mark Retweeted</p>
-
-                <div class="retweet">
-                    <div class="tweetbox-profile">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
-                        <div>
-                            <p>Dagmar</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div> 
-
-
-
-
-
-                <div class="post-row">
-                    <div class="activity-icons">
-                        <!-- like Button-->
-                        <div>
-                            <div class="like-btn">
-                                <button type="button" class="btn btn-dark"><i class="fa-regular fa-heart"></i>234</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <!-- comment button -->
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-regular fa-comment"></i>22
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Show comments</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add
-                                            comment</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <!-- Retweet button -->
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-retweet"></i>45
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Just Retweet</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>--}}
-
-
-
-
-
-            </div>
 
         </div>
 
