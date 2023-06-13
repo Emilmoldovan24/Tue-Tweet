@@ -310,7 +310,7 @@
                     <form action="{{ route('feed') }}" method="GET">
                         <button type="submit" class="list-group-item list-group-item-action active"><i class="fa-solid fa-house"></i><a> Home </a></button>
                     </form>
-                    <form action=<?php echo "'profile/" . $results . "'"; ?> method="GET">
+                    <form action=<?php echo "'/" . $results . "'"; ?> method="GET">
                         <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-user"></i><a> Profile </a></button>
                     </form>
                     <form action="{{ route('settings') }}" method="GET">
@@ -531,7 +531,7 @@
 
 
                 echo '<div style="display: inline-block;">';
-                echo '<a style="margin-right: 3px;" href="profile/' . $username . '">' . $username . '</a>';
+                echo '<a style="margin-right: 3px;" href="/' . $username . '">' . $username . '</a>';
                 echo '<a> &bull; </a>';
                 echo '<span>' . $tweet->created_at . '</span>';
                 echo '</div>';

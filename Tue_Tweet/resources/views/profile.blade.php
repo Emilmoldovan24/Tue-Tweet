@@ -288,9 +288,8 @@ align-items: left;
   </head>
   <body>
   <?php
-                                $id = Auth::id();
-                                $results = DB::table('users')->where('id', $id)->value('username');
-                                ?>
+    $profile_id = DB::table('users')->where('username', $username)->value('id');
+    ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand">Tue-Tweet</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -298,18 +297,18 @@ align-items: left;
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-    <form action="{{ route('feed') }}" method="GET">
-                            <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
-                            </form>
-                            
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile<span class="sr-only">(current)</span> </a></button>
-                           
-      <form action="{{ route('settings') }}" method="GET">
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
-                            </form>
-                            <form action="{{ route('logout') }}" method="GET">
-                                <button type="submit"class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
-                            </form>
+        <form action="{{ route('feed') }}" method="GET">
+            <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
+        </form>
+        <form action=<?php echo "'/" . DB::table('users')->where('id', Auth::id())->value('username') . "'"; ?> method="GET">               
+            <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile </a></button>
+        </form>      
+        <form action="{{ route('settings') }}" method="GET">
+            <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
+        </form>
+        <form action="{{ route('logout') }}" method="GET">
+            <button type="submit"class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+        </form>
     </div>
   </div>
   <form class="d-flex" role="search">
@@ -317,8 +316,6 @@ align-items: left;
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
 </nav>
-
-    {{-- <h1> User: {{$username}} </h1> --}}
    
 <div class="container">
 <!-- <img class="titelbild" src="https://civis.eu/storage/files/picture-univeristy-tubingen.jpg" alt=""> -->
@@ -330,31 +327,20 @@ align-items: left;
 
             <div class="left-side">
            
-
             <div class="card" style="width: 18rem;">
             <?php
-                            $id = Auth::id();
-                            $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                            if (is_null($userImg)){
-                                echo '<img class="card-img-top" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="...">';
-                            } else{
-                                echo '<img class="profile-img" src=data:image/png;base64,' . $userImg . ' alt="...">';
-                            }
-                            
-                            ?>
+                $userImg = DB::table('users')->where('id', $profile_id)->value('profile_img');
+                $profileImg = app('App\Http\Controllers\UserController')->getUserImg($userImg);
+                echo "<img class='img-fluid' src='" . $profileImg . "' >"
+            ?>
 
   <div class="card-body">
-  <?php
-                                $id = Auth::id();
-                                $results = DB::table('users')->where('id', $id)->value('username');
-                                echo '<h5 class="card-title">Hello @' . $results . '</h5>'
-                                ?>
+  <h5 class="card-title">@ {{ $username }}</h5>
     <p class="card-text">
         {{--Ich studiere Informatik im (xy). Semester.--}}
         <?php
-        $id = Auth::id();
-        $userBio = DB::table('users')->where('id', $id)->value('profile_bio');
-        if (is_null($userBio)) {
+        $userBio = DB::table('users')->where('id', $profile_id)->value('profile_bio');
+        if (is_null($userBio) && Auth::id() == $profile_id) {
             echo '<a href="' . route('settings') . '">Create your bio</a>'; // Weiß nicht ob man hier dann noch angemeldet bleibt, muss man testen!
         } else {
             echo $userBio;
@@ -367,13 +353,13 @@ align-items: left;
     <li class="list-group-item"><i class="fa-solid fa-calendar"></i> 
         <?php
         use Carbon\Carbon;
-
-        $id = Auth::id();
-        $userJoined = DB::table('users')->where('id', $id)->value('created_at');
+        $userJoined = DB::table('users')->where('id', $profile_id)->value('created_at');
         $createdDate = Carbon::parse($userJoined)->format('d.m.Y H:i:s');
         echo $createdDate;
         ?>
     </li>
+
+    <!-- TODO -->
     <li class="list-group-item"><a href="#"> 48 following</a></li>
     <li class="list-group-item"><a href="#"> 22 followers</a></li>
   </ul>
@@ -429,11 +415,32 @@ align-items: left;
                     <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
                 </div>  --}}
 
+                <script>
+                    // toggles the display of the comments when the user clicks on the comments button
+                    function displayComments(tweet_id) {
+                        let element = document.getElementById("comments" + tweet_id);
+                        element.removeAttribute("hidden");
+
+                        if (element.style.display == "none" || element.style.display == "") {
+                            // show
+                            element.style.display = "block";
+                        } else {
+                            // hide
+                            element.style.display = "none";
+                        }
+                    }
+
+                    $(document).ready(function() {
+                        $(".default_picture").on("error", function() {
+                            $(this).attr('src', "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+                        });
+                    });
+                </script>
+
 
                 {{-- eigenes Feed anzeigen. Design ist bisschen verschoben? --}}
                 <?php
-            $userId = Auth::id();
-            $tweets = DB::table('tweets')->where('user_id', $userId)->orderBy('created_at', 'desc')->get();
+            $tweets = DB::table('tweets')->where('user_id', $profile_id)->orderBy('created_at', 'desc')->get();
 
             foreach ($tweets as $tweet) {
                 $currentTimeString = time();
@@ -448,14 +455,7 @@ align-items: left;
                 echo '<div class="post-row">';
                 echo '<div class="user-profile">';
                 echo $userImgHtml;
-
-               
                 
-               // echo '<p style="margin-right: 10px;">Mark &bull; </span>';
-               // echo '<span>May 3 2023, 2:30 pm</span>';
-               // echo '</div>';
-                
-
                 echo '<div style="display: inline-block;">';
                 echo '<a style="margin-right: 3px;" href="profile/' . $username . '">' . $username . '</a>';
                 echo '<a> &bull; </a>';
@@ -495,7 +495,7 @@ align-items: left;
 
                 // Like Button
                 echo '<div>';
-                echo '<form action=like method="POST">';
+                echo '<form action=like method="POST">';    
                 echo csrf_field();
                 echo '<div class="like-btn">';
 
@@ -582,51 +582,6 @@ align-items: left;
                 echo '</div>';
             }
             ?>
-
-
-
-                <div class="post-row">
-                    <div class="activity-icons">
-                        <!-- like Button-->
-                        <div>
-                            <div class="like-btn">
-                                <button type="button" class="btn btn-dark"><i class="fa-regular fa-heart"></i>234</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <!-- comment button -->
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-regular fa-comment"></i>22
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Show comments</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add
-                                            comment</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <!-- Retweet button -->
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-retweet"></i>45
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Just Retweet</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
 
