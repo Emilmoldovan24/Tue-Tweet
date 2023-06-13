@@ -280,13 +280,9 @@
                         <div class="col-md-4">
                             <?php
                             $id = Auth::id();
-                            $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                            if (is_null($userImg)) {
-                                echo '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" height="100px" width="150px" alt="...">';
-                            } else {
-                                echo '<img src=data:image/png;base64,' . $userImg . ' height="100px" width="150px" alt="...">';
-                            }
-
+                            $profileImg = DB::table('users')->where('id', $id)->value('profile_img');
+                            $profileImg = app('App\Http\Controllers\UserController')->getUserImg($profileImg);
+                            echo '<img src='.$profileImg.' height="100px" width="100px" >';
                             ?>
                         </div>
                         <div class="col-md-8">
