@@ -254,10 +254,7 @@ body {
     <nav class="navbar bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand">Tue-Tweet</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+           
         </div>
     </nav>
 
@@ -568,15 +565,10 @@ body {
                 // Retweet Button
                 echo '<div><!-- Retweet button -->';
                 echo '<div class="btn-group dropend">';
-                echo '<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"';
-                echo 'aria-expanded="false">';
+                echo '<button type="button" class="btn btn-dark">';
                 echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
                 echo '</button>';
-                echo '<ul class="dropdown-menu">';
-                echo '<li><a class="dropdown-item" href="#">Just Retweet</a></li>';
-                echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>';
-                echo '</li>';
-                echo '</ul>';
+        
                 echo '</div>';
                 echo '</div>';
 
@@ -725,73 +717,8 @@ body {
     </form>
 
 
-    {{-- #TODO kann das removed werden??
-    <!-- Comment Modal -->
-    <div class="modal fade" id="CommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
+    
 
-                    <div class="write-post-container">
-                        <div class="user-profile">
-                            <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                            <div>
-                                <?php
-                                echo '<p>' . $user_name . '</p>';
-                                ?>
-                                <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
-                            </div>
-                        </div>
-
-                        <div class="post-input-container">
-                            <textarea rows="3" placeholder="Add a comment to this tweet"></textarea>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Comment</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <!-- Quote Retweet Modal -->
-    <div class="modal fade" id="QuoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-
-                    <div class="write-post-container">
-                        <div class="user-profile">
-                            <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
-                            <div>
-                                <?php
-                                echo '<p>' . $user_name . '</p>';
-                                ?>
-                                <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
-                            </div>
-                        </div>
-
-                        <div class="post-input-container">
-                            <textarea rows="3" placeholder="Add a comment to your quote"></textarea>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Retweet</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
---}}
 
     </div>
     </div>
