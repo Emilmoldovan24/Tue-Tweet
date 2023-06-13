@@ -1,77 +1,87 @@
-
-
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <title>Hello, world!</title>
 
     <style>
-        body {
-            background-color: lightgrey;
-            
-        }
-        .profile-img {
-       
-       width:100%;
-       max-width: 200px;
-       margin-top: 10px;
-            border-radius: 50%;
-   
-       }
-     /*    .card-img-top {
+    body {
+        background-color: lightgrey;
+
+    }
+
+    .profile-img {
+
+        width: 100%;
+        max-width: 200px;
+        margin-top: 10px;
+        border-radius: 50%;
+
+    }
+
+    /*    .card-img-top {
             margin-top: 10px;
             max-height: 80%;
             max-width: 80%;
             border-radius: 50%;
         } */
-        .card {
-            align-items: center;
-        }
-        .card-body {
-            display: inline-block;
-        }
-        .card-img-top-tweet {
-            margin-top: 10px;
-            max-height: 20%;
-            max-width: 20%;
-            border-radius: 50%;
-        }
-        .card-img-noti {
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-        .navbar{
-            color: white;
-        }
-        .titelbild{
-            width: 1000px;
-            height: 500px;
-            
-        }
-        .list-group{
-            width: 279px;
-        }
+    .card {
+        align-items: center;
+    }
 
-  .btn.btn-light {
+    .card-body {
+        display: inline-block;
+    }
+
+    .card-img-top-tweet {
+        margin-top: 10px;
+        max-height: 20%;
+        max-width: 20%;
+        border-radius: 50%;
+    }
+
+    .card-img-noti {
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .navbar {
+        color: white;
+    }
+
+    .titelbild {
+        width: 1000px;
+        height: 500px;
+
+    }
+
+    .list-group {
+        width: 279px;
+    }
+
+    .btn.btn-light {
         margin: 20px;
-}
-.card {
-    margin-bottom: 10px;
-}
-.bg-dark.p-4 {
-align-items: left;
-}
+    }
+
+    .card {
+        margin-bottom: 10px;
+    }
+
+    .bg-dark.p-4 {
+        align-items: left;
+    }
 
 
 
-.post-input-container {
+    .post-input-container {
         padding-left: 55px;
         padding-top: 20px;
     }
@@ -85,15 +95,15 @@ align-items: left;
         background: transparent;
     }
 
- 
-/* 
+
+    /* 
     .container {
         display: flex;
         justify-content: space-between;
         padding: 13px 5%;
     } */
 
-/* 
+    /* 
     .left-side {
         flex-basis: 25%;
         position: sticky;
@@ -127,7 +137,7 @@ align-items: left;
         margin-bottom: 6px;
         display: flex;
         align-items: center;
-        
+
     }
 
     .user-profile img {
@@ -274,71 +284,73 @@ align-items: left;
         border-radius: 6px;
         border: 2px solid;
     }
-  
-     .pos-f-t {
+
+    .pos-f-t {
         width: 300px;
-  height: 60px;
+        height: 60px;
 
-    } 
-  
- 
-
-  
+    }
     </style>
-  </head>
-  <body>
-  <?php
+</head>
+
+<body>
+    <?php
     $profile_id = DB::table('users')->where('username', $username)->value('id');
     ?>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand">Tue-Tweet</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-        <form action="{{ route('feed') }}" method="GET">
-            <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand">Tue-Tweet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <form action="{{ route('feed') }}" method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
+                </form>
+                <form action=<?php echo "'/" . DB::table('users')->where('id', Auth::id())->value('username') . "'"; ?>
+                    method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile
+                        </a></button>
+                </form>
+                <form action="{{ route('settings') }}" method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings
+                        </a></button>
+                </form>
+                <form action="{{ route('logout') }}" method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout
+                        </a></button>
+                </form>
+            </div>
+        </div>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <form action=<?php echo "'/" . DB::table('users')->where('id', Auth::id())->value('username') . "'"; ?> method="GET">               
-            <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile </a></button>
-        </form>      
-        <form action="{{ route('settings') }}" method="GET">
-            <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings </a></button>
-        </form>
-        <form action="{{ route('logout') }}" method="GET">
-            <button type="submit"class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
-        </form>
-    </div>
-  </div>
-  <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-</nav>
-   
-<div class="container">
-<!-- <img class="titelbild" src="https://civis.eu/storage/files/picture-univeristy-tubingen.jpg" alt=""> -->
+    </nav>
 
-    <div class="row">
-   
+    <div class="container">
+        <!-- <img class="titelbild" src="https://civis.eu/storage/files/picture-univeristy-tubingen.jpg" alt=""> -->
 
-        <div class="col">
+        <div class="row">
 
-            <div class="left-side">
-           
-            <div class="card" style="width: 18rem;">
-            <?php
+
+            <div class="col">
+
+                <div class="left-side">
+
+                    <div class="card" style="width: 18rem;">
+                        <?php
                 $userImg = DB::table('users')->where('id', $profile_id)->value('profile_img');
                 $profileImg = app('App\Http\Controllers\UserController')->getUserImg($userImg);
                 echo "<img class='img-fluid' src='" . $profileImg . "' >"
             ?>
 
-  <div class="card-body">
-  <h5 class="card-title">@ {{ $username }}</h5>
-    <p class="card-text">
-        {{--Ich studiere Informatik im (xy). Semester.--}}
-        <?php
+                        <div class="card-body">
+                            <h5 class="card-title">@ {{ $username }}</h5>
+                            <p class="card-text">
+                                {{--Ich studiere Informatik im (xy). Semester.--}}
+                                <?php
         $userBio = DB::table('users')->where('id', $profile_id)->value('profile_bio');
         if (is_null($userBio) && Auth::id() == $profile_id) {
             echo '<a href="' . route('settings') . '">Create your bio</a>'; // Weiß nicht ob man hier dann noch angemeldet bleibt, muss man testen!
@@ -346,43 +358,43 @@ align-items: left;
             echo $userBio;
         }
         ?>
-    </p>
-  </div>
-  <ul class="list-group list-group-flush">
-    {{--<li class="list-group-item"><i class="fa-solid fa-location-dot"></i> Tübingen</li>--}}
-    <li class="list-group-item"><i class="fa-solid fa-calendar"></i> 
-        <?php
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {{--<li class="list-group-item"><i class="fa-solid fa-location-dot"></i> Tübingen</li>--}}
+                            <li class="list-group-item"><i class="fa-solid fa-calendar"></i>
+                                <?php
         use Carbon\Carbon;
         $userJoined = DB::table('users')->where('id', $profile_id)->value('created_at');
         $createdDate = Carbon::parse($userJoined)->format('d.m.Y H:i:s');
         echo $createdDate;
         ?>
-    </li>
+                            </li>
 
-    <!-- TODO -->
-    <li class="list-group-item"><a href="#"> 48 following</a></li>
-    <li class="list-group-item"><a href="#"> 22 followers</a></li>
-  </ul>
+                            <!-- TODO -->
+                            <li class="list-group-item"><a href="#"> 48 following</a></li>
+                            <li class="list-group-item"><a href="#"> 22 followers</a></li>
+                        </ul>
 
-</div>
-
-
+                    </div>
 
 
-            
-     
 
+
+
+
+
+                </div>
             </div>
-</div>
-
-          
-        <div class="col-5">
-
-            <div class="middle-side">
-                
 
 
-            {{--<div class="post-container">
+            <div class="col-5">
+
+                <div class="middle-side">
+
+
+
+                    {{--<div class="post-container">
                  <div class="post-row">
                     <div class="user-profile">
                         <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
@@ -415,7 +427,7 @@ align-items: left;
                     <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
                 </div>  --}}
 
-                <script>
+                    <script>
                     // toggles the display of the comments when the user clicks on the comments button
                     function displayComments(tweet_id) {
                         let element = document.getElementById("comments" + tweet_id);
@@ -432,14 +444,16 @@ align-items: left;
 
                     $(document).ready(function() {
                         $(".default_picture").on("error", function() {
-                            $(this).attr('src', "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+                            $(this).attr('src',
+                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                                );
                         });
                     });
-                </script>
+                    </script>
 
 
-                {{-- eigenes Feed anzeigen. Design ist bisschen verschoben? --}}
-                <?php
+                    {{-- eigenes Feed anzeigen. Design ist bisschen verschoben? --}}
+                    <?php
             $tweets = DB::table('tweets')->where('user_id', $profile_id)->orderBy('created_at', 'desc')->get();
 
             foreach ($tweets as $tweet) {
@@ -582,12 +596,12 @@ align-items: left;
                 echo '</div>';
             }
             ?>
-            </div>
+                </div>
 
 
 
-               
-            {{--<div class="post-container">
+
+                {{--<div class="post-container">
                  <div class="post-row">
                     <div class="user-profile">
                         <img src="https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="">
@@ -671,7 +685,7 @@ align-items: left;
 
 
 
-                
+
             </div>
 
         </div>
@@ -679,63 +693,71 @@ align-items: left;
         <div class="col">
 
             <div class="right-side">
-             
-            <div class="pos-f-t">
-                
-                <div class="collapse" id="navbarToggleExternalContent">
-              
-                  <div class="bg-dark p-4">
-              
-                  <div class="card" style="width: 15rem;">
-                <div class="card-body">
-                <div style="display: inline-block;">
-                  <img class="card-img-noti" src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80"  width="56" height="56" alt="Card image cap">
-              </div>
-                  <p class="card-text">Sven reported your post.</p>
-                  <a href="#" class="btn btn-primary">See the Post</a>
+
+                <div class="pos-f-t">
+
+                    <div class="collapse" id="navbarToggleExternalContent">
+
+                        <div class="bg-dark p-4">
+
+                            <div class="card" style="width: 15rem;">
+                                <div class="card-body">
+                                    <div style="display: inline-block;">
+                                        <img class="card-img-noti"
+                                            src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80"
+                                            width="56" height="56" alt="Card image cap">
+                                    </div>
+                                    <p class="card-text">Sven reported your post.</p>
+                                    <a href="#" class="btn btn-primary">See the Post</a>
+                                </div>
+                            </div>
+
+
+                            <div class="card" style="width: 15rem;">
+                                <div class="card-body">
+
+                                    <img class="card-img-noti"
+                                        src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
+                                        width="56" height="56" alt="Card image cap">
+
+                                    <p class="card-text">Mike wants to follow you.</p>
+                                    <a href="#" class="btn btn-primary">Accept</a>
+                                    <a href="#" class="btn btn-secondary">Decline</a>
+                                </div>
+                            </div>
+
+                            <div class="card" style="width: 15rem;">
+                                <div class="card-body">
+                                    <div style="display: inline-block;">
+                                        <img class="card-img-noti"
+                                            src="https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2lybHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=700&q=60"
+                                            width="56" height="56" alt="Card image cap">
+                                    </div>
+                                    <p class="card-text">Erica commented on your post.</p>
+                                    <a href="#" class="btn btn-primary">See the Post</a>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <nav class="navbar navbar-dark bg-dark">
+                        <p>Show Notifications</p>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </nav>
                 </div>
-              </div>
-              
-              
-              <div class="card" style="width: 15rem;">
-                <div class="card-body">
-                
-                  <img class="card-img-noti" src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"  width="56" height="56" alt="Card image cap">
-              
-                  <p class="card-text">Mike wants to follow you.</p>
-                  <a href="#" class="btn btn-primary">Accept</a>
-                  <a href="#" class="btn btn-secondary">Decline</a>
-                </div>
-              </div>
-               
-              <div class="card" style="width: 15rem;">
-                <div class="card-body">
-                <div style="display: inline-block;">
-                  <img class="card-img-noti" src="https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2lybHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=700&q=60"  width="56" height="56" alt="Card image cap">
-              </div>
-                  <p class="card-text">Erica commented on your post.</p>
-                  <a href="#" class="btn btn-primary">See the Post</a>
-                </div>
-              </div>
-               
-              
-              
-                  </div>
-                </div>
-                <nav class="navbar navbar-dark bg-dark">
-                  <p>Show Notifications</p>
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                </nav>
-              </div>
 
 
             </div>
 
-      
 
-<!--             <div class="card" style="width: 18rem;">
+
+            <!--             <div class="card" style="width: 18rem;">
   <img class="card-img-top-tweet" src="https://images.unsplash.com/photo-1615899486509-84e2c782b0da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=700&q=60" alt="Card image cap">
   <div class="card-body">
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -746,13 +768,20 @@ align-items: left;
 
         </div>
     </div>
-</div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-     <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+</body>
+
 </html>
