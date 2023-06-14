@@ -69,6 +69,12 @@ Route::get('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminLogIn',
     'as' => 'adminLogin'
 ]);
+
+Route::get('/adminLogout', [
+    'uses' => 'App\Http\Controllers\AdminController@getAdminLogout',
+    'as' => 'adminLogout'
+]);
+
 Route::get('/adminFeed', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminFeed',
     'as' => 'adminFeed'
@@ -83,6 +89,8 @@ Route::post('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminLogIn',
     'as' => 'adminLogin'
 ]);
+
+
 
 Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');
 

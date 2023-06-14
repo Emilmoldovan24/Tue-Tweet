@@ -19,6 +19,11 @@ class AdminController extends Controller
     public function getAdminFeed(){
         return view('adminFeed');
     }
+    public function getAdminLogout()
+    {
+        Auth::logout();
+        return redirect()->route('adminLogin');
+    }
 
     public function postAdminSignUp(Request $request) {
         $currentTimeString = time();
@@ -59,10 +64,11 @@ class AdminController extends Controller
 
         if ($admin && Hash::check($request->user_password, $admin->user_password)) {
                 // Admin gefunden und Passwort ist korrekt
+                Auth::login($admin);
             return redirect()->route('adminFeed');
         } else {
             // Admin nicht gefunden oder Passwort ist falsch
-            return redirect()->back();
+            return redirect()->back()->withErrors(['admin_password' => 'Check if the password or email is correct.'])->withInput();
             
         }
     }
