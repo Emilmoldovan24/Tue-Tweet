@@ -56,7 +56,15 @@ class UserController extends Controller
         $email_ = $request['email'];
         $user_password_ = bcrypt($request['user_password']);
 
-        $usr_data = array('username' => $username_, 'email' => $email_, 'user_password' => $user_password_);
+        $randomNumber = random_int(100000, 999999);
+
+        $usr_data = array('username' => $username_, 'email' => $email_, 'user_password' => $user_password_, 'randomNumber' => $randomNumber);
+
+        Mail::send('mail.mailVerify', $usr_data, function($message) use($usr_data) {
+            $message->to($usr_data['email'], $usr_data['username'])->subject
+               ('Verify Email');
+            $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
+         });
 
         return view('verify',compact('usr_data'));
     }
