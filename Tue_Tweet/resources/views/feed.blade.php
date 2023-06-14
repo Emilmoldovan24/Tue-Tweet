@@ -512,12 +512,12 @@
                 echo '<div class="post-row">';
                 echo '<div class="activity-icons">';
 
-
+                
                 // Count Likes Comments and Retweets
-                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->count();
-                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->count();
-                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->count();
-
+                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility', 1)->count();
+                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility', 1)->count();
+                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility', 1)->count();
+                
 
                 // Like Button
                 echo '<div>';

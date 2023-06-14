@@ -301,12 +301,13 @@
 
 <body>
     <?php
-    $user_id = Auth::user()->id;
-    $profile_id = DB::table('users')->where('username', $username)->value('id');
-    $profile_followers = DB::table('follows')->where('follow_user_id', $profile_id)->count();
-    $profile_following = DB::table('follows')->where('following_user_id', $profile_id)->count();
-    $myProfile = ($user_id == $profile_id);
-    $follow = DB::table('follows')->where('following_user_id', $user_id)->where('follow_user_id', $profile_id)->exists()
+     // Database requests
+        $user_id = Auth::user()->id;
+        $profile_id = DB::table('users')->where('username', $username)->value('id');
+        $profile_followers = DB::table('follows')->where('follow_user_id', $profile_id)->count();
+        $profile_following = DB::table('follows')->where('following_user_id', $profile_id)->count();
+        $myProfile = ($user_id == $profile_id);
+        $follow = DB::table('follows')->where('following_user_id', $user_id)->where('follow_user_id', $profile_id)->exists()
     ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand">Tue-Tweet</a>
@@ -349,41 +350,41 @@
 
                     <div class="card" style="width: 18rem;">
                         <?php
-                $userImg = DB::table('users')->where('id', $profile_id)->value('profile_img');
-                $profileImg = app('App\Http\Controllers\UserController')->getUserImg($userImg);
-                echo "<img class='img-fluid' src='" . $profileImg . "' >"
-            ?>
+                            $userImg = DB::table('users')->where('id', $profile_id)->value('profile_img');
+                            $profileImg = app('App\Http\Controllers\UserController')->getUserImg($userImg);
+                            echo "<img class='img-fluid' src='" . $profileImg . "' >"
+                        ?>
 
                         <div class="card-body">
                             <h5 class="card-title">@ {{ $username }}</h5>
                             <p class="card-text">
                                 {{--Ich studiere Informatik im (xy). Semester.--}}
                                 <?php
-        $userBio = DB::table('users')->where('id', $profile_id)->value('profile_bio');
-        if (is_null($userBio) && Auth::id() == $profile_id) {
-            echo '<a href="' . route('settings') . '">Create your bio</a>'; // Weiß nicht ob man hier dann noch angemeldet bleibt, muss man testen!
-        } else {
-            echo $userBio;
-        }
-        ?>
+                                    $userBio = DB::table('users')->where('id', $profile_id)->value('profile_bio');
+                                    if (is_null($userBio) && Auth::id() == $profile_id) {
+                                        echo '<a href="' . route('settings') . '">Create your bio</a>'; // Weiß nicht ob man hier dann noch angemeldet bleibt, muss man testen!
+                                    } else {
+                                        echo $userBio;
+                                    }
+                                ?>
                             </p>
                         </div>
                         <ul class="list-group list-group-flush">
                             {{--<li class="list-group-item"><i class="fa-solid fa-location-dot"></i> Tübingen</li>--}}
                             <li class="list-group-item"><i class="fa-solid fa-calendar"></i>
                                 <?php
-        use Carbon\Carbon;
-        $userJoined = DB::table('users')->where('id', $profile_id)->value('created_at');
-        $createdDate = Carbon::parse($userJoined)->format('d.m.Y H:i:s');
-        echo '<a>  Joined at ' . $createdDate . '</a>';
-        ?>
+                                    use Carbon\Carbon;
+                                    $userJoined = DB::table('users')->where('id', $profile_id)->value('created_at');
+                                    $createdDate = Carbon::parse($userJoined)->format('d.m.Y H:i:s');
+                                    echo '<a>  Joined at ' . $createdDate . '</a>';
+                                ?>
                             </li>
 
                             
                             <li class="list-group-item"><a href="#"> {{$profile_following}} following</a></li>
                             <li class="list-group-item"><a href="#">{{$profile_followers}} followers</a></li>
 
-
+                            <!-- Follow Button -->
                             @if(! $myProfile)
                                 <form action="{{ route('follow') }}" method="POST">
                                     <?php echo csrf_field(); ?>
@@ -439,8 +440,9 @@
                     </script>
 
 
-                    {{-- eigenes Feed anzeigen. Design ist bisschen verschoben? --}}
-                    <?php
+            {{-- eigenes Feed anzeigen. Design ist bisschen verschoben? --}}
+            <?php
+            // #TODO visibility und deleted_at Abfragen 
             $tweets = DB::table('tweets')->where('user_id', $profile_id)->orderBy('created_at', 'desc')->get();
 
             foreach ($tweets as $tweet) {
