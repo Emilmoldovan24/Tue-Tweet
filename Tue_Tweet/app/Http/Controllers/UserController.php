@@ -232,6 +232,24 @@ class UserController extends Controller
     }
 
 
+    // Post Follow
+    public function postFollow(Request $request)
+    {
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+        $following_user_id = Auth::id();
+
+        $follow_user_id = $request['follow_user_id'];
+        if (DB::table('follows')->where('following_user_id', $following_user_id)->where('follow_user_id', $follow_user_id)->doesntExist()) {
+            DB::insert('insert into follows(follow_user_id, following_user_id, created_at) 
+            values(?,?,?)', [$follow_user_id, $following_user_id, $currentTimestamp]);
+        } else {
+            DB::delete('delete from follows where following_user_id = ? and follow_user_id = ?', [$following_user_id, $follow_user_id]);
+        }
+
+        return Redirect::back();
+    }
+
     // Store Image
     public function postImage(Request $request)
     {

@@ -148,6 +148,11 @@ Route::post('/like', [
     'as' => 'like'
 ]);
 
+Route::post('/follow', [
+    'uses' => 'App\Http\Controllers\UserController@postFollow',
+    'as' => 'follow'
+]);
+
 Route::get('/logout', [
     'uses' => 'App\Http\Controllers\UserController@getLogout',
     'as' => 'logout'

@@ -295,7 +295,12 @@
 
 <body>
     <?php
+    $user_id = Auth::user()->id;
     $profile_id = DB::table('users')->where('username', $username)->value('id');
+    $profile_followers = DB::table('follows')->where('follow_user_id', $profile_id)->count();
+    $profile_following = DB::table('follows')->where('following_user_id', $profile_id)->count();
+    $myProfile = ($user_id == $profile_id);
+    $follow = DB::table('follows')->where('following_user_id', $user_id)->where('follow_user_id', $profile_id)->exists()
     ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand">Tue-Tweet</a>
@@ -371,9 +376,23 @@
         ?>
                             </li>
 
-                            <!-- TODO -->
-                            <li class="list-group-item"><a href="#"> 48 following</a></li>
-                            <li class="list-group-item"><a href="#"> 22 followers</a></li>
+                            
+                            <li class="list-group-item"><a href="#"> {{$profile_following}} following</a></li>
+                            <li class="list-group-item"><a href="#">{{$profile_followers}} followers</a></li>
+
+
+                            @if(! $myProfile)
+                                <form action="{{ route('follow') }}" method="POST">
+                                    <?php echo csrf_field(); ?>
+
+                                    @if($follow)
+                                        <button type="submit" class="btn btn-primary">Unfollow</button>
+                                    @else
+                                        <button type="submit" class="btn btn-primary">Follow</button>
+                                    @endif
+                                    <input type="hidden" name="follow_user_id" value="{{$profile_id}}">
+                                </form>
+                            @endif
                         </ul>
 
                     </div>
@@ -446,7 +465,7 @@
                         $(".default_picture").on("error", function() {
                             $(this).attr('src',
                                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                );
+                            );
                         });
                     });
                     </script>
