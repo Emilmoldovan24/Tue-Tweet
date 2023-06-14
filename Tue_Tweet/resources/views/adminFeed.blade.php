@@ -314,6 +314,37 @@
 
 
     <div class="container">
+        <!--COLUMN 1 (LEFT-SIDEBAR-->
+        
+            <div class="left-sidebar">
+            <h1> Menu </h1>
+
+                <!-- Current admin -->
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <?php
+                            $admin_id = Auth::id();
+                            $admin_name = DB::table('admins')->where('id', $admin_id)->value('adminname');
+                            ?>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Current: {{$admin_name}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Buttons -->
+                <div class="list-group">
+                    <form action="{{ route('adminLogout') }}" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+                    </form>
+                </div>
+                <br>
+            </div>
+        
         
         <!-- MIDDLE-BAR-FEED -->
 
