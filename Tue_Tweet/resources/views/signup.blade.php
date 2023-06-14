@@ -14,8 +14,7 @@
         margin: 6px 7%;
     }
     .home-header {
-        background: rgb(222,218,218);
-        background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);
+        background: lightgrey;
     }
     .home-header .row{
         padding-top: 50px;
