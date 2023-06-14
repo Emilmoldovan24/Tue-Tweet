@@ -570,7 +570,7 @@
 
                 echo '<div class="comment-container">';
                 //list comments
-                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->get();
+                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility',1)->get();
                 foreach ($comments as $comment) {
                     $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                     $userImg = DB::table('users')->where('id', $id)->value('profile_img');
