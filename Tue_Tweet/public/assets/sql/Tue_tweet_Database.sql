@@ -18,7 +18,7 @@ set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION
 -- profile_img -> self-selected profile picture
 -- created_at  -> Time when the user was created
 CREATE TABLE users (
-  id                INT           AUTO_INCREMENT PRIMARY KEY ,
+  id                INT           AUTO_INCREMENT PRIMARY KEY,
   username          VARCHAR(30)   UNIQUE NOT NULL,
   email             VARCHAR(50)   UNIQUE NOT NULL,
   user_password     VARCHAR(60)   NOT NULL,
@@ -29,7 +29,8 @@ CREATE TABLE users (
   email_verified_at DATETIME      DEFAULT NULL,
   created_at        TIMESTAMP ,
   updated_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
-  deleted_at        TIMESTAMP     NULL DEFAULT NULL
+  deleted_at        TIMESTAMP     NULL DEFAULT NULL,
+  activate          BOOLEAN       DEFAULT TRUE
  );
 
 /*
@@ -79,13 +80,14 @@ VALUES( "Admin1", "admin@1", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gY
 -- img        -> possible image of a tweet
 -- created_at -> time when the tweet was created
 CREATE TABLE tweets (
-  tweet_id    INT         AUTO_INCREMENT PRIMARY KEY,
-  user_id     INT         NOT NULL,
-  tweet       TEXT(240)   NOT NULL,
-  visibility  BOOLEAN     DEFAULT TRUE,
-  img         LONGBLOB    DEFAULT NULL,
-  created_at  TIMESTAMP,
-  deleted_at  TIMESTAMP   NULL DEFAULT NULL
+  tweet_id              INT         AUTO_INCREMENT PRIMARY KEY,
+  user_id               INT         NOT NULL,
+  tweet                 TEXT(240)   NOT NULL,
+  visibility            BOOLEAN     DEFAULT TRUE,
+  img                   LONGBLOB    DEFAULT NULL,
+  created_at            TIMESTAMP,
+  deleted_at            TIMESTAMP   NULL DEFAULT NULL,
+  activate              BOOLEAN     DEFAULT TRUE
 );
 
 /*
@@ -105,13 +107,15 @@ VALUES( 1, "First Tweet", TRUE,  NULL, '2023-05-09 14:56:21'),
 -- comment    -> text for the comment 
 -- created_at -> Time at which comments were made
 CREATE TABLE comments (
-  comment_id  INT        AUTO_INCREMENT PRIMARY KEY,
-  user_id     INT        NOT NULL,
-  tweet_id    INT        NOT NULL,
-  comment     TEXT(240)  NOT NULL,
-  visibility  BOOLEAN    DEFAULT TRUE,
-  created_at  TIMESTAMP,
-  deleted_at  TIMESTAMP  NULL DEFAULT NULL
+  comment_id            INT        AUTO_INCREMENT PRIMARY KEY,
+  user_id               INT        NOT NULL,
+  tweet_id              INT        NOT NULL,
+  comment               TEXT(240)  NOT NULL,
+  notification_flag     BOOLEAN    DEFAULT TRUE,
+  visibility            BOOLEAN    DEFAULT TRUE,
+  created_at            TIMESTAMP,
+  deleted_at            TIMESTAMP  NULL DEFAULT NULL,
+  activate              BOOLEAN    DEFAULT TRUE
 );
 
 /*
@@ -134,9 +138,11 @@ CREATE TABLE retweets (
   user_id      INT         NOT NULL,
   tweet_id     INT         NOT NULL,
   retweet_text TEXT(240)   NOT NULL,
-  visibility   BOOLEAN     DEFAULT TRUE, 
-  created_at   TIMESTAMP,
-  deleted_at   TIMESTAMP   NULL DEFAULT NULL
+  notification_flag        BOOLEAN     DEFAULT TRUE,
+  visibility               BOOLEAN     DEFAULT TRUE, 
+  created_at               TIMESTAMP,
+  deleted_at               TIMESTAMP   NULL DEFAULT NULL,
+  activate                 BOOLEAN     DEFAULT TRUE
 );
 
 /*
@@ -153,12 +159,14 @@ VALUES( 1, 3, "retweet to tweet 3", TRUE, '2023-05-09 18:56:21'),
 -- tweet_id     -> to which tweet does the like refer
 -- created_at   -> Time at which likes were made
 CREATE TABLE likes (
-  like_id    INT         AUTO_INCREMENT PRIMARY KEY,
-  user_id    INT         NOT NULL,
-  tweet_id   INT         NOT NULL,
-  visibility BOOLEAN     DEFAULT TRUE,
-  created_at TIMESTAMP,
-  deleted_at TIMESTAMP   NULL DEFAULT NULL
+  like_id               INT         AUTO_INCREMENT PRIMARY KEY,
+  user_id               INT         NOT NULL,
+  tweet_id              INT         NOT NULL,
+  visibility            BOOLEAN     DEFAULT TRUE,
+  notification_flag     BOOLEAN     DEFAULT TRUE,
+  created_at            TIMESTAMP,
+  deleted_at            TIMESTAMP   NULL DEFAULT NULL,
+  activate              BOOLEAN     DEFAULT TRUE
 );
 
 /*
@@ -175,12 +183,14 @@ VALUES( 3, 3, '2023-05-09 15:56:21'),
 -- following_user_id -> user this is followed
 -- created_at        -> Time at which follow were made
 CREATE TABLE follows (
-  follow_id         INT        AUTO_INCREMENT PRIMARY KEY,
-  follow_user_id    INT        NOT NULL,
-  following_user_id INT        NOT NULL,
-  visibility        BOOLEAN    DEFAULT TRUE,
-  created_at        TIMESTAMP,
-  deleted_at        TIMESTAMP     NULL DEFAULT NULL
+  follow_id             INT        AUTO_INCREMENT PRIMARY KEY,
+  follow_user_id        INT        NOT NULL,
+  following_user_id     INT        NOT NULL,
+  visibility            BOOLEAN    DEFAULT TRUE,
+  notification_flag     BOOLEAN     DEFAULT TRUE,
+  created_at            TIMESTAMP,
+  deleted_at            TIMESTAMP   NULL DEFAULT NULL,
+  activate              BOOLEAN     DEFAULT TRUE
 );
 
 
@@ -223,7 +233,9 @@ ADD CONSTRAINT FK_likes_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id
 
 /*
  Trigger for Cascading the Updates on users
+ deleted_at
 */
+
 CREATE TRIGGER update_tweets_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -272,6 +284,10 @@ BEGIN
     END IF;
 END;
 
+/*
+visibility
+*/
+
 CREATE TRIGGER update_tweets_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -318,8 +334,57 @@ BEGIN
 END;
 
 /*
- Event that checks once a day whether deleted_at is older than 30 days
+activate
 */
+
+CREATE TRIGGER update_tweets_activate
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.activate  <> OLD.activate THEN
+        UPDATE tweets SET activate = NEW.activate  WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_comments_activate
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.activate <> OLD.activate  THEN
+        UPDATE comments SET activate = NEW.activate  WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_likes_activate
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.activate  <> OLD.activate  THEN
+        UPDATE likes SET activate  = NEW.activate  WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_retweets_activate
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.activate  <> OLD.activate THEN
+        UPDATE retweets SET activate  = NEW.activate  WHERE user_id = NEW.id;
+    END IF;
+END;
+
+CREATE TRIGGER update_follows_activate
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.activate  <> OLD.activate  THEN
+        UPDATE follows SET activate  = NEW.activate  WHERE follow_id = NEW.id;
+    END IF;
+END;
+
+/*
+ Event that checks once a day whether deleted_at is older than 30 days
+
 SET GLOBAL event_scheduler = ON;
 
 DROP EVENT IF EXISTS delete_old_rows_event;
@@ -329,5 +394,6 @@ ON SCHEDULE
   STARTS CURRENT_TIMESTAMP + INTERVAL 1 DAY
 DO
   DELETE FROM users WHERE deleted_at < (CURDATE() - INTERVAL 30 DAY);
+  */
 
 
