@@ -11,16 +11,16 @@
 <style>
 .logo {
     font-family: 'Inter', sans-serif;
-    color: white;
+    color: black;
     font-size: 100px;
     margin: 6px 7%;
 }
 
-/**.home-header {
-    background: rgb(222,218,218);
-    background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);  
+.home-header {
+    background: lightgrey;
+    /* background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);  
     background: rgb(2, 0, 36);
-    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
 }
 
@@ -73,8 +73,8 @@
 }
 
 body {
-    color: white;
-}*/
+    color: black;
+}
 </style>
 
 <body>
