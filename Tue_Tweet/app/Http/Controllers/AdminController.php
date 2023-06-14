@@ -79,7 +79,13 @@ class AdminController extends Controller
     public function hideTweet(Request $request){
         
         $id = $request->id;
-        
+        $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
+        $userDeletedAt = DB::table('users')->where('id', $userId)->value('deleted_at');
+        $userExists = 0;
+        if($userDeletedAt == NULL){
+            $userExists = 1;
+        }
+
         $tweet = DB::select("select * from tweets where tweet_id ='$id'");
         $tweetVis = DB::table('tweets')->where('tweet_id', $id)->value('visibility');
 
@@ -88,7 +94,36 @@ class AdminController extends Controller
         }else{
             DB::update("update tweets set visibility = 0 where tweet_id = '$id'");
         }
+
         
+        
+        
+        return redirect()->route('adminFeed');
+    }
+
+    public function deleteUser(Request $request){
+
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update users set deleted_at = '$currentTimestamp' where id = '$id'");
+
+        DB::update("update tweets set visibility = 0 where user_id = '$id'");
+
+        return redirect()->route('adminFeed');
+
+    }
+
+
+    //will need to be implemented
+    public function restoreUser(Request $request){
+
+        $id = $request->id;
+        $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
+        DB::update("update users set deleted_at = NULL where id = '$userId'");
+        DB::update("update tweets set visibility = 1 where user_id = '$userId'");
         
         return redirect()->route('adminFeed');
     }

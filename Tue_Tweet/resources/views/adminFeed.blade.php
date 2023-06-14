@@ -194,6 +194,34 @@
         cursor: pointer;
     }
 
+    .deleteuser-btn {
+        background-color: black;
+        color: black; 
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .restoreuser-btn {
+        background-color: green;
+        color: black; 
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
     .activity-icons div i {
         display: inline-flex;
         align-items: center;
@@ -289,199 +317,38 @@
         
         <!-- MIDDLE-BAR-FEED -->
 
-        <!-- DEMO RETWEET -->
+        <script>
+            // toggles the display of the comments when the user clicks on the comments button
+            function displayComments(tweet_id) {
+                let element = document.getElementById("comments" + tweet_id);
+                element.removeAttribute("hidden");
+
+                if (element.style.display == "none" || element.style.display == "") {
+                    // show
+                    element.style.display = "block";
+                } else {
+                    // hide
+                    element.style.display = "none";
+                }
+            }
+
+            $(document).ready(function() {
+                $(".default_picture").on("error", function() {
+                    $(this).attr('src',
+                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                        );
+                });
+            });
+        </script>
+
         <div class="main-content">
             <h1> Normal Feed </h1>
         
-            <div class="post-container">
-                <div class="post-row">
-                    <div class="user-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
-                        <div>
-                            <p>Mark</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <div class="menu-btn-stranger">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Report Tweet</a></li>
-                            <li><a class="dropdown-item" href="#">Follow / Unfollow @...</a></li>
-                            <li><a class="dropdown-item" href="#">Block @...</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <p class="post-text">Ich retweete das.</p>
-
-                <div class="retweet">
-                    <div class="tweetbox-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);  
-                        ?>
-                        <div>
-                            <p>Dagmar</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div>
-
-
-
-
-                <script>
-                    // toggles the display of the comments when the user clicks on the comments button
-                    function displayComments(tweet_id) {
-                        let element = document.getElementById("comments" + tweet_id);
-                        element.removeAttribute("hidden");
-
-                        if (element.style.display == "none" || element.style.display == "") {
-                            // show
-                            element.style.display = "block";
-                        } else {
-                            // hide
-                            element.style.display = "none";
-                        }
-                    }
-
-                        $(document).ready(function()
-                        {
-                            $(".default_picture").on("error", function(){
-                                $(this).attr('src', "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
-                            });
-                        });
-
-
-                        
-                </script>
-
-
-
-
-
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="button" class="btn btn-light yx-auto">Load more</button>
-                </div>
-            </div>
-
-
-
-
-
-            <div class="post-container">
-                <div class="post-row">
-                    <div class="user-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
-
-                        <!--
-                        #TODO Wäre besser, funktioniert leider aber nicht
-                        <img src=<?PHP app('App\Http\Controllers\UserController')->getUserImg($userImg); ?> alt='' />
-                        -->
-
-                        <div>
-                            <p>Mark</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <div class="menu-btn-own">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Delete-Tweet</a></li>
-                            <li><a class="dropdown-item" href="#">Change Privacy</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> Mark Retweeted</p>
-
-                <div class="retweet">
-                    <div class="tweetbox-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
-                        <div>
-                            <p>Dagmar</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div>
-
-
-
-
-
-            
-                <div class="post-row">
-                    <div class="activity-icons">
-                        
-                        <div>
-                            <div class="like-btn">
-                                <button type="button" class="btn btn-dark"><i class="fa-regular fa-heart"></i>234</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-regular fa-comment"></i>22
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Show comments</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add
-                                            comment</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-
-                        <div>
-                            
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-retweet"></i>45
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Just Retweet</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        
-
-                    </div>
-
-                </div>
-
-            </div>
-            
 
             <?php
             $users = DB::select('select * from tweets order by created_at desc');
             foreach ($users as $tweet) {
                 if($tweet->visibility == 1){
-                    $currentTimeString = time();
-                $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
                 $id = $tweet->user_id;
                 $username = DB::table('users')->where('id', $id)->value('username');
                 $userImg = DB::table('users')->where('id', $id)->value('profile_img');
@@ -617,6 +484,9 @@
                 
                 //hidebutton
                 ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Hide Tweet</a></button> <?php
+                
+                
+                
                 echo '</div>';
                 }
             }
@@ -631,195 +501,15 @@
         <div class="main-content">
             <h1> Hidden Feed </h1>
         
-            <div class="post-container">
-                <div class="post-row">
-                    <div class="user-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
-                        <div>
-                            <p>Mark</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <div class="menu-btn-stranger">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Report Tweet</a></li>
-                            <li><a class="dropdown-item" href="#">Follow / Unfollow @...</a></li>
-                            <li><a class="dropdown-item" href="#">Block @...</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <p class="post-text">Ich retweete das.</p>
-
-                <div class="retweet">
-                    <div class="tweetbox-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);  
-                        ?>
-                        <div>
-                            <p>Dagmar</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div>
-
-
-
-
-                <script>
-                    // toggles the display of the comments when the user clicks on the comments button
-                    function displayComments(tweet_id) {
-                        let element = document.getElementById("comments" + tweet_id);
-                        element.removeAttribute("hidden");
-
-                        if (element.style.display == "none" || element.style.display == "") {
-                            // show
-                            element.style.display = "block";
-                        } else {
-                            // hide
-                            element.style.display = "none";
-                        }
-                    }
-
-                        $(document).ready(function()
-                        {
-                            $(".default_picture").on("error", function(){
-                                $(this).attr('src', "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
-                            });
-                        });
-
-
-                        
-                </script>
-
-
-
-
-
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="button" class="btn btn-light yx-auto">Load more</button>
-                </div>
-            </div>
-
-
-
-
-
-            <div class="post-container">
-                <div class="post-row">
-                    <div class="user-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
-
-                        <!--
-                        #TODO Wäre besser, funktioniert leider aber nicht
-                        <img src=<?PHP app('App\Http\Controllers\UserController')->getUserImg($userImg); ?> alt='' />
-                        -->
-
-                        <div>
-                            <p>Mark</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <div class="menu-btn-own">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Delete-Tweet</a></li>
-                            <li><a class="dropdown-item" href="#">Change Privacy</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> Mark Retweeted</p>
-
-                <div class="retweet">
-                    <div class="tweetbox-profile">
-                        <?php
-                        $id = Auth::id();
-                        $userImg = DB::table('users')->where('id', $id)->value('profile_img');
-
-                        echo app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        ?>
-                        <div>
-                            <p>Dagmar</p>
-                            <span>May 3 2023, 2:30 pm</span>
-                        </div>
-                    </div>
-                    <p class="retweet-text">Dies ist ein Beitrag, der retweetet wird.</p>
-                </div>
-
-
-
-
-
-            
-                <div class="post-row">
-                    <div class="activity-icons">
-                        
-                        <div>
-                            <div class="like-btn">
-                                <button type="button" class="btn btn-dark"><i class="fa-regular fa-heart"></i>234</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-regular fa-comment"></i>22
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Show comments</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#CommentModal">Add
-                                            comment</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-
-                        <div>
-                            
-                            <div class="btn-group dropend">
-                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-retweet"></i>45
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Just Retweet</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#QuoteModal">Quote</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        
-
-                    </div>
-
-                </div>
-
-            </div>
-            
-
             <?php
             $users = DB::select('select * from tweets order by created_at desc');
             foreach ($users as $tweet) {
                 if($tweet->visibility == 0){
-                $currentTimeString = time();
-                $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+                $userDeletedAt = DB::table('users')->where('id', $tweet->user_id)->value('deleted_at');
+                $userExists = 0;
+                if($userDeletedAt == NULL){
+                    $userExists = 1;
+                }
                 $id = $tweet->user_id;
                 $username = DB::table('users')->where('id', $id)->value('username');
                 $userImg = DB::table('users')->where('id', $id)->value('profile_img');
@@ -953,11 +643,16 @@
                 //delete button
                 ?>  <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button> <?php
                 
-                //hidebutton
-                ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Unhide Tweet</a></button> <?php
-                echo '</div>';
+
+                if($userExists){
+                    ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Unhide Tweet</a></button> <?php
+                    ?>  <button class="deleteuser-btn"><a href="{{ route('tweet.deleteUser', $tweet->user_id) }}">Delete User</a></button> <?php
+                }else{
+                    ?>  <button class="restoreuser-btn"><a href="{{ route('tweet.restoreUser', $tweet->tweet_id) }}">Restore User</a></button> <?php
                 }
+                
             }
+        }
             
             ?>
 
@@ -965,6 +660,7 @@
                 <button type="button" class="btn btn-light yx-auto">Load more</button>
             </div>
         </div>
+    
     
     
     <!--
