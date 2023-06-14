@@ -650,6 +650,8 @@
                 }else{
                     ?>  <button class="restoreuser-btn"><a href="{{ route('tweet.restoreUser', $tweet->tweet_id) }}">Restore User</a></button> <?php
                 }
+
+                echo '</div>';
                 
             }
         }
