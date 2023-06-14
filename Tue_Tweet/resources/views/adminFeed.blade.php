@@ -194,6 +194,34 @@
         cursor: pointer;
     }
 
+    .deleteuser-btn {
+        background-color: black;
+        color: black; 
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .restoreuser-btn {
+        background-color: green;
+        color: black; 
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
     .activity-icons div i {
         display: inline-flex;
         align-items: center;
@@ -617,6 +645,9 @@
                 
                 //hidebutton
                 ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Hide Tweet</a></button> <?php
+                
+                
+                
                 echo '</div>';
                 }
             }
@@ -953,8 +984,12 @@
                 //delete button
                 ?>  <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button> <?php
                 
-                //hidebutton
+                //unhide Button
                 ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Unhide Tweet</a></button> <?php
+                
+
+                //deleteUserButton
+                ?>  <button class="deleteuser-btn"><a href="{{ route('tweet.deleteUser', $tweet->user_id) }}">Delete User</a></button> <?php
                 echo '</div>';
                 }
             }

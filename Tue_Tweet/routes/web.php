@@ -88,6 +88,8 @@ Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('
 
 Route::get('tweet-hide/{id}', [AdminController::class, 'hideTweet'])->name('tweet.hide');
 
+Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tweet.deleteUser');
+
 Route::get('/feed', [
     'uses' => 'App\Http\Controllers\UserController@getFeed',
     'as' => 'feed'
