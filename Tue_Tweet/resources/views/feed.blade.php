@@ -470,7 +470,7 @@
 
 
             <?php
-            $users = DB::select('select * from tweets where deleted_at is null  order by created_at desc');
+            $users = DB::select('select * from tweets where deleted_at is null and visibility order by created_at desc');
             foreach ($users as $tweet) {
                 $currentTimeString = time();
                 $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
@@ -514,9 +514,9 @@
 
 
                 // Count Likes Comments and Retweets
-                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->count();
-                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->count();
-                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->count();
+                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->count();
+                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->count();
+                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->count();
 
 
                 // Like Button
@@ -570,7 +570,7 @@
 
                 echo '<div class="comment-container">';
                 //list comments
-                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->get();
+                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility')->get();
                 foreach ($comments as $comment) {
                     $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                     $userImg = DB::table('users')->where('id', $id)->value('profile_img');
