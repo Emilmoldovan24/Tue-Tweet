@@ -79,7 +79,7 @@
                               <!-- Button trigger modal -->
                               
         <form action="{{ route('welcome') }}" method="GET">
-            <button type="submit" class="btn btn-primary"> Sign in </button>
+            <button type="submit" class="btn btn-light"> Sign in </button>
         </form>
 
                     </div>
@@ -112,7 +112,7 @@
  <input class="form-control @error('user_password') is-invalid @enderror" type="password" name="user_password" id="user_password"> 
   </div>
      </div>
-     <button type="submit" class="btn btn-primary"> Submit </button>
+     <button type="submit" class="btn btn-light"> Submit </button>
     <input type="hidden" name="_token" value="{{  Session::token() }}">
 </form>
 
