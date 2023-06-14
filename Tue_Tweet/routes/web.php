@@ -90,6 +90,8 @@ Route::get('tweet-hide/{id}', [AdminController::class, 'hideTweet'])->name('twee
 
 Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tweet.deleteUser');
 
+Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('tweet.restoreUser');
+
 Route::get('/feed', [
     'uses' => 'App\Http\Controllers\UserController@getFeed',
     'as' => 'feed'

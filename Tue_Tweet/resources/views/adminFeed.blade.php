@@ -646,20 +646,13 @@
 
                 if($userExists){
                     ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Unhide Tweet</a></button> <?php
-                }else{
-                    ?>  <button class="restoreuser-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Restore User</a></button> <?php
-                }
-                //unhide Button
-                
-                
-                if($userExists){
-                    //deleteUserButton
                     ?>  <button class="deleteuser-btn"><a href="{{ route('tweet.deleteUser', $tweet->user_id) }}">Delete User</a></button> <?php
+                }else{
+                    ?>  <button class="restoreuser-btn"><a href="{{ route('tweet.restoreUser', $tweet->tweet_id) }}">Restore User</a></button> <?php
                 }
                 
-                echo '</div>';
-                }
             }
+        }
             
             ?>
 
@@ -667,6 +660,7 @@
                 <button type="button" class="btn btn-light yx-auto">Load more</button>
             </div>
         </div>
+    
     
     
     <!--
