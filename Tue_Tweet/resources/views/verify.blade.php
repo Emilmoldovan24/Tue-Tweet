@@ -5,7 +5,7 @@
     <p>Email: {{$usr_data['email']}} </p>
     <p>Password: {{$usr_data['user_password']}} </p>
 
-    <form action="{{ route('signUp')}}" method="POST">
+    <form action="{{ route('signup')}}" method="POST">
         <input type='hidden' name="username" id='username' value="{{$usr_data['username']}}">
         <input type='hidden' name="email" id='email' value="{{$usr_data['email']}}">
         <input type='hidden' name="user_password" id='user_password' value="{{$usr_data['user_password']}}">
