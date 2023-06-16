@@ -5,6 +5,8 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,11 +52,6 @@ Route::get('/feed', function () {
     return view('feed');
 });
 
-// Profile with your RouteName
-Route::get('/{username}', function($username){
-    return view('profile', ['username' => $username]);
-});
-
 // Verify with UserData
 Route::get('verify/{usr_data}', function($usr_data){
     return view('verify', ['usr_data' => $usr_data]);
@@ -64,23 +61,25 @@ Route::get('verify/{usr_data}', function($usr_data){
 
 // UserController
 
-/* // Startscreen
+// Startscreen: We need in the signup.blade!
 Route::get('/welcome', [
     'uses' => 'App\Http\Controllers\UserController@getwelcome',
     'as' => 'welcome'
-]); */
+]);  
 
-// SignUp
+// Post SignUp
 Route::post('/signup', [
     'uses' => 'App\Http\Controllers\UserController@postSignUp',
     'as' => 'signup'
 ]);
 
+// Post SignIn
 Route::post('/signin', [
     'uses' => 'App\Http\Controllers\UserController@postSignIn',
     'as' => 'signin'
 ]);
 
+// Post Verify
 Route::post('/verify', [
     'uses' => 'App\Http\Controllers\UserController@postVerify',
     'as' => 'postVerify'
@@ -88,115 +87,161 @@ Route::post('/verify', [
 
 //---------------------------------------------------------------------------------------------------------------------------
 
-Route::get('/Profile', [
-    'uses' => 'App\Http\Controllers\FeedController@getProfile',
-    'as' => 'profile'
-]);
+// AdminController
 
-
-
+// AdminLogIn
 Route::get('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminLogIn',
     'as' => 'adminLogin'
 ]);
 
+// AdminLogOut
 Route::get('/adminLogout', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminLogout',
     'as' => 'adminLogout'
 ]);
 
+// AdminFeed
 Route::get('/adminFeed', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminFeed',
     'as' => 'adminFeed'
 ]);
 
+// Post AdminSignUp
 Route::post('/adminSingup', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminSignUp',
     'as' => 'adminSingup'
 ]);
 
+// Post AdminLogIn
 Route::post('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminLogIn',
     'as' => 'adminLogin'
 ]);
 
-
-
+// Delete Tweet
 Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');
 
+// Hide Tweet
 Route::get('tweet-hide/{id}', [AdminController::class, 'hideTweet'])->name('tweet.hide');
 
+// Delete User
 Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tweet.deleteUser');
 
+// Restore User
 Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('tweet.restoreUser');
 
-Route::get('/feed', [
-    'uses' => 'App\Http\Controllers\FeedController@getFeed',
-    'as' => 'feed'
-]);
+//---------------------------------------------------------------------------------------------------------------------------
 
-Route::post('/postTweet', [
-    'uses' => 'App\Http\Controllers\FeedController@postTweet',
-    'as' => 'postTweet'
-]);
+// ProfileController
 
-
+// Update Image
 Route::post('/postImage', [
     'uses' => 'App\Http\Controllers\ProfileController@postImage',
     'as' => 'postImage'
 ]);
 
+// Update Bio
 Route::post('/postBio', [
     'uses' => 'App\Http\Controllers\ProfileController@postBio',
     'as' => 'postBio'
 ]);
 
+// Update Username
 Route::post('/postUsername', [
     'uses' => 'App\Http\Controllers\ProfileController@postUsername',
     'as' => 'postUsername'
 ]);
 
+// Update Email
 Route::post('/postEmail', [
     'uses' => 'App\Http\Controllers\ProfileController@postEmail',
     'as' => 'postEmail'
 ]);
 
-Route::post('/retweet', [
-    'uses' => 'App\Http\Controllers\FeedController@postRetweet',
-    'as' => 'retweet'
-]);
-
-Route::post('/createRetweet', [
-    'uses' => 'App\Http\Controllers\FeedController@createRetweet',
-    'as' => 'createRetweet'
-]);
-
-Route::post('/postComment', [
-    'uses' => 'App\Http\Controllers\FeedController@postComment',
-    'as' => 'postComment'
-]);
-
-Route::post('/like', [
-    'uses' => 'App\Http\Controllers\FeedController@postLike',
-    'as' => 'like'
-]);
-
+// Follow/Unfollow
 Route::post('/follow', [
     'uses' => 'App\Http\Controllers\ProfileController@postFollow',
     'as' => 'follow'
 ]);
 
+//---------------------------------------------------------------------------------------------------------------------------
+
+// FeedController
+
+//---------------------Button on the right-------------------------
+// Profile
+Route::get('/Profile', [
+    'uses' => 'App\Http\Controllers\FeedController@getProfile',
+    'as' => 'profile'
+]);
+
+// Feed
+Route::get('/feed', [
+    'uses' => 'App\Http\Controllers\FeedController@getFeed',
+    'as' => 'feed'
+]);
+
+// LogOut
 Route::get('/logout', [
     'uses' => 'App\Http\Controllers\FeedController@getLogout',
     'as' => 'logout'
 ]);
 
-
-
+// Settings
 Route::get('/settings', [
     'uses' => 'App\Http\Controllers\FeedController@getsettings',
     'as' => 'settings'
 ]);
 
+//-----------------------------------------------------------------
 
+// Post Tweet
+Route::post('/postTweet', [
+    'uses' => 'App\Http\Controllers\FeedController@postTweet',
+    'as' => 'postTweet'
+]);
+
+// Post Retweet
+Route::post('/retweet', [
+    'uses' => 'App\Http\Controllers\FeedController@postRetweet',
+    'as' => 'retweet'
+]);
+
+// unfinish: Create Retweet
+Route::post('/createRetweet', [
+    'uses' => 'App\Http\Controllers\FeedController@createRetweet',
+    'as' => 'createRetweet'
+]);
+
+// Post Comment
+Route::post('/postComment', [
+    'uses' => 'App\Http\Controllers\FeedController@postComment',
+    'as' => 'postComment'
+]);
+
+// Like/Unlike
+Route::post('/like', [
+    'uses' => 'App\Http\Controllers\FeedController@postLike',
+    'as' => 'like'
+]);
+
+//---------------------------------------------------------------------------------------------------------------------------
+
+// NOTE: this route must be at the very back, otherwise it will throw errors
+
+ // Profile with your RouteName
+ Route::get('/{username}', function($username){
+    // Überprüfe, ob der Benutzername existiert
+    $user = User::where('username', $username)->first();
+
+    if ($user) {
+        return view('profile', ['username' => $user->username]);
+    } else {
+        // Benutzername existiert nicht, zeige eine entsprechende Fehlermeldung oder leite auf eine andere Seite weiter
+        abort(404);
+    }
+});
+
+//---------------------------------------------------------------------------------------------------------------------------
 
