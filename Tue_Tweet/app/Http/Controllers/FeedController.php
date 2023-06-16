@@ -137,6 +137,16 @@ class FeedController extends Controller {
 
         return Redirect::back();
     }
+
+    // Edit Tweets
+    public function editTweet(Request $request){
+        $id = $request->id;
+        $editTweetText = $request->editTweetText;
+    
+        DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => $editTweetText]);
+    
+        return redirect()->route('feed');
+    }
 //--------------------------------------------------------------------------------------
 }
 ?>

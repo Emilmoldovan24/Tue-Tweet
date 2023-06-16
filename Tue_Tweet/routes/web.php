@@ -226,6 +226,12 @@ Route::post('/like', [
     'as' => 'like'
 ]);
 
+// Edit Tweet
+Route::post('/tweet-edit', [
+    'uses' => 'App\Http\Controllers\FeedController@editTweet',
+    'as' => 'editTweet'
+]);
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // NOTE: this route must be at the very back, otherwise it will throw errors

@@ -491,8 +491,17 @@
                 echo '</div>';
                 echo '</div>';
 
-                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
-                echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                // Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört
+                if ($id === Auth::id()) {
+                echo '<div class="menu-btn-own">';
+                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                echo '<ul class="dropdown-menu">';
+                echo '<li><a class="dropdown-item" href="#">Delete</a></li>';
+                echo '<li><button type="button" class="dropdown-item" onclick="editTweet('.$tweet->tweet_id.', '.htmlspecialchars('"'.$tweet->tweet.'"').')" data-tweet-id="' . $tweet->tweet_id . '" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>';
+                echo '<li><a class="dropdown-item" href="#">Something else here</a></li>';
+                echo '</ul>';
+                echo '</div>';
+                }
                 echo '</div>';
 
                 // Tweet content
@@ -698,6 +707,44 @@
     </form>
 
 
+<!-- Edit-Tweet-Modal -->
+<form action="{{ route('editTweet') }}" method="POST">
+    @csrf
+    <div class="modal fade" id="EditTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="write-post-container">
+                        <div class="user-profile">
+                            <img src="{{$user_profileImg}}">
+                            <div>
+                                {{$user_name}} <br>
+                                <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                            </div>
+                        </div>
+
+                        <div class="post-input-container">
+                            <input style="display:none" name="id" id="editTweetId">
+                            <textarea rows="3" placeholder="Am Besten steht hier der alte Tweet" name="editTweetText" id="editTweetText">{{ $tweet->tweet }}</textarea>
+                            <div id="pictureBox"></div>
+                            <div class="add-post-links">
+                                <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
+                                <div class="form-group">
+                                    <input type="file" name="img" id="img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Edit Tweet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 
 
 
@@ -721,8 +768,21 @@
             $(".modal-body").html("");
         });
     </script>
+    <script>
+        $(".EditTweetModal").on("hidden.bs.modal", function() {
+            document.getElementById("editTweetText").value="test"
+            $(".modal-body").html("");
+        });
+    </script>
     <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
+
+    <script>
+        function editTweet(id, text) {
+            document.getElementById('editTweetText').value=text;
+            document.getElementById('editTweetId').value=id;
+        }
     </script>
 </body>
 
