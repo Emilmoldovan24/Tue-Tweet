@@ -491,8 +491,17 @@
                 echo '</div>';
                 echo '</div>';
 
-                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
-                echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                // Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört
+                if ($id === Auth::id()) {
+                echo '<div class="menu-btn-own">';
+                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                echo '<ul class="dropdown-menu">';
+                echo '<li><a class="dropdown-item" href="#">Delete</a></li>';
+                echo '<li><a class="dropdown-item" href="#">Edit</a></li>';
+                echo '<li><a class="dropdown-item" href="#">Something else here</a></li>';
+                echo '</ul>';
+                echo '</div>';
+                }
                 echo '</div>';
 
                 // Tweet content
