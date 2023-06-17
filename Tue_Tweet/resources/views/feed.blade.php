@@ -708,7 +708,7 @@
 
 
 <!-- Edit-Tweet-Modal -->
-<form action="{{ route('editTweet') }}" method="POST">
+<form action="{{ route('editTweet') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="EditTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -720,17 +720,32 @@
                             <div>
                                 {{$user_name}} <br>
                                 <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                @section('content')
+                                @if (count($errors) > 0)
+                                <div class='row'>
+                                    <div class="col">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>
+                                                {{$error}}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="post-input-container">
                             <input style="display:none" name="id" id="editTweetId">
-                            <textarea rows="3" placeholder="Am Besten steht hier der alte Tweet" name="editTweetText" id="editTweetText">{{ $tweet->tweet }}</textarea>
-                            <div id="pictureBox"></div>
+                            <textarea rows="3" placeholder="Edit your Tweet" name="editTweetText" id="editTweetText" value="{{Request::old('tweet')}}">{{ $tweet->tweet }}</textarea>
+                            <div id="pictureEditBox"></div>
                             <div class="add-post-links">
                                 <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
                                 <div class="form-group">
-                                    <input type="file" name="img" id="img">
+                                    <input type="file" name="editImg" id="editImg" value="{{Request::old('img')}}">
                                 </div>
                             </div>
                         </div>
@@ -738,7 +753,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Edit Tweet</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <input type="hidden" name="_token" value="{{  Session::token() }}">
                 </div>
             </div>
         </div>
@@ -750,19 +766,7 @@
 
     </div>
     </div>
-    <script>
-        document.getElementById('pictureBtn').addEventListener('click', function() {
-            var input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(event) {
-                var image = document.createElement('img');
-                image.src = URL.createObjectURL(event.target.files[0]);
-                document.getElementById('pictureBox').appendChild(image);
-            };
-            input.click();
-        });
-    </script>
+
     <script>
         $(".PostTweetModal").on("hidden.bs.modal", function() {
             $(".modal-body").html("");
@@ -770,7 +774,6 @@
     </script>
     <script>
         $(".EditTweetModal").on("hidden.bs.modal", function() {
-            document.getElementById("editTweetText").value="test"
             $(".modal-body").html("");
         });
     </script>
@@ -784,6 +787,7 @@
             document.getElementById('editTweetId').value=id;
         }
     </script>
+
 </body>
 
 </html>

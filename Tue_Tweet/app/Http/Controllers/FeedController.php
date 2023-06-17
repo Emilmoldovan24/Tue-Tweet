@@ -139,14 +139,41 @@ class FeedController extends Controller {
     }
 
     // Edit Tweets
-    public function editTweet(Request $request){
-        $id = $request->id;
-        $editTweetText = $request->editTweetText;
-    
-        DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => $editTweetText]);
-    
-        return redirect()->route('feed');
+    public function editTweet(Request $request)
+{ 
+    // image Validation
+    $request->validate([
+        'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    $id = $request->id;
+    $editTweetText = $request->editTweetText;
+
+    // Empty Tweet after Update Validation
+    if (strlen(trim($editTweetText)) === 0) {
+        if (trim(is_null($request['editImg']))) {
+            $request->validate([
+                'editTweetText' => 'required',
+                'image' => 'required'
+            ]);
+        } else {
+            // image without text
+            $image =  base64_encode(file_get_contents($request->file('editImg')->path()));
+            DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => "", 'img' => $image]);
+        }
+    } else {
+        if (!is_null($request['editImg'])) {
+            $image =  base64_encode(file_get_contents($request->file('editImg')->path()));
+        } else {
+            $image = null;
+        }
+        
+        DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => $editTweetText, 'img' => $image]);
     }
+
+    return redirect()->route('feed');
+}
+
 //--------------------------------------------------------------------------------------
 }
 ?>
