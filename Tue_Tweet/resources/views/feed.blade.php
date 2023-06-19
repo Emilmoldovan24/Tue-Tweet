@@ -496,7 +496,7 @@
                 echo '<div class="menu-btn-own">';
                 echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
                 echo '<ul class="dropdown-menu">';
-                echo '<li><a class="dropdown-item" href="#">Delete</a></li>';
+                    ?>  <li><button class="dropdown-item"><a href="{{ route('MyTweetDelete', $tweet->tweet_id) }}" style="text-decoration: none;">Delete</a></button></li> <?php
                 echo '<li><button type="button" class="dropdown-item" onclick="editTweet('.$tweet->tweet_id.', '.htmlspecialchars('"'.$tweet->tweet.'"').')" data-tweet-id="' . $tweet->tweet_id . '" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>';
                 echo '<li><a class="dropdown-item" href="#">Something else here</a></li>';
                 echo '</ul>';

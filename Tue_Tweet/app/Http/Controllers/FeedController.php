@@ -174,6 +174,16 @@ class FeedController extends Controller {
     return redirect()->route('feed');
 }
 
+    // Delete Tweet
+    public function MyTweetDelete(Request $request){
+        
+        $id = $request->id;
+        DB::delete("delete from tweets where tweet_id = '$id'");
+        
+
+        return redirect()->route('feed');
+    }
+
 //--------------------------------------------------------------------------------------
 }
 ?>
