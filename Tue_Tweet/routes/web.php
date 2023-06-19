@@ -165,6 +165,18 @@ Route::post('/follow', [
     'as' => 'follow'
 ]);
 
+// Edit Tweet
+Route::post('/profileTweet-edit', [
+    'uses' => 'App\Http\Controllers\ProfileController@editProfileTweet',
+    'as' => 'editProfileTweet'
+]);
+
+// Delete Tweet
+Route::get('profile-tweet-delete/{id}', [
+    'uses' => 'App\Http\Controllers\ProfileController@ProfileTweetDelete',
+    'as' => 'ProfileTweetDelete'
+]);
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // FeedController
@@ -233,7 +245,7 @@ Route::post('/tweet-edit', [
 ]);
 
 // Delete Tweet
-Route::get('MyTweetDelete/{id}', [
+Route::get('feed-tweet-delete/{id}', [
     'uses' => 'App\Http\Controllers\FeedController@MyTweetDelete',
     'as' => 'MyTweetDelete'
 ]);

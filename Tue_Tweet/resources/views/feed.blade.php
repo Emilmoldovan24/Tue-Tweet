@@ -485,7 +485,7 @@
                 echo '<div class="user-profile">';
                 echo $userImgHtml;
                 echo '<div style="display: inline-block;">';
-                echo '<a style="margin-right: 3px;" href="/' . $username . '">' . $username . '</a>';
+                echo '<a style="margin-right: 3px; text-decoration: none;" href="/' . $username . '">' . $username . '</a>';
                 echo '<a> &bull; </a>';
                 echo '<span>' . $tweet->created_at . '</span>';
                 echo '</div>';
