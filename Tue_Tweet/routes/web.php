@@ -232,6 +232,12 @@ Route::post('/tweet-edit', [
     'as' => 'editTweet'
 ]);
 
+// Delete Tweet
+Route::get('MyTweetDelete/{id}', [
+    'uses' => 'App\Http\Controllers\FeedController@MyTweetDelete',
+    'as' => 'MyTweetDelete'
+]);
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // NOTE: this route must be at the very back, otherwise it will throw errors
