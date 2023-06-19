@@ -458,22 +458,24 @@
                 echo '<div class="post-row">';
                 echo '<div class="user-profile">';
                 echo $userImgHtml;
-                
                 echo '<div style="display: inline-block;">';
-                echo '<a style="margin-right: 3px;" href="profile/' . $username . '">' . $username . '</a>';
+                echo '<a style="margin-right: 3px; text-decoration: none;" href="/' . $username . '">' . $username . '</a>';
                 echo '<a> &bull; </a>';
                 echo '<span>' . $tweet->created_at . '</span>';
                 echo '</div>';
                 echo '</div>';
+
+                // Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört
+                if ($id === Auth::id()) {
                 echo '<div class="menu-btn-own">';
-                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown"';
-                echo 'aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                echo '<button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
                 echo '<ul class="dropdown-menu">';
-                echo '<li><a class="dropdown-item" href="#">Delete-Tweet</a></li>';
-                echo '<li><a class="dropdown-item" href="#">Change Privacy</a></li>';
+                    ?> <li><button class="dropdown-item"><a href="{{ route('ProfileTweetDelete', $tweet->tweet_id) }}" style="text-decoration: none;">Delete</a></button></li> <?php
+                echo '<li><button type="button" class="dropdown-item" onclick="editProfileTweet('.$tweet->tweet_id.', '.htmlspecialchars('"'.$tweet->tweet.'"').')" data-tweet-id="' . $tweet->tweet_id . '" data-bs-toggle="modal" data-bs-target="#EditProfileTweetModal">Edit</button></li>';
                 echo '<li><a class="dropdown-item" href="#">Something else here</a></li>';
                 echo '</ul>';
                 echo '</div>';
+                }
                 echo '</div>';
 
                 // Tweet content
@@ -482,12 +484,10 @@
                     echo $tweet->tweet . '<br>';
                 }
 
-                //Tweet image
-                if (!is_null($tweet->img)){
+                // display Tweet image
+                if (!is_null($tweet->img)) {
                     $tweetImg = app('App\Http\Controllers\UserController')->getUserImgHtml($tweet->img);
-                    // echo $tweetImg;
                     echo '<img class="img-fluid" src=data:image/png;base64,' . $tweet->img . '>';
-                    // echo $tweet->img;
                 }
                 echo '</div>';
 
@@ -495,16 +495,16 @@
                 echo '<div class="post-row">';
                 echo '<div class="activity-icons">';
 
-
+                
                 // Count Likes Comments and Retweets
-                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
-                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
-                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
-
+                $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility', 1)->count();
+                $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility', 1)->count();
+                $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility', 1)->count();
+                
 
                 // Like Button
                 echo '<div>';
-                echo '<form action=like method="POST">';    
+                echo '<form action=like method="POST">';
                 echo csrf_field();
                 echo '<div class="like-btn">';
 
@@ -533,11 +533,12 @@
                 echo '</div>';
 
                 // Retweet Button
-                echo '<div>';
+                echo '<div><!-- Retweet button -->';
                 echo '<div class="btn-group dropend">';
                 echo '<button type="button" class="btn btn-dark">';
-                echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '</button>';
-               
+                echo '<i class="fa-solid fa-retweet"></i>' . $retweets . '';
+                echo '</button>';
+
                 echo '</div>';
                 echo '</div>';
 
@@ -552,7 +553,7 @@
 
                 echo '<div class="comment-container">';
                 //list comments
-                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->get();
+                $comments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->where('deleted_at', NULL)->where('visibility',1)->get();
                 foreach ($comments as $comment) {
                     $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                     $userImg = DB::table('users')->where('id', $id)->value('profile_img');
@@ -671,12 +672,76 @@
 
 
         </div>
+        <?php
+        $user_id = Auth::id();
+        $user_name = DB::table('users')->where('id', $user_id)->value('username');
+        $user_profileImg = DB::table('users')->where('id', $user_id)->value('profile_img');
+        $user_profileImg = app('App\Http\Controllers\UserController')->getUserImg($user_profileImg);
+        ?>
+<!-- Edit-Tweet-Modal -->
+<form action="{{ route('editProfileTweet') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="modal fade" id="EditProfileTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="write-post-container">
+                        <div class="user-profile">
+                            <img src="{{$user_profileImg}}">
+                            <div>
+                                {{$user_name}} <br>
+                                <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                            
+                                {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                @section('content')
+                                @if (count($errors) > 0)
+                                <div class='row'>
+                                    <div class="col">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>
+                                                {{$error}}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
+                            
+                            </div>
+                        </div>
+
+                        <div class="post-input-container">
+                            <input style="display:none" name="id" id="editProfileTweetId">
+                            <textarea rows="3" placeholder="Edit your Tweet" name="editProfileTweetText" id="editProfileTweetText" value="{{Request::old('tweet')}}">
+                                {{ isset($tweet) ? $tweet->tweet : '' }}
+                            </textarea>                            
+                            <div id="pictureProfileEditBox"></div>
+                            <div class="add-post-links">
+                                <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
+                                <div class="form-group">
+                                    <input type="file" name="editProfileImg" id="editProfileImg" value="{{Request::old('img')}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <input type="hidden" name="_token" value="{{  Session::token() }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
     </div>
     </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -685,6 +750,23 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script> --}}
+
+    {{-- Open dropdown-menu --}}
+    <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <script>
+        $(".EditProfileTweetModal").on("hidden.bs.modal", function() {
+            document.getElementById("editProfileTweetText").value="test"
+            $(".modal-body").html("");
+        });
+    </script>
+    <script>
+        function editProfileTweet(id, text) {
+            document.getElementById('editProfileTweetText').value=text;
+            document.getElementById('editProfileTweetId').value=id;
+        }
     </script>
 </body>
 

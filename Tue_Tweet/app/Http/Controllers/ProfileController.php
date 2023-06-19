@@ -41,6 +41,51 @@ class ProfileController extends Controller
         return Redirect::back();
     }
 
+    // Edit Tweets
+    public function editProfileTweet(Request $request)
+    { 
+    // image Validation
+    $request->validate([
+        'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    $id = $request->id;
+    $editProfileTweetText = $request->editProfileTweetText;
+
+    // Empty Tweet after Update Validation
+    if (strlen(trim($editProfileTweetText)) === 0) {
+        if (trim(is_null($request['editProfileImg']))) {
+            $request->validate([
+                'editProfileTweetText' => 'required',
+                'image' => 'required'
+            ]);
+        } else {
+            // image without text
+            $image =  base64_encode(file_get_contents($request->file('editProfileImg')->path()));
+            DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => "", 'img' => $image]);
+        }
+    } else {
+        if (!is_null($request['editProfileImg'])) {
+            $image =  base64_encode(file_get_contents($request->file('editProfileImg')->path()));
+        } else {
+            $image = null;
+        }
+
+        DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => $editProfileTweetText, 'img' => $image]);
+    }
+        return Redirect::back();
+    }
+
+    // Delete Tweet
+    public function ProfileTweetDelete(Request $request){
+        
+        $id = $request->id;
+        DB::delete("delete from tweets where tweet_id = '$id'");
+        
+
+        return Redirect::back();
+    }
+
 //----------------------Profile Settings----------------------------------------------------------------------------------------------------------
 
 // Function: Update Image 
