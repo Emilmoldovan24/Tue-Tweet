@@ -26,7 +26,7 @@
         </div>
         @endif
      <!--  SignIn   -->
-     <div class="col-md-6">
+        <div class="col-md-6">
             <h3> Sign In </h3>
             <form action="{{ route('adminLogin')}}" method="POST">
                 <div class="form-group">
@@ -41,5 +41,14 @@
                 <input type="hidden" name="_token" value="{{  Session::token() }}">
             </form>
         </div>
+        
+        <!--Back Button-->
+        <div class="col-md-4 col-md-offset-4">
+            <form action="{{ route('welcome') }}" method="GET">
+                <button type="submit" class="btn btn-light"> Back </button>
+            </form>
+        </div>
+        
+
 </body>
 </html>
