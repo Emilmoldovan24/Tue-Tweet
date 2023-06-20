@@ -1,303 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
 <style>
-    body {
-        background-color: #DCDCDC;
-        /* background: rgb(2, 0, 36);
+body {
+    background-color: #DCDCDC;
+    /* background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
-    }
+}
 
-    .navbar.bg-dark {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 5px 5%;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
+.navbar.bg-dark {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
-    .post-input-container {
-        padding-left: 55px;
-        padding-top: 20px;
-    }
+.post-input-container {
+    padding-left: 55px;
+    padding-top: 20px;
+}
 
-    .post-input-container textarea {
-        width: 100%;
-        resize: none;
-        border-bottom: 10px solid #grey;
-        border: 0;
-        outline: 0;
-        background: transparent;
-    }
+.post-input-container textarea {
+    width: 100%;
+    resize: none;
+    border-bottom: 10px solid #grey;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
 
-    .container {
-        display: flex;
-        justify-content: space-between;
-        padding: 13px 5%;
-    }
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 5%;
+}
 
-    .left-sidebar {
-        margin: 20px 0;
-        flex-basis: 25%;
-        position: sticky;
-        top: 70px;
-        align-self: flex-start;
+.left-sidebar {
+    margin: 20px 0;
+    flex-basis: 25%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
 
-    }
+}
 
-    .right-sidebar {
-        margin: 20px 0;
-        flex-basis: 25%;
-        position: sticky;
-        top: 70px;
-        align-self: flex-start;
-    }
+.right-sidebar {
+    margin: 20px 0;
+    flex-basis: 25%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+}
 
-    .main-content {
-        flex-basis: 47%;
-        align-self: flex-start;
-    }
+.main-content {
+    flex-basis: 47%;
+    align-self: flex-start;
+}
 
-    .write-post-container {
-        width: 100%;
-        background: white;
-        border-radius: 6px;
-        padding: 20px;
-        columns: #626262;
-    }
+.write-post-container {
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    padding: 20px;
+    columns: #626262;
+}
 
-    .user-profile {
-        margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-    }
+.user-profile {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+}
 
-    .user-profile img {
-        width: 45px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
+.user-profile img {
+    width: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
-    .user-profile p {
-        margin-bottom: -5px;
-        font-weight: 500;
-        color: #626262;
-    }
+.user-profile p {
+    margin-bottom: -5px;
+    font-weight: 500;
+    color: #626262;
+}
 
-    .user-profile small {
-        font-size: 12px;
-    }
+.user-profile small {
+    font-size: 12px;
+}
 
-    .add-post-links {
-        display: flex;
-        margin-top: 10px;
-    }
+.add-post-links {
+    display: flex;
+    margin-top: 10px;
+}
 
-    .add-post-links a {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        color: #626262;
-        margin-right: 30px;
-        font-size: 13px;
-        margin-top: 10px;
-    }
+.add-post-links a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #626262;
+    margin-right: 30px;
+    font-size: 13px;
+    margin-top: 10px;
+}
 
-    .fa-solid.fa-camera.fa-2xl {
-        margin-right: 3px;
-    }
+.fa-solid.fa-camera.fa-2xl {
+    margin-right: 3px;
+}
 
-    .post-container {
-        width: 100%;
-        background: #fff;
-        border-radius: 6px;
-        padding: 20px;
-        color: #626262;
-        margin: 20px 0;
-    }
+.post-container {
+    width: 100%;
+    background: #fff;
+    border-radius: 6px;
+    padding: 20px;
+    color: #626262;
+    margin: 20px 0;
+}
 
-    .user-profile span {
-        font-size: 13px;
-        color: #9a9a9a;
-    }
+.user-profile span {
+    font-size: 13px;
+    color: #9a9a9a;
+}
 
-    .post-text-just-retweet {
-        color: #1DA1F2;
-        font-family: 'Helvetica Neue Bold', Arial, sans-serif;
-        margin: 15px 0;
-        font-size: 15px;
-    }
+.post-text-just-retweet {
+    color: #1DA1F2;
+    font-family: 'Helvetica Neue Bold', Arial, sans-serif;
+    margin: 15px 0;
+    font-size: 15px;
+}
 
-    .post-img {
-        width: 100%;
-        height: 500px;
-        border-radius: 4px;
-        margin-bottom: 5px;
-    }
+.post-img {
+    width: 100%;
+    height: 500px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
 
-    .card.mb-3 {
-        align-items: center;
-    }
+.card.mb-3 {
+    align-items: center;
+}
 
-    .post-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+.post-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-    .activity-icons div {
-        display: inline-flex;
-        align-items: center;
-        margin-right: 20px;
-        margin-top: 10px;
-    }
+.activity-icons div {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-top: 10px;
+}
 
-    .like-btn {
-        display: inline-flex;
-        align-items: center;
-        margin-right: 20px;
-        margin-top: 10px;
-    }
+.like-btn {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-top: 10px;
+}
 
-    .delete-btn {
-        background-color: red;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
-    .hide-btn {
-        background-color: yellow;
-        color: black; 
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
+.delete-btn {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 
-    .deleteuser-btn {
-        background-color: black;
-        color: black; 
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
+.hide-btn {
+    background-color: yellow;
+    color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 
-    .restoreuser-btn {
-        background-color: green;
-        color: black; 
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
+.deleteuser-btn {
+    background-color: black;
+    color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 
-    .activity-icons div i {
-        display: inline-flex;
-        align-items: center;
-        margin-right: 5px;
-    }
+.restoreuser-btn {
+    background-color: green;
+    color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 
-    .post-row a {
-        color: black;
-    }
+.activity-icons div i {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px;
+}
 
-    .retweet-text {
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 1px;
+.post-row a {
+    color: black;
+}
 
-    }
+.retweet-text {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 1px;
 
-    .tweetbox-profile span {
-        font-size: 13px;
-        color: #9a9a9a;
-        margin-left: 10px;
-    }
+}
 
-    .tweetbox-profile p {
-        margin-top: 14px;
-        font-weight: 500;
-        color: #626262;
+.tweetbox-profile span {
+    font-size: 13px;
+    color: #9a9a9a;
+    margin-left: 10px;
+}
 
-    }
+.tweetbox-profile p {
+    margin-top: 14px;
+    font-weight: 500;
+    color: #626262;
 
-    .tweetbox-profile {
-        padding-left: 10px;
-        padding-right: 10px;
-        color: #626262;
-        margin: 5px 0;
-        text-align: center;
-        justify-content: space-between;
-    }
+}
 
-    .tweetbox-profile img {
-        width: 45px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
+.tweetbox-profile {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #626262;
+    margin: 5px 0;
+    text-align: center;
+    justify-content: space-between;
+}
 
-    .retweet div {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+.tweetbox-profile img {
+    width: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
-    }
+.retweet div {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    .retweet {
-        border-radius: 6px;
-        border: 2px solid;
-    }
+}
 
-    #pictureBox img {
-        max-width: 50%;
-        max-height: 50%;
-    }
+.retweet {
+    border-radius: 6px;
+    border: 2px solid;
+}
 
-    #pictureBox {
-        display: flex;
-        border-color: black;
-        border: 2px solid;
-        border-radius: 5px;
-    }
+#pictureBox img {
+    max-width: 50%;
+    max-height: 50%;
+}
 
-    .list-group-item i {
-        margin-right: 20px;
-    }
+#pictureBox {
+    display: flex;
+    border-color: black;
+    border: 2px solid;
+    border-radius: 5px;
+}
 
-    .list-group-item a {
-        padding-right: 130px;
-    }
+.list-group-item i {
+    margin-right: 20px;
+}
+
+.list-group-item a {
+    padding-right: 130px;
+}
 </style>
 
 
@@ -315,66 +318,71 @@
 
     <div class="container">
         <!--COLUMN 1 (LEFT-SIDEBAR-->
-        
-            <div class="left-sidebar">
+
+        <div class="left-sidebar">
             <h1> Menu </h1>
 
-                <!-- Current admin -->
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <?php
+            <!-- Current admin -->
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <?php
                             $admin_id = Auth::id();
                             $admin_name = DB::table('admins')->where('id', $admin_id)->value('adminname');
                             ?>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Current: {{$admin_name}}</h5>
-                            </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Current: {{$admin_name}}</h5>
                         </div>
                     </div>
                 </div>
-
-                <!-- Menu Buttons -->
-                <div class="list-group">
-                    <form action="{{ route('adminLogout') }}" method="GET">
-                        <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
-                    </form>
-                </div>
-                <br>
             </div>
-        
-        
+
+            <!-- Menu Buttons -->
+            <div class="list-group">
+                <form action="{{ route('adminCreate') }}" method="GET">
+                    <button type="submit" class="list-group-item list-group-item-action"><i
+                            class="fa-solid fa-right-from-bracket"></i><a> Admin settings </a></button>
+                </form>
+                <form action="{{ route('adminLogout') }}" method="GET">
+                    <button type="submit" class="list-group-item list-group-item-action"><i
+                            class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+                </form>
+            </div>
+            <br>
+        </div>
+
+
         <!-- MIDDLE-BAR-FEED -->
 
         <script>
-            // toggles the display of the comments when the user clicks on the comments button
-            function displayComments(tweet_id) {
-                let element = document.getElementById("comments" + tweet_id);
-                element.removeAttribute("hidden");
+        // toggles the display of the comments when the user clicks on the comments button
+        function displayComments(tweet_id) {
+            let element = document.getElementById("comments" + tweet_id);
+            element.removeAttribute("hidden");
 
-                if (element.style.display == "none" || element.style.display == "") {
-                    // show
-                    element.style.display = "block";
-                } else {
-                    // hide
-                    element.style.display = "none";
-                }
+            if (element.style.display == "none" || element.style.display == "") {
+                // show
+                element.style.display = "block";
+            } else {
+                // hide
+                element.style.display = "none";
             }
+        }
 
-            $(document).ready(function() {
-                $(".default_picture").on("error", function() {
-                    $(this).attr('src',
-                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                        );
-                });
+        $(document).ready(function() {
+            $(".default_picture").on("error", function() {
+                $(this).attr('src',
+                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                );
             });
+        });
         </script>
 
         <div class="main-content">
             <h1> Normal Feed </h1>
-        
+
 
             <?php
             $users = DB::select('select * from tweets order by created_at desc');
@@ -511,10 +519,12 @@
                 echo '</div>';
 
                 //delete button
-                ?>  <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button> <?php
+                ?> <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete
+                    Tweet</a></button> <?php
                 
                 //hidebutton
-                ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Hide Tweet</a></button> <?php
+                ?> <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Hide
+                    Tweet</a></button> <?php
                 
                 
                 
@@ -531,7 +541,7 @@
 
         <div class="main-content">
             <h1> Hidden Feed </h1>
-        
+
             <?php
             $users = DB::select('select * from tweets order by created_at desc');
             foreach ($users as $tweet) {
@@ -672,14 +682,18 @@
                 echo '</div>';
 
                 //delete button
-                ?>  <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button> <?php
+                ?> <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete
+                    Tweet</a></button> <?php
                 
 
                 if($userExists){
-                    ?>  <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Unhide Tweet</a></button> <?php
-                    ?>  <button class="deleteuser-btn"><a href="{{ route('tweet.deleteUser', $tweet->user_id) }}">Delete User</a></button> <?php
+                    ?> <button class="hide-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Unhide
+                    Tweet</a></button> <?php
+                    ?> <button class="deleteuser-btn"><a href="{{ route('tweet.deleteUser', $tweet->user_id) }}">Delete
+                    User</a></button> <?php
                 }else{
-                    ?>  <button class="restoreuser-btn"><a href="{{ route('tweet.restoreUser', $tweet->tweet_id) }}">Restore User</a></button> <?php
+                    ?> <button class="restoreuser-btn"><a
+                    href="{{ route('tweet.restoreUser', $tweet->tweet_id) }}">Restore User</a></button> <?php
                 }
 
                 echo '</div>';
@@ -693,10 +707,10 @@
                 <button type="button" class="btn btn-light yx-auto">Load more</button>
             </div>
         </div>
-    
-    
-    
-    <!--
+
+
+
+        <!--
     <div>
         <h1> FEED </h1>
 

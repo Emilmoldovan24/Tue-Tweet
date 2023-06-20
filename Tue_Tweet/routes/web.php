@@ -95,6 +95,12 @@ Route::get('/adminLogin', [
     'as' => 'adminLogin'
 ]);
 
+// AdminCreate
+Route::get('/adminCreate', [
+    'uses' => 'App\Http\Controllers\AdminController@getAdminCreate',
+    'as' => 'adminCreate'
+]);
+
 // AdminLogOut
 Route::get('/adminLogout', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminLogout',
@@ -107,10 +113,10 @@ Route::get('/adminFeed', [
     'as' => 'adminFeed'
 ]);
 
-// Post AdminSignUp
-Route::post('/adminSingup', [
-    'uses' => 'App\Http\Controllers\AdminController@postAdminSignUp',
-    'as' => 'adminSingup'
+// Post AdminCreate
+Route::post('/adminCreate', [
+    'uses' => 'App\Http\Controllers\AdminController@postCreateAdmin',
+    'as' => 'adminCreate'
 ]);
 
 // Post AdminLogIn
@@ -118,6 +124,9 @@ Route::post('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminLogIn',
     'as' => 'adminLogin'
 ]);
+
+// Delete Admin
+Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete');
 
 // Delete Tweet
 Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');

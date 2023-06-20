@@ -15,6 +15,9 @@ class AdminController extends Controller
     public function getAdminLogIn(){
         return view('adminLogIn');
     }
+    public function getAdminCreate(){
+        return view('adminCreate');
+    }
 
     public function getAdminFeed(){
         return view('adminFeed');
@@ -25,21 +28,23 @@ class AdminController extends Controller
         return redirect()->route('adminLogin');
     }
 
-    public function postAdminSignUp(Request $request) {
+    public function postCreateAdmin(Request $request) {
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
 
+        //validation
         $this->validate($request, [
             'email' => 'email|unique:users', 
             'adminname' => 'required|max:120',
             'user_password' => 'required|min:4'
         ]);
 
-
+        
         $email = $request['email'];
         $adminname = $request['adminname'];
         $user_password = bcrypt($request['user_password']);
 
+        //Create new admin
         $admin = new Admin();
         $admin->email = $email;
         $admin->adminname = $adminname;
@@ -47,9 +52,8 @@ class AdminController extends Controller
 
         $admin->save();
 
-        Auth::login($admin);
-
-        return redirect()->route('adminFeed');
+        return redirect()->route('adminCreate');
+        
 
     }
 
@@ -80,6 +84,14 @@ class AdminController extends Controller
         
 
         return redirect()->route('adminFeed');
+    }
+
+    public function deleteAdmin(Request $request){
+        
+        $id = $request->id;
+        DB::delete("delete from admins where id = '$id'");
+        
+        return redirect()->route('adminCreate');
     }
 
     public function hideTweet(Request $request){
