@@ -163,7 +163,8 @@ VALUES( 1, 3, "retweet to tweet 3", TRUE, '2023-05-09 18:56:21'),
 CREATE TABLE likes (
   like_id               INT         AUTO_INCREMENT PRIMARY KEY,
   user_id               INT         NOT NULL,
-  tweet_id              INT         NOT NULL,
+  tweet_id              INT         DEFAULT NULL,
+  retweet_id            INT         DEFAULT NULL,
   visibility            BOOLEAN     DEFAULT TRUE,
   notification_flag     BOOLEAN     DEFAULT TRUE,
   created_at            TIMESTAMP,
@@ -174,9 +175,10 @@ CREATE TABLE likes (
 /*
 filling of likes for exercise purposes
 */
-INSERT INTO  likes ( user_id, tweet_id, created_at) 
-VALUES( 3, 3, '2023-05-09 15:56:21'),
-      ( 2, 3, '2023-05-09 16:57:21');
+INSERT INTO  likes ( user_id, tweet_id,retweet_id, created_at) 
+VALUES( 3, 3, NULL, '2023-05-09 15:56:21'),
+      ( 3, NULL, 2, '2023-05-09 15:56:21'),
+      ( 2, 3, NULL, '2023-05-09 16:57:21');
 
 -- Create of Table follows
 -- table follows contains the following information :
