@@ -38,7 +38,7 @@ Route::get('/verify', function () {
 });
 
 // Settings
-Route::get('/settings', function() {
+Route::get('/settings', function () {
     return view('settings');
 });
 
@@ -53,7 +53,7 @@ Route::get('/feed', function () {
 });
 
 // Verify with UserData
-Route::get('verify/{usr_data}', function($usr_data){
+Route::get('verify/{usr_data}', function ($usr_data) {
     return view('verify', ['usr_data' => $usr_data]);
 });
 
@@ -65,7 +65,7 @@ Route::get('verify/{usr_data}', function($usr_data){
 Route::get('/welcome', [
     'uses' => 'App\Http\Controllers\UserController@getwelcome',
     'as' => 'welcome'
-]);  
+]);
 
 // Post SignUp
 Route::post('/signup', [
@@ -186,6 +186,12 @@ Route::get('profile-tweet-delete/{id}', [
     'as' => 'ProfileTweetDelete'
 ]);
 
+// safe Information as file
+Route::get('/safeFile', [
+    'uses' => 'App\Http\Controllers\ProfileController@safeFile',
+    'as' => 'safeFile'
+]);
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // FeedController
@@ -263,8 +269,8 @@ Route::get('feed-tweet-delete/{id}', [
 
 // NOTE: this route must be at the very back, otherwise it will throw errors
 
- // Profile with your RouteName
- Route::get('/{username}', function($username){
+// Profile with your RouteName
+Route::get('/{username}', function ($username) {
     // Überprüfe, ob der Benutzername existiert
     $user = User::where('username', $username)->first();
 
@@ -277,4 +283,3 @@ Route::get('feed-tweet-delete/{id}', [
 });
 
 //---------------------------------------------------------------------------------------------------------------------------
-
