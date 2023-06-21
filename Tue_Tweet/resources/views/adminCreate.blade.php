@@ -33,6 +33,10 @@
 .home-header .admin-box h1 {
     margin-bottom: 25px;
 }
+.home-head .admin{
+    background: lightgrey;
+    color: green;
+}
 
 .home-header .btn-primary {
     font-size: 20px;
@@ -60,8 +64,6 @@
 </style>
 
 <body>
-
-
     <section class="home-header">
         <h1 class="logo">Tue-Tweet</h1>
 
@@ -91,24 +93,25 @@
                        
                         $admins = DB::select('select * from admins ');
                         foreach($admins as $admin) {
-                            echo "Name:  $admin->adminname".
-                            '<br>';
-                            echo "ID:   $admin->id".
-                            '<br>';
-                            echo "Created at: $admin->created_at".
-                            '<br>';
-                            ?>
-                            <button class="delete-btn"><a href="{{ route('admin.delete', $admin->id) }}">Delete admin</a></button> <?php
-                            echo "======================================================".
-                            '<br>';
-                        }
-                        ?>
+                                 echo "Name:  $admin->adminname".
+                                 '<br>';
+                                 echo "ID:   $admin->id".
+                                 '<br>';
+                                 echo "Created at: $admin->created_at".
+                                 '<br>';
+                                 ?>
+                                 <button class="delete-btn"><a href="{{ route('admin.delete', $admin->id) }}">Delete admin</a></button> <?php
+                                 echo "======================================================".
+                                 '<br>';
+                        }?>
+                        
                     </div>
                     <!-- Button trigger modal -->
-                    <form action="{{ route('adminFeed') }}" method="GET">
+                    <form action="{{ route('adminDash') }}" method="GET">
                             <button type="submit" class="btn btn-light"> Back </button>
                         </form>
                 </div>
+                
                 <div class="col-md-6 text-center">
                     <div class="lead-form">
                         <div class="title-box">

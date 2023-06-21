@@ -18,7 +18,12 @@ class AdminController extends Controller
     public function getAdminCreate(){
         return view('adminCreate');
     }
-
+    public function getAdminDash(){
+        return view('adminDashboard');
+    }
+    public function getAdminUsers(){
+        return view('adminUserFeed');
+    }
     public function getAdminFeed(){
         return view('adminFeed');
     }
@@ -69,7 +74,7 @@ class AdminController extends Controller
         if ($admin && Hash::check($request->user_password, $admin->user_password)) {
                 // Admin gefunden und Passwort ist korrekt
                 Auth::login($admin);
-            return redirect()->route('adminFeed');
+            return redirect()->route('adminDash');
         } else {
             // Admin nicht gefunden oder Passwort ist falsch
             return redirect()->back()->withErrors(['admin_password' => 'Check if the password or email is correct.'])->withInput();
