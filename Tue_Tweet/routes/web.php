@@ -95,6 +95,18 @@ Route::get('/adminLogin', [
     'as' => 'adminLogin'
 ]);
 
+// AdminDash
+Route::get('/adminDash', [
+    'uses' => 'App\Http\Controllers\AdminController@getAdminDash',
+    'as' => 'adminDash'
+]);
+
+// AdminDash
+Route::get('/adminUsers', [
+    'uses' => 'App\Http\Controllers\AdminController@getAdminUsers',
+    'as' => 'adminUsers'
+]);
+
 // AdminCreate
 Route::get('/adminCreate', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminCreate',

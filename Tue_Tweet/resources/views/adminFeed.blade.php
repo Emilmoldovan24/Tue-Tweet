@@ -341,13 +341,9 @@ body {
 
             <!-- Menu Buttons -->
             <div class="list-group">
-                <form action="{{ route('adminCreate') }}" method="GET">
+                <form action="{{ route('adminDash') }}" method="GET">
                     <button type="submit" class="list-group-item list-group-item-action"><i
-                            class="fa-solid fa-right-from-bracket"></i><a> Admin settings </a></button>
-                </form>
-                <form action="{{ route('adminLogout') }}" method="GET">
-                    <button type="submit" class="list-group-item list-group-item-action"><i
-                            class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+                            class="fa-solid fa-right-from-bracket"></i><a> Back </a></button>
                 </form>
             </div>
             <br>
