@@ -58,8 +58,10 @@ CREATE TABLE admins (
   adminname      VARCHAR(30)   UNIQUE NOT NULL,
   email          VARCHAR(50)   UNIQUE NOT NULL,
   user_password  VARCHAR(60)   NOT NULL,
-  profile_bio    VARCHAR(255)  DEFAULT NULL,
-  profile_img    LONGBLOB      DEFAULT NULL,
+  -- profile_bio    VARCHAR(255)  DEFAULT NULL,
+  -- profile_img    LONGBLOB      DEFAULT NULL,
+  activated      BOOLEAN       DEFAULT TRUE,
+  super_admin    BOOLEAN       DEFAULT FALSE,
   remember_token VARCHAR(100)  DEFAULT NULL,
   created_at     TIMESTAMP ,
   updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP    
@@ -68,8 +70,8 @@ CREATE TABLE admins (
 /*
 filling of users for exercise purposes
 */
-INSERT INTO admins ( adminname, email, user_password, profile_bio, profile_img,  remember_token, created_at , updated_at) 
-VALUES( "Admin1", "admin@1", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2" , "blablabla", NULL,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21');
+INSERT INTO admins ( adminname, email, user_password, super_admin,  remember_token, created_at , updated_at) 
+VALUES( "Admin1", "admin@1", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2" , TRUE ,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21');
 
 
 -- Create of Table tweets
