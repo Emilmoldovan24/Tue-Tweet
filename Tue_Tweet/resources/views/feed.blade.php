@@ -10,244 +10,244 @@
 
 </head>
 <style>
-body {
-    background-color: #DCDCDC;
-    /* background: rgb(2, 0, 36);
+    body {
+        background-color: #DCDCDC;
+        /* background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
-}
+    }
 
-.navbar.bg-dark {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 5%;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+    .navbar.bg-dark {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
 
-.post-input-container {
-    padding-left: 55px;
-    padding-top: 20px;
-}
+    .post-input-container {
+        padding-left: 55px;
+        padding-top: 20px;
+    }
 
-.post-input-container textarea {
-    width: 100%;
-    resize: none;
-    border-bottom: 10px solid #grey;
-    border: 0;
-    outline: 0;
-    background: transparent;
-}
+    .post-input-container textarea {
+        width: 100%;
+        resize: none;
+        border-bottom: 10px solid #grey;
+        border: 0;
+        outline: 0;
+        background: transparent;
+    }
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    padding: 13px 5%;
-}
+    .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 5%;
+    }
 
-.left-sidebar {
-    margin: 20px 0;
-    flex-basis: 25%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
+    .left-sidebar {
+        margin: 20px 0;
+        flex-basis: 25%;
+        position: sticky;
+        top: 70px;
+        align-self: flex-start;
 
-}
+    }
 
-.right-sidebar {
-    margin: 20px 0;
-    flex-basis: 25%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
-}
+    .right-sidebar {
+        margin: 20px 0;
+        flex-basis: 25%;
+        position: sticky;
+        top: 70px;
+        align-self: flex-start;
+    }
 
-.main-content {
-    flex-basis: 47%;
-    align-self: flex-start;
-}
+    .main-content {
+        flex-basis: 47%;
+        align-self: flex-start;
+    }
 
-.write-post-container {
-    width: 100%;
-    background: white;
-    border-radius: 6px;
-    padding: 20px;
-    columns: #626262;
-}
+    .write-post-container {
+        width: 100%;
+        background: white;
+        border-radius: 6px;
+        padding: 20px;
+        columns: #626262;
+    }
 
-.user-profile {
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
+    .user-profile {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
 
-}
+    }
 
-.user-profile img {
-    width: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+    .user-profile img {
+        width: 45px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 
-.user-profile p {
-    margin-bottom: -5px;
-    font-weight: 500;
-    color: #626262;
-    margin-right: 20px;
-}
+    .user-profile p {
+        margin-bottom: -5px;
+        font-weight: 500;
+        color: #626262;
+        margin-right: 20px;
+    }
 
-.user-profile small {
-    font-size: 12px;
-}
+    .user-profile small {
+        font-size: 12px;
+    }
 
-.add-post-links {
-    display: flex;
-    margin-top: 10px;
-}
+    .add-post-links {
+        display: flex;
+        margin-top: 10px;
+    }
 
-.add-post-links a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: #626262;
-    margin-right: 30px;
-    font-size: 13px;
-    margin-top: 10px;
-}
+    .add-post-links a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        color: #626262;
+        margin-right: 30px;
+        font-size: 13px;
+        margin-top: 10px;
+    }
 
-.fa-solid.fa-camera.fa-2xl {
-    margin-right: 3px;
-}
+    .fa-solid.fa-camera.fa-2xl {
+        margin-right: 3px;
+    }
 
-.post-container {
-    width: 100%;
-    background: #fff;
-    border-radius: 6px;
-    padding: 20px;
-    color: #626262;
-    margin: 20px 0;
-}
+    .post-container {
+        width: 100%;
+        background: #fff;
+        border-radius: 6px;
+        padding: 20px;
+        color: #626262;
+        margin: 20px 0;
+    }
 
-.user-profile span {
-    font-size: 13px;
-    color: #9a9a9a;
-}
+    .user-profile span {
+        font-size: 13px;
+        color: #9a9a9a;
+    }
 
-.post-text-just-retweet {
-    color: #1DA1F2;
-    font-family: 'Helvetica Neue Bold', Arial, sans-serif;
-    margin: 15px 0;
-    font-size: 15px;
-}
+    .post-text-just-retweet {
+        color: #1DA1F2;
+        font-family: 'Helvetica Neue Bold', Arial, sans-serif;
+        margin: 15px 0;
+        font-size: 15px;
+    }
 
-.post-img {
-    width: 100%;
-    height: 500px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-}
+    .post-img {
+        width: 100%;
+        height: 500px;
+        border-radius: 4px;
+        margin-bottom: 5px;
+    }
 
-.card.mb-3 {
-    align-items: center;
-}
+    .card.mb-3 {
+        align-items: center;
+    }
 
-.post-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+    .post-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-.activity-icons div {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 20px;
-    margin-top: 10px;
-}
+    .activity-icons div {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
 
-.like-btn {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 20px;
-    margin-top: 10px;
-}
+    .like-btn {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
 
-.activity-icons div i {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 5px;
-}
+    .activity-icons div i {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 5px;
+    }
 
-.post-row a {
-    color: black;
-}
+    .post-row a {
+        color: black;
+    }
 
-.retweet-text {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 1px;
+    .retweet-text {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 1px;
 
-}
+    }
 
-.tweetbox-profile span {
-    font-size: 13px;
-    color: #9a9a9a;
-    margin-left: 10px;
-}
+    .tweetbox-profile span {
+        font-size: 13px;
+        color: #9a9a9a;
+        margin-left: 10px;
+    }
 
-.tweetbox-profile p {
-    margin-top: 14px;
-    font-weight: 500;
-    color: #626262;
+    .tweetbox-profile p {
+        margin-top: 14px;
+        font-weight: 500;
+        color: #626262;
 
-}
+    }
 
-.tweetbox-profile {
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #626262;
-    margin: 5px 0;
-    text-align: center;
-    justify-content: space-between;
-}
+    .tweetbox-profile {
+        padding-left: 10px;
+        padding-right: 10px;
+        color: #626262;
+        margin: 5px 0;
+        text-align: center;
+        justify-content: space-between;
+    }
 
-.tweetbox-profile img {
-    width: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+    .tweetbox-profile img {
+        width: 45px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 
-.retweet div {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    .retweet div {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
 
-}
+    }
 
-.retweet {
-    border-radius: 6px;
-    border: 2px solid;
-}
+    .retweet {
+        border-radius: 6px;
+        border: 2px solid;
+    }
 
-#pictureBox img {
-    max-width: 50%;
-    max-height: 50%;
-}
+    #pictureBox img {
+        max-width: 50%;
+        max-height: 50%;
+    }
 
-#pictureBox {
-    display: flex;
-    border-color: black;
-    border: 2px solid;
-    border-radius: 5px;
-}
+    #pictureBox {
+        display: flex;
+        border-color: black;
+        border: 2px solid;
+        border-radius: 5px;
+    }
 
-.list-group-item i {
-    margin-right: 20px;
-}
+    .list-group-item i {
+        margin-right: 20px;
+    }
 
-.list-group-item a {
-    padding-right: 130px;
-}
+    .list-group-item a {
+        padding-right: 130px;
+    }
 </style>
 
 <body>
@@ -273,15 +273,19 @@ body {
                         <div class="col-md-4">
                             <?php
                             $user_id = Auth::id();
-                            $user_name = DB::table('users')->where('id', $user_id)->value('username');
-                            $user_profileImg = DB::table('users')->where('id', $user_id)->value('profile_img');
+                            $user_name = DB::table('users')
+                                ->where('id', $user_id)
+                                ->value('username');
+                            $user_profileImg = DB::table('users')
+                                ->where('id', $user_id)
+                                ->value('profile_img');
                             $user_profileImg = app('App\Http\Controllers\UserController')->getUserImg($user_profileImg);
                             ?>
-                            <img src="{{$user_profileImg}}" height="100px" width="100px">
+                            <img src="{{ $user_profileImg }}" height="100px" width="100px">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Hello {{$user_name}}</h5>
+                                <h5 class="card-title">Hello {{ $user_name }}</h5>
                             </div>
                         </div>
                     </div>
@@ -324,228 +328,284 @@ body {
         <div class="col-5">
 
             <script>
-            // toggles the display of the comments when the user clicks on the comments button
-            function displayComments(tweet_id) {
-                let element = document.getElementById("comments" + tweet_id);
-                element.removeAttribute("hidden");
+                // toggles the display of the comments when the user clicks on the comments button
+                function displayComments(tweet_id) {
+                    let element = document.getElementById("comments" + tweet_id);
+                    element.removeAttribute("hidden");
 
-                if (element.style.display == "none" || element.style.display == "") {
-                    // show
-                    element.style.display = "block";
-                } else {
-                    // hide
-                    element.style.display = "none";
+                    if (element.style.display == "none" || element.style.display == "") {
+                        // show
+                        element.style.display = "block";
+                    } else {
+                        // hide
+                        element.style.display = "none";
+                    }
                 }
-            }
 
-            $(document).ready(function() {
-                $(".default_picture").on("error", function() {
-                    $(this).attr('src',
-                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                    );
+                $(document).ready(function() {
+                    $(".default_picture").on("error", function() {
+                        $(this).attr('src',
+                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                        );
+                    });
                 });
-            });
             </script>
 
 
             <?php
             $tweets = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at
-            from (
-                SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, deleted_at
-                from tweets 
-                where deleted_at is null 
-                UNION
-                SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, deleted_at
-                from retweets
-            ) as feedTmp
-            where deleted_at is null and visibility = 1
-            order by created_at DESC");
+                        from (
+                            SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, deleted_at
+                            from tweets 
+                            where deleted_at is null 
+                            UNION
+                            SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, deleted_at
+                            from retweets
+                        ) as feedTmp
+                        where deleted_at is null and visibility = 1
+                        order by created_at DESC");
             ?>
-            
+
             @foreach ($tweets as $tweet)
+                <?php
+                //DB query for user
+                $cur_user_id = Auth::id();
+                $currentTimeString = time();
+                $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+                $user_id = $tweet->user_id;
+                $username = DB::table('users')
+                    ->where('id', $user_id)
+                    ->value('username');
+                $userImg = DB::table('users')
+                    ->where('id', $user_id)
+                    ->value('profile_img');
+                $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+                $tweet_id = $tweet->id;
                 
-                    <?php
-                    //DB query for user
-                        $cur_user_id = Auth::id();
-                        $currentTimeString = time();
-                        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
-                        $user_id = $tweet->user_id;
-                        $username = DB::table('users')->where('id', $user_id)->value('username');
-                        $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
-                        $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                        $tweet_id = $tweet->id;
+                if ($tweet->typ == 'tweet') {
+                    // DB query for tweet
+                    $tweetText = DB::table('tweets')
+                        ->where('tweet_id', $tweet->id)
+                        ->value('tweet');
+                    $tweetImg = DB::table('tweets')
+                        ->where('tweet_id', $tweet->id)
+                        ->value('img');
+                } else {
+                    // DB query for retweet
+                    $retweetedTweet = DB::table('retweets')
+                        ->where('retweet_id', $tweet->id)
+                        ->value('tweet_id');
+                    $retweetedUser_id = DB::table('tweets')
+                        ->where('tweet_id', $retweetedTweet)
+                        ->value('user_id');
+                    $retweetedUsername = DB::table('users')
+                        ->where('id', $retweetedUser_id)
+                        ->value('username');
+                    $retweetedUserImg = DB::table('users')
+                        ->where('id', $retweetedUser_id)
+                        ->value('profile_img');
+                    $retweetedUserImg = app('App\Http\Controllers\UserController')->getUserImg($retweetedUserImg);
+                    $retweetedTweetCreatedAt = DB::table('tweets')
+                        ->where('tweet_id', $retweetedTweet)
+                        ->value('created_at');
+                    $tweetText = DB::table('tweets')
+                        ->where('tweet_id', $retweetedTweet)
+                        ->value('tweet');
+                }
+                ?>
 
-                        if($tweet->typ == 'tweet'){
-                            // DB query for tweet
-                            $tweetText = DB::table('tweets')->where('tweet_id', $tweet->id)->value('tweet');
-                            $tweetImg = DB::table('tweets')->where('tweet_id', $tweet->id)->value('img');
-                        }else{
-                            // DB query for retweet
-                            $retweetedTweet = DB::table('retweets')->where('retweet_id', $tweet->id)->value('tweet_id');
-                            $retweetedUser_id = DB::table('tweets')->where('tweet_id', $retweetedTweet)->value('user_id');
-                            $retweetedUsername = DB::table('users')->where('id', $retweetedUser_id)->value('username');
-                            $retweetedUserImg = DB::table('users')->where('id', $retweetedUser_id)->value('profile_img');
-                            $retweetedUserImg = app('App\Http\Controllers\UserController')->getUserImg($retweetedUserImg);
-                            $retweetedTweetCreatedAt = DB::table('tweets')->where('tweet_id', $retweetedTweet)->value('created_at');
-                            $tweetText = DB::table('tweets')->where('tweet_id', $retweetedTweet)->value('tweet');
-                        }
-                    ?>
-
-                    <!-- Tweet header -->
-                    <div class="post-container">
-                        <div class="post-row">
-                            <div class="user-profile">
-                                <?php echo $userImgHtml; ?>
-                                <div style="display: inline-block;">
-                                    <a style="margin-right: 3px; text-decoration: none;" href="/{{$username}}">{{$username}}</a>
-                                    <a> &bull; </a>
-                                    <span>{{$tweet->created_at}}</span>
-                                </div>
+                <!-- Tweet header -->
+                <div class="post-container">
+                    <div class="post-row">
+                        <div class="user-profile">
+                            <?php echo $userImgHtml; ?>
+                            <div style="display: inline-block;">
+                                <a style="margin-right: 3px; text-decoration: none;"
+                                    href="/{{ $username }}">{{ $username }}</a>
+                                <a> &bull; </a>
+                                <span>{{ $tweet->created_at }}</span>
                             </div>
-
-                            <!--Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört -->
-                            @if($user_id === $cur_user_id)
-                                <div class="menu-btn-own">
-                                    <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                                    <ul class="dropdown-menu">
-                                        <li><button class="dropdown-item"><a href="{{ route('MyTweetDelete', $tweet->id) }}" style="text-decoration: none;">Delete</a></button></li>
-                                        <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweet('.$tweet->id.', '.htmlspecialchars('"'.$tweetText.'"').')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
-                                </div>
-                            @endif
                         </div>
 
-
-                        <!-- Tweet content -->
-
-                        <!-- Display Retweet -->
-                        @if($tweet->typ == 'retweet')
-                            <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> {{$username}} retweeted</p>
-                            <div class="retweet">
-                                <div class="tweetbox-profile">
-                                    <img src="{{$retweetedUserImg}}">
-                                    <div>
-                                        <p>{{$retweetedUsername}}</p>
-                                        <span>{{$retweetedTweetCreatedAt}}</span>
-                                    </div>
-                                </div>
-                                @if(!is_null($tweetText)) <!-- Validation fängt es schon ab, dennoch so besser -->
-                                    <p class="retweet-text">{{$tweetText}}</p>
-                                @endif
+                        <!--Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört -->
+                        @if ($user_id === $cur_user_id)
+                            <div class="menu-btn-own">
+                                <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item"><a href="{{ route('MyTweetDelete', $tweet->id) }}"
+                                                style="text-decoration: none;">Delete</a></button></li>
+                                    <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
                             </div>
-                    
-                        @elseif($tweet->typ == 'tweet')
+                        @endif
+                    </div>
 
-                            <!-- Display Tweet -->
-                            @if(!is_null($tweetText)) <!-- Validation fängt es schon ab, dennoch so besser -->
-                                {{$tweetText}}<br>
+
+                    <!-- Tweet content -->
+
+                    <!-- Display Retweet -->
+                    @if ($tweet->typ == 'retweet')
+                        <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> {{ $username }}
+                            retweeted</p>
+                        <div class="retweet">
+                            <div class="tweetbox-profile">
+                                <img src="{{ $retweetedUserImg }}">
+                                <div>
+                                    <p>{{ $retweetedUsername }}</p>
+                                    <span>{{ $retweetedTweetCreatedAt }}</span>
+                                </div>
+                            </div>
+                            @if (!is_null($tweetText))
+                                <!-- Validation fängt es schon ab, dennoch so besser -->
+                                <p class="retweet-text">{{ $tweetText }}</p>
                             @endif
-                            
+                        </div>
+                    @elseif($tweet->typ == 'tweet')
+                        <!-- Display Tweet -->
+                        @if (!is_null($tweetText))
+                            <!-- Validation fängt es schon ab, dennoch so besser -->
+                            {{ $tweetText }}<br>
+                        @endif
 
-                            <!-- Display Tweet image -->
-                            @if(!is_null($tweetImg))
-                                <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
-                                <img class="img-fluid" src={{$tweetImg}}>
-                            @endif
 
-                            <!-- Activity Icons -->
-                            <div class="post-row">
-                                <div class="activity-icons">
+                        <!-- Display Tweet image -->
+                        @if (!is_null($tweetImg))
+                            <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
+                            <img class="img-fluid" src={{ $tweetImg }}>
+                        @endif
 
-                                    <!-- Count Likes Comments and Retweets -->
-                                    <?php
-                                    // hier gibt es ein Datenbankproblem, da die IDs nicht eindeutig sind
-                                        $likes = DB::table('likes')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->count();
-                                        $numComments = DB::table('comments')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->count();
-                                        $retweets = DB::table('retweets')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->count();
-                                    ?>
+                        <!-- Activity Icons -->
+                        <div class="post-row">
+                            <div class="activity-icons">
 
-                                    <!-- Like Button -->
-                                    <div>
-                                        <form action=like method="POST">
-                                            @csrf
-                                            <div class="like-btn">
+                                <!-- Count Likes Comments and Retweets -->
+                                <?php
+                                // hier gibt es ein Datenbankproblem, da die IDs nicht eindeutig sind
+                                $likes = DB::table('likes')
+                                    ->where('tweet_id', $tweet->id)
+                                    ->where('deleted_at', null)
+                                    ->where('visibility', 1)
+                                    ->count();
+                                $numComments = DB::table('comments')
+                                    ->where('tweet_id', $tweet->id)
+                                    ->where('deleted_at', null)
+                                    ->where('visibility', 1)
+                                    ->count();
+                                $retweets = DB::table('retweets')
+                                    ->where('tweet_id', $tweet->id)
+                                    ->where('deleted_at', null)
+                                    ->where('visibility', 1)
+                                    ->count();
+                                ?>
 
-                                                <!-- Like Button turns red if  user has liked-->
-                                                <?php
-                                                if (DB::table('likes')->where('tweet_id', $tweet->id)->where('user_id', Auth::id())->exists()) {
-                                                    echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-                                                } else {
-                                                    echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-                                                } ?>
-                                                <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
-                                            </div>
-                                        </form>
-                                    </div>
+                                <!-- Like Button -->
+                                <div>
+                                    <form action=like method="POST">
+                                        @csrf
+                                        <div class="like-btn">
 
-                                    <!-- Comment Button (display comments if button is clicked) -->
-                                    <div>
-                                        <div class="comment-btn">
-                                            <button onclick="displayComments({{$tweet->id}})" class="btn btn-dark" aria-expanded="false">
-                                                <i class="fa-regular fa-comment"></i> {{$numComments}}
-                                            </button>
+                                            <!-- Like Button turns red if  user has liked-->
+                                            <?php
+                                            if (
+                                                DB::table('likes')
+                                                    ->where('tweet_id', $tweet->id)
+                                                    ->where('user_id', Auth::id())
+                                                    ->exists()
+                                            ) {
+                                                echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                                            } else {
+                                                echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                                            } ?>
+                                            <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
                                         </div>
-                                    </div>
+                                    </form>
+                                </div>
 
-                                    <!-- Retweet Button -->
-                                    <div class="retweet-btn">
-                                        <button type="button" class="btn btn-dark">
-                                            <i class="fa-solid fa-retweet"></i> {{$retweets}}
+                                <!-- Comment Button (display comments if button is clicked) -->
+                                <div>
+                                    <div class="comment-btn">
+                                        <button onclick="displayComments({{ $tweet->id }})" class="btn btn-dark"
+                                            aria-expanded="false">
+                                            <i class="fa-regular fa-comment"></i> {{ $numComments }}
                                         </button>
                                     </div>
                                 </div>
+
+                                <!-- Retweet Button -->
+                                <div class="retweet-btn">
+                                    <button type="button" class="btn btn-dark">
+                                        <i class="fa-solid fa-retweet"></i> {{ $retweets }}
+                                    </button>
+                                </div>
                             </div>
-                
-                            <!-- Comment-->
-                            <?php echo '<div class="comments" id="comments' . $tweet->id . '" hidden>'; ?>
-                                <br>
-                                <br>
+                        </div>
 
-                                <div class="comment-container">
+                        <!-- Comment-->
+                        <?php echo '<div class="comments" id="comments' . $tweet->id . '" hidden>'; ?>
+                        <br>
+                        <br>
 
-                                    <!-- List Comments -->
-                                    <?php 
+                        <div class="comment-container">
+
+                            <!-- List Comments -->
+                            <?php 
                                     $comments = DB::table('comments')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility',1)->get();
                                     foreach ($comments as $comment) {
                                         $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                                         $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
                                         ?>
-                                    <div class="comment">
-                                        <div class="user-profile">
-                                            <?php echo $userImgHtml; ?>
-                                            <div>
-                                                <p>{{$commentUsername}}</p>
-                                                <span>{{$comment->created_at}}</span>
-                                            </div>
-                                        </div>
-                                        <p>{{$comment->comment}}</p>
-                                    </div>
-                                    <?php } ?>
-
-                                    <!-- Comment input field -->
-                                    <div class="comment-input">
-                                        <form action=postComment method="POST">
-                                            @csrf 
-                                            <div class="input-group mb-3">
-                                                <input type="text" name="comment" id="comment" class="form-control"
-                                                    placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">
-                                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>
-                                            </div>
-                                            <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
-                                        </form>
+                            <div class="comment">
+                                <div class="user-profile">
+                                    <?php echo $userImgHtml; ?>
+                                    <div>
+                                        <p>{{ $commentUsername }}</p>
+                                        <span>{{ $comment->created_at }}</span>
                                     </div>
                                 </div>
+                                <p>{{ $comment->comment }}</p>
+                                @if ($user_id === $cur_user_id)
+                                    <div class="menu-btn-own">
+                                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <ul class="dropdown-menu">
+                                            <li><button class="dropdown-item"><a href="{{ route('MyCommentDelete', $comment->comment_id) }}"
+                                                style="text-decoration: none;">Delete</a></button></li>
+                                            <?php echo '<li><button type="button" class="dropdown-item" onclick="editComment(' . $comment->comment_id . ', ' . htmlspecialchars('"' . $comment->comment . '"') . ')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>'; ?>
+                                            
+                                        </ul>
+                                    </div>
+                                @endif
+
                             </div>
-                    @endif     
-                </div>    
-            @endforeach
+                            <?php } ?>
 
-
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button type="button" class="btn btn-light yx-auto">Load more</button>
-            </div>
+                            <!-- Comment input field -->
+                            <div class="comment-input">
+                                <form action=postComment method="POST">
+                                    @csrf
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="comment" id="comment" class="form-control"
+                                            placeholder="Add a comment" aria-label="Add a comment"
+                                            aria-describedby="button-addon2">
+                                        <button class="btn btn-outline-secondary" type="submit"
+                                            id="button-addon2">Post</button>
+                                    </div>
+                                    <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                </form>
+                            </div>
+                        </div>
+                </div>
+            @endif
         </div>
+        @endforeach
+
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="button" class="btn btn-light yx-auto">Load more</button>
+        </div>
+    </div>
 
 
 
@@ -583,7 +643,7 @@ body {
 
 
     <!-- Post-Tweet-Modal -->
-    <form action="{{ route('postTweet')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('postTweet') }}" method="POST" enctype="multipart/form-data">
         <div class="modal fade" id="PostTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -593,97 +653,41 @@ body {
 
                         <div class="write-post-container">
                             <div class="user-profile">
-                                <img src='{{$user_profileImg}}'>
+                                <img src='{{ $user_profileImg }}'>
                                 <div>
-                                    {{$user_name}} <br>
+                                    {{ $user_name }} <br>
                                     <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
 
                                     {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
                                     @section('content')
-                                    @if (count($errors) > 0)
-                                        <div class='row'>
-                                            <div class="col">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                    <li>
-                                                        {{$error}}
-                                                    </li>
-                                                    @endforeach
-                                                </ul>
+                                        @if (count($errors) > 0)
+                                            <div class='row'>
+                                                <div class="col">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>
+                                                                {{ $error }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
+                                        @endif
 
-                                </div>
-                            </div>
-
-                            <div class="post-input-container">
-                                <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet"
-                                    value="{{Request::old('tweet')}}"></textarea>
-                                <div id="pictureBox"></div>
-                                <div class="add-post-links">
-                                    <a href="#"><i class="fa-solid fa-camera fa-2xl"></i>
-                                        <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
-                                        <div class="form-group">
-                                            <input type="file" name="img" id="img" value="{{Request::old('img')}}">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary"> Post </button>
-                    <input type="hidden" name="_token" value="{{  Session::token() }}">
-                </div>
-            </div>
-        </div>
-        </div>
-    </form>
-
-
-    <!-- Edit-Tweet-Modal -->
-    <form action="{{ route('editTweet') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="modal fade" id="EditTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="write-post-container">
-                            <div class="user-profile">
-                                <img src="{{$user_profileImg}}">
-                                <div>
-                                    {{$user_name}} <br>
-                                    <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
-                                    {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
-                                    @section('content')
-                                    @if (count($errors) > 0)
-                                    <div class='row'>
-                                        <div class="col">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                <li>
-                                                    {{$error}}
-                                                </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
                                     </div>
-                                    @endif
                                 </div>
-                            </div>
 
-                            <div class="post-input-container">
-                                <input style="display:none" name="id" id="editTweetId">
-                                <textarea rows="3" placeholder="Edit your Tweet" name="editTweetText" id="editTweetText"
-                                    value="{{Request::old('tweet')}}">{{ $tweetText }}</textarea>
-                                <div id="pictureEditBox"></div>
-                                <div class="add-post-links">
-                                    <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
-                                    <div class="form-group">
-                                        <input type="file" name="editImg" id="editImg" value="{{Request::old('img')}}">
+                                <div class="post-input-container">
+                                    <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet"
+                                        value="{{ Request::old('tweet') }}"></textarea>
+                                    <div id="pictureBox"></div>
+                                    <div class="add-post-links">
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i>
+                                            <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
+                                            <div class="form-group">
+                                                <input type="file" name="img" id="img"
+                                                    value="{{ Request::old('img') }}">
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -691,42 +695,100 @@ body {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                        <input type="hidden" name="_token" value="{{  Session::token() }}">
+                        <button type="submit" class="btn btn-primary"> Post </button>
+                        <input type="hidden" name="_token" value="{{ Session::token() }}">
                     </div>
                 </div>
             </div>
+            </div>
+        </form>
+
+
+        <!-- Edit-Tweet-Modal -->
+        <form action="{{ route('editTweet') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal fade" id="EditTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="write-post-container">
+                                <div class="user-profile">
+                                    <img src="{{ $user_profileImg }}">
+                                    <div>
+                                        {{ $user_name }} <br>
+                                        <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                        {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                    @section('content')
+                                        @if (count($errors) > 0)
+                                            <div class='row'>
+                                                <div class="col">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>
+                                                                {{ $error }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="post-input-container">
+                                    <input style="display:none" name="id" id="editTweetId">
+                                    <textarea rows="3" placeholder="Edit your Tweet" name="editTweetText" id="editTweetText"
+                                        value="{{ Request::old('tweet') }}">{{ $tweetText }}</textarea>
+                                    <div id="pictureEditBox"></div>
+                                    <div class="add-post-links">
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
+                                        <div class="form-group">
+                                            <input type="file" name="editImg" id="editImg"
+                                                value="{{ Request::old('img') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            <input type="hidden" name="_token" value="{{ Session::token() }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+
         </div>
-    </form>
+        </div>
 
+        <script>
+            $(".PostTweetModal").on("hidden.bs.modal", function() {
+                $(".modal-body").html("");
+            });
+        </script>
+        <script>
+            $(".EditTweetModal").on("hidden.bs.modal", function() {
+                $(".modal-body").html("");
+            });
+        </script>
+        <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        </script>
 
+        <script>
+            function editTweet(id, text) {
+                document.getElementById('editTweetText').value = text;
+                document.getElementById('editTweetId').value = id;
+            }
+        </script>
 
+    </body>
 
-    </div>
-    </div>
-
-    <script>
-    $(".PostTweetModal").on("hidden.bs.modal", function() {
-        $(".modal-body").html("");
-    });
-    </script>
-    <script>
-    $(".EditTweetModal").on("hidden.bs.modal", function() {
-        $(".modal-body").html("");
-    });
-    </script>
-    <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
-
-    <script>
-    function editTweet(id, text) {
-        document.getElementById('editTweetText').value = text;
-        document.getElementById('editTweetId').value = id;
-    }
-    </script>
-
-</body>
-
-</html>
+    </html>
