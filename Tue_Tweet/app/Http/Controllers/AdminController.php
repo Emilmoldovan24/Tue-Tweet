@@ -135,7 +135,7 @@ class AdminController extends Controller
 
         DB::update("update tweets set visibility = 0 where user_id = '$id'");
 
-        return redirect()->route('adminFeed');
+        return redirect()->back();
 
     }
 
@@ -148,8 +148,10 @@ class AdminController extends Controller
         DB::update("update users set deleted_at = NULL where id = '$userId'");
         DB::update("update tweets set visibility = 1 where user_id = '$userId'");
         
-        return redirect()->route('adminFeed');
+        return redirect()->back();
     }
+
+
 
     //TODO: delte/hide/unhide reply
 }
