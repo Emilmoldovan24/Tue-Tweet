@@ -556,6 +556,7 @@
                                         $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                                         $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
                                         ?>
+                            <div class="post-row">            
                             <div class="comment">
                                 <div class="user-profile">
                                     <?php echo $userImgHtml; ?>
@@ -565,7 +566,8 @@
                                     </div>
                                 </div>
                                 <p>{{ $comment->comment }}</p>
-                                @if ($user_id === $cur_user_id)
+                                
+                                @if ($comment->user_id === $cur_user_id)
                                     <div class="menu-btn-own">
                                         <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
                                             aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
@@ -578,6 +580,7 @@
                                     </div>
                                 @endif
 
+                            </div>
                             </div>
                             <?php } ?>
 

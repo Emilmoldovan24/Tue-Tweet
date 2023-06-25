@@ -194,7 +194,7 @@ class FeedController extends Controller {
 
     DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
 
-    return redirect()->route('feed');
+    return Redirect::back();
     }
 
     // Delete Tweet
