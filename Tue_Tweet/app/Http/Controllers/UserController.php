@@ -90,7 +90,6 @@ class UserController extends Controller
         // Auth logIn
         $usr = User::where('email', $request->email)->first();
         Auth::login($usr);
-        //Mail::to($email)->send(new WelcomeMail());
 
         return redirect()->route('feed');
     } 
