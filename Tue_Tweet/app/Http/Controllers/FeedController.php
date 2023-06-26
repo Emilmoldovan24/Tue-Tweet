@@ -187,7 +187,7 @@ class FeedController extends Controller {
 
     //Edit Comment
     public function editComment(Request $request)
-{ 
+    { 
 
     $id= $request->id;
     $editCommentText= $request-> editCommentText;

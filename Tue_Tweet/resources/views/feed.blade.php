@@ -555,6 +555,7 @@
                                     foreach ($comments as $comment) {
                                         $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                                         $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
+                                        $commentText = $comment->comment;
                                         ?>
                             <div class="post-row">            
                             <div class="comment">
@@ -573,9 +574,11 @@
                                             aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                         <ul class="dropdown-menu">
                                             <li><button class="dropdown-item"><a href="{{ route('MyCommentDelete', $comment->comment_id) }}"
-                                                style="text-decoration: none;">Delete</a></button></li>
-                                            <?php echo '<li><button type="button" class="dropdown-item" onclick="editComment(' . $comment->comment_id . ', ' . htmlspecialchars('"' . $comment->comment . '"') . ')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>'; ?>
-                                            
+                                                style="text-decoration: none;">Delete</a></button>
+                                            </li>
+                                            <?php
+                                            echo '<li><button type="button" class="dropdown-item" onclick="editComment('.$comment->comment_id.', '.htmlspecialchars('"'.$comment->comment.'"').')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>';
+                                            ?> 
                                         </ul>
                                     </div>
                                 @endif
@@ -764,7 +767,62 @@
             </div>
         </form>
 
+        <!-- Edit-Comment-Modal -->
+        <form action="{{ route('editComment') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal fade" id="EditCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="write-post-container">
+                                <div class="user-profile">
+                                    <img src="{{ $user_profileImg }}">
+                                    <div>
+                                        {{ $user_name }} <br>
+                                        <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                        {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                    @section('content')
+                                        @if (count($errors) > 0)
+                                            <div class='row'>
+                                                <div class="col">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>
+                                                                {{ $error }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
 
+                                <div class="post-input-container">
+                                    <input style="display:none" name="id" id="editCommentId">
+                                    <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
+                                        value="{{ Request::old('comment') }}">{{ $commentText }}</textarea>
+                                    {{-- <div id="pictureCommentEditBox"></div>
+                                    <div class="add-post-links">
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
+                                        <div class="form-group">
+                                            <input type="file" name="editImg" id="editImg"
+                                                value="{{ Request::old('img') }}">
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            <input type="hidden" name="_token" value="{{ Session::token() }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
 
         </div>
@@ -780,6 +838,11 @@
                 $(".modal-body").html("");
             });
         </script>
+        <script>
+            $(".EditCommentModal").on("hidden.bs.modal", function() {
+                $(".modal-body").html("");
+            });
+        </script>
         <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
@@ -789,6 +852,13 @@
             function editTweet(id, text) {
                 document.getElementById('editTweetText').value = text;
                 document.getElementById('editTweetId').value = id;
+            }
+        </script>
+
+        <script>
+            function editComment(commentId, commentText) {
+                document.getElementById('editCommentText').value = commentText;
+                document.getElementById('editCommentId').value = commentId;
             }
         </script>
 
