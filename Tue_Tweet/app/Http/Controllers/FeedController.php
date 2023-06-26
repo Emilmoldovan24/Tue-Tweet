@@ -184,6 +184,31 @@ class FeedController extends Controller {
         return redirect()->route('feed');
     }
 
+
+    //Edit Comment
+    public function editComment(Request $request)
+    { 
+
+    $id= $request->id;
+    $editCommentText= $request-> editCommentText;
+
+    DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
+
+    return Redirect::back();
+    }
+
+    // Delete Tweet
+    public function MyCommentDelete(Request $request){
+        
+        $id = $request->id;
+        DB::delete("delete from comments where comment_id = '$id'");
+
+        
+
+        return redirect()->route('feed');
+    }
+
+
 //--------------------------------------------------------------------------------------
 }
 ?>

@@ -271,10 +271,22 @@ Route::post('/tweet-edit', [
     'as' => 'editTweet'
 ]);
 
+// Edit Comment
+Route::post('/comment-edit', [
+    'uses' => 'App\Http\Controllers\FeedController@editComment',
+    'as' => 'editComment'
+]);
+
 // Delete Tweet
 Route::get('feed-tweet-delete/{id}', [
     'uses' => 'App\Http\Controllers\FeedController@MyTweetDelete',
     'as' => 'MyTweetDelete'
+]);
+
+// Delete Comment
+Route::get('feed-comment-delete/{id}', [
+    'uses' => 'App\Http\Controllers\FeedController@MyCommentDelete',
+    'as' => 'MyCommentDelete'
 ]);
 
 //---------------------------------------------------------------------------------------------------------------------------
