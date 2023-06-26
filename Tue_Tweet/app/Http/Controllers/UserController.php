@@ -77,7 +77,7 @@ class UserController extends Controller
 
         $email = $request['email'];
         $username = $request['username'];
-        $user_password = bcrypt($request['user_password']);
+        $user_password = $request['user_password'];
 
         // create new User
         $user = new User();
