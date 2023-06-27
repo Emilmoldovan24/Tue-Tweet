@@ -87,6 +87,27 @@ class ProfileController extends Controller
         return Redirect::back();
     }
 
+    public function ProfileEditComment(Request $request)
+    { 
+
+    $id= $request->id;
+    $editCommentText= $request-> editCommentText;
+
+    DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
+
+    return Redirect::back();
+    }
+
+    public function ProfileCommentDelete(Request $request){
+        
+        $id = $request->id;
+        DB::delete("delete from comments where comment_id = '$id'");
+
+        
+
+        return redirect()->route('feed');
+    }
+
     //----------------------Profile Settings----------------------------------------------------------------------------------------------------------
 
     // Function: Update Image 
