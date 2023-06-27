@@ -7,14 +7,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   </head>
   <style>
-    .logo {
-        font-family: 'Inter', sans-serif;
-        color: black;
-        font-size: 100px;
-        margin: 6px 7%;
-    }
+
+.submit-btn .btn.btn-light {
+    background-color: white;
+    color: black;
+    border-color: #493737;
+}
+.forgot-pass .btn.btn-light {
+    font-size: 15px;
+    background-color: white;
+    color: black;
+}
+.tuetweetlogo {
+    margin-top: 20px;
+    width: 300px;
+}
     .home-header {
-        background: lightgrey;
+        background: white;
     }
     .home-header .row{
         padding-top: 50px;
@@ -26,33 +35,60 @@
     .home-header .promo-text-box h1{
         margin-bottom: 25px;
     }
-    .home-header .btn-primary {
-        font-size: 20px;
-        margin: 20px;
-        color: white;
-        letter-spacing: 1px;
+    .home-header .btn-light {
+      font-size: 20px;
+    margin: 20px;
+    /* background-color: #bf1707; */
+    background-color: #75151E;
+    color: white;
+    letter-spacing: 1px;
     }
     .home-header .lead-form{
-        width: 350px;
-        margin: 10px auto;
-        border-radius: 3px;
-    }
+      width: 350px;
+    margin: 10px auto;
+    margin-bottom: 50px;
+    border: 2px solid;
+    border-radius: 9px;
+ 
+    padding: 30px 20px;
+    background-color: #75151E;
+    /* background-color: #bf1707; */
+    color: white;
+      }
+
     .home-header .lead-form .title-box{
         padding-top: 30px;
         border-bottom-left-radius: 200px 50px;
         border-bottom-right-radius: 200px 50px;
     }
     .home-header .header2 {
-        padding-top: 30px;
+      
       text-align: center;
     }
 
-  </style>
+    .row.row-cols-1.row-cols-md-3.g-4 {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card {
+    margin: 0 auto;
+    width: 70%;
+}
+
+body {
+    color: black;
+}
+
+.signup-btn .btn.btn-light{
+   margin: 0 auto;
+   margin-top: 20px;
+}  </style>
   <body>
 
 
-    <section class="home-header">
-        <h1 class="logo">Tue-Tweet</h1> 
+    
 
         {{-- Design! Fehlermeldungen --}}
         @section('content')
@@ -69,8 +105,11 @@
             </div>
         </div>
         @endif
-
+        <section class="home-header">
         <div class="container">
+    <img class="tuetweetlogo" src="{{ asset('images/tuelogo.png') }}" alt="logo">
+       
+        
             <div class="row">
                 <div class="col-md-6">
                     <div class="promo-text-box">
@@ -79,7 +118,9 @@
                               <!-- Button trigger modal -->
                               
         <form action="{{ route('welcome') }}" method="GET">
+        <div class="signup-btn">
             <button type="submit" class="btn btn-light"> Sign in </button>
+            </div>
         </form>
 
                     </div>
@@ -87,7 +128,7 @@
                 <div class="col-md-6 text-center">
                     <div class="lead-form">
                         <div class="title-box">
-                            <h3>Log-in to your Account</h3>
+                            <h3>Create your Account</h3>
                         </div>
 
 
@@ -97,7 +138,7 @@
   <div class="form-group">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" aria-describedby="emailHelp" value=" {{ Request::old('email') }}"> <!-- emailhelp? !-->
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+   
   </div>
   </div>
   <div class="mb-3">
@@ -112,7 +153,9 @@
  <input class="form-control @error('user_password') is-invalid @enderror" type="password" name="user_password" id="user_password"> 
   </div>
      </div>
+     <div class="submit-btn">
      <button type="submit" class="btn btn-light"> Submit </button>
+     </div>
     <input type="hidden" name="_token" value="{{  Session::token() }}">
 </form>
 
@@ -123,6 +166,7 @@
 
                     </div>
                 </div>
+               
                 <h2 class="header2">Check out the latest tweets!</h2>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col">

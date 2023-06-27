@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <style>
   * {
   box-sizing: border-box;
@@ -6,15 +14,21 @@
   text-align: center;
 }
 
-  #code {
-  position: relative;
-  margin: 0 auto;
-  color: red;
+  #codeCorrect {
+    font-size: 20px;
+    font-weight: bold;
+color: lightgreen;
+}
+
+#codeWrong {
+  font-size: 20px;
+  font-weight: bold;
+color: darkred;
 }
 
 
 body {
-  background-image: linear-gradient(142deg,#9861c2, #5cc0de);
+  background-color: #75151E;
   font-family: "Lato", sans-serif;
   height: 100vh;
   display: flex;
@@ -23,6 +37,7 @@ body {
   text-align: center;
   overflow: hidden;
   margin: 0;
+  color: white;
 }
 
 .container{
@@ -124,13 +139,16 @@ body {
       <input type="number" class="code" placeholder="0" min="0" max="9" required>
       <input type="number" class="code" placeholder="0" min="0" max="9" required>
       <input type="number" class="code" placeholder="0" min="0" max="9" required>
-      <button type="submit" class="btn btn-primary">Verify</button>
+      <button type="submit" class="btn btn-danger">Verify</button>
     </form>
-    <div
-      id="code">
-</div>
+ 
     </div>
-    
+    <div
+      id="codeCorrect">
+</div>
+<div
+      id="codeWrong">
+</div>
     
     <script>
          document.querySelector('form').addEventListener('submit', function(event) {
@@ -145,12 +163,12 @@ body {
       
  
           if ({{$usr_data['randomNumber']}} == ScannedNumber) {
-            document.getElementById("code").innerHTML = "The code is correct";
+            document.getElementById("codeCorrect").innerHTML = "The code is correct";
             document.getElementById("subBut").style.display = "";
 
           } else {
             document.getElementById("subBut").style.display = "none"; // Button ausblenden
-            document.getElementById("code").innerHTML = "The code is NOT correct";
+            document.getElementById("codeWrong").innerHTML = "The code is NOT correct";
           }
         
         });
@@ -160,7 +178,7 @@ body {
         <input type='hidden' name="username" id='username' value="{{$usr_data['username']}}">
         <input type='hidden' name="email" id='email' value="{{$usr_data['email']}}">
         <input type='hidden' name="user_password" id='user_password' value="{{$usr_data['user_password']}}">
-        <button id="subBut" type="submit" class="btn btn-primary" style="display: none;">Continue</button>
+        <button id="subBut" type="submit" class="btn btn-danger" style="display: none;">Continue</button>
         <input type="hidden" name="_token" value="{{  Session::token() }}">
     </form>
 

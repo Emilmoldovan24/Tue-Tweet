@@ -129,6 +129,13 @@
         margin: 20px 0;
     }
 
+    .comment-post-container {
+         width: 100%;
+        background: #fff;
+        border-radius: 6px;
+        color: #626262;
+        margin-bottom: 20px 0;
+    }
     .user-profile span {
         font-size: 13px;
         color: #9a9a9a;
@@ -578,16 +585,19 @@
                                             $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
                                             $commentText = $comment->comment;
                                             ?>
+                                            <div class="comment-post-container">
                                 <div class="post-row">            
-                                    <div class="comment">
+                                    <!-- <div class="comment"> -->
                                         <div class="user-profile">
                                             <?php echo $userImgHtml; ?>
-                                            <div>
-                                                <p>{{ $commentUsername }}</p>
+                                            <div style="display: inline-block;">
+                                       <a style="margin-right: 3px; text-decoration: none;"
+                                       href="/{{ $commentUsername }}">{{ $commentUsername }}</a>
+                                       <a> &bull; </a>
                                                 <span>{{ $comment->created_at }}</span>
                                             </div>
                                         </div>
-                                        <p>{{ $comment->comment }}</p>
+                                        
                                         
                                         @if ($comment->user_id === $cur_user_id)
                                             <div class="menu-btn-own">
@@ -605,6 +615,7 @@
                                         @endif
 
                                     </div>
+                                    <p>{{ $comment->comment }}</p>
                                 </div>
                                 <?php } ?>
 
