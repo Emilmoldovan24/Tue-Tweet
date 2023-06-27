@@ -152,6 +152,9 @@ Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tw
 // Restore User
 Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('tweet.restoreUser');
 
+// Safe single User info
+Route::get('safeUserInfo/{id}', [AdminController::class, 'safeUserInfo'])->name('tweet.safeUserInfo');
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // ProfileController

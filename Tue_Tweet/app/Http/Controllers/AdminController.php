@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class AdminController extends Controller
@@ -139,19 +140,63 @@ class AdminController extends Controller
 
     }
 
-
-    //will need to be implemented
     public function restoreUser(Request $request){
 
         $id = $request->id;
-        $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
-        DB::update("update users set deleted_at = NULL where id = '$userId'");
-        DB::update("update tweets set visibility = 1 where user_id = '$userId'");
+       // $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
+        DB::update("update users set deleted_at =  null where id = '$id'");
+        DB::update("update tweets set visibility = 1 where user_id = '$id'");
         
         return redirect()->back();
     }
 
+    public function safeUserInfo(Request $request){
+        $id = $request->id;
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d-H-i', $currentTimeString);
+    
+        //get user info
+        $user = DB::table('users')->where('id', $id)->value('username');
+        $userID = DB::table('users')->where('id', $id)->value('id');
+        $created = DB::table('users')->where('id', $id)->value('created_at');
+        $deleted = DB::table('users')->where('id', $id)->value('deleted_at');
+        $tweets = DB::table('tweets')->where('user_id', $id)->get(); 
+        $comments = DB::table('comments')->where('user_id', $id)->get(); 
+        $retweets = DB::table('retweets')->where('user_id', $id)->get(); 
 
 
-    //TODO: delte/hide/unhide reply
+        //generate filename, creates a new file one minute after used. if used multiple times in one min it overrides the file
+        $filename = $currentTimestamp.'_'.$userID.'_'.$user .'.txt';
+        $contents = 'Information for user: '.$user.' / ID: '.$userID. "\n\n";
+        $contents .= 'User was created at: '.$created. "\n\n";
+
+        if($deleted != NULL){
+            $contents .= 'User was deleted at: '.$deleted. "\n\n";
+        }
+
+        //get user tweeets
+        if($tweets->count() > 0){
+            $contents .= 'TWEETS:'."\n";
+            foreach ($tweets as $tweet) {
+                $contents .= '- '. $tweet->tweet . "\n\n";
+            }
+        }
+        //get user comments
+        if($comments->count() > 0){
+            $contents .= 'COMMENTS:'."\n";
+            foreach ($comments as $comment) {
+                $contents .= '- '.$comment->comment . "\n\n";
+            }
+        }
+        //get user retweets
+        if($retweets->count() > 0){
+            $contents .= 'RETWEETS:'."\n";
+            foreach ($retweets as $retweet) {
+                $contents .= '- '.$retweet->retweet_text . "\n\n";
+            }
+        }
+        //safe file in root\to\Tue-Tweet\Tue_Tweet\storage\app
+        Storage::put($filename, $contents);
+        return redirect()->back();
+    }
 }
