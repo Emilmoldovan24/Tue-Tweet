@@ -86,10 +86,24 @@ class AdminController extends Controller
     public function deleteTweet(Request $request){
         
         $id = $request->id;
-        DB::delete("delete from tweets where tweet_id = '$id'");
-        
 
-        return redirect()->route('adminFeed');
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update tweets set deleted_at = '$currentTimestamp' where tweet_id = '$id'");
+
+        DB::update("update tweets set visibility = 0 where tweet_id = '$id'");
+
+        return redirect()->back();
+    }
+
+    public function restoreTweet(Request $request){
+        
+        $id = $request->id;
+        DB::update("update tweets set deleted_at = null where tweet_id = '$id'");
+        DB::update("update tweets set visibility = 1 where tweet_id = '$id'");
+        
+        return redirect()->back();
     }
 
     public function deleteAdmin(Request $request){
@@ -118,9 +132,6 @@ class AdminController extends Controller
         }else{
             DB::update("update tweets set visibility = 0 where tweet_id = '$id'");
         }
-
-        
-        
         
         return redirect()->route('adminFeed');
     }
