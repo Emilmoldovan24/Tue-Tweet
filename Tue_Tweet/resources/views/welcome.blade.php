@@ -9,15 +9,26 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 <style>
-.logo {
-    font-family: 'Inter', sans-serif;
+
+
+.submit-btn .btn.btn-light {
+    background-color: white;
     color: black;
-    font-size: 100px;
-    margin: 6px 7%;
+    border-color: #493737;
+}
+.forgot-pass .btn.btn-light {
+    font-size: 15px;
+    background-color: white;
+    color: black;
+}
+.tuetweetlogo {
+    margin-top: 20px;
+    width: 300px;
+    
 }
 
 .home-header {
-    background: lightgrey;
+    background: white;
     /* background: linear-gradient(180deg, rgba(222,218,218,1) 0%, rgba(153,0,0,1) 100%);  
     background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
@@ -40,14 +51,22 @@
 .home-header .btn-light {
     font-size: 20px;
     margin: 20px;
-    color: black;
+    /* background-color: #bf1707; */
+    background-color: #75151E;
+    color: white;
     letter-spacing: 1px;
 }
 
 .home-header .lead-form {
     width: 350px;
     margin: 10px auto;
-    border-radius: 3px;
+    border: 2px solid;
+    border-radius: 9px;
+ 
+    padding: 30px 20px;
+    background-color: #75151E;
+    /* background-color: #bf1707; */
+    color: white;
 }
 
 .home-header .lead-form .title-box {
@@ -69,18 +88,23 @@
 
 .card {
     margin: 0 auto;
-    width: 18rem;
+    width: 70%;
 }
 
 body {
     color: black;
 }
+
+.signup-btn .btn.btn-light{
+   margin: 0 auto;
+   margin-top: 20px;
+}
 </style>
 
 <body>
 
-    <section class="home-header">
-        <h1 class="logo">Tue-Tweet</h1>
+   
+        
         
         {{-- Design! Fehlermeldungen --}}
         @section('content')
@@ -97,8 +121,10 @@ body {
             </div>
         </div>
         @endif 
+        <section class="home-header">
 
         <div class="container">
+        <img class="tuetweetlogo" src="{{ asset('images/tuelogo.png') }}" alt="logo">
             <div class="row">
                 <div class="col-md-6">
                     <div class="promo-text-box">
@@ -107,7 +133,9 @@ body {
                         <!-- Button trigger modal -->
 
                         <form action="{{ route('signup') }}" method="GET">
+                            <div class="signup-btn">
                             <button type="submit" class="btn btn-light"> Sign up now! </button>
+                            </div>
                         </form>
 
                     </div>
@@ -126,8 +154,7 @@ body {
                                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                                     <input class="form-control @error('email') is-invalid @enderror" type="text"
                                         name="email" id="email" value="{{ Request::old('email') }}" aria-describedby="emailHelp"> <!-- emailhelp? !-->
-                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
-                                    </div>
+                                   
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -137,10 +164,14 @@ body {
                                         type="password" name="user_password" id="user_password">
                                 </div>
                             </div>
+                            <div class="submit-btn">
                             <button type="submit" class="btn btn-light"> Submit </button>
+                            </div>
                             <input type="hidden" name="_token" value="{{  Session::token() }}">
                         </form>
-
+                        <div class="forgot-pass">
+                        <button type="submit" class="btn btn-light"> Forgot your Password? </button>
+                        </div>
 
 
                     </div>

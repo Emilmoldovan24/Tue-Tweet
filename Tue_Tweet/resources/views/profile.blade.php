@@ -287,14 +287,19 @@
     }
     .navbar.navbar-expand-lg {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        align-items: left;
+      background-color: #75151E;
         padding: 5px 5%;
         position: sticky;
         top: 0;
         z-index: 100;
         margin-bottom: 20px;
     }
+    .tuetweetlogo {
+  
+  width: 150px;
+  border-radius: 9px;
+  }
     
     </style>
 </head>
@@ -309,14 +314,8 @@
         $myProfile = ($user_id == $profile_id);
         $follow = DB::table('follows')->where('following_user_id', $user_id)->where('follow_user_id', $profile_id)->exists()
     ?>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand">Tue-Tweet</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand"><img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo"></a>
                 <form action="{{ route('feed') }}" method="GET">
                     <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
                 </form>
@@ -333,8 +332,7 @@
                     <button type="submit" class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout
                         </a></button>
                 </form>
-            </div>
-        </div>
+      
     
     </nav>
 
