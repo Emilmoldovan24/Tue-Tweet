@@ -569,13 +569,14 @@
                     echo '</div>';
                     echo '<p>' . $comment->comment . '</p>';
 
-                    if ($comment->user_id === $cur_user_id)
+                    if ($comment->user_id === $cur_user_id) {
                     echo '<div class="menu-btn-own">  <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
                     echo '<ul class="dropdown-menu">';
                     ?> <li><button class="dropdown-item"><a href="{{ route('MyCommentDelete', $comment->comment_id) }}" style="text-decoration: none;">Delete</a></button></li> <?php                      
                     echo '<li><button type="button" class="dropdown-item" onclick="editComment('.$comment->comment_id.', '.htmlspecialchars('"'.$comment->comment.'"').')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>';
                     echo '</ul>';
                     echo '</div>';
+                    }
 
                     echo '</div>';
                 }
@@ -750,6 +751,7 @@
 
 <!-- Edit-Comment-Modal -->
         <form action="{{ route('editComment') }}" method="POST" enctype="multipart/form-data">
+            
             @csrf
             <div class="modal fade" id="EditCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -781,9 +783,10 @@
                                 </div>
 
                                 <div class="post-input-container">
+                                    
                                     <input style="display:none" name="id" id="editCommentId">
                                     <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
-                                        value="{{ Request::old('comment') }}">{{ $commentText }}</textarea>
+                                        value="{{ Request::old('comment') }}"></textarea>
                                     {{-- <div id="pictureCommentEditBox"></div>
                                     <div class="add-post-links">
                                         <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
