@@ -118,6 +118,7 @@ class UserController extends Controller
 //--------------------------------------------------------------------------------------
 
     // Für was benutzen wir das gerade? - Julia
+    // Standardhintergrundbild für den User falls er keins hat  - Luke
 
     //ist das gut wenn man das so macht?
     public function getUserImgHtml($userImg)
