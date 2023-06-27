@@ -446,6 +446,7 @@
             $tweets = DB::table('tweets')->where('user_id', $profile_id)->orderBy('created_at', 'desc')->get();
 
             foreach ($tweets as $tweet) {
+                $cur_user_id = Auth::id();
                 $currentTimeString = time();
                 $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
                 $id = $tweet->user_id;
@@ -557,6 +558,7 @@
                 foreach ($comments as $comment) {
                     $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                     $userImg = DB::table('users')->where('id', $id)->value('profile_img');
+                    $commentText = $comment->comment;
                     echo '<div class="comment">';
                     echo '<div class="user-profile">';
                     echo $userImgHtml;
@@ -566,8 +568,18 @@
                     echo '</div>';
                     echo '</div>';
                     echo '<p>' . $comment->comment . '</p>';
+
+                    if ($comment->user_id === $cur_user_id)
+                    echo '<div class="menu-btn-own">  <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>';
+                    echo '<ul class="dropdown-menu">';
+                    ?> <li><button class="dropdown-item"><a href="{{ route('MyCommentDelete', $comment->comment_id) }}" style="text-decoration: none;">Delete</a></button></li> <?php                      
+                    echo '<li><button type="button" class="dropdown-item" onclick="editComment('.$comment->comment_id.', '.htmlspecialchars('"'.$comment->comment.'"').')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>';
+                    echo '</ul>';
+                    echo '</div>';
+
                     echo '</div>';
                 }
+
 
                 // comment input field
                 echo '<div class="comment-input">';
@@ -736,6 +748,63 @@
     </div>
 </form>
 
+<!-- Edit-Comment-Modal -->
+        <form action="{{ route('editComment') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal fade" id="EditCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="write-post-container">
+                                <div class="user-profile">
+                                    <img src="{{ $user_profileImg }}">
+                                    <div>
+                                        {{ $user_name }} <br>
+                                        <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                        {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                    @section('content')
+                                        @if (count($errors) > 0)
+                                            <div class='row'>
+                                                <div class="col">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>
+                                                                {{ $error }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="post-input-container">
+                                    <input style="display:none" name="id" id="editCommentId">
+                                    <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
+                                        value="{{ Request::old('comment') }}">{{ $commentText }}</textarea>
+                                    {{-- <div id="pictureCommentEditBox"></div>
+                                    <div class="add-post-links">
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
+                                        <div class="form-group">
+                                            <input type="file" name="editImg" id="editImg"
+                                                value="{{ Request::old('img') }}">
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            <input type="hidden" name="_token" value="{{ Session::token() }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
     </div>
     </div>
 
@@ -763,11 +832,22 @@
         });
     </script>
     <script>
+            $(".EditCommentModal").on("hidden.bs.modal", function() {
+                $(".modal-body").html("");
+            });
+        </script>
+    <script>
         function editProfileTweet(id, text) {
             document.getElementById('editProfileTweetText').value=text;
             document.getElementById('editProfileTweetId').value=id;
         }
     </script>
+    <script>
+            function editComment(commentId, commentText) {
+                document.getElementById('editCommentText').value = commentText;
+                document.getElementById('editCommentId').value = commentId;
+            }
+        </script>
 </body>
 
 </html>

@@ -201,6 +201,18 @@ Route::get('profile-tweet-delete/{id}', [
     'as' => 'ProfileTweetDelete'
 ]);
 
+// Edit Comment
+Route::post('/profileComment-edit', [
+    'uses' => 'App\Http\Controllers\ProfileController@ProfileEditComment',
+    'as' => 'ProfileEditComment'
+]);
+
+// Delete Comment
+Route::get('profile-comment-delete/{id}', [
+    'uses' => 'App\Http\Controllers\ProfileController@ProfileCommentDelete',
+    'as' => 'ProfileCommentDelete'
+]);
+
 // safe Information as file
 Route::get('/safeFile', [
     'uses' => 'App\Http\Controllers\ProfileController@safeFile',
