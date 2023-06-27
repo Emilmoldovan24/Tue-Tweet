@@ -98,6 +98,7 @@ body {
                      foreach ($users as $user) {
                         //show all deleted users
                         if($user->deleted_at != NULL){
+                            $userID = $user->id;
                             ?>
                             <div class="user">
                                 <?php
@@ -112,7 +113,10 @@ body {
                                     echo "Deleted at: $user->deleted_at".
                                         '<br>';                   
                                 ?>
-                                <button class="delete-btn"><a href="{{ route('tweet.restoreUser', $user->id) }}">Restore  user</a></button> <?php
+                                <button><a href="{{ route('tweet.restoreUser', $userID) }}">Restore  user</a></button> <?php
+                                ?>
+                                
+                                <button class="delete-btn"><a href="{{ route('tweet.safeUserInfo', $user->id) }}">Export user information</a></button> <?php
                                 ?>
                             </div>
                                 <?php         
@@ -138,6 +142,9 @@ body {
                                         '<br>';                   
                                 ?>
                                 <button class="delete-btn"><a href="{{ route('tweet.deleteUser', $user->id) }}">Delete  user</a></button> <?php
+                                ?>
+                                
+                                <button class="delete-btn"><a href="{{ route('tweet.safeUserInfo', $user->id) }}">Export user information</a></button> <?php
                                 ?>
                             </div>
                                 <?php         
@@ -166,9 +173,12 @@ body {
                                     <button class="delete-btn"><a href="{{ route('tweet.deleteUser', $user->id) }}">Delete User</a></button> <?php
                                 }else{
                                     ?>
-                                    <button class="delete-btn"><a href="{{ route('tweet.deleteUser', $user->id) }}">Restore user</a></button> <?php
+                                    <button class="delete-btn"><a href="{{ route('tweet.restoreUser', $user->id) }}">Restore user</a></button> <?php
                                 }
-                                    ?>
+                                ?>
+                                
+                                <button class="delete-btn"><a href="{{ route('tweet.safeUserInfo', $user->id) }}">Export user information</a></button> <?php
+                                ?>
                         </div>
                     <?php         
                 }
