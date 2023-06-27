@@ -123,18 +123,21 @@ class FeedController extends Controller {
         return Redirect::back();
     }
 
-    // unfinish Function: Post Retweet
+    // Function: Post Retweet
     public function postRetweet(Request $request)
     {
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+        $tweet_id = $request['tweet_id'];
         $id = Auth::id();
 
-        $tweet_id = $request['tweet_id'];
-
-        DB::insert('insert into retweets(user_id, tweet_id, retweet_text, created_at) 
-        values(?,?,?,?', [$id, $request["tweet_id"], $request["retweet_text"], $currentTimestamp]);
-
+        if ($request['retweet_text'] == null) {
+            DB::insert('insert into retweets(user_id, tweet_id, created_at) 
+            values(?,?,?)', [$id, $tweet_id, $currentTimestamp]);
+        } else {
+            DB::insert('insert into retweets(user_id, tweet_id, retweet_text, created_at) 
+            values(?,?,?,?)', [$id, $tweet_id, $request["retweet_text"], $currentTimestamp]);
+        }
         return Redirect::back();
     }
 

@@ -268,10 +268,10 @@ Route::post('/retweet', [
     'as' => 'retweet'
 ]);
 
-// unfinish: Create Retweet
-Route::post('/createRetweet', [
-    'uses' => 'App\Http\Controllers\FeedController@createRetweet',
-    'as' => 'createRetweet'
+// Post Retweet
+Route::post('/postRetweet', [
+    'uses' => 'App\Http\Controllers\FeedController@postRetweet',
+    'as' => 'postRetweet'
 ]);
 
 // Post Comment
