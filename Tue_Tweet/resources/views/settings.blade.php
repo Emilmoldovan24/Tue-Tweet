@@ -160,6 +160,35 @@ My Profile settings
 						</div>
 					</div>
 				</div>
+
+				<!-- change password -->
+
+				<div class="col-xxl-4">
+					<div class="bg-secondary-soft px-4 py-5 rounded">
+						<div class="row g-3">
+							<h4 class="mb-4 mt-0">Change your Password</h4>
+							<div class="text-center">
+								<!-- Profil password -->
+								<div class="col-md-4 col-md-offset-4">
+									<form action="/postPassword" method="POST" enctype="multipart/form-data">
+
+										<?php
+										$user_password = DB::table('users')->where('id', Auth::id())->value('user_password');
+										?>
+
+										<div class="input-group mb-3">
+											<input type="text" class="form-control @error('user_password') is-invalid @enderror" type="text" name="user_password"  id="user_password" value="{{Request::old('user_password')}}">
+											<div class="input-group-append">
+												<button class="btn btn-outline-secondary" type="submit">Upload</button>
+												<input type="hidden" name="_token" value="{{  Session::token() }}">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div> <!-- Row END -->
 			<!-- button -->
 			<div class="gap-3 d-md-flex justify-content-md-end text-center">
