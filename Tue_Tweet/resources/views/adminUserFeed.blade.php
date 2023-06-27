@@ -83,7 +83,7 @@ body {
             <div class="menu">
                 <a href="adminUsers?"> All Users </a> |
                 <a href="adminUsers?page=notDeletedUsers"> Not deleted Users </a> |
-                <a href="adminUsers?page=deletedUsers"> Delted Users </a>
+                <a href="adminUsers?page=deletedUsers"> Deleted Users </a>
 
             </div>
 
