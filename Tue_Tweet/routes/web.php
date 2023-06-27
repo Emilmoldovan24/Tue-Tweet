@@ -183,6 +183,12 @@ Route::post('/postEmail', [
     'as' => 'postEmail'
 ]);
 
+// Update Email
+Route::post('/postPassword', [
+    'uses' => 'App\Http\Controllers\ProfileController@postPassword',
+    'as' => 'postPassword'
+]);
+
 // Follow/Unfollow
 Route::post('/follow', [
     'uses' => 'App\Http\Controllers\ProfileController@postFollow',

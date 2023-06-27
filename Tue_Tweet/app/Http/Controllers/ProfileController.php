@@ -170,6 +170,20 @@ class ProfileController extends Controller
         return redirect()->route('settings');
     }
 
+    public function postPassword(Request $request)
+    {
+        // empty Username Post, max and unique Validation
+        $request->validate([
+            'user_password' => 'required|max:120|min:4|unique:users'
+        ]);
+
+        $id = Auth::id();
+        $user_password =  $request->user_password;
+        DB::table('users')->where('id', $id)->update(['user_password' => bcrypt($user_password)]);
+
+        return redirect()->route('settings');
+    }
+
     // Function: Safe Twitter Data as .txt file
     public function safeFile(Request $request)
     {
