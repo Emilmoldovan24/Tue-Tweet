@@ -146,8 +146,17 @@ Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('
 //Restore Tweet
 Route::get('tweet-restore/{id}', [AdminController::class, 'restoreTweet'])->name('tweet.restore');
 
-// Hide Tweet
+//Hide Tweet
 Route::get('tweet-hide/{id}', [AdminController::class, 'hideTweet'])->name('tweet.hide');
+
+//Delete Comment
+Route::get('comment-delete/{id}', [AdminController::class, 'deleteComment'])->name('comment.delete');
+
+//Restore Comment
+Route::get('comment-restore/{id}', [AdminController::class, 'restoreComment'])->name('comment.restore');
+
+//Hide Comment
+Route::get('comment-hide/{id}', [AdminController::class, 'hideComment'])->name('Comment.hide');
 
 // Delete User
 Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tweet.deleteUser');

@@ -133,8 +133,54 @@ class AdminController extends Controller
             DB::update("update tweets set visibility = 0 where tweet_id = '$id'");
         }
         
-        return redirect()->route('adminFeed');
+        return redirect()->back();
     }
+
+    public function deleteComment(Request $request){
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update comments set deleted_at = '$currentTimestamp' where comment_id = '$id'");
+
+        DB::update("update comments set visibility = 0 where comment_id = '$id'");
+
+        return redirect()->back();
+
+    }
+
+    public function restoreComment(Request $request){
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update comments set deleted_at = null where comment_id = '$id'");
+        DB::update("update comments set visibility = 1 where comment_id = '$id'");
+
+        return redirect()->back();
+
+    }
+
+    public function hideComment(Request $request){
+
+        $id = $request->id;
+
+        $commentVis = DB::table('comments')->where('comment_id', $id)->value('visibility');
+
+        if($commentVis == 0){
+            DB::update("update comments set visibility = 1 where comment_id = '$id'");
+        }else{
+            DB::update("update comments set visibility = 0 where comment_id = '$id'");
+        }
+        
+
+        return redirect()->back();
+
+    }
+
+
 
     public function deleteUser(Request $request){
 
