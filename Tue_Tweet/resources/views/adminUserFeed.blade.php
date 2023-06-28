@@ -82,7 +82,7 @@ body {
 
             <div class="menu">
                 <a href="adminUsers?"> All Users </a> |
-                <a href="adminUsers?page=notDeletedUsers"> Not deleted Users </a> |
+                <a href="adminUsers?page=notDeletedUsers"> Active Users </a> |
                 <a href="adminUsers?page=deletedUsers"> Deleted Users </a>
 
             </div>
@@ -123,7 +123,7 @@ body {
                         }
                     }
                 }else{
-                    ?> <h1> All not deleted users </h1> <?php 
+                    ?> <h1> All active users </h1> <?php 
                     foreach ($users as $user) {
                         //show all not deleted users
                         if($user->deleted_at == NULL){
@@ -186,7 +186,7 @@ body {
             ?>
         </div>
     </div>
-    </div>
+    
 
 </body>
 

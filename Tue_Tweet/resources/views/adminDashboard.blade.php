@@ -51,6 +51,7 @@
                         <?php
                             $admin_id = Auth::id();
                             $admin_name = DB::table('admins')->where('id', $admin_id)->value('adminname');
+                            $admin_super =  $admin_name = DB::table('admins')->where('super_admin', $admin_id)->value('super_admin');
                             ?>
                     </div>
                     <div class="col-md-8">
@@ -63,10 +64,17 @@
 
             <!-- Menu Buttons -->
             <div class="list-group">
-                <form action="{{ route('adminCreate') }}" method="GET">
-                    <button type="submit" class="list-group-item list-group-item-action"><i
+                <?php
+                if($admin_super == 1){
+                    ?>
+                        <form action="{{ route('adminCreate') }}" method="GET">
+                            <button type="submit" class="list-group-item list-group-item-action"><i
                             class="fa-solid fa-right-from-bracket"></i><a> Manage Admins </a></button>
                 </form>
+                    <?php
+                }
+                ?>
+                
                 <form action="{{ route('adminFeed') }}" method="GET">
                     <button type="submit" class="list-group-item list-group-item-action"><i
                             class="fa-solid fa-right-from-bracket"></i><a> Manage Tweets </a></button>
