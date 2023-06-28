@@ -10,13 +10,14 @@
 </head>
 <style>
     body {
-        background-color: #DCDCDC;
+        background-color: lightgrey;
+        /* background-color: #DCDCDC; */
         /* background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
     }
 
-    .navbar.bg-dark {
+/*     .navbar.bg-dark {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -24,7 +25,35 @@
         position: sticky;
         top: 0;
         z-index: 100;
+    } */
+    .navbar.navbar-expand-lg {
+        display: flex;
+        margin: 0 auto;
+        align-items: center;
+        text-align: center;
+      background-color: #75151E;
+        padding: 5px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        margin-bottom: 20px;
     }
+     .navbar.navbar-expand-lg .navbar-brand {
+       margin: 0 auto;
+        align-items: center;
+        text-align: center;
+    }
+    .navbar.navbar-expand-lg .navbar-brand .share-it {
+     color: white;
+    }
+
+
+    .tuetweetlogo {
+  
+  width: 180px;
+  border-radius: 9px;
+  margin-right: 10px;
+  }
 
     .post-input-container {
         padding-left: 55px;
@@ -47,6 +76,7 @@
     }
 
     .left-sidebar {
+        
         margin: 20px 0;
         flex-basis: 25%;
         position: sticky;
@@ -58,7 +88,7 @@
     .right-sidebar {
         margin: 20px 0;
         flex-basis: 25%;
-        position: sticky;
+        
         top: 70px;
         align-self: flex-start;
     }
@@ -80,6 +110,8 @@
         margin-bottom: 6px;
         display: flex;
         align-items: center;
+        color: black;
+        background-color: white;
 
     }
 
@@ -92,12 +124,13 @@
     .user-profile p {
         margin-bottom: -5px;
         font-weight: 500;
-        color: #626262;
+        color: #white;
         margin-right: 20px;
     }
 
     .user-profile small {
         font-size: 12px;
+        color: white;
     }
 
     .add-post-links {
@@ -121,24 +154,27 @@
 
     .post-container {
         width: 100%;
-        background: #fff;
+        background-color: white;
         border-radius: 6px;
         padding: 20px;
-        color: #626262;
+        color: black;
         margin: 20px 0;
     }
 
     .comment-post-container {
         width: 100%;
-        background: #fff;
-        border-radius: 6px;
-        color: #626262;
-        margin-bottom: 20px 0;
+        background: white;
+        border-radius: 12px;
+        border: 2px solid black;
+        color: black;
+        margin-bottom: 20px;
+        padding: 10px;
     }
 
     .user-profile span {
         font-size: 13px;
-        color: #9a9a9a;
+        /* color: #9a9a9a; */
+        color: black;
     }
 
     .post-text-just-retweet {
@@ -146,6 +182,7 @@
         font-family: 'Helvetica Neue Bold', Arial, sans-serif;
         margin: 15px 0;
         font-size: 15px;
+        font-weight: bold;
     }
 
     .post-img {
@@ -205,14 +242,14 @@
     .tweetbox-profile p {
         margin-top: 14px;
         font-weight: 500;
-        color: #626262;
+        color: black;
 
     }
 
     .tweetbox-profile {
         padding-left: 10px;
         padding-right: 10px;
-        color: #626262;
+        color: black;
         margin: 5px 0;
         text-align: center;
         justify-content: space-between;
@@ -250,6 +287,12 @@
         border-radius: 5px;
     }
 
+    .list-group .list-group-item.list-group-item-action{
+        background-color: #75151E;
+        color: white;
+        border-radius: 9px;
+        margin: 3px;
+    }
     .list-group-item i {
         margin-right: 20px;
     }
@@ -257,14 +300,53 @@
     .list-group-item a {
         padding-right: 130px;
     }
+    .card-body {
+        background-color: #75151E;
+        color: white;
+    }
+    .col-md-8 {
+        background-color: #75151E;
+        color: white;
+    }
+    .btn.btn-danger {
+        background-color: #75151E;
+        border-color: #75151E;
+    }
+    .explore-tweets {
+        text-align: center;
+        color: white;
+        border-color: #75151E;
+        border: 3px solid;
+        border-radius: 9px;
+        padding: 10px;
+        background-color: #75151E;
+    }
+    .tweet-button {
+       
+        margin: ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
 </style>
 
 <body>
-    <nav class="navbar bg-dark" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand">Tue-Tweet</a>
+<nav class="navbar navbar-expand-lg">
 
-        </div>
+        <a class="navbar-brand">
+        <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
+        <span class="share-it">Share whats on your mind!</span>
+        
+        
+       
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#PostTweetModal" style="font-size: 20px;">
+                    Tweet!
+                </button>
+                </a>
+
     </nav>
 
     <!--CONTAINER START-->
@@ -304,7 +386,7 @@
                 <!-- Menu Buttons -->
                 <div class="list-group">
                     <form action="{{ route('feed') }}" method="GET">
-                        <button type="submit" class="list-group-item list-group-item-action active"><i class="fa-solid fa-house"></i><a> Home </a></button>
+                        <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-house"></i><a> Home </a></button>
                     </form>
                     <form action=<?php echo "'/" . $user_name . "'"; ?> method="GET">
                         <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-user"></i><a> Profile </a></button>
@@ -319,10 +401,10 @@
                 <br>
 
                 <!-- Tweet Section -->
-                <h4>Share whats on your mind!</h4>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#PostTweetModal">
+           <!--      <h4>Share whats on your mind!</h4>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#PostTweetModal">
                     Tweet!
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -331,7 +413,7 @@
 
         <!-- MIDDLE-BAR-FEED -->
         <div class="col-5">
-
+<h2 class="explore-tweets"> Explore the Tweets! </h2>
             <script>
                 // toggles the display of the comments when the user clicks on the comments button
                 function displayComments(tweet_id) {
@@ -695,7 +777,7 @@
 
 
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="button" class="btn btn-light yx-auto">Load more</button>
+            <button type="button" class="btn btn-dark yx-auto">Load more</button>
         </div>
     </div>
 
@@ -714,8 +796,8 @@
             <div class="card-body">
                 <h5 class="card-title">Follow Request</h5>
                 <p class="card-text">Max Mustermann wants to follow you!</p>
-                <a href="#" class="btn btn-primary">Accept</a>
-                <a href="#" class="btn btn-secondary">Decline</a>
+                <a href="#" class="btn btn-light">Accept</a>
+                <a href="#" class="btn btn-dark">Decline</a>
             </div>
         </div>
         <div class="card mb-3" style="width: 12rem; margin-top: 20px;">
@@ -723,7 +805,7 @@
             <div class="card-body">
                 <h5 class="card-title">Comment-Response</h5>
                 <p class="card-text">Lea responded to your comment. Go see it!</p>
-                <a href="#" class="btn btn-primary">Go to Post</a>
+                <a href="#" class="btn btn-light">Go to Post</a>
             </div>
         </div>
 
@@ -780,7 +862,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary"> Post </button>
+                    <button type="submit" class="btn btn-danger"> Post </button>
                     <input type="hidden" name="_token" value="{{ Session::token() }}">
                 </div>
             </div>
