@@ -48,6 +48,12 @@ body {
     padding: 10px;
     background: white;
 }
+
+.comment{
+    rgin-top: 10px;
+    padding: 40px;
+    background: white;
+}
 </style>
 
 <body>
@@ -86,15 +92,17 @@ body {
                 <a href="adminFeed?page=deletedTweets"> Deleted Tweets </a>
 
             </div>
-
+            
             <?php 
 
             $tweets = DB::select('select * from tweets order by created_at desc');
-            //use query parameters to check which page should be shown
+            
             if(isset($_GET['page'])){
-                if($_GET['page'] == 'deletedTweets'){ 
+                if($_GET['page'] == 'deletedTweets'){
                    ?> <h1> Deleted Tweets </h1> 
+                   
                    <?php 
+                   
                     foreach ($tweets as $tweet) {
                         if($tweet->deleted_at != NULL){
                             $tweetID = $tweet->tweet_id;
@@ -102,33 +110,47 @@ body {
                             $username = DB::table('users')->where('id', $userID)->value('username');
                             $userImg = DB::table('users')->where('id', $userID)->value('profile_img');
                             $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+                            $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+                            $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
+                            $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
                             ?>
-                            <div class="tweet">
+                            <div class="user">
                                 <?php
-                                    echo "tweetID: $tweetID".
-                                        '<br>';
-                                    echo "Bsername: $username".
-                                        '<br>';
-                                    echo "userID: $userID".
-                                        '<br>';
-                                    
-                                    echo "Created at: $tweet->created_at".
-                                        '<br>';
-                                    echo "Deleted at: $tweet->deleted_at".
-                                        '<br>';
-                                    echo '<br>';
                                     echo "$tweet->tweet".
-                                        '<br>';        
+                                    '<br>';
+                                    
+                                    
+                                        
+                                    
+                                    
+                                    echo "tweetID: $tweetID".
+                                    '<br>';
+                                    echo "Username: $username".
+                                    '<br>';
+                                    echo "userID: $userID".
+                                    '<br>';
+                                
+                                    echo "Created at: $tweet->created_at".
+                                    '<br>';
+                                    echo "Deleted at: $tweet->deleted_at".
+                                    '<br>';       
+                                    echo "$likes Likes".
+                                    '<br>';
+                                    echo "$numComments Comments".
+                                    '<br>';
+                                    echo "$retweets Retweets".
+                                    '<br>'; 
                                 ?>
                                 
+                                <br>
                                 <button class="delete-btn"><a href="{{ route('tweet.restore', $tweet->tweet_id) }}">Restore Tweet</a></button>
-                                
                             </div>
                                 <?php         
                         }
                     
                     }
                 }
+                
                 if($_GET['page'] == 'hiddenTweets'){
                     ?> <h1> Hidden Tweets </h1> <?php 
                     foreach ($tweets as $tweet) {
@@ -138,24 +160,34 @@ body {
                             $username = DB::table('users')->where('id', $userID)->value('username');
                             $userImg = DB::table('users')->where('id', $userID)->value('profile_img');
                             $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+                            $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+                            $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
+                            $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
                             ?>
-                            <div class="tweet">
+                            <div class="user">
                                 <?php
+                                    echo "$tweet->tweet".
+                                        '<br>';
+
                                     echo "tweetID: $tweetID".
                                         '<br>';
-                                    echo "Bsername: $username".
+                                    echo "Username: $username".
                                         '<br>';
                                     echo "userID: $userID".
                                         '<br>';
                                     
                                     echo "Created at: $tweet->created_at".
                                         '<br>';
-                                    echo "Deleted at: $tweet->deleted_at".
-                                        '<br>';
-                                    echo '<br>';
-                                    echo "$tweet->tweet".
-                                        '<br>';        
+                                    echo "$likes Likes".
+                                    '<br>';
+                                    echo "$numComments Comments".
+                                    '<br>';
+                                    echo "$retweets Retweets".
+                                    '<br>'; 
+                                            
                                 ?>
+                                
+                                <br>
                                 
                                 <button class="delete-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">UnHide Tweet</a></button>
                                 <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button>
@@ -166,6 +198,7 @@ body {
                     }
                 }
             }
+            
             else{
                 
                     ?> <h1> Visible Tweets </h1> <?php 
@@ -178,33 +211,44 @@ body {
                             $username = DB::table('users')->where('id', $userID)->value('username');
                             $userImg = DB::table('users')->where('id', $userID)->value('profile_img');
                             $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+                            $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
+                            $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
+                            $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
                             ?>
-                            <div class="tweet">
+                            <div class="user">
                                 <?php
-                                    echo "tweetID: $tweetID".
-                                        '<br>';
-                                    echo "Bsername: $username".
-                                        '<br>';
-                                    echo "userID: $userID".
-                                        '<br>';
-                                    
-                                    echo "Created at: $tweet->created_at".
-                                        '<br>';
-                                    echo "Deleted at: $tweet->deleted_at".
-                                        '<br>';
-                                    echo '<br>';
                                     echo "$tweet->tweet".
-                                        '<br>';        
+                                    '<br>';
+
+                                    echo "tweetID: $tweetID".
+                                    '<br>';
+                                    echo "Username: $username".
+                                    '<br>';
+                                    echo "userID: $userID".
+                                    '<br>';
+                                
+                                    echo "Created at: $tweet->created_at".
+                                    '<br>';
+                                    echo "$likes Likes".
+                                    '<br>';
+                                    echo "$numComments Comments".
+                                    '<br>';
+                                    echo "$retweets Retweets".
+                                    '<br>'; 
                                 ?>
                                 
+                                <br>
                                 <button class="delete-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Hide Tweet</a></button>
                                 <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button>
-                            </div>
-                                <?php         
+
+                        </div>
+                                <?php
+                                
                         }
                     
                     }
-            }
+            
+        }
                 
             
             ?>
