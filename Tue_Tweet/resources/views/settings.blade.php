@@ -3,11 +3,52 @@
 My Profile settings
 @endsection
 
-
+<style>
+	
+		.btn.btn-light {
+			margin: 20px;
+		
+	}
+	   .navbar.navbar-expand-lg {
+        display: flex;
+        align-items: left;
+      background-color: #75151E;
+        padding: 5px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        margin-bottom: 20px;
+    }
+    .tuetweetlogo {
+  
+  width: 150px;
+  border-radius: 9px;
+  }
+  </style>
 <div>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-
+	<nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand"><img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo"></a>
+                <form action="{{ route('feed') }}" method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
+                </form>
+                <form action=<?php echo "'/" . DB::table('users')->where('id', Auth::id())->value('username') . "'"; ?>
+                    method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile
+                        </a></button>
+                </form>
+                <form action="{{ route('settings') }}" method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings
+                        </a></button>
+                </form>
+                <form action="{{ route('logout') }}" method="GET">
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout
+                        </a></button>
+                </form>
+      
+    
+    </nav>
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -204,3 +245,5 @@ My Profile settings
 <form action="{{ route('feed') }}" method="GET">
 	<button type="submit" class="btn btn-primary"> BackToFeed </button>
 </form>
+<script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
