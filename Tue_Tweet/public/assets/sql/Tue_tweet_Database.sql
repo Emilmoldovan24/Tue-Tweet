@@ -139,7 +139,7 @@ CREATE TABLE retweets (
   retweet_id   INT         AUTO_INCREMENT Primary Key,
   user_id      INT         NOT NULL,
   tweet_id     INT         NOT NULL,
-  retweet_text TEXT(240)   NOT NULL,
+  retweet_text TEXT(240)   ,
   notification_flag        BOOLEAN     DEFAULT TRUE,
   visibility               BOOLEAN     DEFAULT TRUE, 
   created_at               TIMESTAMP,
