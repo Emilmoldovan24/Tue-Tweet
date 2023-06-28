@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -90,6 +91,7 @@ class UserController extends Controller
         // Auth logIn
         $usr = User::where('email', $request->email)->first();
         Auth::login($usr);
+        Log::info("User $username signed up!");
 
         return redirect()->route('feed');
     } 
