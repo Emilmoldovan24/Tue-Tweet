@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -88,22 +89,23 @@ class ProfileController extends Controller
     }
 
     public function ProfileEditComment(Request $request)
-    { 
+    {
 
-    $id= $request->id;
-    $editCommentText= $request-> editCommentText;
+        $id = $request->id;
+        $editCommentText = $request->editCommentText;
 
-    DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
+        DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
 
-    return Redirect::back();
+        return Redirect::back();
     }
 
-    public function ProfileCommentDelete(Request $request){
-        
+    public function ProfileCommentDelete(Request $request)
+    {
+
         $id = $request->id;
         DB::delete("delete from comments where comment_id = '$id'");
 
-        
+
 
         return redirect()->route('feed');
     }
@@ -187,6 +189,59 @@ class ProfileController extends Controller
     // Function: Safe Twitter Data as .txt file
     public function safeFile(Request $request)
     {
+        $id = Auth::id();
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d-H-i', $currentTimeString);
+
+        //get user info
+        $user = DB::table('users')->where('id', $id)->get();
+        $userID = DB::table('users')->where('id', $id)->value('id');
+        $created = DB::table('users')->where('id', $id)->value('created_at');
+        $deleted = DB::table('users')->where('id', $id)->value('deleted_at');
+        $tweets = DB::table('tweets')->where('user_id', $id)->get();
+        $comments = DB::table('comments')->where('user_id', $id)->get();
+        $retweets = DB::table('retweets')->where('user_id', $id)->get();
+
+
+        //generate filename, creates a new file one minute after used. if used multiple times in one min it overrides the file
+        $filename = $currentTimestamp . '_' . $userID . '_' . $user . '.txt';
+        $contents = 'Information for user: ' . $user . ' / ID: ' . $userID . "\n\n";
+        $contents .= 'User was created at: ' . $created . "\n\n";
+
+        if ($deleted != NULL) {
+            $contents .= 'User was deleted at: ' . $deleted . "\n\n";
+        }
+
+        //get user tweeets
+        if ($tweets->count() > 0) {
+            $contents .= 'TWEETS:' . "\n";
+            foreach ($tweets as $tweet) {
+                $contents .= '- ' . $tweet->tweet . "\n\n";
+            }
+        }
+        //get user comments
+        if ($comments->count() > 0) {
+            $contents .= 'COMMENTS:' . "\n";
+            foreach ($comments as $comment) {
+                $contents .= '- ' . $comment->comment . "\n\n";
+            }
+        }
+        //get user retweets
+        if ($retweets->count() > 0) {
+            $contents .= 'RETWEETS:' . "\n";
+            foreach ($retweets as $retweet) {
+                $contents .= '- ' . $retweet->retweet_text . "\n\n";
+            }
+        }
+
+
+        //safe file in root\to\Tue-Tweet\Tue_Tweet\storage\app
+        Storage::put($filename, $contents);
+        return redirect()->back();
+    }
+
+    /*
+
 
         $id = Auth::id();
         $name = DB::table('users')->where('id', $id)->value('username');
@@ -220,7 +275,7 @@ class ProfileController extends Controller
             file_put_contents($filePath, $content); // safe .txt file     
         }
         return redirect()->route('settings');
-    }
+    } */
 
 
     //--------------------------------------------------------------------------------------
