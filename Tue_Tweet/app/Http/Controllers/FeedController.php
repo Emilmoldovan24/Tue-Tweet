@@ -96,7 +96,8 @@ class FeedController extends Controller {
 
         $id = Auth::id();
 
-        DB::insert('insert into comments(user_id, tweet_id, comment, created_at) 
+        // depending on the tweet_typ (tweet or retweet), the comment is inserted into the corresponding column
+        DB::insert('insert into comments(user_id, '. $request["tweet_typ"] .'_id, comment, created_at) 
         values(?,?,?,?)', [$id, $request["tweet_id"], $request["comment"], $currentTimestamp]);
 
         return Redirect::back();
@@ -109,15 +110,19 @@ class FeedController extends Controller {
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $id = Auth::id();
 
-        $tweet_id = $request['tweet_id'];
+        $typ = $request['typ'];
+
+        $tweet_id = $request[$typ."_id"];
+        
+
         // like
-        if (DB::table('likes')->where('tweet_id', $tweet_id)->where('user_id', $id)->doesntExist()) {
-            DB::insert('insert into likes(user_id, tweet_id, created_at) 
-            values(?,?,?)', [$id, $request["tweet_id"], $currentTimestamp]);
+        if (DB::table('likes')->where($typ.'_id', $tweet_id)->where('user_id', $id)->doesntExist()) {
+            DB::insert('insert into likes(user_id, '.$typ.'_id, created_at) 
+            values(?,?,?)', [$id, $tweet_id, $currentTimestamp]);
         } 
         // unlike
         else {
-            DB::delete('delete from likes where user_id = ? and tweet_id = ?', [$id, $tweet_id]);
+            DB::delete('delete from likes where user_id = ? and '.$typ.'_id = ?', [$id, $tweet_id]);
         }
 
         return Redirect::back();

@@ -506,6 +506,8 @@
                 echo '<form action=like method="POST">';
                 echo csrf_field();
                 echo '<div class="like-btn">';
+                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+                echo '<input type="hidden" name="typ" value="tweet">'; // dummy
 
                 // like button turns red if user has liked the tweet
                 if (DB::table('likes')->where('tweet_id', $tweet->tweet_id)->where('user_id', Auth::id())->exists()) {
@@ -513,7 +515,6 @@
                 } else {
                     echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
                 }
-                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
                 echo '</div>';
                 echo '</form>';
                 echo '</div>';
@@ -585,10 +586,11 @@
                 echo '<form action=postComment method="POST">';
                 echo csrf_field();
                 echo '<div class="input-group mb-3">';
+                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
+                echo '<input type="hidden" name="tweet_typ" value="tweet">'; // dummy
                 echo '<input type="text" name="comment" id="comment" class="form-control" placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">';
                 echo '<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>';
                 echo '</div>';
-                echo '<input type="hidden" name="tweet_id" value="' . $tweet->tweet_id . '">';
                 echo '</form>';
                 echo '</div>';
 
