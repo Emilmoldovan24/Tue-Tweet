@@ -248,11 +248,12 @@ Route::get('/Profile', [
     'as' => 'profile'
 ]);
 
-// Feed
+//Feed
 Route::get('/feed', [
-    'uses' => 'App\Http\Controllers\FeedController@getFeed',
+    'uses' => 'App\Http\Controllers\FeedController@index' ,
     'as' => 'feed'
 ]);
+
 
 // LogOut
 Route::get('/logout', [
@@ -264,6 +265,23 @@ Route::get('/logout', [
 Route::get('/settings', [
     'uses' => 'App\Http\Controllers\FeedController@getsettings',
     'as' => 'settings'
+]);
+
+
+
+Route::get('/tweets1', [
+    'uses' => 'App\Http\Controllers\FeedController@index1' ,
+    'as' => 'tweets.index1'
+]);
+
+Route::get('/tweets2', [
+    'uses' => 'App\Http\Controllers\FeedController@index2' ,
+    'as' => 'tweets.index2'
+]);
+
+Route::get('/tweets3', [
+    'uses' => 'App\Http\Controllers\FeedController@index3' ,
+    'as' => 'tweets.index3'
 ]);
 
 //-----------------------------------------------------------------
