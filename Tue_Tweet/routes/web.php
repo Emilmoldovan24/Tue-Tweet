@@ -266,6 +266,26 @@ Route::get('/settings', [
     'as' => 'settings'
 ]);
 
+Route::get('/tweets', [
+    'uses' => 'App\Http\Controllers\FeedController@index' ,
+    'as' => 'tweets.index'
+]);
+
+Route::get('/tweets1', [
+    'uses' => 'App\Http\Controllers\FeedController@index1' ,
+    'as' => 'tweets.index1'
+]);
+
+Route::get('/tweets2', [
+    'uses' => 'App\Http\Controllers\FeedController@index2' ,
+    'as' => 'tweets.index2'
+]);
+
+Route::get('/tweets3', [
+    'uses' => 'App\Http\Controllers\FeedController@index3' ,
+    'as' => 'tweets.index3'
+]);
+
 //-----------------------------------------------------------------
 
 // Post Tweet

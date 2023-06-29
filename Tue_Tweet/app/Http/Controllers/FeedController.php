@@ -211,7 +211,142 @@ class FeedController extends Controller {
         return redirect()->route('feed');
     }
 
+    public function index(Request $request)
+    {
+        $sort = $request->input('sort', 'default');
+    
+        $query = "SELECT id, user_id, created_at, typ
+                  FROM (
+                      SELECT 'tweet' as typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(likes.like_id) AS like_count
+                      FROM tweets
+                      LEFT JOIN likes ON tweets.tweet_id = likes.tweet_id
+                      WHERE tweets.deleted_at IS NULL AND tweets.visibility = true
+                      GROUP BY tweets.tweet_id, tweets.user_id, tweets.tweet, tweets.created_at
+    
+                      UNION ALL
+    
+                      SELECT 'retweet' AS typ, retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at, COUNT(likes.like_id) AS like_count
+                      FROM retweets
+                      LEFT JOIN likes ON retweets.retweet_id = likes.retweet_id
+                      WHERE retweets.deleted_at IS NULL AND retweets.visibility = true
+                      GROUP BY retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at
+                  ) AS combined";
+    
+        if ($sort === 'likes') {
+            $query .= " ORDER BY like_count DESC";
+        }
+    
+        $tweets = DB::select($query);
+    
+        // Rest of your code to render the tweets or perform further operations
+    
+        return view('feed', compact('tweets'));
+    }
 
+
+    public function index1(Request $request)
+    {
+        $sort = $request->input('sort', 'default');
+    
+        $query = "SELECT id, user_id, created_at, typ, visibility, deleted_at
+        from (
+            SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, deleted_at
+                from tweets 
+                where deleted_at is null 
+                UNION
+                SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, deleted_at
+                from retweets
+        ) as feedTmp
+        where deleted_at is null and visibility = 1 ";
+        
+
+                  
+    
+        if ($sort === 'time') {
+            
+            $query .= " ORDER BY created_at DESC";
+        }
+    
+        $tweets = DB::select($query);
+    
+        // Rest of your code to render the tweets or perform further operations
+    
+        return view('feed', compact('tweets'));
+    }
+
+    public function index2(Request $request)
+    {
+        $sort = $request->input('sort', 'default');
+    
+        $query = "SELECT id, user_id ,created_at , typ
+                                    FROM (
+                                        SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(comments.comment_id) AS comment_count
+                                            FROM tweets
+                                            LEFT JOIN comments ON tweets.tweet_id = comments.tweet_id
+                                             WHERE tweets.deleted_at IS NULL AND tweets.visibility = true
+                                            GROUP BY tweets.tweet_id, tweets.user_id, tweets.tweet, tweets.created_at
+            
+                                            UNION ALL
+            
+                                            SELECT 'retweet' AS typ, retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at, COUNT(comments.comment_id) AS comment_count
+                                            FROM retweets
+                                            LEFT JOIN comments ON retweets.retweet_id = comments.retweet_id
+                                            WHERE retweets.deleted_at IS NULL AND retweets.visibility = true
+                                             GROUP BY retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at
+                                        ) AS combined";
+        
+
+                  
+    
+        if ($sort === 'comment') {
+            
+            $query .= " ORDER BY comment_count DESC";
+        }
+    
+        $tweets = DB::select($query);
+    
+        // Rest of your code to render the tweets or perform further operations
+    
+        return view('feed', compact('tweets'));
+    }
+    
+    public function index3(Request $request)
+    {
+        $sort = $request->input('sort', 'default');
+    
+        $query = "SELECT id, user_id, created_at , typ
+                                    FROM (
+                                        SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(retweets.retweet_id) AS retweet_count
+                                            FROM tweets
+                                            LEFT JOIN retweets ON tweets.tweet_id = retweets.tweet_id
+                                            WHERE tweets.deleted_at IS NULL AND tweets.visibility = true
+                                            GROUP BY tweets.tweet_id, tweets.user_id, tweets.tweet, tweets.created_at
+            
+                                            UNION ALL
+            
+                                            SELECT 'retweet' AS typ, retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at, 0 AS retweet_count
+                                            FROM retweets
+                                            WHERE retweets.deleted_at IS NULL AND retweets.visibility = true
+                                        ) AS combined
+                                    ";
+        
+
+                  
+    
+        if ($sort === 'retweet') {
+            
+            $query .= " ORDER BY retweet_count DESC";
+        }
+    
+        $tweets = DB::select($query);
+    
+        // Rest of your code to render the tweets or perform further operations
+    
+        return view('feed', compact('tweets'));
+    }
+    
+    
+    
 //--------------------------------------------------------------------------------------
 }
 ?>
