@@ -96,7 +96,8 @@ class FeedController extends Controller {
 
         $id = Auth::id();
 
-        DB::insert('insert into comments(user_id, tweet_id, comment, created_at) 
+        // depending on the tweet_typ (tweet or retweet), the comment is inserted into the corresponding column
+        DB::insert('insert into comments(user_id, '. $request["tweet_typ"] .'_id, comment, created_at) 
         values(?,?,?,?)', [$id, $request["tweet_id"], $request["comment"], $currentTimestamp]);
 
         return Redirect::back();
