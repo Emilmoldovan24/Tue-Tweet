@@ -298,7 +298,7 @@ class FeedController extends Controller {
 
                   
     
-        if ($sort === 'comment') {
+        if ($sort === 'comments') {
             
             $query .= " ORDER BY comment_count DESC";
         }
