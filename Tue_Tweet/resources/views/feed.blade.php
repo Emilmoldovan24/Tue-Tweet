@@ -669,29 +669,41 @@
                             <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
                             <img class="img-fluid" src={{ $tweetImg }}>
                         @endif
-
+                    @endif
                         <!-- Activity Icons -->
                         <div class="post-row">
                             <div class="activity-icons">
 
                                 <!-- Count Likes Comments and Retweets -->
                                 <?php
-                                // hier gibt es ein Datenbankproblem, da die IDs nicht eindeutig sind
-                                $likes = DB::table('likes')
-                                    ->where('tweet_id', $tweet->id)
-                                    ->where('deleted_at', null)
-                                    ->where('visibility', 1)
-                                    ->count();
-                                $numComments = DB::table('comments')
-                                    ->where('tweet_id', $tweet->id)
-                                    ->where('deleted_at', null)
-                                    ->where('visibility', 1)
-                                    ->count();
-                                $retweets = DB::table('retweets')
-                                    ->where('tweet_id', $tweet->id)
-                                    ->where('deleted_at', null)
-                                    ->where('visibility', 1)
-                                    ->count();
+                                if($tweet->typ == 'tweet'){
+                                    $likes = DB::table('likes')
+                                        ->where('tweet_id', $tweet->id)
+                                        ->where('deleted_at', null)
+                                        ->where('visibility', 1)
+                                        ->count();
+                                    $numComments = DB::table('comments')
+                                        ->where('tweet_id', $tweet->id)
+                                        ->where('deleted_at', null)
+                                        ->where('visibility', 1)
+                                        ->count();
+                                    $retweets = DB::table('retweets')
+                                        ->where('tweet_id', $tweet->id)
+                                        ->where('deleted_at', null)
+                                        ->where('visibility', 1)
+                                        ->count();
+                                } elseif ($tweet->typ == 'retweet') {
+                                    $likes = DB::table('likes')
+                                        ->where('retweet_id', $tweet->id)
+                                        ->where('deleted_at', null)
+                                        ->where('visibility', 1)
+                                        ->count();
+                                    $numComments = DB::table('comments')
+                                        ->where('retweet_id', $tweet->id)
+                                        ->where('deleted_at', null)
+                                        ->where('visibility', 1)
+                                        ->count();
+                                }
                                 ?>
 
                                 <!-- Like Button -->
@@ -702,17 +714,29 @@
 
                                             <!-- Like Button turns red if  user has liked-->
                                             <?php
-                                            if (
-                                                DB::table('likes')
+                                            if($tweet->typ == 'tweet') {
+                                                $alreadyLiked = DB::table('likes')
                                                     ->where('tweet_id', $tweet->id)
                                                     ->where('user_id', Auth::id())
-                                                    ->exists()
-                                            ) {
+                                                    ->exists();
+                                            } elseif($tweet->typ == 'retweet') {
+                                                 $alreadyLiked = DB::table('likes')
+                                                    ->where('retweet_id', $tweet->id)
+                                                    ->where('user_id', Auth::id())
+                                                    ->exists();
+                                            }
+
+                                            if ($alreadyLiked) {
                                                 echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
                                             } else {
                                                 echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
                                             } ?>
-                                            <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                            @if($tweet->typ == 'tweet')
+                                                <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                            @elseif($tweet->typ == 'retweet')
+                                                <input type="hidden" name="retweet_id" value="{{ $tweet->id }}">
+                                            @endif
+                                            <input type="hidden" name="typ" value="{{ $tweet->typ }}">
                                         </div>
                                     </form>
                                 </div>
@@ -726,7 +750,7 @@
                                         </button>
                                     </div>
                                 </div>
-
+                    @if($tweet->typ == 'tweet')
                                 <!-- Retweet Button -->
                                 <div class="retweet-btn">
                                     <?php
@@ -750,10 +774,9 @@
                                     <i class="fa-solid fa-retweet"></i> {{ $retweets }}
                                     </button>
                                 </div>
-
+                        @endif
                             </div>
                         </div>
-
                         <!-- Comment-->
                         <?php echo '<div class="comments" id="comments' . $tweet->id . '" hidden>'; ?>
                         <br>
@@ -819,7 +842,6 @@
                             </div>
                         </div>
                 </div>
-            @endif
         </div>
         @endforeach
 
