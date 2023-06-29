@@ -433,7 +433,7 @@
                   </button>
                 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('tweets.index', ['sort' => 'likes']) }}">Likes</a>
+                    <a class="dropdown-item" href="{{ route('feed', ['sort' => 'likes']) }}">Likes</a>
                     <a class="dropdown-item" href="{{ route('tweets.index1', ['sort' => 'time']) }}">Newest</a>
                     <a class="dropdown-item" href="{{ route('tweets.index2', ['sort' => 'comments']) }}">Comments</a>
                     <a class="dropdown-item" href="{{ route('tweets.index3', ['sort' => 'retweet']) }}">Retweet</a>
