@@ -89,6 +89,29 @@ class ProfileController extends Controller
         return Redirect::back();
     }
 
+    // Hide Tweet Profile
+    public function hideTweetProfile(Request $request){
+        
+        $id = $request->id;
+        $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
+        $userDeletedAt = DB::table('users')->where('id', $userId)->value('deleted_at');
+        $userExists = 0;
+        if($userDeletedAt == NULL){
+            $userExists = 1;
+        }
+
+        $tweet = DB::select("select * from tweets where tweet_id ='$id'");
+        $tweetVis = DB::table('tweets')->where('tweet_id', $id)->value('own_visibility');
+
+        if($tweetVis == 0){
+            DB::update("update tweets set own_visibility = 1 where tweet_id = '$id'");
+        }else{
+            DB::update("update tweets set own_visibility = 0 where tweet_id = '$id'");
+        }
+        
+        return redirect()->back();
+    }
+
     public function ProfileEditComment(Request $request)
     {
 
