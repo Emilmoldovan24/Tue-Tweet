@@ -47,10 +47,7 @@ Route::get('/Test', function () {
     return view('test');
 });
 
-// Feed
-Route::get('/feed', function () {
-    return view('feed');
-});
+
 
 // Verify with UserData
 Route::get('verify/{usr_data}', function ($usr_data) {
@@ -219,6 +216,12 @@ Route::get('profile-tweet-delete/{id}', [
     'as' => 'ProfileTweetDelete'
 ]);
 
+// Hide Tweet Profile 
+
+Route::get('tweet-hide1/{id}', [
+    'uses' => 'App\Http\Controllers\ProfileController@hideTweetProfile',
+    'as' => 'tweet.hide.profile']);
+
 // Edit Comment
 Route::post('/profileComment-edit', [
     'uses' => 'App\Http\Controllers\ProfileController@ProfileEditComment',
@@ -333,6 +336,11 @@ Route::get('feed-tweet-delete/{id}', [
     'uses' => 'App\Http\Controllers\FeedController@MyTweetDelete',
     'as' => 'MyTweetDelete'
 ]);
+
+//Hide Tweet Feed
+Route::get('tweet-hide2/{id}', [
+    'uses' => 'App\Http\Controllers\FeedController@hideTweetFeed',
+    'as' => 'tweet.hide.feed']);
 
 // Delete Comment
 Route::get('feed-comment-delete/{id}', [

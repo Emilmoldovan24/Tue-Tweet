@@ -472,81 +472,7 @@
 
 
 
-            <?php
-            //query sorted by the number of likes of tweets and retweets
             
-            $query1 = "SELECT id, user_id, created_at, typ
-                                    FROM (   
-                                        SELECT  'tweet' as typ ,tweets.tweet_id AS id , tweets.user_id, tweets.tweet , tweets.created_at, COUNT(likes.like_id) AS like_count
-                                            FROM tweets
-                                            LEFT JOIN likes ON tweets.tweet_id = likes.tweet_id
-                                            WHERE tweets.deleted_at IS NULL AND tweets.visibility = true
-                                            GROUP BY tweets.tweet_id, tweets.user_id, tweets.tweet, tweets.created_at
-            
-                                        UNION ALL
-            
-                                        SELECT 'retweet' AS typ, retweets.retweet_id, retweets.user_id, retweets.retweet_text , retweets.created_at, COUNT(likes.like_id) AS like_count
-                                            FROM retweets
-                                            LEFT JOIN likes ON retweets.retweet_id = likes.retweet_id
-                                            WHERE retweets.deleted_at IS NULL AND retweets.visibility = true
-                                            GROUP BY retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at
-                                         ) AS combined
-                                    ORDER BY like_count DESC;";
-            
-            //query sorted according to the chronological sequence
-            
-            $query2 = "SELECT id, user_id, created_at, typ, visibility, deleted_at
-                                    from (
-                                        SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, deleted_at
-                                            from tweets 
-                                            where deleted_at is null 
-                                            UNION
-                                            SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, deleted_at
-                                            from retweets
-                                    ) as feedTmp
-                                    where deleted_at is null and visibility = 1
-                                    order by created_at DESC;";
-            
-            //query sorted according to the number of comments
-            
-            $query3 = "SELECT id, user_id ,created_at , typ
-                                    FROM (
-                                        SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(comments.comment_id) AS comment_count
-                                            FROM tweets
-                                            LEFT JOIN comments ON tweets.tweet_id = comments.tweet_id
-                                             WHERE tweets.deleted_at IS NULL AND tweets.visibility = true
-                                            GROUP BY tweets.tweet_id, tweets.user_id, tweets.tweet, tweets.created_at
-            
-                                            UNION ALL
-            
-                                            SELECT 'retweet' AS typ, retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at, COUNT(comments.comment_id) AS comment_count
-                                            FROM retweets
-                                            LEFT JOIN comments ON retweets.retweet_id = comments.retweet_id
-                                            WHERE retweets.deleted_at IS NULL AND retweets.visibility = true
-                                             GROUP BY retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at
-                                        ) AS combined
-                                ORDER BY comment_count DESC;";
-            
-            // query sorted by most retweets
-            
-            $query4 = "SELECT id, user_id, created_at , typ
-                                    FROM (
-                                        SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(retweets.retweet_id) AS retweet_count
-                                            FROM tweets
-                                            LEFT JOIN retweets ON tweets.tweet_id = retweets.tweet_id
-                                            WHERE tweets.deleted_at IS NULL AND tweets.visibility = true
-                                            GROUP BY tweets.tweet_id, tweets.user_id, tweets.tweet, tweets.created_at
-            
-                                            UNION ALL
-            
-                                            SELECT 'retweet' AS typ, retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at, 0 AS retweet_count
-                                            FROM retweets
-                                            WHERE retweets.deleted_at IS NULL AND retweets.visibility = true
-                                        ) AS combined
-                                    ORDER BY retweet_count DESC;";
-            
-                                    // $tweets = DB::select($query3);
-            ?>
 
             @foreach ($tweets as $tweet)
                 <?php
@@ -628,7 +554,7 @@
                                     <li><button class="dropdown-item"><a href="{{ route('MyTweetDelete', $tweet->id) }}"
                                                 style="text-decoration: none;">Delete</a></button></li>
                                     <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li><button class="dropdown-item"><a href="{{ route('tweet.hide.feed', $tweet->id) }}">Hide Tweet</a></button></li>
                                 </ul>
                             </div>
                         @endif
@@ -694,6 +620,7 @@
                                         ->where('tweet_id', $tweet->id)
                                         ->where('deleted_at', null)
                                         ->where('visibility', 1)
+                                        ->where('own_visibility', 1)
                                         ->count();
                                 } elseif ($tweet->typ == 'retweet') {
                                     $likes = DB::table('likes')
