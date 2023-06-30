@@ -27,8 +27,8 @@ CREATE TABLE users (
   visibility        BOOLEAN       DEFAULT TRUE,
   remember_token    VARCHAR(100)  DEFAULT NULL,
   email_verified_at DATETIME      DEFAULT NULL,
-  created_at        TIMESTAMP ,
-  updated_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  created_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  updated_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at        TIMESTAMP     NULL DEFAULT NULL,
   activate          BOOLEAN       DEFAULT TRUE
  );
@@ -63,8 +63,8 @@ CREATE TABLE admins (
   activated      BOOLEAN       DEFAULT TRUE,
   super_admin    BOOLEAN       DEFAULT FALSE,
   remember_token VARCHAR(100)  DEFAULT NULL,
-  created_at     TIMESTAMP ,
-  updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP    
+  created_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP    
 );
 
 /*
@@ -86,8 +86,9 @@ CREATE TABLE tweets (
   user_id               INT         NOT NULL,
   tweet                 TEXT(240)   NOT NULL,
   visibility            BOOLEAN     DEFAULT TRUE,
+  own_visibility        BOOLEAN     DEFAULT TRUE,
   img                   LONGBLOB    DEFAULT NULL,
-  created_at            TIMESTAMP,
+  created_at            TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
   deleted_at            TIMESTAMP   NULL DEFAULT NULL,
   activate              BOOLEAN     DEFAULT TRUE
 );
@@ -116,7 +117,7 @@ CREATE TABLE comments (
   comment               TEXT(240)  NOT NULL,
   notification_flag     BOOLEAN    DEFAULT TRUE,
   visibility            BOOLEAN    DEFAULT TRUE,
-  created_at            TIMESTAMP,
+  created_at            TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
   deleted_at            TIMESTAMP  NULL DEFAULT NULL,
   activate              BOOLEAN    DEFAULT TRUE
 );
@@ -142,8 +143,9 @@ CREATE TABLE retweets (
   tweet_id     INT         NOT NULL,
   retweet_text TEXT(240)   DEFAULT NULL,
   notification_flag        BOOLEAN     DEFAULT TRUE,
-  visibility               BOOLEAN     DEFAULT TRUE, 
-  created_at               TIMESTAMP,
+  visibility               BOOLEAN     DEFAULT TRUE,
+  own_visibility           BOOLEAN     DEFAULT TRUE, 
+  created_at               TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
   deleted_at               TIMESTAMP   NULL DEFAULT NULL,
   activate                 BOOLEAN     DEFAULT TRUE
 );
@@ -168,7 +170,7 @@ CREATE TABLE likes (
   retweet_id            INT         DEFAULT NULL,
   visibility            BOOLEAN     DEFAULT TRUE,
   notification_flag     BOOLEAN     DEFAULT TRUE,
-  created_at            TIMESTAMP,
+  created_at            TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
   deleted_at            TIMESTAMP   NULL DEFAULT NULL,
   activate              BOOLEAN     DEFAULT TRUE
 );
@@ -192,10 +194,10 @@ CREATE TABLE follows (
   follow_user_id        INT        NOT NULL,
   following_user_id     INT        NOT NULL,
   visibility            BOOLEAN    DEFAULT TRUE,
-  notification_flag     BOOLEAN     DEFAULT TRUE,
-  created_at            TIMESTAMP,
-  deleted_at            TIMESTAMP   NULL DEFAULT NULL,
-  activate              BOOLEAN     DEFAULT TRUE
+  notification_flag     BOOLEAN    DEFAULT TRUE,
+  created_at            TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
+  deleted_at            TIMESTAMP  NULL DEFAULT NULL,
+  activate              BOOLEAN    DEFAULT TRUE
 );
 
 
@@ -387,9 +389,9 @@ BEGIN
     END IF;
 END;
 
-/*
- Event that checks once a day whether deleted_at is older than 30 days
 
+/*Event that checks once a day whether deleted_at is older than 30 days
+*/
 SET GLOBAL event_scheduler = ON;
 
 DROP EVENT IF EXISTS delete_old_rows_event;
@@ -399,6 +401,6 @@ ON SCHEDULE
   STARTS CURRENT_TIMESTAMP + INTERVAL 1 DAY
 DO
   DELETE FROM users WHERE deleted_at < (CURDATE() - INTERVAL 30 DAY);
-  */
+  
 
 

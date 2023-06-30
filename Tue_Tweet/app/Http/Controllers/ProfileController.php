@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class ProfileController extends Controller
 {
@@ -194,89 +195,91 @@ class ProfileController extends Controller
         $currentTimestamp = date('Y-m-d-H-i', $currentTimeString);
 
         //get user info
-        $user = DB::table('users')->where('id', $id)->get();
+        $user = DB::table('users')->where('id', $id)->value('username');
         $userID = DB::table('users')->where('id', $id)->value('id');
         $created = DB::table('users')->where('id', $id)->value('created_at');
-        $deleted = DB::table('users')->where('id', $id)->value('deleted_at');
         $tweets = DB::table('tweets')->where('user_id', $id)->get();
         $comments = DB::table('comments')->where('user_id', $id)->get();
         $retweets = DB::table('retweets')->where('user_id', $id)->get();
-
+        $tweetPics = DB::table('tweets')->where('user_id', $id)->where('img', '<>', NULL)->get();
+        $likes = DB::table('likes')->where('user_id', $id)->get();
+        $follows = DB::table('follows')->select('follows.*', 'users.username')->join('users', 'follows.follow_user_id', '=', 'users.id')->where('follows.following_user_id', $id)->get();
+        $followings = DB::table('follows')->join('users', 'follows.following_user_id', '=', 'users.id')->where('follows.follow_user_id', $id)->select('users.username', 'follows.created_at')->get();
 
         //generate filename, creates a new file one minute after used. if used multiple times in one min it overrides the file
         $filename = $currentTimestamp . '_' . $userID . '_' . $user . '.txt';
         $contents = 'Information for user: ' . $user . ' / ID: ' . $userID . "\n\n";
         $contents .= 'User was created at: ' . $created . "\n\n";
 
-        if ($deleted != NULL) {
-            $contents .= 'User was deleted at: ' . $deleted . "\n\n";
-        }
-
         //get user tweeets
         if ($tweets->count() > 0) {
             $contents .= 'TWEETS:' . "\n";
             foreach ($tweets as $tweet) {
-                $contents .= '- ' . $tweet->tweet . "\n\n";
+                if ($tweet->tweet <> NULL) {
+                    $contents .= '- ' . $tweet->tweet .  "\n" . ' tweeted on ' . $tweet->created_at . "\n\n";
+                }
             }
         }
         //get user comments
         if ($comments->count() > 0) {
             $contents .= 'COMMENTS:' . "\n";
             foreach ($comments as $comment) {
-                $contents .= '- ' . $comment->comment . "\n\n";
+                if ($comment->tweet_id <> Null) {
+                    $contents .= '- ' . $comment->comment . "\n" . 'commented Tweet with TweetID ' . $comment->tweet_id . ' on ' . $comment->created_at . "\n\n";
+                } else $contents .= '- ' . $comment->comment . "\n" . 'commented Retweet with RetweetID ' . $comment->retweet_id . ' on ' . $comment->created_at . "\n\n";
             }
         }
         //get user retweets
         if ($retweets->count() > 0) {
             $contents .= 'RETWEETS:' . "\n";
             foreach ($retweets as $retweet) {
-                $contents .= '- ' . $retweet->retweet_text . "\n\n";
+                $contents .= '- ' . $retweet->retweet_text . "\n" . 'retweeted Tweet with TweetID ' . $retweet->tweet_id . ' on ' . $retweet->created_at . "\n\n";
+            }
+        }
+        //get user likes
+        if ($likes->count() > 0) {
+            $contents .= 'LIKES:' . "\n";
+            foreach ($likes as $like) {
+                if ($like->tweet_id <> NULL) {
+                    $contents .= '- Has liked the Tweet with TweetID ' . $like->tweet_id . ' on ' . $like->created_at . "\n\n";
+                } else $contents .= '- Has liked the Retweet with ReetweetID ' . $like->retweet_id . ' on ' . $like->created_at . "\n\n";
+            }
+        }
+        //get user follows
+        if ($follows->count() > 0) {
+            $contents .= 'Follows:' . "\n";
+            foreach ($follows as $follow)
+                $contents .= '- Has followed  ' . $follow->username . ' on ' . $follow->created_at . "\n\n";
+        }
+        //get user following
+        if ($followings->count() > 0) {
+            $contents .= 'Following:' . "\n";
+            foreach ($followings as $following)
+                $contents .= '-' . $following->username . ' Following you since ' . $following->created_at . "\n\n";
+        }
+        //get user tweet-pictures
+        if ($tweetPics->count() > 0) {
+            $contents .= 'TWEET-Pictures:' . "\n";
+            foreach ($tweets as $tweet) {
+                if ($tweet->img <> NULL) {
+                    $contents .= '- ' . $tweet->img .  "\n" . ' tweeted on ' . $tweet->created_at . "\n\n";
+                }
             }
         }
 
 
-        //safe file in root\to\Tue-Tweet\Tue_Tweet\storage\app
         Storage::put($filename, $contents);
+        //safe file in root\to\Tue-Tweet\Tue_Tweet\storage\app
+        $filePath = storage_path('app/' . $filename);
+        $fileSize = filesize($filePath);
+
+        Storage::download($filePath, $filename, ['Content-Length' => $fileSize]);
+
+        Response::download($filePath);
+
+
         return redirect()->back();
     }
-
-    /*
-
-
-        $id = Auth::id();
-        $name = DB::table('users')->where('id', $id)->value('username');
-
-        //hier müssen wir noch irgendwie erstellen das man einen Pfad dazu aussuchen kann
-        $filePath = 'F:/Studium/Teamprojekt/downloadFiles/' . $name . '_Informations.txt'; // Path to the .txt-file
-
-        $tweets = DB::table('tweets')->where('user_id', $id)->get(); // Retrieve tweets of the user
-
-        $comments = DB::table('comments')->where('user_id', $id)->get(); // Retrieve tweets of the user
-
-        $retweets = DB::table('retweets')->where('user_id', $id)->get(); // Retrieve retweets of the user
-
-        if ($tweets->count() > 0 || $retweets->count() > 0 || $comments->count() > 0) {
-
-            $content = 'Here is all the information about the user ' . $name . ":\n\n";
-            $content .= "\nThe Profile Biography is as follows: " . $name . ":\n\n";
-            $content .= "\n" . DB::table('users')->where('id', $id)->value('profile_bio') . "\n\n";
-            $content .= "\nThese are the tweets from User " . $name . ":\n\n";
-            foreach ($tweets as $tweet) {
-                $content .= $tweet->tweet . "\n"; // Add Tweets to the content 
-            }
-            $content .= "\nThese are the comments from User " . $name . ":\n\n";
-            foreach ($comments as $comment) {
-                $content .= $comment->comment . "\n"; // Add comments to the content
-            }
-            $content .= "\nThese are the Retweets from User " . $name . ":\n\n";
-            foreach ($retweets as $retweet) {
-                $content .= $retweet->retweet_text . "\n"; // Add retweets to the content
-            }
-            file_put_contents($filePath, $content); // safe .txt file     
-        }
-        return redirect()->route('settings');
-    } */
-
 
     //--------------------------------------------------------------------------------------
 
