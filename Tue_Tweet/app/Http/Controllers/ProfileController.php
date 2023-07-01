@@ -43,6 +43,22 @@ class ProfileController extends Controller
         return Redirect::back();
     }
 
+    // Profile Query
+    public function getProfileQuery($profile_id){
+        $query = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at, own_visibility
+                        from (
+                            SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
+                                from tweets 
+                                where deleted_at is null and visibility = 1 and user_id = " . $profile_id . "
+                                UNION
+                                SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, own_visibility, deleted_at
+                                from retweets
+                                WHERE deleted_at is null and visibility = 1 and user_id = " . $profile_id . "
+                        ) as feedTmp
+                        ORDER BY created_at DESC");
+        return $query;
+    }
+
     // Edit Tweets
     public function editProfileTweet(Request $request)
     {
