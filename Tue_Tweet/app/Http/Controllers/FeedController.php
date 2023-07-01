@@ -197,20 +197,18 @@ class FeedController extends Controller {
     public function hideTweetFeed(Request $request){
         
         $id = $request->id;
-        $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
-        $userDeletedAt = DB::table('users')->where('id', $userId)->value('deleted_at');
-        $userExists = 0;
-        if($userDeletedAt == NULL){
-            $userExists = 1;
-        }
+        $typ = $request->typ;
+        $table = $typ."s";
 
-        $tweet = DB::select("select * from tweets where tweet_id ='$id'");
-        $tweetVis = DB::table('tweets')->where('tweet_id', $id)->value('own_visibility');
+        $userId = DB::table($table)->where($typ.'_id', $id)->value('user_id');
+
+        $tweet = DB::select("select * from ".$table." where ".$typ."_id ='$id'");
+        $tweetVis = DB::table($table)->where($typ.'_id', $id)->value('own_visibility');
 
         if($tweetVis == 0){
-            DB::update("update tweets set own_visibility = 1 where tweet_id = '$id'");
+            DB::update("update ".$table." set own_visibility = 1 where ".$typ."_id = '$id'");
         }else{
-            DB::update("update tweets set own_visibility = 0 where tweet_id = '$id'");
+            DB::update("update ".$table." set own_visibility = 0 where ".$typ."_id = '$id'");
         }
         
         return redirect()->back();

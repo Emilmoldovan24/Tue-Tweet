@@ -546,15 +546,21 @@
 
                         <!--Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört -->
                         @if ($user_id === $cur_user_id)
-                            <!-- Edit and delete tweet -->
+                            <!-- Edit and delete and hide tweet -->
                             <div class="menu-btn-own">
                                 <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                 <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item"><a href="{{ route('MyTweetDelete', $tweet->id) }}"
-                                                style="text-decoration: none;">Delete</a></button></li>
-                                    <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
-                                    <li><button class="dropdown-item"><a href="{{ route('tweet.hide.feed', $tweet->id) }}">Hide Tweet</a></button></li>
+                                    <li><button class="dropdown-item">
+                                            <a href="{{ route('MyTweetDelete', $tweet->id) }}"
+                                                style="text-decoration: none;">Delete</a>
+                                        </button></li>
+                                    <?php   echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
+                                     <li><button class="dropdown-item">
+                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}">Hide Tweet</a>
+                                        </button></li>
+
+                                    
                                 </ul>
                             </div>
                         @endif
@@ -1042,7 +1048,7 @@
                                 <div class="post-input-container">
                                     <input style="display:none" name="id" id="editCommentId">
                                     <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
-                                        value="{{ Request::old('comment') }}">{{ $commentText }}</textarea>
+                                        value="{{ Request::old('comment') }}"></textarea>
                                     {{-- <div id="pictureCommentEditBox"></div>
                                     <div class="add-post-links">
                                         <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
@@ -1072,19 +1078,15 @@
             $(".PostTweetModal").on("hidden.bs.modal", function() {
                 $(".modal-body").html("");
             });
-        </script>
-        <script>
+     
             $(".PostRetweetModal").on("hidden.bs.modal", function() {
                 $(".modal-body").html("");
             });
-        </script>
-
-        <script>
+  
             $(".EditTweetModal").on("hidden.bs.modal", function() {
                 $(".modal-body").html("");
             });
-        </script>
-        <script>
+  
             $(".EditCommentModal").on("hidden.bs.modal", function() {
                 $(".modal-body").html("");
             });

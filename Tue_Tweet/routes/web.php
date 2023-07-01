@@ -338,7 +338,7 @@ Route::get('feed-tweet-delete/{id}', [
 ]);
 
 //Hide Tweet Feed
-Route::get('tweet-hide2/{id}', [
+Route::get('tweet-hide2/{id}/{typ}', [
     'uses' => 'App\Http\Controllers\FeedController@hideTweetFeed',
     'as' => 'tweet.hide.feed']);
 

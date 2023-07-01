@@ -460,7 +460,10 @@
 
                     {{-- eigenes Feed anzeigen. Design ist bisschen verschoben? --}}
                     <?php
-            $query = app('App\Http\Controllers\ProfileController')->getProfileQuery($profile_id);
+                    // in own profile -> also show archived tweets
+                    // in other profile -> show public tweets
+                    $myProfile = $user_id == $profile_id;
+                    $query = app('App\Http\Controllers\ProfileController')->getProfileQuery($profile_id, $myProfile);
             ?>
 
 
@@ -550,7 +553,9 @@
                                     <li><button class="dropdown-item"><a href="{{ route('MyTweetDelete', $tweet->id) }}"
                                                 style="text-decoration: none;">Delete</a></button></li>
                                     <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
-                                    <li><button class="dropdown-item"><a href="{{ route('tweet.hide.feed', $tweet->id) }}">Hide Tweet</a></button></li>
+                                    <li><button class="dropdown-item">
+                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}">Hide Tweet</a>
+                                        </button></li>
                                 </ul>
                             </div>
                         @endif
