@@ -545,7 +545,7 @@
                         </div>
 
                         <!--Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört -->
-                        @if ($user_id === $cur_user_id)
+                        @if ($user_id === $cur_user_id && $tweet->typ == 'tweet')
                             <!-- Edit and delete and hide tweet -->
                             <div class="menu-btn-own">
                                 <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
@@ -564,6 +564,28 @@
                                 </ul>
                             </div>
                         @endif
+
+                        {{-- selbe für Retweets --}}
+                        @if ($user_id === $cur_user_id && $tweet->typ == 'retweet')
+                            <!-- Edit and delete and hide tweet -->
+                            <div class="menu-btn-own">
+                                <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item">
+                                            <a href="{{ route('MyRetweetDelete', $tweet->id) }}"
+                                                style="text-decoration: none;">Delete</a>
+                                        </button></li>
+                                    <?php   echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
+                                     <li><button class="dropdown-item">
+                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}">Hide Tweet</a>
+                                        </button></li>
+
+                                    
+                                </ul>
+                            </div>
+                        @endif
+
                     </div>
 
 

@@ -270,6 +270,17 @@ class FeedController extends Controller {
         return view('feed', compact('tweets'));
     }
 
+    // Delete Retweet
+    public function MyRetweetDelete(Request $request){
+        
+        $id = $request->id;
+        DB::delete("delete from retweets where retweet_id = '$id'");
+        
+
+        return redirect()->route('feed');
+    }
+
+    // Sortierungen
 
     public function index1(Request $request)
     {
