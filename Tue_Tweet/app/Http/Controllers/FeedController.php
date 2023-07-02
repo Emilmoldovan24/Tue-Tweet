@@ -220,9 +220,21 @@ class FeedController extends Controller {
     { 
 
     $id= $request->id;
-    $editCommentText= $request-> editCommentText;
+    $editCommentText= $request->editCommentText;
 
     DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
+
+    return Redirect::back();
+    }
+
+    //Edit Retweets
+    public function editRetweet(Request $request)
+    { 
+
+    $id= $request->retweet_id;
+    $editRetweetText= $request->editRetweetText;
+
+    DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editRetweetText]);
 
     return Redirect::back();
     }
@@ -238,6 +250,18 @@ class FeedController extends Controller {
         return redirect()->route('feed');
     }
 
+    // Delete Retweet
+    public function MyRetweetDelete(Request $request){
+        
+        $id = $request->id;
+        DB::delete("delete from retweets where retweet_id = '$id'");
+        
+
+        return redirect()->route('feed');
+    }
+
+    // Sortierungen
+    
     public function index(Request $request)
     {
         $sort = $request->input('sort', 'default');
@@ -269,7 +293,6 @@ class FeedController extends Controller {
     
         return view('feed', compact('tweets'));
     }
-
 
     public function index1(Request $request)
     {
