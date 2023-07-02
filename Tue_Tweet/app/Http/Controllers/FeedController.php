@@ -220,9 +220,21 @@ class FeedController extends Controller {
     { 
 
     $id= $request->id;
-    $editCommentText= $request-> editCommentText;
+    $editCommentText= $request->editCommentText;
 
     DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
+
+    return Redirect::back();
+    }
+
+    //Edit Retweets
+    public function editRetweet(Request $request)
+    { 
+
+    $id= $request->retweet_id;
+    $editRetweetText= $request->editRetweetText;
+
+    DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editRetweetText]);
 
     return Redirect::back();
     }

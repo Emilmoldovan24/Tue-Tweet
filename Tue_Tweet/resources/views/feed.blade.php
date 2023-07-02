@@ -576,12 +576,16 @@
                                             <a href="{{ route('MyRetweetDelete', $tweet->id) }}"
                                                 style="text-decoration: none;">Delete</a>
                                         </button></li>
-                                    <?php   echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
-                                     <li><button class="dropdown-item">
-                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}">Hide Tweet</a>
-                                        </button></li>
-
-                                    
+                                        <?php
+                                        $retweetId = $tweet->id; // ID des Retweets
+                                        $retweetText = $retweetText ?? ''; // Text des Retweets (falls vorhanden)
+                                        echo '<li><button type="button" class="dropdown-item" onclick="editRetweet(' . $retweetId . ', ' . htmlspecialchars('"' . $retweetText . '"') . ')" data-retweet-id="{{ $retweetId }} " data-bs-toggle="modal" data-bs-target="#EditRetweetModal">Edit</button></li>';
+                                        ?>
+                                        <li>
+                                            <button class="dropdown-item">
+                                                <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}">Hide Tweet</a>
+                                            </button>
+                                        </li>
                                 </ul>
                             </div>
                         @endif
@@ -1035,6 +1039,64 @@
             </div>
         </form>
 
+        <!-- Edit-Retweet-Modal -->
+        <form action="{{ route('editRetweet') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal fade" id="EditRetweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="write-post-container">
+                                <div class="user-profile">
+                                    <img src="{{ $user_profileImg }}">
+                                    <div>
+                                        {{ $user_name }} <br>
+                                        <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                        {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                    @section('content')
+                                        @if (count($errors) > 0)
+                                            <div class='row'>
+                                                <div class="col">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>
+                                                                {{ $error }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="post-input-container">
+                                    <input style="display:none" name="retweet_id" id="editRetweetId">
+                                    <textarea rows="3" placeholder="Edit your Retweet" name="editRetweetText" id="editRetweetText"
+                                        value="{{ Request::old('retweet_text') }}"></textarea>
+                                        <input type="hidden" name="id" id="editRetweetId">
+                                    {{-- <div id="pictureCommentEditBox"></div>
+                                    <div class="add-post-links">
+                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
+                                        <div class="form-group">
+                                            <input type="file" name="editImg" id="editImg"
+                                                value="{{ Request::old('img') }}">
+                            </div>
+                        </div>
+                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                <input type="hidden" name="_token" value="{{ Session::token() }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+
         <!-- Edit-Comment-Modal -->
         <form action="{{ route('editComment') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -1108,6 +1170,10 @@
             $(".EditTweetModal").on("hidden.bs.modal", function() {
                 $(".modal-body").html("");
             });
+
+            $(".EditRetweetModal").on("hidden.bs.modal", function() {
+                $(".modal-body").html("");
+            });
   
             $(".EditCommentModal").on("hidden.bs.modal", function() {
                 $(".modal-body").html("");
@@ -1121,6 +1187,12 @@
             function editTweet(id, text) {
                 document.getElementById('editTweetText').value = text;
                 document.getElementById('editTweetId').value = id;
+            }
+
+            function editRetweet(retweetId, retweetText) {
+                console.log(retweetId, retweetText);
+                document.getElementById('editRetweetText').value = retweetText;
+                document.getElementById('editRetweetId').value = retweetId;
             }
 
             function editComment(commentId, commentText) {

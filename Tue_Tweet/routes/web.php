@@ -343,6 +343,12 @@ Route::get('feed-retweet-delete/{id}', [
     'as' => 'MyRetweetDelete'
 ]);
 
+// Edit Retweet
+Route::post('/retweet-edit', [
+    'uses' => 'App\Http\Controllers\FeedController@editRetweet',
+    'as' => 'editRetweet'
+]);
+
 //Hide Tweet Feed
 Route::get('tweet-hide2/{id}/{typ}', [
     'uses' => 'App\Http\Controllers\FeedController@hideTweetFeed',
