@@ -554,7 +554,11 @@
                                                 style="text-decoration: none;">Delete</a></button></li>
                                     <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
                                     <li><button class="dropdown-item">
-                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}">Hide Tweet</a>
+                                        @if(($tweet->deleted_at == NULL) && $tweet->own_visibility == 0)
+                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Unhide Tweet</a>
+                                        @else 
+                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide Tweet</a>
+                                        @endif
                                         </button></li>
                                 </ul>
                             </div>
