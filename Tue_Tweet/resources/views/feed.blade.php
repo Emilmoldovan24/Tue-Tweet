@@ -440,10 +440,50 @@
 
                 </div>
             </div>
-
            
 
-            <script>
+            
+                <!-- opens retweet modal when session variable is set meaning when redirected from profile retweet button -->
+                @if(session('openRetweetModal'))
+                        <?php
+                            $tweetId = request()->route()->parameter('id');
+                            $tweet = DB::table('tweets')
+                                ->where('tweet_id', $tweetId)
+                                ->first();
+                            $tweetText  = $tweet->tweet;
+                            $tweetCreatedAt = $tweet->created_at;
+                            $tweetImg = $tweet->img;  
+                            $userId = $tweet->user_id;
+                            $user = DB::table('users')
+                                ->where('id', $userId)
+                                ->first();
+                            $userId = $user->id;
+                            $username = $user->username;
+                            $userImg = $user->profile_img;
+                            $userImgSrc = app('App\Http\Controllers\UserController')->getUserImg($userImg); ?>
+
+                        <script>
+                            // open retweet modal
+                            document.addEventListener('DOMContentLoaded', function() {
+                                retweet(<?php echo $tweetId . ', "' . $tweetText . '", "' . $username . '", "' . $userImgSrc . '", "' . $tweetCreatedAt . '", "' . $tweetImg . '"'; ?>);
+                                var retweetModal = new bootstrap.Modal(document.getElementById('PostRetweetModal'));
+                                retweetModal.show();
+                                retweetModal.classList.add('show');
+                                retweetModal.style.display = 'block';
+                                retweetModal.remove('d-none');
+                                retweetModal.setAttribute('aria-modal', true);
+                                retweetModal.removeAttribute('aria-hidden');
+                                retweetModal.setAttribute('style', 'display: block; padding-right: 17px;');
+                            });
+
+
+                            // set session(openRetweetModal) to false
+                            <?php session(['openRetweetModal' => false]); ?>
+
+                    </script>
+                @endif
+
+                <script>
                 // toggles the display of the comments when the user clicks on the comments button
                 function displayComments(tweet_id, tweet_typ) {
                 

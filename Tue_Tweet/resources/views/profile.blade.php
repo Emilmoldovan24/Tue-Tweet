@@ -683,18 +683,11 @@
                     @if($tweet->typ == 'tweet')
                                 <!-- Retweet Button -->
                                 <div class="retweet-btn">
-                                    <?php
-                                    $tweetCreatedAt = date('Y-m-d H:i:s', strtotime($tweet->created_at));
-                                    echo '<button onclick="retweet(' .
-                                        $tweet->id .
-                                        ', ' . htmlspecialchars('"' . $tweetText . '"') .
-                                        ', ' . htmlspecialchars('"' . $username . '"') .
-                                        ', ' . htmlspecialchars('"' . $userImgSrc . '"') .
-                                        ', ' . htmlspecialchars('"' . $tweetCreatedAt . '"') .
-                                        ', ' . htmlspecialchars('"' . $tweetImg . '"') . ')" 
-                                        class="btn btn-dark"   data-tweet-id="' . $tweet_id . '" data-bs-toggle="modal" data-bs-target="#PostRetweetModal" aria-expanded="false">'; ?>
-                                    <i class="fa-solid fa-retweet"></i> {{ $retweets }}
-                                    </button>
+                                    <form action="{{route('profileRetweet', ['tweet_id' => $tweet->id])}}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-dark"><i class="fa-solid fa-retweet" aria-expanded="false"></i> {{ $retweets }}</button>
+                                        <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                    </form>
                                 </div>
                         @endif
                             </div>
