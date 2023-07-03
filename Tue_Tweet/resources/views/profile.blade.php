@@ -544,7 +544,7 @@
                         </div>
 
                         <!--Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört -->
-                        @if ($user_id === $cur_user_id)
+                        @if ($user_id === $cur_user_id && $tweet->typ == 'tweet')
                             <!-- Edit and delete tweet -->
                             <div class="menu-btn-own">
                                 <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
@@ -563,6 +563,35 @@
                                 </ul>
                             </div>
                         @endif
+                        <!-- Retweet-->
+                        @if ($user_id === $cur_user_id && $tweet->typ == 'retweet')
+                        <!-- Edit and delete and hide tweet -->
+                        <div class="menu-btn-own">
+                            <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                            <ul class="dropdown-menu">
+                                <li><button class="dropdown-item">
+                                        <a href="{{ route('MyProfileRetweetDelete', $tweet->id) }}"
+                                            style="text-decoration: none;">Delete</a>
+                                    </button>
+                                </li>
+                                <?php
+                                    $retweetId = $tweet->id; // ID des Retweets
+                                    $retweetText = $retweetText ?? ''; // Text des Retweets (falls vorhanden)
+                                    echo '<li><button type="button" class="dropdown-item" onclick="editRetweet(' . $retweetId . ', ' . htmlspecialchars('"' . $retweetText . '"') . ')" data-retweet-id="{{ $retweetId }} " data-bs-toggle="modal" data-bs-target="#EditRetweetModal">Edit</button></li>';
+                                ?> 
+                                <li>  
+                                    <button class="dropdown-item">
+                                        @if(($tweet->deleted_at == NULL) && $tweet->own_visibility == 0)
+                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Unhide Tweet</a>
+                                        @else 
+                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide Tweet</a>
+                                        @endif
+                                    </button>
+                                </li> 
+                            </ul>
+                        </div>
+                    @endif
                     </div>
 
 
