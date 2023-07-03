@@ -621,11 +621,11 @@
                                         $retweetText = $retweetText ?? ''; // Text des Retweets (falls vorhanden)
                                         echo '<li><button type="button" class="dropdown-item" onclick="editRetweet(' . $retweetId . ', ' . htmlspecialchars('"' . $retweetText . '"') . ')" data-retweet-id="{{ $retweetId }} " data-bs-toggle="modal" data-bs-target="#EditRetweetModal">Edit</button></li>';
                                         ?>
-                                        {{-- <li>
+                                        <li>
                                             <button class="dropdown-item">
                                                 <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide Tweet</a>
                                             </button>
-                                        </li> --}}
+                                        </li>
                                 </ul>
                             </div>
                         @endif
