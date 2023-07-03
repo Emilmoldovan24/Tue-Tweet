@@ -246,6 +246,17 @@ Route::get('/safeFile', [
     'as' => 'safeFile'
 ]);
 
+// Delete Retweet
+Route::get('profile-retweet-delete/{id}', [
+    'uses' => 'App\Http\Controllers\ProfileController@MyProfileRetweetDelete',
+    'as' => 'MyProfileRetweetDelete'
+]);
+
+// Edit Retweet
+Route::post('/retweet-profile-edit', [
+    'uses' => 'App\Http\Controllers\ProfileController@editProfileRetweet',
+    'as' => 'editProfileRetweet'
+]);
 //---------------------------------------------------------------------------------------------------------------------------
 
 // FeedController

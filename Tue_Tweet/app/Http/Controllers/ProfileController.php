@@ -175,6 +175,26 @@ class ProfileController extends Controller
         return redirect()->route('feedForRetweet', ['id' => $tweet_id])->with('openRetweetModal', true);
     }
 
+    // Delete Retweet
+    public function MyProfileRetweetDelete(Request $request){
+
+        $id = $request->id;
+        DB::delete("delete from retweets where retweet_id = '$id'");
+
+        return Redirect::back();
+    }
+
+    //Edit Retweets
+    public function editProfileRetweet(Request $request)
+    { 
+
+    $id= $request->retweet_id;
+    $editProfileRetweetText= $request->editProfileRetweetText;
+
+    DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editProfileRetweetText]);
+
+    return Redirect::back();
+    }
 
     //----------------------Profile Settings----------------------------------------------------------------------------------------------------------
 
