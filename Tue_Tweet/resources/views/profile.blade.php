@@ -550,9 +550,9 @@
                                 <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                 <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item"><a href="{{ route('MyTweetDelete', $tweet->id) }}"
+                                    <li><button class="dropdown-item"><a href="{{ route('ProfileTweetDelete', $tweet->id) }}"
                                                 style="text-decoration: none;">Delete</a></button></li>
-                                    <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
+                                    <?php echo '<li><button type="button" class="dropdown-item" onclick="editProfileTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditProfileTweetModal">Edit</button></li>'; ?>
                                     <li><button class="dropdown-item">
                                         @if(($tweet->deleted_at == NULL) && $tweet->own_visibility == 0)
                                             <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Unhide Tweet</a>
@@ -909,7 +909,7 @@
                                         <div class="post-input-container">
                                             <input style="display:none" name="id" id="editProfileTweetId">
                                             <textarea rows="3" placeholder="Edit your Tweet" name="editProfileTweetText" id="editProfileTweetText"
-                                                value="{{ Request::old('tweet') }}">{{$tweetText}}</textarea>
+                                                value="{{ Request::old('tweet') }}"></textarea>
                                             <div id="pictureProfileEditBox"></div>
                                             <div class="add-post-links">
                                                 <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
