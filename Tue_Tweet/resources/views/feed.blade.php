@@ -577,7 +577,7 @@
                         <div class="user-profile">
                             <?php echo $userImgHtml; ?>
                             <div style="display: inline-block;">
-                                <a style="margin-right: 3px; text-decoration: none;"
+                                <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;"
                                     href="/{{ $username }}">{{ $username }}</a>
                                 <a> &bull; </a>
                                 <span>{{ $tweet->created_at }}</span>
@@ -618,7 +618,8 @@
                             <div class="tweetbox-profile">
                                 <img src="{{ $retweetedUserImg }}">
                                 <div>
-                                    <p>{{ $retweetedUsername }}</p>
+                                    <a style="margin-right: 3px; text-decoration: none; color: black; font-weight: bold;"
+                                    href="/{{ $retweetedUsername }}">{{ $retweetedUsername }}</a>
                                     <span>{{ $retweetedTweetCreatedAt }}</span>
                                 </div>
                             </div>
