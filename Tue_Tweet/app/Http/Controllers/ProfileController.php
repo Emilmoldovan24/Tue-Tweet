@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -142,6 +143,7 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
+    // Edit Comment
     public function ProfileEditComment(Request $request)
     {
 
@@ -163,6 +165,16 @@ class ProfileController extends Controller
 
         return redirect()->route('feed');
     }
+
+    // Profile Retweet
+    public function ProfileRetweet(Request $request)
+    {
+        $tweet_id = $request['tweet_id'];
+        Log::info('You are about to retweet Tweet '.$tweet_id);
+
+        return redirect()->route('feedForRetweet', ['id' => $tweet_id])->with('openRetweetModal', true);
+    }
+
 
     //----------------------Profile Settings----------------------------------------------------------------------------------------------------------
 

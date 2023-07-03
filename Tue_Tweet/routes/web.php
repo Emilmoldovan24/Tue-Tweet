@@ -234,6 +234,12 @@ Route::get('profile-comment-delete/{id}', [
     'as' => 'ProfileCommentDelete'
 ]);
 
+// Profile Retweet
+Route::post('profile-retweet/{tweet_id}', [
+    'uses' => 'App\Http\Controllers\ProfileController@profileRetweet',
+    'as' => 'profileRetweet'
+]);
+
 // safe Information as file
 Route::get('/safeFile', [
     'uses' => 'App\Http\Controllers\ProfileController@safeFile',
@@ -257,6 +263,11 @@ Route::get('/feed', [
     'as' => 'feed'
 ]);
 
+// Feed with tweet id for retweet
+Route::get('/feed/{id}', [
+    'uses' => 'App\Http\Controllers\FeedController@index',
+    'as' => 'feedForRetweet'
+]);
 
 // LogOut
 Route::get('/logout', [
