@@ -184,6 +184,18 @@ class ProfileController extends Controller
         return Redirect::back();
     }
 
+    //Edit Retweets
+    public function editProfileRetweet(Request $request)
+    { 
+
+    $id= $request->retweet_id;
+    $editProfileRetweetText= $request->editProfileRetweetText;
+
+    DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editProfileRetweetText]);
+
+    return Redirect::back();
+    }
+
     //----------------------Profile Settings----------------------------------------------------------------------------------------------------------
 
     // Function: Update Image 

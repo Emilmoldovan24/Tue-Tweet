@@ -252,6 +252,11 @@ Route::get('profile-retweet-delete/{id}', [
     'as' => 'MyProfileRetweetDelete'
 ]);
 
+// Edit Retweet
+Route::post('/retweet-profile-edit', [
+    'uses' => 'App\Http\Controllers\ProfileController@editProfileRetweet',
+    'as' => 'editProfileRetweet'
+]);
 //---------------------------------------------------------------------------------------------------------------------------
 
 // FeedController
