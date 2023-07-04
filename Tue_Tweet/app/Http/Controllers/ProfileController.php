@@ -64,7 +64,7 @@ class ProfileController extends Controller
             from (
                 SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
                     from tweets 
-                    where deleted_at is null and visibility = 1 and user_id = " . $profile_id . "
+                    where deleted_at is null and visibility = 1 and user_id = " . $profile_id . " and own_visibility = 1
                     UNION
                     SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, own_visibility, deleted_at
                     from retweets
