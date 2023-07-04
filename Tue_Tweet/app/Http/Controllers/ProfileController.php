@@ -45,8 +45,9 @@ class ProfileController extends Controller
     }
 
     // Profile Query
-    public function getProfileQuery($profile_id, $myProfile){
-        if($myProfile){
+    public function getProfileQuery($profile_id, $myProfile)
+    {
+        if ($myProfile) {
             $query = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at, own_visibility
                             from (
                                 SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
@@ -58,7 +59,7 @@ class ProfileController extends Controller
                                     WHERE deleted_at is null and visibility = 1 and user_id = " . $profile_id . "
                             ) as feedTmp
                             ORDER BY created_at DESC");
-        }else{
+        } else {
             $query = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at, own_visibility
             from (
                 SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
@@ -121,25 +122,26 @@ class ProfileController extends Controller
     }
 
     // Hide Tweet Profile
-    public function hideTweetProfile(Request $request){
-        
+    public function hideTweetProfile(Request $request)
+    {
+
         $id = $request->id;
         $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
         $userDeletedAt = DB::table('users')->where('id', $userId)->value('deleted_at');
         $userExists = 0;
-        if($userDeletedAt == NULL){
+        if ($userDeletedAt == NULL) {
             $userExists = 1;
         }
 
         $tweet = DB::select("select * from tweets where tweet_id ='$id'");
         $tweetVis = DB::table('tweets')->where('tweet_id', $id)->value('own_visibility');
 
-        if($tweetVis == 0){
+        if ($tweetVis == 0) {
             DB::update("update tweets set own_visibility = 1 where tweet_id = '$id'");
-        }else{
+        } else {
             DB::update("update tweets set own_visibility = 0 where tweet_id = '$id'");
         }
-        
+
         return redirect()->back();
     }
 
@@ -170,13 +172,14 @@ class ProfileController extends Controller
     public function ProfileRetweet(Request $request)
     {
         $tweet_id = $request['tweet_id'];
-        Log::info('You are about to retweet Tweet '.$tweet_id);
+        Log::info('You are about to retweet Tweet ' . $tweet_id);
 
         return redirect()->route('feedForRetweet', ['id' => $tweet_id])->with('openRetweetModal', true);
     }
 
     // Delete Retweet
-    public function MyProfileRetweetDelete(Request $request){
+    public function MyProfileRetweetDelete(Request $request)
+    {
 
         $id = $request->id;
         DB::delete("delete from retweets where retweet_id = '$id'");
@@ -186,14 +189,14 @@ class ProfileController extends Controller
 
     //Edit Retweets
     public function editProfileRetweet(Request $request)
-    { 
+    {
 
-    $id= $request->retweet_id;
-    $editProfileRetweetText= $request->editProfileRetweetText;
+        $id = $request->retweet_id;
+        $editProfileRetweetText = $request->editProfileRetweetText;
 
-    DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editProfileRetweetText]);
+        DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editProfileRetweetText]);
 
-    return Redirect::back();
+        return Redirect::back();
     }
 
     //----------------------Profile Settings----------------------------------------------------------------------------------------------------------
@@ -355,15 +358,20 @@ class ProfileController extends Controller
 
         Storage::put($filename, $contents);
         //safe file in root\to\Tue-Tweet\Tue_Tweet\storage\app
-        $filePath = storage_path('app/' . $filename);
+        $filePath = storage_path('app\\' . $filename);
         $fileSize = filesize($filePath);
 
-        Storage::download($filePath, $filename, ['Content-Length' => $fileSize]);
+        if (file_exists($filePath)) {
 
-        Response::download($filePath);
-
-
-        return redirect()->back();
+            $headers = [
+                'Content-Type' => 'text/plain',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                'Content-Length' => $fileSize,
+            ];
+            return response()->download($filePath, $filename, $headers);
+        } else {
+            return redirect()->route('settings');
+        }
     }
 
     //--------------------------------------------------------------------------------------
