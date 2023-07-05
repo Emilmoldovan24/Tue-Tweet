@@ -388,6 +388,11 @@ Route::get('/search', [
     'as' => 'search'
 ]);
 
+// ReadMark
+Route::post('/mark-as-read', [
+    'uses' => 'App\Http\Controllers\FeedController@markAllAsRead',
+    'as' => 'mark-as-read'
+]);
 
 
 //---------------------------------------------------------------------------------------------------------------------------
