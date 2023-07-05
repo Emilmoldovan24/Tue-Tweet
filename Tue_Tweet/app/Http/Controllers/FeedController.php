@@ -45,6 +45,17 @@ class FeedController extends Controller {
 
 //--------------------------------------------------------------------------------------
     
+    public function markAllAsRead()
+    {
+        $user = Auth::user();
+
+        foreach ($user->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+
+        return redirect()->back();
+    }
+
     // Function: Post Tweet
     public function postTweet(Request $request)
     {
