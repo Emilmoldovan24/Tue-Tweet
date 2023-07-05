@@ -409,8 +409,37 @@
                         <button type="submit" class="list-group-item list-group-item-action"><i
                                 class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
                     </form>
+
+                <!-- Search Bar -->
+                    <form action="{{ route('search') }}" method="GET">
+                        <input type="text" name="query" placeholder="Enter your search query">
+                        <button type="submit">Search</button>
+                    </form>
                 </div>
                 <br>
+
+                @if (empty($combinedResults))
+                    <p>No results found.</p>
+                @else
+                    <ul>
+                        @foreach ($combinedResults as $result)
+                            @if (isset($result->tweet))
+                                <li>Tweet: {{ $result->tweet }}</li>
+                                <!-- Display other tweet-related information -->
+                            @elseif (isset($result->retweet_text))
+                                <li>Retweet: {{ $result->retweet_text }}</li>
+                                <!-- Display other retweet-related information -->
+                            @elseif (isset($result->comment))
+                                <li>Comment: {{ $result->comment }}</li>
+                                <!-- Display other comment-related information -->
+                            @elseif (isset($result->username))
+                                <li>User: {{ $result->username }}</li>
+                                <!-- Display other user-related information -->
+                            @endif
+                        @endforeach
+                    </ul>
+                @endif
+                
 
                 <!-- Tweet Section -->
                 <!--      <h4>Share whats on your mind!</h4>
@@ -510,8 +539,24 @@
                 });
             </script>
 
-
-
+            <!-- Orders by Date if its not set otherwise -->
+            @isset($tweets)
+                
+            @else
+                <?php
+                $tweets = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at
+                        from (
+                            SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
+                                from tweets 
+                                where deleted_at is null 
+                                UNION
+                                SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, own_visibility, deleted_at
+                                from retweets
+                        ) as feedTmp
+                        where deleted_at is null and visibility = 1 and own_visibility = 1
+                        order by created_at desc");
+                ?>
+            @endisset
             
 
             @foreach ($tweets as $tweet)
