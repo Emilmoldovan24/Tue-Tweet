@@ -382,6 +382,14 @@ Route::get('feed-comment-delete/{id}', [
     'as' => 'MyCommentDelete'
 ]);
 
+// Search
+Route::get('/search', [
+    'uses' => 'App\Http\Controllers\FeedController@search',
+    'as' => 'search'
+]);
+
+
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // NOTE: this route must be at the very back, otherwise it will throw errors

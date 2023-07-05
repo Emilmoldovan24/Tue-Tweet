@@ -421,11 +421,41 @@ class FeedController extends Controller {
         $tweets = DB::select($query);
     
         // Rest of your code to render the tweets or perform further operations
-    
         return view('feed', compact('tweets'));
     }
-    
-    
+
+
+    // search function
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search in Tweets
+        $tweets = DB::table('tweets')
+                    ->where('tweet', 'like', "%$query%")
+                    ->get();
+
+        // Search in Retweets
+        $retweets = DB::table('retweets')
+                      ->where('retweet_text', 'like', "%$query%")
+                      ->get();
+
+        // Search in Comments
+        $comments = DB::table('comments')
+            ->where('comment', 'like', "%$query%")
+            ->get();
+
+        // Search in Users
+        $users = DB::table('users')
+            ->where('username', 'like', "%$query%")
+            ->get();
+
+        // Combine the search results
+        $combinedResults = $tweets->concat($retweets)->concat($users)->concat($comments);
+
+        // return view('search-results', compact('combinedResults'));
+        return view('feed', compact('combinedResults'));
+    }
     
 //--------------------------------------------------------------------------------------
 }
