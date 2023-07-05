@@ -101,11 +101,20 @@ class FeedController extends Controller {
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
 
+        $tweet_typ = $request['tweet_typ'];
+        $tweet_id = $request["tweet_id"];
+        $user_id = $request['user_id'];
         $id = Auth::id();
 
         // depending on the tweet_typ (tweet or retweet), the comment is inserted into the corresponding column
-        DB::insert('insert into comments(user_id, '. $request["tweet_typ"] .'_id, comment, created_at) 
-        values(?,?,?,?)', [$id, $request["tweet_id"], $request["comment"], $currentTimestamp]);
+        DB::insert('insert into comments(user_id, '. $tweet_typ .'_id, comment, created_at) 
+        values(?,?,?,?)', [$id, $tweet_id, $request["comment"], $currentTimestamp]);
+
+        // Retrieve the user receiving the notification
+        $notifiableUser = User::find($user_id);
+
+        // Send Notification
+        Notification::sendNow($notifiableUser, new UserNotifications($id, $tweet_id, $tweet_typ, 'comment'));
 
         return Redirect::back();
     }
@@ -156,6 +165,13 @@ class FeedController extends Controller {
             DB::insert('insert into retweets(user_id, tweet_id, retweet_text, created_at) 
             values(?,?,?,?)', [$id, $tweet_id, $request["retweet_text"], $currentTimestamp]);
         }
+
+        // Retrieve the user receiving the notification
+        $notifiableUser = User::find($user_id);
+
+        // Send Notification
+        Notification::sendNow($notifiableUser, new UserNotifications($id, $tweet_id, 'retweet'));
+
         return Redirect::back();
     }
 
