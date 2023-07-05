@@ -157,6 +157,7 @@ class FeedController extends Controller {
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
         $tweet_id = $request['tweet_id'];
         $id = Auth::id();
+        $user_id = $request['user_id'];
 
         if ($request['retweet_text'] == null) {
             DB::insert('insert into retweets(user_id, tweet_id, created_at) 
@@ -170,7 +171,7 @@ class FeedController extends Controller {
         $notifiableUser = User::find($user_id);
 
         // Send Notification
-        Notification::sendNow($notifiableUser, new UserNotifications($id, $tweet_id, 'retweet'));
+        Notification::sendNow($notifiableUser, new UserNotifications($id, $tweet_id, 'retweet','retweet'));
 
         return Redirect::back();
     }

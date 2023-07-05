@@ -465,7 +465,7 @@
                         <script>
                             // open retweet modal
                             document.addEventListener('DOMContentLoaded', function() {
-                                retweet(<?php echo $tweetId . ', "' . $tweetText . '", "' . $username . '", "' . $userImgSrc . '", "' . $tweetCreatedAt . '", "' . $tweetImg . '"'; ?>);
+                                retweet(<?php echo $tweetId . ', "' . $tweetText . '", "' . $username . '", "' . $userId . '", "' . $userImgSrc . '", "' . $tweetCreatedAt . '", "' . $tweetImg . '"'; ?>);
                                 var retweetModal = new bootstrap.Modal(document.getElementById('PostRetweetModal'));
                                 retweetModal.show();
                                 retweetModal.classList.add('show');
@@ -762,6 +762,7 @@
                                         $tweet->id .
                                         ', ' . htmlspecialchars('"' . $tweetText . '"') .
                                         ', ' . htmlspecialchars('"' . $username . '"') .
+                                        ', ' . htmlspecialchars('"' . $user_id . '"') .
                                         ', ' . htmlspecialchars('"' . $userImgSrc . '"') .
                                         ', ' . htmlspecialchars('"' . $tweetCreatedAt . '"') .
                                         ', ' . htmlspecialchars('"' . $tweetImg . '"') . ')" 
@@ -1054,6 +1055,7 @@
 
                                 <div class="post-input-container">
                                     <input style="display:none" name="tweet_id" id="tweet_id">
+                                    <input style="display:none" name="user_id" id="retweet_user_id">
                                     <textarea rows="3" placeholder="Add text to your retweet" name="retweet_text" id="retweet_text"></textarea>
 
                                     <!-- Display quoted tweet -->
@@ -1256,9 +1258,10 @@
                 document.getElementById('editCommentId').value = commentId;
             }
 
-            function retweet(tweetId, tweetText, tweetUsername, tweetUserImg, tweetCreatedAt, tweetImg) {
+            function retweet(tweetId, tweetText, tweetUsername, tweetUserId, tweetUserImg, tweetCreatedAt, tweetImg) {
 
                 document.getElementById('tweet_id').value = tweetId;
+                document.getElementById('retweet_user_id').value = tweetUserId;
 
                 if (tweetText === null) {
                     document.getElementById('retweeted_text').innerHTML = "";
