@@ -839,6 +839,7 @@
                                     </div>
                                     <input type="hidden" name="tweet_typ" value="{{ $tweet->typ }}">
                                     <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                    <input type="hidden" name="user_id" value="{{ $user_id }}">
                                 </form>
                             </div>
                         </div>

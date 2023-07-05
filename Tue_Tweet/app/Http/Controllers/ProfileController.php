@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserNotifications;
+
 class ProfileController extends Controller
 {
     public function getProfile($username)
@@ -36,6 +40,13 @@ class ProfileController extends Controller
         if (DB::table('follows')->where('following_user_id', $following_user_id)->where('follow_user_id', $follow_user_id)->doesntExist()) {
             DB::insert('insert into follows(follow_user_id, following_user_id, created_at) 
             values(?,?,?)', [$follow_user_id, $following_user_id, $currentTimestamp]);
+
+            // Retrieve the user receiving the notification
+            $notifiableUser = User::find($follow_user_id);
+
+            // Send Notification
+            Notification::sendNow($notifiableUser, new UserNotifications($following_user_id, NULL, NULL, 'follow'));
+
         }
         // unfollow
         else {
