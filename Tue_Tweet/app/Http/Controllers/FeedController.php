@@ -2,10 +2,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserNotifications;
+
+use App\Http\Controllers\Controller;
+
+
 
 class FeedController extends Controller {
 
@@ -111,21 +118,27 @@ class FeedController extends Controller {
         $id = Auth::id();
 
         $typ = $request['typ'];
-
         $tweet_id = $request[$typ."_id"];
+        $user_id = $request['user_id'];
         
 
         // like
         if (DB::table('likes')->where($typ.'_id', $tweet_id)->where('user_id', $id)->doesntExist()) {
             DB::insert('insert into likes(user_id, '.$typ.'_id, created_at) 
             values(?,?,?)', [$id, $tweet_id, $currentTimestamp]);
+
+            // Retrieve the user receiving the notification
+            $notifiableUser = User::find($user_id);
+
+            // Send Notification
+            Notification::sendNow($notifiableUser, new UserNotifications($id, $tweet_id, $typ, 'like'));
         } 
         // unlike
         else {
             DB::delete('delete from likes where user_id = ? and '.$typ.'_id = ?', [$id, $tweet_id]);
         }
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     // Function: Post Retweet
