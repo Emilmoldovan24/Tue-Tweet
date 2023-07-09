@@ -110,10 +110,12 @@ class UserController extends Controller
         if ($user && Hash::check($request->user_password, $user->user_password)) {
             // User found and right password
             Auth::login($user);
+            Log::info("User signed in!");
             return redirect()->route('feed');
         } else {
             // User not found or wrong password 
             return redirect()->back()->withErrors(['user_password' => 'Check if the password or email is correct.'])->withInput();
+            Log::error("Wrong password!");
         }
     }
 

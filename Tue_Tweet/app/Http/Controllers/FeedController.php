@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
@@ -33,6 +34,8 @@ class FeedController extends Controller {
     // Route: Logout
     public function getLogout()
     {
+        $user = Auth::user();
+        Log::info("User logged out!");
         Auth::logout();
         return redirect()->route('welcome');
     }
