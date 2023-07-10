@@ -338,6 +338,14 @@
         align-items: center;
 
     }
+
+    .above-feed {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
 </style>
 
 <body>
@@ -409,37 +417,8 @@
                         <button type="submit" class="list-group-item list-group-item-action"><i
                                 class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
                     </form>
-
-                <!-- Search Bar -->
-                    <form action="{{ route('search') }}" method="GET">
-                        <input type="text" name="query" placeholder="Enter your search query">
-                        <button type="submit">Search</button>
-                    </form>
                 </div>
                 <br>
-
-                @if (empty($combinedResults))
-                    <p>No results found.</p>
-                @else
-                    <ul>
-                        @foreach ($combinedResults as $result)
-                            @if (isset($result->tweet))
-                                <li>Tweet: {{ $result->tweet }}</li>
-                                <!-- Display other tweet-related information -->
-                            @elseif (isset($result->retweet_text))
-                                <li>Retweet: {{ $result->retweet_text }}</li>
-                                <!-- Display other retweet-related information -->
-                            @elseif (isset($result->comment))
-                                <li>Comment: {{ $result->comment }}</li>
-                                <!-- Display other comment-related information -->
-                            @elseif (isset($result->username))
-                                <li>User: {{ $result->username }}</li>
-                                <!-- Display other user-related information -->
-                            @endif
-                        @endforeach
-                    </ul>
-                @endif
-                
 
                 <!-- Tweet Section -->
                 <!--      <h4>Share whats on your mind!</h4>
@@ -456,18 +435,35 @@
         <div class="col-5">
             <h2 class="explore-tweets"> Explore the Tweets! </h2>
             
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
-                    Sort by
-                  </button>
-                
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('feed', ['sort' => 'likes']) }}">Likes</a>
-                    <a class="dropdown-item" href="{{ route('tweets.index1', ['sort' => 'time']) }}">Newest</a>
-                    <a class="dropdown-item" href="{{ route('tweets.index2', ['sort' => 'comments']) }}">Comments</a>
-                    <a class="dropdown-item" href="{{ route('tweets.index3', ['sort' => 'retweet']) }}">Retweet</a>
-
+            <div class="above-feed">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                        Sort by
+                    </button>
+                    
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ route('feed', ['sort' => 'likes']) }}">Likes</a>
+                        <a class="dropdown-item" href="{{ route('tweets.index1', ['sort' => 'time']) }}">Newest</a>
+                        <a class="dropdown-item" href="{{ route('tweets.index2', ['sort' => 'comments']) }}">Comments</a>
+                        <a class="dropdown-item" href="{{ route('tweets.index3', ['sort' => 'retweet']) }}">Retweet</a>
+                    </div>
                 </div>
+
+                <!-- Search Bar -->
+                <form action="{{ route('search') }}" method="GET">
+                    <input type="text" name="query" placeholder="Enter your search query">
+                    <button type="submit">Search</button>
+                </form>
+                <form action="{{ route('closeSearch') }}" method="GET">
+                    <button type="submit"> X </button>
+                </form>
+
+                <?php
+                if(!isset($noResults)){
+                    //is true if there are no search results
+                    $noResults = false;
+                } ?>
+
             </div>
            
 
@@ -540,10 +536,10 @@
             </script>
 
             <!-- Orders by Date if its not set otherwise -->
-            @isset($tweets)
+            <?php 
+            if(isset($tweets) or $noResults){
                 
-            @else
-                <?php
+            }else{
                 $tweets = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at
                         from (
                             SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
@@ -555,348 +551,346 @@
                         ) as feedTmp
                         where deleted_at is null and visibility = 1 and own_visibility = 1
                         order by created_at desc");
-                ?>
-            @endisset
+            }
+            ?>
             
-
-            @foreach ($tweets as $tweet)
-                <?php
-                //DB query for user
-                $cur_user_id = Auth::id();
-                $currentTimeString = time();
-                $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
-                $user_id = $tweet->user_id;
-                $username = DB::table('users')
-                    ->where('id', $user_id)
-                    ->value('username');
-                $userImg = DB::table('users')
-                    ->where('id', $user_id)
-                    ->value('profile_img');
-                $userImgSrc = app('App\Http\Controllers\UserController')->getUserImg($userImg);
-                $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                $tweet_id = $tweet->id;
-                $tweet_typ =  (string) $tweet->typ;
-                
-                if ($tweet->typ == 'tweet') {
-                    // DB query for tweet
-                    $tweetText = DB::table('tweets')
-                        ->where('tweet_id', $tweet->id)
-                        ->value('tweet');
-                    $tweetImg = DB::table('tweets')
-                        ->where('tweet_id', $tweet->id)
-                        ->value('img');
-                } else {
-                    // DB query for retweet
-                    $retweetedTweet = DB::table('retweets')
-                        ->where('retweet_id', $tweet->id)
-                        ->value('tweet_id');
-                    $retweetText = DB::table('retweets')
-                        ->where('retweet_id', $tweet->id)
-                        ->value('retweet_text');
-                    $retweetedUser_id = DB::table('tweets')
-                        ->where('tweet_id', $retweetedTweet)
-                        ->value('user_id');
-                    $retweetedUsername = DB::table('users')
-                        ->where('id', $retweetedUser_id)
+            @if($noResults == true)
+                <p> No results found </p> 
+            @else
+                @foreach ($tweets as $tweet)
+                    <?php
+                    //DB query for user
+                    $cur_user_id = Auth::id();
+                    $currentTimeString = time();
+                    $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+                    $user_id = $tweet->user_id;
+                    $username = DB::table('users')
+                        ->where('id', $user_id)
                         ->value('username');
-                    $retweetedUserImg = DB::table('users')
-                        ->where('id', $retweetedUser_id)
+                    $userImg = DB::table('users')
+                        ->where('id', $user_id)
                         ->value('profile_img');
-                    $retweetedUserImg = app('App\Http\Controllers\UserController')->getUserImg($retweetedUserImg);
-                    $retweetedTweetCreatedAt = DB::table('tweets')
-                        ->where('tweet_id', $retweetedTweet)
-                        ->value('created_at');
-                    $tweetText = DB::table('tweets')
-                        ->where('tweet_id', $retweetedTweet)
-                        ->value('tweet');
-                    $tweetImg = DB::table('tweets')
-                        ->where('tweet_id', $retweetedTweet)
-                        ->value('img');
-                }
-                ?>
+                    $userImgSrc = app('App\Http\Controllers\UserController')->getUserImg($userImg);
+                    $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
+                    $tweet_id = $tweet->id;
+                    $tweet_typ =  (string) $tweet->typ;
+                    
+                    if ($tweet->typ == 'tweet') {
+                        // DB query for tweet
+                        $tweetText = DB::table('tweets')
+                            ->where('tweet_id', $tweet->id)
+                            ->value('tweet');
+                        $tweetImg = DB::table('tweets')
+                            ->where('tweet_id', $tweet->id)
+                            ->value('img');
+                    } else {
+                        // DB query for retweet
+                        $retweetedTweet = DB::table('retweets')
+                            ->where('retweet_id', $tweet->id)
+                            ->value('tweet_id');
+                        $retweetText = DB::table('retweets')
+                            ->where('retweet_id', $tweet->id)
+                            ->value('retweet_text');
+                        $retweetedUser_id = DB::table('tweets')
+                            ->where('tweet_id', $retweetedTweet)
+                            ->value('user_id');
+                        $retweetedUsername = DB::table('users')
+                            ->where('id', $retweetedUser_id)
+                            ->value('username');
+                        $retweetedUserImg = DB::table('users')
+                            ->where('id', $retweetedUser_id)
+                            ->value('profile_img');
+                        $retweetedUserImg = app('App\Http\Controllers\UserController')->getUserImg($retweetedUserImg);
+                        $retweetedTweetCreatedAt = DB::table('tweets')
+                            ->where('tweet_id', $retweetedTweet)
+                            ->value('created_at');
+                        $tweetText = DB::table('tweets')
+                            ->where('tweet_id', $retweetedTweet)
+                            ->value('tweet');
+                        $tweetImg = DB::table('tweets')
+                            ->where('tweet_id', $retweetedTweet)
+                            ->value('img');
+                    }
+                    ?>
 
-                <!-- Tweet header -->
-                <div class="post-container">
+                    <!-- Tweet header -->
+                    <div class="post-container">
 
-                    <div class="post-row">
-                        <div class="user-profile">
-                            <?php echo $userImgHtml; ?>
-                            <div style="display: inline-block;">
-                                <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;"
-                                    href="/{{ $username }}">{{ $username }}</a>
-                                <a> &bull; </a>
-                                <span>{{ $tweet->created_at }}</span>
-                            </div>
-                        </div>
-
-                        <!--Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört -->
-                        @if ($user_id === $cur_user_id && $tweet->typ == 'tweet')
-                            <!-- Edit and delete and hide tweet -->
-                            <div class="menu-btn-own">
-                                <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item">
-                                            <a href="{{ route('MyTweetDelete', $tweet->id) }}"
-                                                style="text-decoration: none;">Delete</a>
-                                        </button></li>
-                                    <?php   echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
-                                      <li><button class="dropdown-item">
-                                            <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide/ Unhide Tweet</a>
-                                        </button></li> 
-
-                                    
-                                </ul>
-                            </div>
-                        @endif
-
-                        {{-- selbe für Retweets --}}
-                        @if ($user_id === $cur_user_id && $tweet->typ == 'retweet')
-                            <!-- Edit and delete and hide tweet -->
-                            <div class="menu-btn-own">
-                                <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item">
-                                            <a href="{{ route('MyRetweetDelete', $tweet->id) }}"
-                                                style="text-decoration: none;">Delete</a>
-                                        </button></li>
-                                        <?php
-                                        $retweetId = $tweet->id; // ID des Retweets
-                                        $retweetText = $retweetText ?? ''; // Text des Retweets (falls vorhanden)
-                                        echo '<li><button type="button" class="dropdown-item" onclick="editRetweet(' . $retweetId . ', ' . htmlspecialchars('"' . $retweetText . '"') . ')" data-retweet-id="{{ $retweetId }} " data-bs-toggle="modal" data-bs-target="#EditRetweetModal">Edit</button></li>';
-                                        ?>
-                                        <li>
-                                            <button class="dropdown-item">
-                                                <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide Tweet</a>
-                                            </button>
-                                        </li>
-                                </ul>
-                            </div>
-                        @endif
-
-                    </div>
-
-
-                    <!-- Tweet content -->
-
-                    <!-- Display Retweet -->
-                    @if ($tweet->typ == 'retweet')
-                        <p class="retweet-text">{{ $retweetText }}</p>
-                        <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> {{ $username }}
-                            retweeted</p>
-                        <div class="retweet">
-                            <div class="tweetbox-profile">
-                                <img src="{{ $retweetedUserImg }}">
-                                <div>
-                                    <a style="margin-right: 3px; text-decoration: none; color: black; font-weight: bold;"
-                                    href="/{{ $retweetedUsername }}">{{ $retweetedUsername }}</a>
-                                    <span>{{ $retweetedTweetCreatedAt }}</span>
+                        <div class="post-row">
+                            <div class="user-profile">
+                                <?php echo $userImgHtml; ?>
+                                <div style="display: inline-block;">
+                                    <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;"
+                                        href="/{{ $username }}">{{ $username }}</a>
+                                    <a> &bull; </a>
+                                    <span>{{ $tweet->created_at }}</span>
                                 </div>
                             </div>
+
+                            <!--Überprüfe, ob die user_id des Tweets zur aktuellen Benutzer-ID gehört -->
+                            @if ($user_id === $cur_user_id && $tweet->typ == 'tweet')
+                                <!-- Edit and delete and hide tweet -->
+                                <div class="menu-btn-own">
+                                    <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><button class="dropdown-item">
+                                                <a href="{{ route('MyTweetDelete', $tweet->id) }}"
+                                                    style="text-decoration: none;">Delete</a>
+                                            </button></li>
+                                        <?php   echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
+                                        <li><button class="dropdown-item">
+                                                <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide/ Unhide Tweet</a>
+                                            </button></li> 
+
+                                        
+                                    </ul>
+                                </div>
+                            @endif
+
+                            {{-- selbe für Retweets --}}
+                            @if ($user_id === $cur_user_id && $tweet->typ == 'retweet')
+                                <!-- Edit and delete and hide tweet -->
+                                <div class="menu-btn-own">
+                                    <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><button class="dropdown-item">
+                                                <a href="{{ route('MyRetweetDelete', $tweet->id) }}"
+                                                    style="text-decoration: none;">Delete</a>
+                                            </button></li>
+                                            <?php
+                                            $retweetId = $tweet->id; // ID des Retweets
+                                            $retweetText = $retweetText ?? ''; // Text des Retweets (falls vorhanden)
+                                            echo '<li><button type="button" class="dropdown-item" onclick="editRetweet(' . $retweetId . ', ' . htmlspecialchars('"' . $retweetText . '"') . ')" data-retweet-id="{{ $retweetId }} " data-bs-toggle="modal" data-bs-target="#EditRetweetModal">Edit</button></li>';
+                                            ?>
+                                            <li>
+                                                <button class="dropdown-item">
+                                                    <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide Tweet</a>
+                                                </button>
+                                            </li>
+                                    </ul>
+                                </div>
+                            @endif
+
+                        </div>
+
+
+                        <!-- Tweet content -->
+
+                        <!-- Display Retweet -->
+                        @if ($tweet->typ == 'retweet')
+                            <p class="retweet-text">{{ $retweetText }}</p>
+                            <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> {{ $username }}
+                                retweeted</p>
+                            <div class="retweet">
+                                <div class="tweetbox-profile">
+                                    <img src="{{ $retweetedUserImg }}">
+                                    <div>
+                                        <a style="margin-right: 3px; text-decoration: none; color: black; font-weight: bold;"
+                                        href="/{{ $retweetedUsername }}">{{ $retweetedUsername }}</a>
+                                        <span>{{ $retweetedTweetCreatedAt }}</span>
+                                    </div>
+                                </div>
+                                @isset($tweetText)
+                                    <!-- Validation fängt es schon ab, dennoch so besser -->
+                                    <p class="retweet-text">{{ $tweetText }}</p>
+                                @endisset
+                                @if (!is_null($tweetImg))
+                                    <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
+                                    <img class="img-fluid" src={{ $tweetImg }}>
+                                @endif
+                            </div>
+                        @elseif($tweet->typ == 'tweet')
+                            <!-- Display Tweet -->
                             @if (!is_null($tweetText))
                                 <!-- Validation fängt es schon ab, dennoch so besser -->
-                                <p class="retweet-text">{{ $tweetText }}</p>
+                                {{ $tweetText }}<br>
                             @endif
+
+
+                            <!-- Display Tweet image -->
                             @if (!is_null($tweetImg))
                                 <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
                                 <img class="img-fluid" src={{ $tweetImg }}>
                             @endif
-                        </div>
-                    @elseif($tweet->typ == 'tweet')
-                        <!-- Display Tweet -->
-                        @if (!is_null($tweetText))
-                            <!-- Validation fängt es schon ab, dennoch so besser -->
-                            {{ $tweetText }}<br>
                         @endif
+                            <!-- Activity Icons -->
+                            <div class="post-row">
+                                <div class="activity-icons">
 
+                                    <!-- Count Likes Comments and Retweets -->
+                                    <?php
+                                    if($tweet->typ == 'tweet'){
+                                        $likes = DB::table('likes')
+                                            ->where('tweet_id', $tweet->id)
+                                            ->where('deleted_at', null)
+                                            ->where('visibility', 1)
+                                            ->count();
+                                        $numComments = DB::table('comments')
+                                            ->where('tweet_id', $tweet->id)
+                                            ->where('deleted_at', null)
+                                            ->where('visibility', 1)
+                                            ->count();
+                                        $retweets = DB::table('retweets')
+                                            ->where('tweet_id', $tweet->id)
+                                            ->where('deleted_at', null)
+                                            ->where('visibility', 1)
+                                            ->where('own_visibility', 1)
+                                            ->count();
+                                    } elseif ($tweet->typ == 'retweet') {
+                                        $likes = DB::table('likes')
+                                            ->where('retweet_id', $tweet->id)
+                                            ->where('deleted_at', null)
+                                            ->where('visibility', 1)
+                                            ->count();
+                                        $numComments = DB::table('comments')
+                                            ->where('retweet_id', $tweet->id)
+                                            ->where('deleted_at', null)
+                                            ->where('visibility', 1)
+                                            ->count();
+                                    }
+                                    ?>
 
-                        <!-- Display Tweet image -->
-                        @if (!is_null($tweetImg))
-                            <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
-                            <img class="img-fluid" src={{ $tweetImg }}>
-                        @endif
-                    @endif
-                        <!-- Activity Icons -->
-                        <div class="post-row">
-                            <div class="activity-icons">
+                                    <!-- Like Button -->
+                                    <div>
+                                        <form action=like method="POST">
+                                            @csrf
+                                            <div class="like-btn">
 
-                                <!-- Count Likes Comments and Retweets -->
-                                <?php
-                                if($tweet->typ == 'tweet'){
-                                    $likes = DB::table('likes')
-                                        ->where('tweet_id', $tweet->id)
-                                        ->where('deleted_at', null)
-                                        ->where('visibility', 1)
-                                        ->count();
-                                    $numComments = DB::table('comments')
-                                        ->where('tweet_id', $tweet->id)
-                                        ->where('deleted_at', null)
-                                        ->where('visibility', 1)
-                                        ->count();
-                                    $retweets = DB::table('retweets')
-                                        ->where('tweet_id', $tweet->id)
-                                        ->where('deleted_at', null)
-                                        ->where('visibility', 1)
-                                        ->where('own_visibility', 1)
-                                        ->count();
-                                } elseif ($tweet->typ == 'retweet') {
-                                    $likes = DB::table('likes')
-                                        ->where('retweet_id', $tweet->id)
-                                        ->where('deleted_at', null)
-                                        ->where('visibility', 1)
-                                        ->count();
-                                    $numComments = DB::table('comments')
-                                        ->where('retweet_id', $tweet->id)
-                                        ->where('deleted_at', null)
-                                        ->where('visibility', 1)
-                                        ->count();
-                                }
-                                ?>
+                                                <!-- Like Button turns red if  user has liked-->
+                                                <?php
+                                                if($tweet->typ == 'tweet') {
+                                                    $alreadyLiked = DB::table('likes')
+                                                        ->where('tweet_id', $tweet->id)
+                                                        ->where('user_id', Auth::id())
+                                                        ->exists();
+                                                } elseif($tweet->typ == 'retweet') {
+                                                    $alreadyLiked = DB::table('likes')
+                                                        ->where('retweet_id', $tweet->id)
+                                                        ->where('user_id', Auth::id())
+                                                        ->exists();
+                                                }
 
-                                <!-- Like Button -->
-                                <div>
-                                    <form action=like method="POST">
-                                        @csrf
-                                        <div class="like-btn">
+                                                if ($alreadyLiked) {
+                                                    echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                                                } else {
+                                                    echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
+                                                } ?>
+                                                @if($tweet->typ == 'tweet')
+                                                    <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                                @elseif($tweet->typ == 'retweet')
+                                                    <input type="hidden" name="retweet_id" value="{{ $tweet->id }}">
+                                                @endif
+                                                <input type="hidden" name="typ" value="{{ $tweet->typ }}">
+                                                <input type="hidden" name="user_id" value="{{ $user_id }}">
+                                            </div>
+                                        </form>
+                                    </div>
 
-                                            <!-- Like Button turns red if  user has liked-->
-                                            <?php
-                                            if($tweet->typ == 'tweet') {
-                                                $alreadyLiked = DB::table('likes')
-                                                    ->where('tweet_id', $tweet->id)
-                                                    ->where('user_id', Auth::id())
-                                                    ->exists();
-                                            } elseif($tweet->typ == 'retweet') {
-                                                 $alreadyLiked = DB::table('likes')
-                                                    ->where('retweet_id', $tweet->id)
-                                                    ->where('user_id', Auth::id())
-                                                    ->exists();
-                                            }
-
-                                            if ($alreadyLiked) {
-                                                echo '<button type="submit" class="btn btn-danger"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-                                            } else {
-                                                echo '<button type="submit" class="btn btn-dark"><i class="fa-regular fa-heart"></i>' . $likes . '</button>';
-                                            } ?>
-                                            @if($tweet->typ == 'tweet')
-                                                <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
-                                            @elseif($tweet->typ == 'retweet')
-                                                <input type="hidden" name="retweet_id" value="{{ $tweet->id }}">
-                                            @endif
-                                            <input type="hidden" name="typ" value="{{ $tweet->typ }}">
-                                            <input type="hidden" name="user_id" value="{{ $user_id }}">
+                                    <!-- Comment Button (display comments if button is clicked) -->
+                                    <div>
+                                        <div class="comment-btn">
+                                            <?php echo '<button onclick="displayComments('. $tweet->id .', '. htmlspecialchars('"' . $tweet->typ . '"') .')" class="btn btn-dark" aria-expanded="false">'; ?>
+                                                <i class="fa-regular fa-comment"></i> {{ $numComments }}
+                                            </button>
                                         </div>
-                                    </form>
-                                </div>
-
-                                <!-- Comment Button (display comments if button is clicked) -->
-                                <div>
-                                    <div class="comment-btn">
-                                        <?php echo '<button onclick="displayComments('. $tweet->id .', '. htmlspecialchars('"' . $tweet->typ . '"') .')" class="btn btn-dark" aria-expanded="false">'; ?>
-                                            <i class="fa-regular fa-comment"></i> {{ $numComments }}
+                                    </div>
+                        @if($tweet->typ == 'tweet')
+                                    <!-- Retweet Button -->
+                                    <div class="retweet-btn">
+                                        <?php
+                                        $tweetCreatedAt = date('Y-m-d H:i:s', strtotime($tweet->created_at));
+                                        echo '<button onclick="retweet(' .
+                                            $tweet->id .
+                                            ', ' . htmlspecialchars('"' . $tweetText . '"') .
+                                            ', ' . htmlspecialchars('"' . $username . '"') .
+                                            ', ' . htmlspecialchars('"' . $user_id . '"') .
+                                            ', ' . htmlspecialchars('"' . $userImgSrc . '"') .
+                                            ', ' . htmlspecialchars('"' . $tweetCreatedAt . '"') .
+                                            ', ' . htmlspecialchars('"' . $tweetImg . '"') . ')" 
+                                            class="btn btn-dark"   data-tweet-id="' . $tweet_id . '" data-bs-toggle="modal" data-bs-target="#PostRetweetModal" aria-expanded="false">'; ?>
+                                        <i class="fa-solid fa-retweet"></i> {{ $retweets }}
                                         </button>
                                     </div>
+                            @endif
                                 </div>
-                    @if($tweet->typ == 'tweet')
-                                <!-- Retweet Button -->
-                                <div class="retweet-btn">
-                                    <?php
-                                    $tweetCreatedAt = date('Y-m-d H:i:s', strtotime($tweet->created_at));
-                                    echo '<button onclick="retweet(' .
-                                        $tweet->id .
-                                        ', ' . htmlspecialchars('"' . $tweetText . '"') .
-                                        ', ' . htmlspecialchars('"' . $username . '"') .
-                                        ', ' . htmlspecialchars('"' . $user_id . '"') .
-                                        ', ' . htmlspecialchars('"' . $userImgSrc . '"') .
-                                        ', ' . htmlspecialchars('"' . $tweetCreatedAt . '"') .
-                                        ', ' . htmlspecialchars('"' . $tweetImg . '"') . ')" 
-                                        class="btn btn-dark"   data-tweet-id="' . $tweet_id . '" data-bs-toggle="modal" data-bs-target="#PostRetweetModal" aria-expanded="false">'; ?>
-                                    <i class="fa-solid fa-retweet"></i> {{ $retweets }}
-                                    </button>
-                                </div>
-                        @endif
                             </div>
-                        </div>
-                        <!-- Comment-->
-                        <?php echo '<div class="comments" id="comments_' . $tweet_typ . '_' . $tweet->id . '" hidden>'; ?>
-                        <br>
-                        <div class="comment-container">
+                            <!-- Comment-->
+                            <?php echo '<div class="comments" id="comments_' . $tweet_typ . '_' . $tweet->id . '" hidden>'; ?>
+                            <br>
+                            <div class="comment-container">
 
-                            <!-- List Comments -->
-                            <?php
-                            // Get all comments for this tweet or retweet
-                    if($tweet->typ == 'tweet'){
-                        $comments = DB::table('comments')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
-                    }elseif($tweet->typ == 'retweet'){
-                        $comments = DB::table('comments')->where('retweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
-                    }
-                    foreach ($comments as $comment) {
-                        $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
-                        $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
-                        $commentText = $comment->comment;
-                    ?>
-                            <div class="comment-post-container">
-                                <div class="post-row">
-                                    <!-- <div class="comment"> -->
-                                    <div class="user-profile">
-                                        <?php echo $userImgHtml; ?>
-                                        <div style="display: inline-block;">
-                                            <a style="margin-right: 3px; text-decoration: none;"
-                                                href="/{{ $commentUsername }}">{{ $commentUsername }}</a>
-                                            <a> &bull; </a>
-                                            <span>{{ $comment->created_at }}</span>
+                                <!-- List Comments -->
+                                <?php
+                                // Get all comments for this tweet or retweet
+                        if($tweet->typ == 'tweet'){
+                            $comments = DB::table('comments')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
+                        }elseif($tweet->typ == 'retweet'){
+                            $comments = DB::table('comments')->where('retweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
+                        }
+                        foreach ($comments as $comment) {
+                            $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
+                            $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
+                            $commentText = $comment->comment;
+                        ?>
+                                <div class="comment-post-container">
+                                    <div class="post-row">
+                                        <!-- <div class="comment"> -->
+                                        <div class="user-profile">
+                                            <?php echo $userImgHtml; ?>
+                                            <div style="display: inline-block;">
+                                                <a style="margin-right: 3px; text-decoration: none;"
+                                                    href="/{{ $commentUsername }}">{{ $commentUsername }}</a>
+                                                <a> &bull; </a>
+                                                <span>{{ $comment->created_at }}</span>
+                                            </div>
                                         </div>
+
+
+                                        @if ($comment->user_id === $cur_user_id)
+                                            <div class="menu-btn-own">
+                                                <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"><i
+                                                        class="fa-solid fa-ellipsis-vertical"></i></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><button class="dropdown-item"><a
+                                                                href="{{ route('MyCommentDelete', $comment->comment_id) }}"
+                                                                style="text-decoration: none;">Delete</a></button>
+                                                    </li>
+                                                    <?php
+                                                    echo '<li><button type="button" class="dropdown-item" onclick="editComment(' . $comment->comment_id . ', ' . htmlspecialchars('"' . $comment->comment . '"') . ')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>';
+                                                    ?>
+                                                </ul>
+                                            </div>
+                                        @endif
+
                                     </div>
-
-
-                                    @if ($comment->user_id === $cur_user_id)
-                                        <div class="menu-btn-own">
-                                            <button class="btn btn-dark" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false"><i
-                                                    class="fa-solid fa-ellipsis-vertical"></i></button>
-                                            <ul class="dropdown-menu">
-                                                <li><button class="dropdown-item"><a
-                                                            href="{{ route('MyCommentDelete', $comment->comment_id) }}"
-                                                            style="text-decoration: none;">Delete</a></button>
-                                                </li>
-                                                <?php
-                                                echo '<li><button type="button" class="dropdown-item" onclick="editComment(' . $comment->comment_id . ', ' . htmlspecialchars('"' . $comment->comment . '"') . ')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>';
-                                                ?>
-                                            </ul>
-                                        </div>
-                                    @endif
-
+                                    <p>{{ $comment->comment }}</p>
                                 </div>
-                                <p>{{ $comment->comment }}</p>
+                                <?php } ?>
+
+                                <!-- Comment input field -->
+                                <div class="comment-input">
+                                    <form action=postComment method="POST">
+                                        @csrf
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="comment" id="comment" class="form-control"
+                                                placeholder="Add a comment" aria-label="Add a comment"
+                                                aria-describedby="button-addon2">
+                                            <button class="btn btn-outline-secondary" type="submit"
+                                                id="button-addon2">Post</button>
+                                        </div>
+                                        <input type="hidden" name="tweet_typ" value="{{ $tweet->typ }}">
+                                        <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                        <input type="hidden" name="user_id" value="{{ $user_id }}">
+                                    </form>
+                                </div>
                             </div>
-                            <?php } ?>
-
-                            <!-- Comment input field -->
-                            <div class="comment-input">
-                                <form action=postComment method="POST">
-                                    @csrf
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="comment" id="comment" class="form-control"
-                                            placeholder="Add a comment" aria-label="Add a comment"
-                                            aria-describedby="button-addon2">
-                                        <button class="btn btn-outline-secondary" type="submit"
-                                            id="button-addon2">Post</button>
-                                    </div>
-                                    <input type="hidden" name="tweet_typ" value="{{ $tweet->typ }}">
-                                    <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
-                                    <input type="hidden" name="user_id" value="{{ $user_id }}">
-                                </form>
-                            </div>
-                        </div>
-                </div>
-        </div>
-        @endforeach
-
-
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="button" class="btn btn-dark yx-auto">Load more</button>
-        </div>
+                    </div>
+            </div>
+            @endforeach
+        @endisset
     </div>
 
 
@@ -1049,7 +1043,7 @@
                                 <div class="post-input-container">
                                     <input style="display:none" name="id" id="editTweetId">
                                     <textarea rows="3" placeholder="Edit your Tweet" name="editTweetText" id="editTweetText"
-                                        value="{{ Request::old('tweet') }}">{{ $tweetText }}</textarea>
+                                        value="{{ Request::old('tweet') }}"></textarea>
                                     <div id="pictureEditBox"></div>
                                     <div class="add-post-links">
                                         <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>

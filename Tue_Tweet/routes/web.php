@@ -384,8 +384,13 @@ Route::get('feed-comment-delete/{id}', [
 
 // Search
 Route::get('/search', [
-    'uses' => 'App\Http\Controllers\FeedController@search',
+    'uses' => 'App\Http\Controllers\FeedController@searchOnFeed',
     'as' => 'search'
+]);
+
+Route::get('/closeSearch', [
+    'uses' => 'App\Http\Controllers\FeedController@closeSearch',
+    'as' => 'closeSearch'
 ]);
 
 // ReadMark
