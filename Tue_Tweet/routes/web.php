@@ -64,10 +64,14 @@ Route::post('/passChangeVerify', [
     'as' => 'passChangeVerify'
 ]);
 
-Route::get('/passChange', function(){
-    return view('passChange');
+Route::get('passChange/{email}', function ($email) {
+    return view('passChange', ['email' => $email]);
 })->name('passChange');
 
+Route::post('/passChanged', [
+    'uses' => 'App\Http\Controllers\UserController@postPassChange',
+    'as' => 'passChanged'
+]);
 //---------------------------------------------------------------------------------------------------------------------------
 
 // UserController

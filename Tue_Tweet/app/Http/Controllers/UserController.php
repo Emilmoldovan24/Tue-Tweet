@@ -67,23 +67,38 @@ class UserController extends Controller
     public function postPassChangeVerify(Request $request){
 
 
-        // email, username and password Validation
+        // email of user
         $this->validate($request, [
             'email' => 'required'
         ]);
-
-        $email = $request['email'];
+        $usr = User::where('email', $request->email)->first();
+        $usr_data = array('email' => $usr->email, 'username' => $usr->username);
 
         // sending Mail to MailTrap
-        Mail::send('mail.mailPassword', $data = [], function($message) use($email) {
-            $message->to($email, "Username")->subject('Change Password');
+        Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
+            $message->to($usr_data['email'], $usr_data['username'])->subject('Change Password');
             $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
          });
 
         return view('passChangeVerify');
     }
 
+    // Function: Password change
+    public function postPassChange(Request $request){
 
+    // password to be changed
+    $this->validate($request, [
+        'password' => 'required',
+        'email' => 'required'
+    ]);
+
+    // change password of user
+    $usr = User::where('email', $request->email)->first();
+    Log::debug("User $usr->username changed password, $request->email, $request->password!");
+    // TODO change password of this user
+
+    return redirect()->route('welcome');
+}
 
     // Function: SignUp
     public function postSignUp(Request $request)
@@ -132,7 +147,7 @@ class UserController extends Controller
         if ($user && Hash::check($request->user_password, $user->user_password)) {
             // User found and right password
             Auth::login($user);
-            Log::info("User signed in!");
+            Log::info("$user->username signed in!");
             return redirect()->route('feed');
         } else {
             // User not found or wrong password 
