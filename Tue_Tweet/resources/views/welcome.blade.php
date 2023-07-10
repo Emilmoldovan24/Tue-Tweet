@@ -170,7 +170,9 @@ body {
                             <input type="hidden" name="_token" value="{{  Session::token() }}">
                         </form>
                         <div class="forgot-pass">
-                        <button type="submit" class="btn btn-light"> Forgot your Password? </button>
+                        <form action="{{ route('passChangeRequest') }}" method="GET">
+                            <button type="submit" class="btn btn-light"> Forgot your Password? </button>
+                        </form>
                         </div>
 
 

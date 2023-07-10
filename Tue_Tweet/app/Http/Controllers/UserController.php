@@ -54,7 +54,7 @@ class UserController extends Controller
 
         $usr_data = array('username' => $username_, 'email' => $email_, 'user_password' => $user_password_, 'randomNumber' => $randomNumber);
 
-        // sening Mail to MailTrap
+        // sending Mail to MailTrap
         Mail::send('mail.mailVerify', $usr_data, function($message) use($usr_data) {
             $message->to($usr_data['email'], $usr_data['username'])->subject('Verify Email');
             $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
@@ -62,6 +62,28 @@ class UserController extends Controller
 
         return view('verify',compact('usr_data'));
     }
+    
+    // Function: Password change request
+    public function postPassChangeVerify(Request $request){
+
+
+        // email, username and password Validation
+        $this->validate($request, [
+            'email' => 'required'
+        ]);
+
+        $email = $request['email'];
+
+        // sending Mail to MailTrap
+        Mail::send('mail.mailPassword', $data = [], function($message) use($email) {
+            $message->to($email, "Username")->subject('Change Password');
+            $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
+         });
+
+        return view('passChangeVerify');
+    }
+
+
 
     // Function: SignUp
     public function postSignUp(Request $request)
