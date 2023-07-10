@@ -474,6 +474,8 @@ class FeedController extends Controller {
     // search return table 
     public function searchOnFeed(Request $request)
     {
+        $closeSearch = true; 
+
         // query from search bar
         $search = $request->input('query');
 
@@ -494,19 +496,39 @@ class FeedController extends Controller {
                     ORDER BY created_at DESC";
 
         $tweets = DB::select($query);
+        $noResults = empty($tweets);
        
-        if($tweets == NULL){
-            $noResults = true;
-            return view('feed', compact('noResults'));
-        }else{
-            $noResults = false;
-            return view('feed', compact('tweets'), compact('noResults'));
+        if($tweets == NULL){ // no results found
+            return view('feed', compact('noResults','closeSearch'));
+
+        }else{ // results found
+            return view('feed', compact('tweets', 'noResults','closeSearch'));
         }
     }
 
     public function closeSearch(){
-        $noResults = false;
-            return view('feed', compact('noResults'));
+        $closeSearch = false;
+        $noResults = false; 
+
+        return view('feed', compact('noResults','closeSearch'));
+    }
+
+    // show tweet
+    public function showTweet($id, $typ)
+    {
+        $closeSearch = true;
+
+        // deleted tweets aren't shown
+        if($typ == 'tweet'){
+            $query ="SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at
+                        FROM tweets WHERE tweets.tweet_id = ".$id;
+        }else{
+            $query = "SELECT 'retweet' AS typ, retweets.retweet_id AS id, retweets.user_id, retweets.retweet_text, retweets.created_at
+                        FROM retweets WHERE retweets.retweet_id = ".$id;
+        }
+
+        $tweets= DB::select($query);
+        return view('feed', compact('tweets', 'closeSearch'));
     }
     
 //--------------------------------------------------------------------------------------
