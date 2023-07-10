@@ -470,6 +470,44 @@ class FeedController extends Controller {
         // return view('search-results', compact('combinedResults'));
         return view('feed', compact('combinedResults'));
     }
+
+    // search return table 
+    public function searchOnFeed(Request $request)
+    {
+        // query from search bar
+        $search = $request->input('query');
+
+        $query = "SELECT id, user_id, created_at, typ
+                    FROM (
+                        SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at
+                        FROM tweets
+                        
+                        WHERE tweets.tweet LIKE '%" . $search . "%' AND tweets.deleted_at IS NULL AND tweets.visibility = true AND tweets.own_visibility = true
+                        GROUP BY tweets.tweet_id, tweets.user_id, tweets.tweet, tweets.created_at
+
+                        UNION ALL
+
+                        SELECT 'retweet' AS typ, retweets.retweet_id AS id, retweets.user_id, retweets.retweet_text, retweets.created_at
+                        FROM retweets
+                        WHERE retweet_text LIKE '%" . $search . "%' AND retweets.deleted_at IS NULL AND retweets.visibility = true AND retweets.own_visibility = true
+                    ) AS combined
+                    ORDER BY created_at DESC";
+
+        $tweets = DB::select($query);
+       
+        if($tweets == NULL){
+            $noResults = true;
+            return view('feed', compact('noResults'));
+        }else{
+            $noResults = false;
+            return view('feed', compact('tweets'), compact('noResults'));
+        }
+    }
+
+    public function closeSearch(){
+        $noResults = false;
+            return view('feed', compact('noResults'));
+    }
     
 //--------------------------------------------------------------------------------------
 }
