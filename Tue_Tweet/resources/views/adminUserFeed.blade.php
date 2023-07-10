@@ -47,17 +47,45 @@ body {
     margin-top: 10px;
     padding: 10px;
     background: white;
+    border-radius: 9px;
+    border: 2px solid #75151E;
 }
+
+    .navbar {
+    background-color: #75151E;
+    color: red;
+}
+    .tuetweetlogo {
+
+width: 180px;
+border-radius: 9px;
+margin-right: 10px;
+}
+.adminDash {
+    color: white;
+    font-size: 2,5vw; /* Standard-Schriftgröße */
+  max-font-size: 30px; /* Maximale Schriftgröße */
+  min-font-size: 25px; /* Minimale Schriftgröße */
+}
+@media (max-width: 368px) {
+    .adminDash {
+   display: block;
+    
+    
+  font-size: 25px; /* Maximale Schriftgröße */
+  
+  }
+}
+
 </style>
 
 <body>
-    <nav class="navbar bg-dark" data-bs-theme="dark">
+<nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand">Tue-Tweet - Manage Users</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <a class="navbar-brand"> <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
+         <span class="adminDash"> Admin Dashboard </span> 
+        </a>
+            
         </div>
     </nav>
 
