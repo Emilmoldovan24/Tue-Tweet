@@ -388,6 +388,7 @@ Route::get('/search', [
     'as' => 'search'
 ]);
 
+// close displayed tweets from search
 Route::get('/closeSearch', [
     'uses' => 'App\Http\Controllers\FeedController@closeSearch',
     'as' => 'closeSearch'
@@ -397,6 +398,12 @@ Route::get('/closeSearch', [
 Route::post('/mark-as-read', [
     'uses' => 'App\Http\Controllers\FeedController@markAllAsRead',
     'as' => 'mark-as-read'
+]);
+
+// show tweet
+Route::get('/showTweet/{id}/{typ}', [
+    'uses' => 'App\Http\Controllers\FeedController@showTweet',
+    'as' => 'showTweet'
 ]);
 
 
