@@ -12,7 +12,7 @@ My Profile settings
 	   .navbar.navbar-expand-lg {
         display: flex;
         align-items: left;
-      background-color: #75151E;
+      background-color: #a71b28;
         padding: 5px 5%;
         position: sticky;
         top: 0;

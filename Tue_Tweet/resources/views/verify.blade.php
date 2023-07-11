@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>Verify</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <style>
@@ -28,9 +28,9 @@ color: darkred;
 
 
 body {
-  background-color: #75151E;
+  background-color: #a71b28;
   font-family: "Lato", sans-serif;
-  height: 100vh;
+ 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,6 +41,9 @@ body {
 }
 
 .container{
+ margin-top: 100px;
+  align-items: center;
+  justify-content: center;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   padding: 30px;
@@ -64,31 +67,19 @@ body {
 
 .code{
   caret-color: transparent;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: #a71b28;
   border-radius: 10px;
   border: 1px solid #eee;
   font-size: 30px;
   font-family: "Lato", sans-serif;
-  width: 75px;
-  height: 80px;
+  width: 90%;
   margin: 10px;
   text-align: center;
   font-weight: 300;
+  color: white;
 }
 
-@media (max-width: 600px) {
-  .code-container{
-    flex-wrap: wrap;
-    text-align: center;
-  }
-  .code{
-    font-size: 24px;
-    height: 50px;
-    max-width: 50px;
-    font-size: bold;
-    text-align: center;
-  }
-}
+
 
 .code::-webkit-outer-spin-button,
 .code::-webkit-inner-spin-button {
@@ -96,11 +87,12 @@ body {
 }
 
 .code:valid {
-  border-color: #9861c2;
+  border-color: #00fe10;
   box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.25);
 }
 
 .btn{
+  width: 50%;
   font-family: "Lato", sans-serif;
   min-width: 400px;
   display: inline-block;
@@ -124,21 +116,29 @@ body {
   background-color: #9861c2;
   border-color: #9861c2;
 }
+.tuetweetlogo {
+    margin-bottom: 20px;
+    width: 200px;
+    border-radius: 7px;
+    
+}
+.btn.btn-danger{
+  width: 200px;
+}
 </style>
 <body>
+
 <div class="container">
+<img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
     <h2>You need to verify your account</h2>
      <p>We have sent you an email containing a verification code. Please enter it below!</p>
     <p>Username: {{$usr_data['username']}} </p>
     <p>Email: {{$usr_data['email']}} </p>
     <div class="code-container">
       <form>
-      <input type="number" class="code" placeholder="0" min="0" max="9" required>
-      <input type="number" class="code" placeholder="0" min="0" max="9" required>
-      <input type="number" class="code" placeholder="0" min="0" max="9" required>
-      <input type="number" class="code" placeholder="0" min="0" max="9" required>
-      <input type="number" class="code" placeholder="0" min="0" max="9" required>
-      <input type="number" class="code" placeholder="0" min="0" max="9" required>
+      <div class="mb-3">
+    <input type="number" class="code" placeholder="Type in your code" min="0" max="999999" required>
+    </div>
       <button type="submit" class="btn btn-danger">Verify</button>
     </form>
  

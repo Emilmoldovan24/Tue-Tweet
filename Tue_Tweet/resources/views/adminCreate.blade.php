@@ -11,7 +11,7 @@
 
 <style>
 body {
-    background-color: #DCDCDC;
+    background-color: #E7E7E7;
     /* background: rgb(2, 0, 36);
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 }
@@ -21,6 +21,50 @@ body {
     display: flex;
 }
 
+.navbar {
+    background-color: #a71b28;
+    color: red;
+}
+.tuetweetlogo {
+
+width: 180px;
+border-radius: 9px;
+margin-right: 10px;
+}
+.adminDash {
+    color: white;
+    font-size: 2,5vw; /* Standard-Schriftgröße */
+  max-font-size: 30px; /* Maximale Schriftgröße */
+  min-font-size: 25px; /* Minimale Schriftgröße */
+}
+.back.btn.btn-light{
+   background-color: #a71b28;
+    color: white;
+    border-radius: 9px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    
+}
+.lead-form {
+   
+    margin: 10px auto;
+    border: 2px solid;
+    border-radius: 9px;
+ 
+    padding: 30px 20px;
+    background-color: #a71b28;
+    /* background-color: #bf1707; */
+    color: white;
+}
+@media (max-width: 368px) {
+    .adminDash {
+   display: block;
+    
+    
+  font-size: 25px; /* Maximale Schriftgröße */
+  
+  }
+}
 .left-side-content {
     margin-right: 32px;
     width: 30%;
@@ -47,9 +91,13 @@ body {
 }
 
 .user {
-    margin-top: 10px;
-    padding: 10px;
-    background: white;
+    width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    color: black;
+    margin: 20px 0;
+    border: 3px solid #a71b28;
 }
 .logged-in{
    
@@ -58,24 +106,22 @@ body {
     margin-left: 16px;
 }
 </style>
-
 <body>
-    <nav class="navbar bg-dark" data-bs-theme="dark">
+    <nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand">Tue-Tweet - Manage Users</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <a class="navbar-brand"> <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
+         <span class="adminDash">Manage Admins </span> 
+        </a>
+            
         </div>
     </nav>
 
 
     <div class="container">
-
+    <div class="col-3">
         <div class="left-side-content">
              <!-- Current admin -->
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3" style="max-width: 540px; background-color: #a71b28; color: white;">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <?php
@@ -85,7 +131,7 @@ body {
                     </div>
                     <div class="logged-in">
                         <div class="log-text">
-                            Loged in: {{$admin_name}}
+                            Logged in: {{$admin_name}}
                         </div>
                     </div>
                 </div>
@@ -94,19 +140,18 @@ body {
 
             <div class="list-group">
                 <form action="{{ route('adminDash') }}" method="GET">
-                    <button type="submit" class="list-group-item list-group-item-action"><i
-                            class="fa-solid fa-right-from-bracket"></i><a> back </a></button>
+                <button type="submit" class="back btn btn-light"> Go back </button>
                 </form>
             </div>
         </div>
-
-
+        </div>
+     
         <div class="main-content">
 
             <div class="menu">
-                <a href="adminCreate?"> All Admins </a> |
-                <a href="adminCreate?page=normalAdmins"> Normal Admins </a> |
-                <a href="adminCreate?page=superAdmins"> Super Admins </a>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminCreate?'">All Admins</button>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminCreate?page=normalAdmins'">Normal Admins</button>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminCreate?page=superAdmins'">Super Admins</button>  
             </div>
 
             <?php 
@@ -190,11 +235,13 @@ body {
                     ?>
 
         </div>
-
+          
+            
         <div class="right-side-content"> 
+        <div class="col-md-6 text-center">
                 <div class="lead-form">
                     <div class="title-box">
-                        <h3>Create new admin user</h3>
+                        <h3>Create new Admin</h3>
                     </div>
                     <form action='{{ route("adminCreate") }}' method="POST">
                         <div class="mb-3">
@@ -241,7 +288,8 @@ body {
                 </div>
         </div>
     </div>
-
+            </div>
+           
 </body>
 
 </html>
