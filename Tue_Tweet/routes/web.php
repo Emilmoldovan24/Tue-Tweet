@@ -54,6 +54,24 @@ Route::get('verify/{usr_data}', function ($usr_data) {
     return view('verify', ['usr_data' => $usr_data]);
 });
 
+// Routes for Password change
+Route::get('/passChangeRequest', function(){
+    return view('passChangeRequest');
+})->name('passChangeRequest');
+
+Route::post('/passChangeVerify', [
+    'uses' => 'App\Http\Controllers\UserController@postPassChangeVerify',
+    'as' => 'passChangeVerify'
+]);
+
+Route::get('passChange/{email}', function ($email) {
+    return view('passChange', ['email' => $email]);
+})->name('passChange');
+
+Route::post('/passChanged', [
+    'uses' => 'App\Http\Controllers\UserController@postPassChange',
+    'as' => 'passChanged'
+]);
 //---------------------------------------------------------------------------------------------------------------------------
 
 // UserController

@@ -11,7 +11,7 @@
 </head>
 <style>
 body {
-    background-color: lightgrey;
+    background-color: #E7E7E7;
     /* background-color: #DCDCDC; */
     /* background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
@@ -91,7 +91,7 @@ body {
 .right-sidebar {
     margin: 20px 0;
     flex-basis: 25%;
-
+position: sticky;
     top: 70px;
     align-self: flex-start;
 }
@@ -158,17 +158,18 @@ body {
 .post-container {
     width: 100%;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 25px;
     padding: 20px;
     color: black;
     margin: 20px 0;
+    border: 2px solid #75151E;
 }
 
 .comment-post-container {
-    width: 100%;
+    width: 90%;
     background: white;
-    border-radius: 12px;
-    border: 2px solid black;
+    border-radius: 8px;
+    border: 2px solid #75151E;
     color: black;
     margin-bottom: 20px;
     padding: 10px;
@@ -320,7 +321,7 @@ body {
     border-color: #75151E;
 }
 
-.explore-tweets {
+/* .explore-tweets {
     text-align: center;
     color: white;
     border-color: #75151E;
@@ -328,7 +329,7 @@ body {
     border-radius: 9px;
     padding: 10px;
     background-color: #75151E;
-}
+} */
 
 .tweet-button {
 
@@ -412,6 +413,28 @@ body {
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
 }
+.notifications {
+margin: 15px;
+padding: 15px;
+}
+.share-it {
+    margin: 15px;
+    padding: 15px;
+}
+.col-5 {
+    margin-left: 20px;
+    padding-left: 20px;
+}
+.tweet.btn.btn-light {
+    background-color: #75151E;
+    color: white;
+}
+.noti.btn.btn-secondary.dropdown-toggle {
+    background-color: #75151E;
+}
+.search.btn.btn-secondary.dropdown-toggle {
+    background-color: #75151E;
+}
 </style>
 
 <body>
@@ -419,14 +442,11 @@ body {
 
         <a class="navbar-brand">
             <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
-            <span class="share-it">Share whats on your mind!</span>
+            
 
 
 
-            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#PostTweetModal"
-                style="font-size: 20px;">
-                Tweet!
-            </button>
+            
         </a>
 
     </nav>
@@ -499,11 +519,11 @@ body {
 
         <!-- MIDDLE-BAR-FEED -->
         <div class="col-5">
-            <h2 class="explore-tweets"> Explore the Tweets! </h2>
+            
 
             <div class="above-feed">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    <button class="search btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Sort by
                     </button>
@@ -978,9 +998,17 @@ body {
 
 
     <!-- RIGHT SIDE-BAR -->
-
+    <div class="dol-3">
     <div class="right-sidebar">
-
+        <div class="share-it">
+    <h4>Share whats on your mind!</h4>
+    <button type="button" class="tweet btn btn-light" data-bs-toggle="modal" data-bs-target="#PostTweetModal"
+                style="font-size: 20px;">
+                Tweet!
+            </button>
+                        </div>
+                        <div class="notifications">
+            <h4>Notifications</h4>
         <script>
         function toggleNotifications() {
             let element = document.getElementById("displayNotifications");
@@ -1019,10 +1047,9 @@ body {
             @if (Auth::user()->unreadNotifications()->count() > 0)
             <form action="{{ route('mark-as-read') }}" method="POST">
                 @csrf
-                <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
+                <button class="noti btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                     onclick="submitFormAndCallFunction(event)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-bell-fill" viewBox="0 0 16 16">
+                    <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
                         <path
                             d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z">
                         </path>
@@ -1031,9 +1058,8 @@ body {
                 </button>
             </form>
             @else
-            <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell"
-                    viewBox="0 0 16 16">
+            <button type="button" class="noti btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fa-regular fa-bell" style="color: #ffffff;"></i>
                     <path
                         d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z">
                     </path>
@@ -1059,6 +1085,7 @@ body {
                                 style="width: 40px; height: 40px; border-radius: 50%;">
                         </div>
                         <div class="col-10">
+
                             @if($notification->data['action'] == 'like')
                                 <p>{{ $notification_username }} liked your tweet</p>
                             @else
@@ -1070,7 +1097,7 @@ body {
                 @endforeach
             </div>
         </div>
-
+    </div>
 
         <!-- Notification design examples
         <div class="card mb-3" style="width: 12rem;">
@@ -1099,6 +1126,7 @@ body {
 
     </div>
 
+    </div>
 
     <!-- Post-Tweet-Modal -->
     <form action="{{ route('postTweet') }}" method="POST" enctype="multipart/form-data">

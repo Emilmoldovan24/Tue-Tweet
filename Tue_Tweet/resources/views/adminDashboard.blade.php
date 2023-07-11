@@ -9,21 +9,9 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
-<body>
-    <nav class="navbar bg-dark" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand">Tue-Tweet - Admin Dashboard</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
-
-
-    <style>
+<style>
     body {
-        background-color: #DCDCDC;
+        background-color:  #E7E7E7;
         /* background: rgb(2, 0, 36);
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
@@ -37,7 +25,46 @@
         align-self: flex-start;
         width: 50%;
     }
+    .navbar {
+    background-color: #75151E;
+    color: red;
+}
+    .tuetweetlogo {
+
+width: 180px;
+border-radius: 9px;
+margin-right: 10px;
+}
+.adminDash {
+    color: white;
+    font-size: 2,5vw; /* Standard-Schriftgröße */
+  max-font-size: 30px; /* Maximale Schriftgröße */
+  min-font-size: 25px; /* Minimale Schriftgröße */
+}
+@media (max-width: 368px) {
+    .adminDash {
+   display: block;
+    
+    
+  font-size: 25px; /* Maximale Schriftgröße */
+  
+  }
+}
+
     </style>
+
+
+
+<body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand"> <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
+         <span class="adminDash"> Admin Dashboard </span> 
+        </a>
+            
+        </div>
+    </nav>
+
 
 
     <div class="container">

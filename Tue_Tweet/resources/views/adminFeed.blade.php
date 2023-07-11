@@ -12,7 +12,7 @@
 
 <style>
 body {
-    background-color: #DCDCDC;
+    background-color:  #E7E7E7;
     /* background: rgb(2, 0, 36);
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 }
@@ -50,20 +50,44 @@ body {
 }
 
 .comment{
-    rgin-top: 10px;
+    margin-top: 10px;
     padding: 40px;
     background: white;
+}
+.navbar {
+    background-color: #75151E;
+    color: red;
+}
+    .tuetweetlogo {
+
+width: 180px;
+border-radius: 9px;
+margin-right: 10px;
+}
+.adminDash {
+    color: white;
+    font-size: 2,5vw; /* Standard-Schriftgröße */
+  max-font-size: 30px; /* Maximale Schriftgröße */
+  min-font-size: 25px; /* Minimale Schriftgröße */
+}
+@media (max-width: 368px) {
+    .adminDash {
+   display: block;
+    
+    
+  font-size: 25px; /* Maximale Schriftgröße */
+  
+  }
 }
 </style>
 
 <body>
-    <nav class="navbar bg-dark" data-bs-theme="dark">
+<nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand">Tue-Tweet - Manage Tweets</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <a class="navbar-brand"> <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
+         <span class="adminDash"> Manage Tweets </span> 
+        </a>
+            
         </div>
     </nav>
 
