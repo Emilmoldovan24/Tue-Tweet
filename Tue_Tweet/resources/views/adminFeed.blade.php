@@ -238,12 +238,20 @@ margin-right: 10px;
                             $likes = DB::table('likes')->where('tweet_id', $tweet->tweet_id)->count();
                             $numComments = DB::table('comments')->where('tweet_id', $tweet->tweet_id)->count();
                             $retweets = DB::table('retweets')->where('tweet_id', $tweet->tweet_id)->count();
+                            $tweetImg = DB::table('tweets')
+                            ->where('tweet_id', $tweet->tweet_id)
+                            ->value('img');
                             ?>
                             <div class="user">
                                 <?php
                                     echo "$tweet->tweet".
                                     '<br>';
-
+                                    ?>
+                                    @if (!is_null($tweetImg))
+                                        <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
+                                        <img class="img-fluid" src={{ $tweetImg }}>
+                                    @endif
+                                    <?php
                                     echo "tweetID: $tweetID".
                                     '<br>';
                                     echo "Username: $username".
