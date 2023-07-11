@@ -859,7 +859,7 @@ padding: 15px;
 
                         <!-- Like Button -->
                         <div>
-                            <form action=like method="POST">
+                            <form action="{{ route('like') }}" method="POST">
                                 @csrf
                                 <div class="like-btn">
 
@@ -975,7 +975,7 @@ padding: 15px;
 
                     <!-- Comment input field -->
                     <div class="comment-input">
-                        <form action=postComment method="POST">
+                        <form action="{{ route('postComment') }}" method="POST">
                             @csrf
                             <div class="input-group mb-3">
                                 <input type="text" name="comment" id="comment" class="form-control"
@@ -1073,7 +1073,7 @@ padding: 15px;
                 <!-- loop through all notifications -->
                 @foreach ($unreadNotifications as $notification)
                 <a class="dropdown-item"
-                    href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ']]) }}">
+                    href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ'], 'notificationId' => $notification->id]) }}">
                     <div class="row">
                         <div class="col-2">
                             <?php
@@ -1085,7 +1085,12 @@ padding: 15px;
                                 style="width: 40px; height: 40px; border-radius: 50%;">
                         </div>
                         <div class="col-10">
-                            <p>{{ $notification_username }} {{ $notification->data['action'] }}d your tweet</p>
+
+                            @if($notification->data['action'] == 'like')
+                                <p>{{ $notification_username }} liked your tweet</p>
+                            @else
+                                <p>{{ $notification_username }} {{$notification->data['action']}}ed your tweet</p>
+                            @endif
                         </div>
                     </div>
                 </a>

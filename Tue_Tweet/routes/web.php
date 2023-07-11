@@ -419,7 +419,13 @@ Route::post('/mark-as-read', [
 ]);
 
 // show tweet
-Route::get('/showTweet/{id}/{typ}', [
+Route::post('/showTweet/{id}/{typ}', [
+    'uses' => 'App\Http\Controllers\FeedController@showTweet',
+    'as' => 'showTweet'
+]);
+
+// show tweet
+Route::get('/showTweet/{id}/{typ}/{notificationId}', [
     'uses' => 'App\Http\Controllers\FeedController@showTweet',
     'as' => 'showTweet'
 ]);

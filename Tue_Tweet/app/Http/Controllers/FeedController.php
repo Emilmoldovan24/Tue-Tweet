@@ -514,7 +514,7 @@ class FeedController extends Controller {
     }
 
     // show tweet
-    public function showTweet($id, $typ)
+    public function showTweet($id, $typ, $notificationId)
     {
         $closeSearch = true;
 
@@ -526,6 +526,11 @@ class FeedController extends Controller {
             $query = "SELECT 'retweet' AS typ, retweets.retweet_id AS id, retweets.user_id, retweets.retweet_text, retweets.created_at
                         FROM retweets WHERE retweets.retweet_id = ".$id;
         }
+
+        // mark notification as read
+        $notification = DB::table('notifications')
+            ->where('id', $notificationId)
+            ->update(['read_at' => now()]);
 
         $tweets= DB::select($query);
         return view('feed', compact('tweets', 'closeSearch'));
