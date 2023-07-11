@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Manage Tweets</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
 
@@ -44,9 +45,13 @@ body {
 }
 
 .user {
-    margin-top: 10px;
-    padding: 10px;
-    background: white;
+    width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    color: black;
+    margin: 20px 0;
+    border: 6px solid #a71b28;
 }
 
 .comment{
@@ -54,8 +59,16 @@ body {
     padding: 40px;
     background: white;
 }
+.back.btn.btn-light{
+   background-color: #a71b28;
+    color: white;
+    border-radius: 9px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    
+}
 .navbar {
-    background-color: #75151E;
+    background-color: #a71b28;
     color: red;
 }
     .tuetweetlogo {
@@ -98,9 +111,8 @@ margin-right: 10px;
 
             <div class="list-group">
                 <form action="{{ route('adminDash') }}" method="GET">
-                    <button type="submit" class="list-group-item list-group-item-action"><i
-                            class="fa-solid fa-right-from-bracket"></i><a> back </a></button>
-                </form>
+                <button type="submit" class="back btn btn-light"> Go back </button>
+            </form>
 
 
             </div>
@@ -111,9 +123,10 @@ margin-right: 10px;
         <div class="main-content">
 
             <div class="menu">
-                <a href="adminFeed?"> Visible Tweets </a> |
-                <a href="adminFeed?page=hiddenTweets"> Hidden Tweets </a> |
-                <a href="adminFeed?page=deletedTweets"> Deleted Tweets </a>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminFeed?'">Visible Tweets</button>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminFeed?page=hiddenTweets'">Hidden Tweets</button>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminFeed?page=deletedTweets'">Deleted Tweets</button>
+                
 
             </div>
             
@@ -140,7 +153,7 @@ margin-right: 10px;
                             ?>
                             <div class="user">
                                 <?php
-                                    echo "$tweet->tweet".
+                                    echo "Content: $tweet->tweet".
                                     '<br>';
                                     
                                     
@@ -167,7 +180,7 @@ margin-right: 10px;
                                 ?>
                                 
                                 <br>
-                                <button class="delete-btn"><a href="{{ route('tweet.restore', $tweet->tweet_id) }}">Restore Tweet</a></button>
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.restore', $tweet->tweet_id) }}'">Restore Tweet</button>
                             </div>
                                 <?php         
                         }
@@ -190,7 +203,7 @@ margin-right: 10px;
                             ?>
                             <div class="user">
                                 <?php
-                                    echo "$tweet->tweet".
+                                    echo "Content: $tweet->tweet".
                                         '<br>';
 
                                     echo "tweetID: $tweetID".
@@ -213,8 +226,8 @@ margin-right: 10px;
                                 
                                 <br>
                                 
-                                <button class="delete-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">UnHide Tweet</a></button>
-                                <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button>
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.hide', $tweet->tweet_id) }}'">UnHide Tweet</button>
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.delete', $tweet->tweet_id) }}'">Delete Tweet</button>
                             </div>
                                 <?php         
                         }
@@ -241,7 +254,7 @@ margin-right: 10px;
                             ?>
                             <div class="user">
                                 <?php
-                                    echo "$tweet->tweet".
+                                    echo "Content: $tweet->tweet".
                                     '<br>';
 
                                     echo "tweetID: $tweetID".
@@ -262,8 +275,8 @@ margin-right: 10px;
                                 ?>
                                 
                                 <br>
-                                <button class="delete-btn"><a href="{{ route('tweet.hide', $tweet->tweet_id) }}">Hide Tweet</a></button>
-                                <button class="delete-btn"><a href="{{ route('tweet.delete', $tweet->tweet_id) }}">Delete Tweet</a></button>
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.hide', $tweet->tweet_id) }}'">Hide Tweet</button>
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.delete', $tweet->tweet_id) }}'">Delete Tweet</button>
 
                         </div>
                                 <?php
@@ -279,6 +292,10 @@ margin-right: 10px;
         </div>
     </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 </body>
 

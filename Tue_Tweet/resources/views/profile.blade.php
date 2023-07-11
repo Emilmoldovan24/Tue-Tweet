@@ -1,20 +1,18 @@
-<!doctype html>
+<!Doctype html>
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
+</head>
 
     <style>
         body {
-            background-color: lightgrey;
+            background-color: #E7E7E7;
 
         }
 
@@ -63,7 +61,7 @@
         }
 
         .btn.btn-light {
-            margin: 20px;
+           
         }
 
         .card {
@@ -107,7 +105,7 @@
 
     }
 
-    .right-side {
+    right-side {
        
         flex-basis: 25%;
         position: sticky;
@@ -120,6 +118,17 @@
         
     } */
 
+    .right-side {
+       
+       
+        margin: 20px 0;
+    flex-basis: 25%;
+position: sticky;
+    top: 70px;
+    align-self: flex-start;
+      
+     
+   }
         .write-post-container {
             width: 100%;
             background: white;
@@ -172,12 +181,15 @@
         }
 
         .post-container {
+         
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    color: black;
+    margin: 20px 0;
+    border: 6px solid #a71b28;
             width: 100%;
-
-            border-radius: 6px;
-            padding: 20px;
-            color: #626262;
-            margin: 20px 0;
+         
         }
 
         .user-profile span {
@@ -289,7 +301,7 @@
         .navbar.navbar-expand-lg {
             display: flex;
             align-items: left;
-            background-color: #75151E;
+            background-color: #a71b28;
             padding: 5px 5%;
             position: sticky;
             top: 0;
@@ -302,6 +314,23 @@
             width: 150px;
             border-radius: 9px;
         }
+        .tweet.btn.btn-light {
+    background-color: #a71b28;
+    color: white;
+    border-radius: 6px;
+}
+.share-it {
+    margin-top: 15px;
+   
+}
+.list-group .list-group-item.list-group-item-action {
+    background-color: #a71b28;
+    color: white;
+    border-radius: 9px;
+    margin: 3px;
+}
+
+
     </style>
 </head>
 
@@ -327,25 +356,7 @@
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand"><img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}"
                 alt="logo"></a>
-        <form action="{{ route('feed') }}" method="GET">
-            <button type="submit" class="btn btn-light"><i class="fa-solid fa-house"></i><a> Home </a></button>
-        </form>
-        <form action=<?php echo "'/" .
-            DB::table('users')
-                ->where('id', Auth::id())
-                ->value('username') .
-            "'"; ?> method="GET">
-            <button type="submit" class="btn btn-light"><i class="fa-solid fa-user"></i><a> Profile
-                </a></button>
-        </form>
-        <form action="{{ route('settings') }}" method="GET">
-            <button type="submit" class="btn btn-light"><i class="fa-solid fa-gear"></i><a> Settings
-                </a></button>
-        </form>
-        <form action="{{ route('logout') }}" method="GET">
-            <button type="submit" class="btn btn-light"><i class="fa-solid fa-right-from-bracket"></i><a> Logout
-                </a></button>
-        </form>
+       
 
 
     </nav>
@@ -418,6 +429,33 @@
                         </ul>
 
                     </div>
+
+
+
+
+                    <div class="list-group">
+                    <form action="{{ route('feed') }}" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action"><i
+                                class="fa-solid fa-house"></i><a> Home </a></button>
+                    </form>
+                    <form action=<?php echo "'/" .
+            DB::table('users')
+                ->where('id', Auth::id())
+                ->value('username') .
+            "'"; ?> method="GET">
+                                   <button type="submit" class="list-group-item list-group-item-action"><i
+                                class="fa-solid fa-user"></i><a> Profile </a></button>
+                                </form>
+                    <form action="{{ route('settings') }}" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action"><i
+                                class="fa-solid fa-gear"></i><a> Settings </a></button>
+                    </form>
+                    <form action="{{ route('logout') }}" method="GET">
+                        <button type="submit" class="list-group-item list-group-item-action"><i
+                                class="fa-solid fa-right-from-bracket"></i><a> Logout </a></button>
+                    </form>
+                </div>
+
 
 
 
@@ -812,62 +850,12 @@
 
                 <div class="right-side">
 
-                    <div class="pos-f-t">
-
-                        <div class="collapse" id="navbarToggleExternalContent">
-
-                            <div class="bg-dark p-4">
-
-                                <div class="card" style="width: 15rem;">
-                                    <div class="card-body">
-                                        <div style="display: inline-block;">
-                                            <img class="card-img-noti"
-                                                src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80"
-                                                width="56" height="56" alt="Card image cap">
-                                        </div>
-                                        <p class="card-text">Sven reported your post.</p>
-                                        <a href="#" class="btn btn-primary">See the Post</a>
-                                    </div>
-                                </div>
-
-
-                                <div class="card" style="width: 15rem;">
-                                    <div class="card-body">
-
-                                        <img class="card-img-noti"
-                                            src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-                                            width="56" height="56" alt="Card image cap">
-
-                                        <p class="card-text">Mike wants to follow you.</p>
-                                        <a href="#" class="btn btn-primary">Accept</a>
-                                        <a href="#" class="btn btn-secondary">Decline</a>
-                                    </div>
-                                </div>
-
-                                <div class="card" style="width: 15rem;">
-                                    <div class="card-body">
-                                        <div style="display: inline-block;">
-                                            <img class="card-img-noti"
-                                                src="https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2lybHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=700&q=60"
-                                                width="56" height="56" alt="Card image cap">
-                                        </div>
-                                        <p class="card-text">Erica commented on your post.</p>
-                                        <a href="#" class="btn btn-primary">See the Post</a>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                        </div>
-                        <nav class="navbar navbar-dark bg-dark">
-                            <p>Show Notifications</p>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                        </nav>
+                <div class="share-it">
+    <h4>Share whats on your mind!</h4>
+    <button type="button" class="tweet btn btn-light" data-bs-toggle="modal" data-bs-target="#PostTweetModal"
+                style="font-size: 20px;">
+                Tweet!
+            </button>
                     </div>
 
 
@@ -895,6 +883,67 @@
                 ->value('profile_img');
             $user_profileImg = app('App\Http\Controllers\UserController')->getUserImg($user_profileImg);
             ?>
+
+<!-- Post-Tweet-Modal -->
+<form action="{{ route('postTweet') }}" method="POST" enctype="multipart/form-data">
+        <div class="modal fade" id="PostTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+
+
+                        <div class="write-post-container">
+                            <div class="user-profile">
+                                <img src='{{ $user_profileImg }}'>
+                                <div>
+                                    {{ $user_name }} <br>
+                                    <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+
+                                    {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
+                                    @section('content')
+                                    @if (count($errors) > 0)
+                                    <div class='row'>
+                                        <div class="col">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                <li>
+                                                    {{ $error }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            <div class="post-input-container">
+                                <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet"
+                                    value="{{ Request::old('tweet') }}"></textarea>
+                                <div id="pictureBox"></div>
+                                <div class="add-post-links">
+                                    <a href="#"><i class="fa-solid fa-camera fa-2xl"></i>
+                                        <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
+                                        <div class="form-group">
+                                            <input type="file" name="img" id="img" value="{{ Request::old('img') }}">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger"> Post </button>
+                    <input type="hidden" name="_token" value="{{ Session::token() }}">
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+
             <!-- Edit-Tweet-Modal -->
             <form action="{{ route('editProfileTweet') }}" method="POST" enctype="multipart/form-data">
                 @csrf

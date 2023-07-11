@@ -32,7 +32,7 @@ body {
     margin: 0 auto;
     align-items: center;
     text-align: center;
-    background-color: #75151E;
+    background-color: #a71b28;
     padding: 5px 5%;
     position: sticky;
     top: 0;
@@ -109,6 +109,31 @@ position: sticky;
     columns: #626262;
 }
 
+.comment-user-profile {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    color: black;
+    background-color: #E7E7E7;
+    
+}
+.comment-user-profile img {
+    width: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.comment-user-profile p {
+    margin-bottom: -5px;
+    font-weight: 500;
+    color: white;
+    margin-right: 20px;
+}
+
+.comment-user-profile small {
+    font-size: 12px;
+    color: white;
+}
+
 .user-profile {
     margin-bottom: 6px;
     display: flex;
@@ -158,27 +183,31 @@ position: sticky;
 .post-container {
     width: 100%;
     background-color: white;
-    border-radius: 25px;
+    border-radius: 12px;
     padding: 20px;
     color: black;
     margin: 20px 0;
-    border: 2px solid #75151E;
+    border: 3px solid #a71b28;
 }
 
 .comment-post-container {
     width: 90%;
-    background: white;
+    background: #E7E7E7;
     border-radius: 8px;
-    border: 2px solid #75151E;
+    border: 2px solid #a71b28;
     color: black;
     margin-bottom: 20px;
     padding: 10px;
 }
-
-.user-profile span {
+.comment-user-profile span {
     font-size: 13px;
     /* color: #9a9a9a; */
     color: black;
+}
+.user-profile span {
+    font-size: 13px;
+    /* color: #9a9a9a; */
+    color: grey;
 }
 
 .post-text-just-retweet {
@@ -292,7 +321,7 @@ position: sticky;
 }
 
 .list-group .list-group-item.list-group-item-action {
-    background-color: #75151E;
+    background-color: #a71b28;
     color: white;
     border-radius: 9px;
     margin: 3px;
@@ -307,28 +336,28 @@ position: sticky;
 }
 
 .card-body {
-    background-color: #75151E;
+    background-color: #a71b28;
     color: white;
 }
 
 .col-md-8 {
-    background-color: #75151E;
+    background-color: #a71b28;
     color: white;
 }
 
 .btn.btn-danger {
-    background-color: #75151E;
-    border-color: #75151E;
+    background-color: #a71b28;
+    border-color: #a71b28;
 }
 
 /* .explore-tweets {
     text-align: center;
     color: white;
-    border-color: #75151E;
+    border-color: #a71b28;
     border: 3px solid;
     border-radius: 9px;
     padding: 10px;
-    background-color: #75151E;
+    background-color: #a71b28;
 } */
 
 .tweet-button {
@@ -393,7 +422,7 @@ position: sticky;
 
 .custom-button {
     padding: 10px 20px;
-    background-color: #f2f2f2;
+    background-color: #a71b28;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -403,6 +432,7 @@ position: sticky;
 
 .custom-button i {
     margin-right: 5px;
+    color: white;
 }
 
 .custom-button:hover {
@@ -426,14 +456,25 @@ padding: 15px;
     padding-left: 20px;
 }
 .tweet.btn.btn-light {
-    background-color: #75151E;
+    background-color: #a71b28;
     color: white;
 }
 .noti.btn.btn-secondary.dropdown-toggle {
-    background-color: #75151E;
+    background-color: #a71b28;
 }
 .search.btn.btn-secondary.dropdown-toggle {
-    background-color: #75151E;
+    background-color: #a71b28;
+}
+.noti-box {
+    padding-top: 5px;
+    padding-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 3px solid #a71b28;
+    border-radius: 12px;
+    font-size: 1vw;
+    background-color: white;
+    
 }
 </style>
 
@@ -941,7 +982,7 @@ padding: 15px;
                         ?>
                     <div class="comment-post-container">
                         <div class="post-row">
-                            <div class="user-profile">
+                            <div class="comment-user-profile">
                                 <?php echo $userImgHtml; ?>
                                 <div style="display: inline-block;">
                                     <a style="margin-right: 3px; text-decoration: none;"
@@ -1074,8 +1115,11 @@ padding: 15px;
                 @foreach ($unreadNotifications as $notification)
                 <a class="dropdown-item"
                     href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ'], 'notificationId' => $notification->id]) }}">
+                    <div class="noti-box">
                     <div class="row">
+                    
                         <div class="col-2">
+                       
                             <?php
                                 $notification_userImg = App\Models\User::where('id', $notification->data['user_id'])->value('profile_img');
                                 $notification_userImg = app('App\Http\Controllers\UserController')->getUserImg($notification_userImg);
@@ -1084,20 +1128,28 @@ padding: 15px;
                             <img src="{{ $notification_userImg }}" alt="User Image"
                                 style="width: 40px; height: 40px; border-radius: 50%;">
                         </div>
+                        
+                       
                         <div class="col-10">
 
                             @if($notification->data['action'] == 'like')
                                 <p>{{ $notification_username }} liked your tweet</p>
+                                <p> click to see </p>
                             @else
                                 <p>{{ $notification_username }} {{$notification->data['action']}}ed your tweet</p>
+                                <p> click to see </p>
                             @endif
                         </div>
                     </div>
+                    
                 </a>
+                </div>
                 @endforeach
+               
             </div>
         </div>
     </div>
+    
 
         <!-- Notification design examples
         <div class="card mb-3" style="width: 12rem;">

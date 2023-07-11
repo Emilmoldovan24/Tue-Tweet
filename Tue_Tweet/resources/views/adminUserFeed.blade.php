@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Manage Users</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
-
 
 <style>
 body {
-    background-color: #DCDCDC;
+    background-color: #E7E7E7;
     /* background: rgb(2, 0, 36);
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 }
@@ -44,15 +44,25 @@ body {
 }
 
 .user {
-    margin-top: 10px;
-    padding: 10px;
-    background: white;
+    width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    color: black;
+    margin: 20px 0;
+    border: 6px solid #a71b28;
+}
+.back.btn.btn-light{
+   background-color: #a71b28;
+    color: white;
     border-radius: 9px;
-    border: 2px solid #75151E;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    
 }
 
     .navbar {
-    background-color: #75151E;
+    background-color: #a71b28;
     color: red;
 }
     .tuetweetlogo {
@@ -83,7 +93,7 @@ margin-right: 10px;
 <nav class="navbar">
         <div class="container-fluid">
             <a class="navbar-brand"> <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
-         <span class="adminDash"> Admin Dashboard </span> 
+         <span class="adminDash"> Manage Users </span> 
         </a>
             
         </div>
@@ -96,8 +106,7 @@ margin-right: 10px;
 
             <div class="list-group">
                 <form action="{{ route('adminDash') }}" method="GET">
-                    <button type="submit" class="list-group-item list-group-item-action"><i
-                            class="fa-solid fa-right-from-bracket"></i><a> back </a></button>
+                <button type="submit" class="back btn btn-light"> Go back </button>
                 </form>
 
 
@@ -109,9 +118,10 @@ margin-right: 10px;
         <div class="main-content">
 
             <div class="menu">
-                <a href="adminUsers?"> All Users </a> |
-                <a href="adminUsers?page=notDeletedUsers"> Active Users </a> |
-                <a href="adminUsers?page=deletedUsers"> Deleted Users </a>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminUsers?'">All Users</button>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminUsers?page=notDeletedUsers'">Active Users</button>
+            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminUsers?page=deletedUsers'">Deleted Users</button>
+
 
             </div>
 
@@ -141,10 +151,10 @@ margin-right: 10px;
                                     echo "Deleted at: $user->deleted_at".
                                         '<br>';                   
                                 ?>
-                                <button><a href="{{ route('tweet.restoreUser', $userID) }}">Restore  user</a></button> <?php
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button> <?php
                                 ?>
                                 
-                                <button class="delete-btn"><a href="{{ route('tweet.safeUserInfo', $user->id) }}">Export user information</a></button> <?php
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> <?php
                                 ?>
                             </div>
                                 <?php         
@@ -169,10 +179,11 @@ margin-right: 10px;
                                     echo "Deleted at: $user->deleted_at".
                                         '<br>';                   
                                 ?>
-                                <button class="delete-btn"><a href="{{ route('tweet.deleteUser', $user->id) }}">Delete  user</a></button> <?php
+                                 <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button> <?php
+                               
                                 ?>
                                 
-                                <button class="delete-btn"><a href="{{ route('tweet.safeUserInfo', $user->id) }}">Export user information</a></button> <?php
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> <?php
                                 ?>
                             </div>
                                 <?php         
@@ -198,14 +209,15 @@ margin-right: 10px;
                                     '<br>';
                                 if($user->deleted_at == NULL){
                                     ?>
-                                    <button class="delete-btn"><a href="{{ route('tweet.deleteUser', $user->id) }}">Delete User</a></button> <?php
+                                    <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button> <?php
                                 }else{
                                     ?>
-                                    <button class="delete-btn"><a href="{{ route('tweet.restoreUser', $user->id) }}">Restore user</a></button> <?php
+                                   
+                                   <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button> <?php
                                 }
                                 ?>
                                 
-                                <button class="delete-btn"><a href="{{ route('tweet.safeUserInfo', $user->id) }}">Export user information</a></button> <?php
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> <?php
                                 ?>
                         </div>
                     <?php         
@@ -215,6 +227,11 @@ margin-right: 10px;
         </div>
     </div>
     
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 </body>
 

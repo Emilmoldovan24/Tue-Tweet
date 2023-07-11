@@ -51,8 +51,8 @@
 .home-header .btn-light {
     font-size: 20px;
     margin: 20px;
-    /* background-color: #bf1707; */
-    background-color: #75151E;
+   
+    background-color: #a71b28;
     color: white;
     letter-spacing: 1px;
 }
@@ -64,7 +64,7 @@
     border-radius: 9px;
  
     padding: 30px 20px;
-    background-color: #75151E;
+    background-color: #a71b28;
     /* background-color: #bf1707; */
     color: white;
 }
@@ -98,7 +98,10 @@ body {
 .signup-btn .btn.btn-light{
    margin: 0 auto;
    margin-top: 20px;
+ 
 }
+
+
 </style>
 
 <body>
@@ -171,7 +174,7 @@ body {
                         </form>
                         <div class="forgot-pass">
                         <form action="{{ route('passChangeRequest') }}" method="GET">
-                            <button type="submit" class="btn btn-light"> Forgot your Password? </button>
+                        <button type="submit" class="btn btn-light"> Forgot your Password? </button>
                         </form>
                         </div>
 

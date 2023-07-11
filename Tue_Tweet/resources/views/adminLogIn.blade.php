@@ -31,19 +31,19 @@
 }
 
     .lead-form {
-    width: 80%;
+   
     margin: 10px auto;
     border: 2px solid;
     border-radius: 9px;
  
     padding: 30px 20px;
-    background-color: #75151E;
+    background-color: #a71b28;
     /* background-color: #bf1707; */
     color: white;
 }
 
 .back.btn.btn-light{
-   background-color: #75151E;
+   background-color: #a71b28;
    color: white;
 
 }

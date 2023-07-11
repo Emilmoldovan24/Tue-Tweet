@@ -39,7 +39,7 @@
       font-size: 20px;
     margin: 20px;
     /* background-color: #bf1707; */
-    background-color: #75151E;
+    background-color: #a71b28;
     color: white;
     letter-spacing: 1px;
     }
@@ -51,7 +51,7 @@
     border-radius: 9px;
  
     padding: 30px 20px;
-    background-color: #75151E;
+    background-color: #a71b28;
     /* background-color: #bf1707; */
     color: white;
       }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
@@ -16,6 +16,11 @@
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
     }
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     .main-content {
         margin: 20px 0;
@@ -26,7 +31,7 @@
         width: 50%;
     }
     .navbar {
-    background-color: #75151E;
+    background-color: #a71b28;
     color: red;
 }
     .tuetweetlogo {
@@ -41,6 +46,21 @@ margin-right: 10px;
   max-font-size: 30px; /* Maximale Schriftgröße */
   min-font-size: 25px; /* Minimale Schriftgröße */
 }
+.list-group .list-group-item.list-group-item-action {
+    background-color: #a71b28;
+    color: white;
+    border-radius: 9px;
+    margin: 3px;
+}
+
+.list-group-item i {
+    margin-right: 20px;
+}
+
+.list-group-item a {
+    padding-right: 130px;
+}
+
 @media (max-width: 368px) {
     .adminDash {
    display: block;
@@ -72,7 +92,7 @@ margin-right: 10px;
 
         <div class="main-content">
             <!-- Current admin -->
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3" style="max-width: 540px; background-color: #a71b28; color: white;">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <?php
