@@ -39,6 +39,7 @@
 * Install [Laravel](https://laravel.com/docs/7.x/installation)
 
 After you have installed this, please follow these instructions:
+* Create a new Database **twitterdatabase** in your MySQL Environment (for Example: the first 2 Steps with [MyPHPAdmin](https://www.geeksforgeeks.org/how-to-create-a-new-database-in-phpmyadmin/))
 * [Clone](https://docs.github.com/de/repositories/creating-and-managing-repositories/cloning-a-repository) this Repository on your Local System.
 * open a terminal in this folder and enter the following commands one after the other (this may take some time)
 *     composer update
