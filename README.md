@@ -46,7 +46,7 @@ After you have installed this, please follow these instructions:
 *     php artisan db:seed --class=tweetSeeder
 *     php artisan serve
 
-Now you can open and use the app with *http://127.0.0.1:8000* in your favourite bwroser.  
+Now you can open and use the app with *http://127.0.0.1:8000* in your favourite browser.  
     
 
 ## Responsibilities
