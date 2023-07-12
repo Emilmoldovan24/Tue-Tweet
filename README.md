@@ -1,14 +1,53 @@
-# Tue-Tweet
-![WhatsApp Bild 2023-05-16 um 12 32 57](https://github.com/Emilmoldovan24/Tue-Tweet/assets/116385114/87d7b163-8d3f-4b92-8a0c-942f7de1fd76)
+# Welcome to our Project Tue-Tweet
 
-Task: Social Media for Uni Tuebingen 
+![Tue-Tweet](https://github.com/Emilmoldovan24/Tue-Tweet/assets/92357718/a4cfc58a-39dc-4136-8760-70111d06a1eb)
+
+ 
+## Technologies
+* Apache 2.4.56
+* MySQL 10.4.28
+* PHP 8.2.4
+* Laravel Framework 10.13.1 
 
 ## Features
-Our current state of the app can create and log in users. After the sign-in or sign-up, we come to our feed, where the appropriate user profile picture and username can be seen. We can also create tweets. There you also see the Like and comment counts of the tweets and you are able to comment and like tweets.
-We have a route and a view for the Profile-Setting and its connected with the database. You can change your personal Informations and set a profile picture and bio there.
+### Users
+* Authentication and Email validation. 
+* Can Add Tweets, Comments, Likes, Retweets.
+* Can Delete/Edit Tweets, Comments, Retweets.
+* Can update Tweets, Comments, Retweets.
+* Get notifications when someone comment, retweet or like tweet or follow.
+* Can add Images to Tweets.
+* Can hide Tweets from public.
+* Can follow other Users.
+* Can edit profile.
+* Can sort the feed by: newest, most comments, most likes, most retweets.
+* Can search in feed. 
+* Can Download his Informations(tweets,comments,retweets,likes,follows) as .txt file.
+* Can change Log-in Informations(Password , Mail). 
 
-For the admin we have a temporary button on the SignIn page to get to the Admin SignIn. There you can already sign in, or sign up. We still have to change the way an admin user is created. The sign up form is also temporay. 
-It is possilbe to delete tweets on the admin feed page.
+### Admins
+* One super Admin can create new Admins.
+* Can activae/deactivate Users.
+* Reset User Password.
+* Delete User Tweets, Comments, Retweets
+* Hide Tweets, Comments, Retweets from public.
+* Dwownload User Infomations (tweets,comments,retweets,likes,follows) as .txt file.
+## Installation
+* Install [Apache](https://httpd.apache.org/docs/2.4/install.html)
+* Install [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
+* Install [PHP](https://www.php.net/manual/en/install.php)
+* Install [Laravel](https://laravel.com/docs/7.x/installation)
+
+After you have installed this, please follow these instructions:
+* [Clone](https://docs.github.com/de/repositories/creating-and-managing-repositories/cloning-a-repository) this Repository on your Local System.
+* open a terminal in this folder and enter the following commands one after the other (this may take some time)
+*     composer update
+*     php artisan migrate:fresh
+*     php artisan db:seed --class=tweetSeeder
+*     php artisan serve
+
+Now you can open and use the app with *http://127.0.0.1:8000* in your favourite bwroser.  
+    
 
 ## Responsibilities
 
