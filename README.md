@@ -15,8 +15,8 @@
 ### Users
 * Authentication and Email validation. 
 * Can Add Tweets, Comments, Likes, Retweets.
-* Can Delete/Edit Tweets, Comments, Retweets.
-* Can update Tweets, Comments, Retweets.
+* Can Delete Tweets, Comments, Retweets.
+* Can Edit Tweets, Comments, Retweets.
 * Get notifications when someone comment, retweet or like tweet or follow.
 * Can add Images to Tweets.
 * Can hide Tweets from public.
