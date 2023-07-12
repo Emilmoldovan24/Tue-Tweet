@@ -7,7 +7,8 @@
 * Apache 2.4.56
 * MySQL 10.4.28
 * PHP 8.2.4
-* Laravel Framework 10.13.1 
+* Laravel Framework 10.13.1
+* Mailtrap
 
 ## Features
 ### Users
@@ -37,6 +38,7 @@
 * Install [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
 * Install [PHP](https://www.php.net/manual/en/install.php)
 * Install [Laravel](https://laravel.com/docs/7.x/installation)
+* Create a [Mailtrap](https://mailtrap.io/) Account
 
 After you have installed this, please follow these instructions:
 * Create a new Database **twitterdatabase** in your MySQL Environment (for Example: the first 2 Steps with [MyPHPAdmin](https://www.geeksforgeeks.org/how-to-create-a-new-database-in-phpmyadmin/))
