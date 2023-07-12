@@ -171,7 +171,7 @@ Route::get('comment-delete/{id}', [AdminController::class, 'deleteComment'])->na
 Route::get('comment-restore/{id}', [AdminController::class, 'restoreComment'])->name('comment.restore');
 
 //Hide Comment
-Route::get('comment-hide/{id}', [AdminController::class, 'hideComment'])->name('Comment.hide');
+Route::get('comment-hide/{id}', [AdminController::class, 'hideComment'])->name('comment.hide');
 
 // Delete User
 Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tweet.deleteUser');
