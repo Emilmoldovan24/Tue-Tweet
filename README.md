@@ -9,6 +9,7 @@
 * PHP 8.2.4
 * Laravel Framework 10.13.1
 * Mailtrap
+* JavaScript
 
 ## Features
 ### Users
@@ -55,6 +56,7 @@ Now you can open and use the app with *http://127.0.0.1:8000* in your favourite 
 ## Responsibilities
 
 Database : Markus Holder  
+
 Authentication: Emil Moldovan
 
 User: Aya Afaghani, Julia Egyed, Luke Vallon
