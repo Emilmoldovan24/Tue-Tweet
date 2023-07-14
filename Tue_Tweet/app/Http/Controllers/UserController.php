@@ -88,14 +88,16 @@ class UserController extends Controller
 
     // password to be changed
     $this->validate($request, [
-        'password' => 'required',
+        'password' => 'required|max:120|min:4',
         'email' => 'required'
     ]);
 
     // change password of user
     $usr = User::where('email', $request->email)->first();
-    Log::debug("User $usr->username changed password, $request->email, $request->password!");
-    // TODO change password of this user
+    Log::debug("User $usr->username changed password!");
+
+    $user_password =  $request->password;
+        DB::table('users')->where('email', $request->email)->update(['user_password' => bcrypt($user_password)]);
 
     return redirect()->route('welcome');
 }
