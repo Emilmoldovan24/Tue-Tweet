@@ -12,21 +12,8 @@
 <style>
 body {
     background-color: #E7E7E7;
-    /* background-color: #DCDCDC; */
-    /* background: rgb(2, 0, 36);
-    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
-
 }
 
-/*     .navbar.bg-dark {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 5px 5%;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    } */
 .navbar.navbar-expand-lg {
     display: flex;
     margin: 0 auto;
@@ -55,7 +42,7 @@ body {
 
     width: 180px;
     border-radius: 9px;
-    margin-right: 10px;
+    
 }
 
 .post-input-container {
@@ -74,13 +61,13 @@ body {
 
 .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 13px 5%;
 }
 
 .left-sidebar {
 
-    margin: 20px 0;
+   
     flex-basis: 25%;
     position: sticky;
     top: 70px;
@@ -211,7 +198,7 @@ position: sticky;
 }
 
 .post-text-just-retweet {
-    color: #1DA1F2;
+    color: #a71b28;
     font-family: 'Helvetica Neue Bold', Arial, sans-serif;
     margin: 15px 0;
     font-size: 15px;
@@ -224,7 +211,9 @@ position: sticky;
     border-radius: 4px;
     margin-bottom: 5px;
 }
-
+.card .img-fluid {
+    border-radius: 10px; 
+}
 .card.mb-3 {
     align-items: center;
 }
@@ -330,14 +319,16 @@ position: sticky;
 .list-group-item i {
     margin-right: 20px;
 }
-
-.list-group-item a {
-    padding-right: 130px;
+.list-group {
+    margin-top: 4px;
+    width: 225px;
 }
+
 
 .card-body {
     background-color: #a71b28;
     color: white;
+    border-radius: 7px;
 }
 
 .col-md-8 {
@@ -452,8 +443,7 @@ padding: 15px;
     padding: 15px;
 }
 .col-5 {
-    margin-left: 20px;
-    padding-left: 20px;
+  margin-right: 20px;
 }
 .tweet.btn.btn-light {
     background-color: #a71b28;
@@ -502,9 +492,8 @@ padding: 15px;
 
             <div class="left-sidebar">
                 <!-- Current User Icon -->
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
+                <div class="card" style="width: 14rem;">
+                   
                             <?php
                             $user_id = Auth::id();
                             $user_name = DB::table('users')
@@ -514,17 +503,16 @@ padding: 15px;
                                 ->where('id', $user_id)
                                 ->value('profile_img');
                             $user_profileImg = app('App\Http\Controllers\UserController')->getUserImg($user_profileImg);
+                            echo "<img class='img-fluid' src='" . $user_profileImg . "' >";
                             ?>
-                            <img src="{{ $user_profileImg }}" height="100px" width="100px">
-                        </div>
-                        <div class="col-md-8">
+                            
+                      
                             <div class="card-body">
-                                <h5 class="card-title">Hello {{ $user_name }}</h5>
-                            </div>
-                        </div>
+                            <h5 class="card-title text-center">Hello {{ $user_name }}!</h5>
+                        
                     </div>
                 </div>
-
+                
 
                 <!-- Menu Buttons -->
                 <div class="list-group">
