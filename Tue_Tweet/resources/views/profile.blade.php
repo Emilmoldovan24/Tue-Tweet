@@ -187,7 +187,7 @@ position: sticky;
     padding: 20px;
     color: black;
     margin: 20px 0;
-    border: 6px solid #a71b28;
+    border: 3px solid #a71b28;
             width: 100%;
          
         }
@@ -198,7 +198,7 @@ position: sticky;
         }
 
         .post-text-just-retweet {
-            color: #1DA1F2;
+            color: #a71b28;
             font-family: 'Helvetica Neue Bold', Arial, sans-serif;
             margin: 15px 0;
             font-size: 15px;
@@ -300,18 +300,23 @@ position: sticky;
 
         .navbar.navbar-expand-lg {
             display: flex;
-            align-items: left;
-            background-color: #a71b28;
-            padding: 5px 5%;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            margin-bottom: 20px;
+    margin: 0 auto;
+    background-color: #a71b28;
+    padding: 5px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    margin-bottom: 20px;
         }
 
+        .navbar.navbar-expand-lg .navbar-brand {
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+}
         .tuetweetlogo {
 
-            width: 150px;
+            width: 180px;
             border-radius: 9px;
         }
         .tweet.btn.btn-light {
