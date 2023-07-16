@@ -1101,8 +1101,17 @@ padding: 15px;
 
                 <!-- loop through all notifications -->
                 @foreach ($unreadNotifications as $notification)
-                <a class="dropdown-item"
-                    href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ'], 'notificationId' => $notification->id]) }}">
+                    <?php 
+                        $noti_username = DB::table('users')->where('id', $notification->data['user_id'])->value('username');
+                    ?>
+
+                    @if ($notification->data['action'] == 'follow')
+                        <a class="dropdown-item"
+                                href="/{{ $noti_username }}">
+                    @else
+                        <a class="dropdown-item"
+                            href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ'], 'notificationId' => $notification->id]) }}">
+                    @endif
                     <div class="noti-box">
                     <div class="row">
                     
@@ -1122,6 +1131,9 @@ padding: 15px;
 
                             @if($notification->data['action'] == 'like')
                                 <p>{{ $notification_username }} liked your tweet</p>
+                                <p> click to see </p>
+                            @elseif($notification->data['action'] == 'follow')
+                                <p>{{ $notification_username }} started following you</p>
                                 <p> click to see </p>
                             @else
                                 <p>{{ $notification_username }} {{$notification->data['action']}}ed your tweet</p>
