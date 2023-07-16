@@ -745,6 +745,7 @@ position: sticky;
                                                 <input type="hidden" name="retweet_id" value="{{ $tweet->id }}">
                                             @endif
                                             <input type="hidden" name="typ" value="{{ $tweet->typ }}">
+                                            <input type="hidden" name="user_id" value="{{ $user_id }}">
                                         </div>
                                     </form>
                                 </div>
@@ -836,6 +837,7 @@ position: sticky;
                                     </div>
                                     <input type="hidden" name="tweet_typ" value="{{ $tweet->typ }}">
                                     <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                    <input type="hidden" name="user_id" value="{{ $user_id }}">
                                 </form>
                             </div>
                         </div>
