@@ -765,6 +765,7 @@ position: sticky;
                                         @csrf
                                         <button type="submit" class="btn btn-dark"><i class="fa-solid fa-retweet" aria-expanded="false"></i> {{ $retweets }}</button>
                                         <input type="hidden" name="tweet_id" value="{{ $tweet->id }}">
+                                        <input type="hidden" name="user_id" value="{{ $user_id }}">
                                     </form>
                                 </div>
                         @endif
