@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -72,15 +73,21 @@ class UserController extends Controller
             'email' => 'required'
         ]);
         $usr = User::where('email', $request->email)->first();
-        $usr_data = array('email' => $usr->email, 'username' => $usr->username);
+        if ($usr){
+            $usr_data = array('email' => $usr->email, 'username' => $usr->username);
 
-        // sending Mail to MailTrap
-        Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
-            $message->to($usr_data['email'], $usr_data['username'])->subject('Change Password');
-            $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
-         });
+            // sending Mail to MailTrap
+            Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
+                $message->to($usr_data['email'], $usr_data['username'])->subject('Change Password');
+                $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
+            });
 
         return view('passChangeVerify');
+        } else {
+            return redirect()->back()->withErrors(['email' => 'Check if the email is correct.'])->withInput();
+            Log::error("Wrong email!");
+        }
+        
     }
 
     // Function: Password change
@@ -89,17 +96,24 @@ class UserController extends Controller
     // password to be changed
     $this->validate($request, [
         'password' => 'required|max:120|min:4',
+        'cpassword' => 'required|max:120|min:4',
         'email' => 'required'
     ]);
+    if($request->password != $request->cpassword){
+        return redirect()->back()->withErrors(['password' => 'Passwords do not match.'])->withInput();
+    }
+    if(Str::length($request->password)<4){
+        return redirect()->back()->withErrors(['password' => 'Password is too short.'])->withInput();
+    } else {
+        // change password of user
+        $usr = User::where('email', $request->email)->first();
+        Log::debug("User $usr->username changed password!");
 
-    // change password of user
-    $usr = User::where('email', $request->email)->first();
-    Log::debug("User $usr->username changed password!");
-
-    $user_password =  $request->password;
+        $user_password =  $request->password;
         DB::table('users')->where('email', $request->email)->update(['user_password' => bcrypt($user_password)]);
 
-    return redirect()->route('welcome');
+        return redirect()->route('welcome');
+    }
 }
 
     // Function: SignUp
@@ -154,7 +168,7 @@ class UserController extends Controller
         } else {
             // User not found or wrong password 
             return redirect()->back()->withErrors(['user_password' => 'Check if the password or email is correct.'])->withInput();
-            Log::error("Wrong password!");
+            Log::error("Wrong email or password!");
         }
     }
 

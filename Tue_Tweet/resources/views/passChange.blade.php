@@ -53,6 +53,20 @@
 }
 </style>
 <body>
+  @section('content')
+        @if (count($errors) > 0) 
+            <div class='row'>
+            <div class="col">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>
+                            {{$error}}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif 
   
      <!--  SignIn   -->
      <img class="tuetweetlogo" src="{{ asset('images/tuelogo.png') }}" alt="logo">
@@ -72,7 +86,11 @@
   <form action="{{ route('passChanged')}}" method="POST">
   <div class="form-group">
     <input type="password" name="password" id='password' value=>
+    <h3>Confirm Password:</h3>
+    <input type="password" name="cpassword" id='cpassword' value=>
+    
 </div>
+
 <button type="submit" class="btn btn-light"> Submit </button>
     <input type='hidden' name="email" id='email' value="{{$email}}">
     <input type="hidden" name="_token" value="{{  Session::token() }}">
