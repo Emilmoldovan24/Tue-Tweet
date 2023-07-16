@@ -965,13 +965,14 @@ padding: 15px;
                         }
                         foreach ($comments as $comment) {
                             $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
-                            $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
+                            $commiUserImg = DB::table('users')->where('id', $comment->user_id)->value('profile_img');
+                            $commiUserImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($commiUserImg);
                             $commentText = $comment->comment;
                         ?>
                     <div class="comment-post-container">
                         <div class="post-row">
                             <div class="comment-user-profile">
-                                <?php echo $userImgHtml; ?>
+                                <?php echo $commiUserImgHtml; ?>
                                 <div style="display: inline-block;">
                                     <a style="margin-right: 3px; text-decoration: none;"
                                         href="/{{ $commentUsername }}">{{ $commentUsername }}</a>
@@ -1436,7 +1437,7 @@ padding: 15px;
     <!-- Edit-Comment-Modal -->
     <form action="{{ route('editComment') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="modal fade" id="EditCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="EditCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" 
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -1475,18 +1476,18 @@ padding: 15px;
                                         <div class="form-group">
                                             <input type="file" name="editImg" id="editImg"
                                                 value="{{ Request::old('img') }}">
-                            </div>
+                                        </div>
+                                    </div> --}}
+                            </div> 
                         </div>
-                    </div> --}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <input type="hidden" name="_token" value="{{ Session::token() }}">
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Confirm</button>
-                <input type="hidden" name="_token" value="{{ Session::token() }}">
-            </div>
-        </div>
-        </div>
         </div>
     </form>
 

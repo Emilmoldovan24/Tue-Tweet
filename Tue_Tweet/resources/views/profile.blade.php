@@ -788,12 +788,14 @@ position: sticky;
                         $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
                         $userImg = DB::table('users')->where('id', $user_id)->value('profile_img');
                         $commentText = $comment->comment;
+                        $commiUserImg = DB::table('users')->where('id', $comment->user_id)->value('profile_img');
+                        $commiUserImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($commiUserImg); 
                     ?>
                             <div class="comment-post-container">
                                 <div class="post-row">
                                     <!-- <div class="comment"> -->
                                     <div class="user-profile">
-                                        <?php echo $userImgHtml; ?>
+                                        <?php echo $commiUserImgHtml; ?>
                                         <div style="display: inline-block;">
                                             <a style="margin-right: 3px; text-decoration: none;"
                                                 href="/{{ $commentUsername }}">{{ $commentUsername }}</a>
