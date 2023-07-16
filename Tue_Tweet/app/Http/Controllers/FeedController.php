@@ -181,11 +181,14 @@ class FeedController extends Controller {
             values(?,?,?,?)', [$id, $tweet_id, $request["retweet_text"], $currentTimestamp]);
         }
 
+        // Retrieve the id of the retweet (can't be retrieved earlier because the id is only generated when the retweet was inserted into the database)
+        $retweet_id = DB::table('retweets')->where('user_id', $id)->where('tweet_id', $tweet_id)->where('created_at', $currentTimestamp)->value('retweet_id');
+
         // Retrieve the user receiving the notification
         $notifiableUser = User::find($user_id);
 
         // Send Notification
-        Notification::sendNow($notifiableUser, new UserNotifications($id, $tweet_id, 'retweet','retweet'));
+        Notification::sendNow($notifiableUser, new UserNotifications($id, $retweet_id, 'retweet','retweet'));
 
         return Redirect::back();
     }
