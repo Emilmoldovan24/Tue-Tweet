@@ -770,7 +770,10 @@ padding: 15px;
                                     <a href="{{ route('MyTweetDelete', $tweet->id) }}"
                                         style="text-decoration: none;">Delete</a>
                                 </button></li>
-                            <?php   echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>'; ?>
+                            <?php   
+                                echo '<li><button type="button" class="dropdown-item" onclick="editTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" 
+                                            data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditTweetModal">Edit</button></li>';       
+                            ?>
                             <li><button class="dropdown-item">
                                     <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}"
                                         style="text-decoration: none;">Hide/ Unhide Tweet</a>
@@ -991,9 +994,10 @@ padding: 15px;
                                                 href="{{ route('MyCommentDelete', $comment->comment_id) }}"
                                                 style="text-decoration: none;">Delete</a></button>
                                     </li>
-                                    <?php
-                                                    echo '<li><button type="button" class="dropdown-item" onclick="editComment(' . $comment->comment_id . ', ' . htmlspecialchars('"' . $comment->comment . '"') . ')" data-comment-id="' . $comment->comment_id . '" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>';
-                                                    ?>
+                                <?php
+                                    echo '<li><button type="button" class="dropdown-item" onclick="editComment(' . $comment->comment_id . ', ' . htmlspecialchars('"' . $comment->comment . '"') . ')" 
+                                            data-comment-id="{{ $comment->comment_id }}" data-bs-toggle="modal" data-bs-target="#EditCommentModal">Edit</button></li>';
+                                ?>
                                 </ul>
                             </div>
                             @endif
