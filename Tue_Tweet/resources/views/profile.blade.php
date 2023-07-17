@@ -1115,16 +1115,8 @@
                                 <div class="post-input-container">
                                     <input style="display:none" name="id" id="editCommentId">
                                     <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
-                                        value="{{ Request::old('comment') }}">{{ $commentText }}</textarea>
-                                    {{-- <div id="pictureCommentEditBox"></div>
-                                            <div class="add-post-links">
-                                                <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
-                                                <div class="form-group">
-                                                    <input type="file" name="editImg" id="editImg"
-                                                        value="{{ Request::old('img') }}">
-                                                </div>
-                                            </div>
-                                        </div> --}}
+                                        value="{{ Request::old('comment') }}"></textarea>
+                                    
                                 </div>
                             </div>
                             <div class="modal-footer">
