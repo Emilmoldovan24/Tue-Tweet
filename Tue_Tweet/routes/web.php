@@ -55,7 +55,7 @@ Route::get('verify/{usr_data}', function ($usr_data) {
 });
 
 // Routes for Password change
-Route::get('/passChangeRequest', function(){
+Route::get('/passChangeRequest', function () {
     return view('passChangeRequest');
 })->name('passChangeRequest');
 
@@ -247,7 +247,8 @@ Route::get('profile-tweet-delete/{id}', [
 
 Route::get('tweet-hide1/{id}', [
     'uses' => 'App\Http\Controllers\ProfileController@hideTweetProfile',
-    'as' => 'tweet.hide.profile']);
+    'as' => 'tweet.hide.profile'
+]);
 
 // Edit Comment
 Route::post('/Comment-edit', [
@@ -297,7 +298,7 @@ Route::get('/Profile', [
 
 //Feed
 Route::get('/feed', [
-    'uses' => 'App\Http\Controllers\FeedController@index' ,
+    'uses' => 'App\Http\Controllers\FeedController@index',
     'as' => 'feed'
 ]);
 
@@ -322,17 +323,17 @@ Route::get('/settings', [
 
 
 Route::get('/tweets1', [
-    'uses' => 'App\Http\Controllers\FeedController@index1' ,
+    'uses' => 'App\Http\Controllers\FeedController@index1',
     'as' => 'tweets.index1'
 ]);
 
 Route::get('/tweets2', [
-    'uses' => 'App\Http\Controllers\FeedController@index2' ,
+    'uses' => 'App\Http\Controllers\FeedController@index2',
     'as' => 'tweets.index2'
 ]);
 
 Route::get('/tweets3', [
-    'uses' => 'App\Http\Controllers\FeedController@index3' ,
+    'uses' => 'App\Http\Controllers\FeedController@index3',
     'as' => 'tweets.index3'
 ]);
 
@@ -401,7 +402,8 @@ Route::post('/retweet-edit', [
 //Hide Tweet Feed
 Route::get('tweet-hide2/{id}/{typ}', [
     'uses' => 'App\Http\Controllers\FeedController@hideTweetFeed',
-    'as' => 'tweet.hide.feed']);
+    'as' => 'tweet.hide.feed'
+]);
 
 // Delete Comment
 Route::get('feed-comment-delete/{id}', [
