@@ -348,16 +348,6 @@
         border-color: #a71b28;
     }
 
-    /* .explore-tweets {
-    text-align: center;
-    color: white;
-    border-color: #a71b28;
-    border: 3px solid;
-    border-radius: 9px;
-    padding: 10px;
-    background-color: #a71b28;
-} */
-
     .tweet-button {
 
         margin: ;
@@ -548,12 +538,6 @@
                     </form>
                 </div>
                 <br>
-
-                <!-- Tweet Section -->
-                <!--      <h4>Share whats on your mind!</h4>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#PostTweetModal">
-                    Tweet!
-                </button> -->
             </div>
         </div>
 
@@ -675,13 +659,7 @@
                 }
 
 
-                $(document).ready(function() {
-                    $(".default_picture").on("error", function() {
-                        $(this).attr('src',
-                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                        );
-                    });
-                });
+                
             </script>
 
             <!-- Orders by Date if its not set otherwise -->
@@ -983,17 +961,17 @@
                             <!-- List Comments -->
                             <?php
                                 // Get all comments for this tweet or retweet
-                        if($tweet->typ == 'tweet'){
-                            $comments = DB::table('comments')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
-                        }elseif($tweet->typ == 'retweet'){
-                            $comments = DB::table('comments')->where('retweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
-                        }
-                        foreach ($comments as $comment) {
-                            $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
-                            $commiUserImg = DB::table('users')->where('id', $comment->user_id)->value('profile_img');
-                            $commiUserImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($commiUserImg);
-                            $commentText = $comment->comment;
-                        ?>
+                                if($tweet->typ == 'tweet'){
+                                    $comments = DB::table('comments')->where('tweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
+                                }elseif($tweet->typ == 'retweet'){
+                                    $comments = DB::table('comments')->where('retweet_id', $tweet->id)->where('deleted_at', NULL)->where('visibility', 1)->get();
+                                }
+                                foreach ($comments as $comment) {
+                                    $commentUsername = DB::table('users')->where('id', $comment->user_id)->value('username');
+                                    $commiUserImg = DB::table('users')->where('id', $comment->user_id)->value('profile_img');
+                                    $commiUserImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($commiUserImg);
+                                    $commentText = $comment->comment;
+                            ?>
                             <div class="comment-post-container">
                                 <div class="post-row">
                                     <div class="comment-user-profile">
@@ -1347,21 +1325,23 @@
                                     <div>
                                         {{ $user_name }} <br>
                                         <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+
                                         {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
-                                    @section('content')
-                                        @if (count($errors) > 0)
-                                            <div class='row'>
-                                                <div class="col">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                            <li>
-                                                                {{ $error }}
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
+                                        @section('content')
+                                            @if (count($errors) > 0)
+                                                <div class='row'>
+                                                    <div class="col">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <li>
+                                                                    {{ $error }}
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endif
+                                            @endif
+
                                     </div>
                                 </div>
 
@@ -1446,15 +1426,6 @@
                                     <textarea rows="3" placeholder="Edit your Retweet" name="editRetweetText" id="editRetweetText"
                                         value="{{ Request::old('retweet_text') }}"></textarea>
                                     <input type="hidden" name="id" id="editRetweetId">
-                                    {{-- <div id="pictureCommentEditBox"></div>
-                                    <div class="add-post-links">
-                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
-                                        <div class="form-group">
-                                            <input type="file" name="editImg" id="editImg"
-                                                value="{{ Request::old('img') }}">
-                            </div>
-                        </div>
-                    </div> --}}
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -1503,15 +1474,7 @@
                                     <input style="display:none" name="id" id="editCommentId">
                                     <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
                                         value="{{ Request::old('comment') }}"></textarea>
-                                    {{-- <div id="pictureCommentEditBox"></div>
-                                    <div class="add-post-links">
-                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
-                                        <div class="form-group">
-                                            <input type="file" name="editImg" id="editImg"
-                                                value="{{ Request::old('img') }}">
-                                        </div>
-                                    </div> --}}
-                                </div>
+                                    </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -1528,27 +1491,7 @@
         </div>
         </div>
 
-        <script>
-            $(".PostTweetModal").on("hidden.bs.modal", function() {
-                $(".modal-body").html("");
-            });
-
-            $(".PostRetweetModal").on("hidden.bs.modal", function() {
-                $(".modal-body").html("");
-            });
-
-            $(".EditTweetModal").on("hidden.bs.modal", function() {
-                $(".modal-body").html("");
-            });
-
-            $(".EditRetweetModal").on("hidden.bs.modal", function() {
-                $(".modal-body").html("");
-            });
-
-            $(".EditCommentModal").on("hidden.bs.modal", function() {
-                $(".modal-body").html("");
-            });
-        </script>
+        
         <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
