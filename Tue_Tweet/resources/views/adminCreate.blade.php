@@ -156,11 +156,16 @@ margin-right: 10px;
 
             <?php 
                 $admins = DB::table('admins')->where('super_admin', 0)->get(); 
+                $activated;
                 if(isset($_GET['page'])){
                     if($_GET['page'] == 'normalAdmins'){ 
                         $admins = DB::table('admins')->where('super_admin', 0)->get(); 
                         foreach ($admins as $admin) {
-                            
+                            if($admin->activated == 0){
+                                $activated = 'False';
+                            }else{
+                                $activated = 'True';
+                            }
                                 ?>
                                 <div class="user">
                                     <?php
@@ -172,12 +177,28 @@ margin-right: 10px;
                                             '<br>';
                                         echo "Created at: $admin->created_at".
                                             '<br>'; 
+                                        echo "Deleted at: $admin->deleted_at".
+                                            '<br>'; 
+                                            echo "Activated: $activated".
+                                            '<br>'; 
                                         echo "Super admin: False".
-                                            '<br>';                 
-                                    ?>
-                                    <button><a href="{{ route('admin.delete', $admin->id) }}">Delete  Admin</a></button> <?php
-                                    ?>
-                                
+                                            '<br>';
+                                        if( $admin->deleted_at == null){
+                                            if($admin->activated == 1 ){
+                                                ?>
+                                                <button><a href="{{ route('admin.delete', $admin->id) }}">Delete  Admin</a></button> 
+                                                <button><a href="{{ route('admin.deactivate', $admin->id) }}">Deactivate  Admin</a></button> <?php
+                                            }else{
+                                               ?>
+                                                <button><a href="{{ route('admin.delete', $admin->id) }}">Delete  Admin</a></button> 
+                                                <button><a href="{{ route('admin.activate', $admin->id) }}">Activate  Admin</a></button> <?php
+                                            }
+                                        }else{
+                                            ?>
+                                            <button><a href="{{ route('admin.restore', $admin->id) }}">Restore  Admin</a></button>  <?php
+                                        }
+                                          ?>
+                                                      
                                 </div>
                                 <?php
                         
@@ -223,6 +244,8 @@ margin-right: 10px;
                                     echo "E-mail: $admin->email".
                                         '<br>';
                                     echo "Created at: $admin->created_at".
+                                        '<br>'; 
+                                    echo "Deleted at: $admin->deleted_at".
                                         '<br>'; 
                                     echo "Super admin: $super".
                                         '<br>';                 
