@@ -368,7 +368,6 @@
     </nav>
 
     <div class="container">
-        <!-- <img class="titelbild" src="https://civis.eu/storage/files/picture-univeristy-tubingen.jpg" alt=""> -->
 
         <div class="row">
 
@@ -403,7 +402,7 @@
                             </p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            {{-- <li class="list-group-item"><i class="fa-solid fa-location-dot"></i> Tübingen</li> --}}
+
                             <li class="list-group-item"><i class="fa-solid fa-calendar"></i>
                                 <?php
                                 use Carbon\Carbon;
@@ -881,13 +880,7 @@
 
 
 
-        <!--             <div class="card" style="width: 18rem;">
-  <img class="card-img-top-tweet" src="https://images.unsplash.com/photo-1615899486509-84e2c782b0da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Z3V5fGVufDB8fDB8fHww&auto=format&fit=crop&w=700&q=60" alt="Card image cap">
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div>
- -->
+
 
 
     </div>
@@ -1059,15 +1052,7 @@
                                     <textarea rows="3" placeholder="Edit your Retweet" name="editProfileRetweetText" id="editProfileRetweetText"
                                         value="{{ Request::old('retweet_text') }}"></textarea>
                                     <input type="hidden" name="id" id="editProfileRetweetId">
-                                    {{-- <div id="pictureCommentEditBox"></div>
-                                    <div class="add-post-links">
-                                        <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
-                                        <div class="form-group">
-                                            <input type="file" name="editImg" id="editImg"
-                                                value="{{ Request::old('img') }}">
-                            </div>
-                        </div>
-                    </div> --}}
+
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -1116,7 +1101,7 @@
                                     <input style="display:none" name="id" id="editCommentId">
                                     <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
                                         value="{{ Request::old('comment') }}"></textarea>
-                                    
+
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -1133,18 +1118,7 @@
         </div>
         </div>
 
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        {{-- <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-    </script> --}}
+
 
         {{-- Open dropdown-menu --}}
         <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
@@ -1152,23 +1126,6 @@
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
 
-        <script>
-            $(".EditProfileTweetModal").on("hidden.bs.modal", function() {
-                //document.getElementById("editProfileTweetText").value = "test"
-                $(".modal-body").html("");
-            });
-        </script>
-        <script>
-            $(".EditCommentModal").on("hidden.bs.modal", function() {
-                $(".modal-body").html("");
-            });
-        </script>
-        <script>
-            $(".EditProfileRetweetModal").on("hidden.bs.modal", function() {
-                //document.getElementById("editProfileRetweetText").value = "test"
-                $(".modal-body").html("");
-            });
-        </script>
 
 
         <script>

@@ -657,9 +657,6 @@
                         element.style.display = "none";
                     }
                 }
-
-
-                
             </script>
 
             <!-- Orders by Date if its not set otherwise -->
@@ -667,16 +664,16 @@
             if (isset($tweets) or $noResults) {
             } else {
                 $tweets = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at
-                                    from (
-                                        SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
-                                            from tweets 
-                                            where deleted_at is null 
-                                            UNION
-                                            SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, own_visibility, deleted_at
-                                            from retweets
-                                    ) as feedTmp
-                                    where deleted_at is null and visibility = 1 and own_visibility = 1
-                                    order by created_at desc");
+                                                from (
+                                                    SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
+                                                        from tweets 
+                                                        where deleted_at is null 
+                                                        UNION
+                                                        SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, own_visibility, deleted_at
+                                                        from retweets
+                                                ) as feedTmp
+                                                where deleted_at is null and visibility = 1 and own_visibility = 1
+                                                order by created_at desc");
             }
             ?>
 
@@ -944,7 +941,7 @@
                                             ', ' .
                                             htmlspecialchars('"' . $tweetImg . '"') .
                                             ')" 
-                                                                                    class="btn btn-dark"   data-tweet-id="' .
+                                                                                                                            class="btn btn-dark"   data-tweet-id="' .
                                             $tweet_id .
                                             '" data-bs-toggle="modal" data-bs-target="#PostRetweetModal" aria-expanded="false">'; ?>
                                         <i class="fa-solid fa-retweet"></i> {{ $retweets }}
@@ -1164,28 +1161,28 @@
 
 
         <!-- Notification design examples
-    <div class="card mb-3" style="width: 12rem;">
-        <img class="card-img-top"
-            src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Follow Request</h5>
-            <p class="card-text">Max Mustermann wants to follow you!</p>
-            <a href="#" class="btn btn-light">Accept</a>
-            <a href="#" class="btn btn-dark">Decline</a>
-        </div>
+<div class="card mb-3" style="width: 12rem;">
+    <img class="card-img-top"
+        src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Follow Request</h5>
+        <p class="card-text">Max Mustermann wants to follow you!</p>
+        <a href="#" class="btn btn-light">Accept</a>
+        <a href="#" class="btn btn-dark">Decline</a>
     </div>
-    <div class="card mb-3" style="width: 12rem; margin-top: 20px;">
-        <img class="card-img-top"
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Comment-Response</h5>
-            <p class="card-text">Lea responded to your comment. Go see it!</p>
-            <a href="#" class="btn btn-light">Go to Post</a>
-        </div>
+</div>
+<div class="card mb-3" style="width: 12rem; margin-top: 20px;">
+    <img class="card-img-top"
+        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Comment-Response</h5>
+        <p class="card-text">Lea responded to your comment. Go see it!</p>
+        <a href="#" class="btn btn-light">Go to Post</a>
     </div>
-    -->
+</div>
+-->
 
 
     </div>
@@ -1311,7 +1308,7 @@
             </div>
         </form>
 
-        <!-- TODO: Retweet-Modal -->
+        <!--  Retweet-Modal -->
         <form action="{{ route('postRetweet') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal fade" id="PostRetweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -1327,20 +1324,20 @@
                                         <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
 
                                         {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
-                                        @section('content')
-                                            @if (count($errors) > 0)
-                                                <div class='row'>
-                                                    <div class="col">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                                <li>
-                                                                    {{ $error }}
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                    @section('content')
+                                        @if (count($errors) > 0)
+                                            <div class='row'>
+                                                <div class="col">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>
+                                                                {{ $error }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
-                                            @endif
+                                            </div>
+                                        @endif
 
                                     </div>
                                 </div>
@@ -1368,13 +1365,13 @@
                                     </div>
 
                                     <!-- You can't retweet with a picture
-                                            <div id="pictureEditBox"></div>
-                                            <div class="add-post-links">
-                                                <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
-                                                <div class="form-group">
-                                                    <input type="file" name="editImg" id="editImg">
-                                                </div>
-                                            </div> -->
+                                                <div id="pictureEditBox"></div>
+                                                <div class="add-post-links">
+                                                    <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
+                                                    <div class="form-group">
+                                                        <input type="file" name="editImg" id="editImg">
+                                                    </div>
+                                                </div> -->
 
                                 </div>
                             </div>
@@ -1474,7 +1471,7 @@
                                     <input style="display:none" name="id" id="editCommentId">
                                     <textarea rows="3" placeholder="Edit your Comment" name="editCommentText" id="editCommentText"
                                         value="{{ Request::old('comment') }}"></textarea>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -1491,7 +1488,7 @@
         </div>
         </div>
 
-        
+
         <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
