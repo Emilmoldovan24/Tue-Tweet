@@ -64,6 +64,7 @@ CREATE TABLE admins (
   super_admin    BOOLEAN       DEFAULT FALSE,
   remember_token VARCHAR(100)  DEFAULT NULL,
   created_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  deleted_at     TIMESTAMP     NULL DEFAULT NULL,
   updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP    
 );
 
