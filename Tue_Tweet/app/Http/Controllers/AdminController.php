@@ -40,7 +40,7 @@ class AdminController extends Controller
 
         //validation
         $this->validate($request, [
-            'email' => 'email|unique:users', 
+            'email' => 'required|email|unique:admins', 
             'adminname' => 'required|max:120',
             'user_password' => 'required|min:4'
         ]);
@@ -71,9 +71,18 @@ class AdminController extends Controller
         ]);
         
         $admin = Admin::where('email', $request->email)->first();
-
+        
+        
         if ($admin && Hash::check($request->user_password, $admin->user_password)) {
                 // Admin gefunden und Passwort ist korrekt
+                $adminID = DB::table('admins')->where('email', $request->email)->value('id');
+                $adminDel = DB::table('admins')->where('id', $adminID)->value('deleted_at');
+                $adminAct = DB::table('admins')->where('id', $adminID)->value('activated');
+                //check if admin is deleted / deactivated
+                if($adminDel != null || $adminAct == 0){
+                    return redirect()->back()->withErrors(['admin_password' => 'Admin is deactivated / deleted'])->withInput();
+                }
+                
                 Auth::login($admin);
             return redirect()->route('adminDash');
         } else {
@@ -109,9 +118,45 @@ class AdminController extends Controller
     public function deleteAdmin(Request $request){
         
         $id = $request->id;
-        DB::delete("delete from admins where id = '$id'");
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update admins set deleted_at = '$currentTimestamp' where id = '$id'");
+        DB::update("update admins set activated = 0 where id = '$id'");
+
+        return redirect()->back();
+    }
+
+    public function restoreAdmin(Request $request){
         
-        return redirect()->route('adminCreate');
+        $id = $request->id;
+        
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update admins set deleted_at = null where id = '$id'");
+        DB::update("update admins set activated = 1 where id = '$id'");
+
+        return redirect()->back();
+    }
+
+    public function activateAdmin(Request $request){
+        
+        $id = $request->id;
+
+        DB::update("update admins set activated = 1 where id = '$id'");
+
+        return redirect()->back();
+    }
+
+    public function deactivateAdmin(Request $request){
+        
+        $id = $request->id;
+    
+        DB::update("update admins set activated = 0 where id = '$id'");
+
+        return redirect()->back();
     }
 
     public function hideTweet(Request $request){

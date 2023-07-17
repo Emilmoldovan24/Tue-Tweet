@@ -155,6 +155,15 @@ Route::post('/adminLogin', [
 // Delete Admin
 Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete');
 
+// Restore Admin
+Route::get('admin-restore/{id}', [AdminController::class, 'restoreAdmin'])->name('admin.restore');
+
+// Deactivate Admin
+Route::get('admin-deactivate/{id}', [AdminController::class, 'deactivateAdmin'])->name('admin.deactivate');
+
+// Activate Admin
+Route::get('admin-activate/{id}', [AdminController::class, 'activateAdmin'])->name('admin.activate');
+
 // Delete Tweet
 Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');
 
