@@ -250,7 +250,7 @@ Route::get('tweet-hide1/{id}', [
     'as' => 'tweet.hide.profile']);
 
 // Edit Comment
-Route::post('/profileComment-edit', [
+Route::post('/Comment-edit', [
     'uses' => 'App\Http\Controllers\ProfileController@ProfileEditComment',
     'as' => 'ProfileEditComment'
 ]);
