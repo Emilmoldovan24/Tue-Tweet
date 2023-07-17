@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
@@ -15,12 +16,13 @@ use App\Http\Controllers\Controller;
 
 
 
-class FeedController extends Controller {
+class FeedController extends Controller
+{
 
-//--------------------------------------------------------------------------------------
-    
+    //--------------------------------------------------------------------------------------
+
     // Route: Profile
-    public function getProfile() 
+    public function getProfile()
     {
         return view('profile');
     }
@@ -46,8 +48,8 @@ class FeedController extends Controller {
         return view('settings');
     }
 
-//--------------------------------------------------------------------------------------
-    
+    //--------------------------------------------------------------------------------------
+
     public function markAllAsRead()
     {
         $user = Auth::user();
@@ -72,27 +74,27 @@ class FeedController extends Controller {
         $id = Auth::id();
 
         // empty tweets and empty image Validation
-        if(is_null($request['tweet'])) {
-            if(is_null($request['img'])) {
+        if (is_null($request['tweet'])) {
+            if (is_null($request['img'])) {
                 $request->validate([
                     'image' => 'required',
                     'tweet' => 'required'
                 ]);
-            } 
+            }
             // image Validation
             else {
                 $request->validate([
-                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'  
+                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
                 ]);
                 // image without text
                 $image =  base64_encode(file_get_contents($request->file('img')->path()));
                 DB::insert('insert into tweets(user_id, tweet, img, created_at) 
                 values(?,?,?,?)', [$id, "", $image, $currentTimestamp]); // null statt "" hat nicht geklappt? Unschön
             }
-        } 
+        }
         // text with or without image
         else {
-            if(! is_null($request['img'])){
+            if (!is_null($request['img'])) {
                 $image =  base64_encode(file_get_contents($request->file('img')->path()));
             } else {
                 $image = null;
@@ -121,7 +123,7 @@ class FeedController extends Controller {
         $id = Auth::id();
 
         // depending on the tweet_typ (tweet or retweet), the comment is inserted into the corresponding column
-        DB::insert('insert into comments(user_id, '. $tweet_typ .'_id, comment, created_at) 
+        DB::insert('insert into comments(user_id, ' . $tweet_typ . '_id, comment, created_at) 
         values(?,?,?,?)', [$id, $tweet_id, $request["comment"], $currentTimestamp]);
 
         // Retrieve the user receiving the notification
@@ -141,13 +143,13 @@ class FeedController extends Controller {
         $id = Auth::id();
 
         $typ = $request['typ'];
-        $tweet_id = $request[$typ."_id"];
+        $tweet_id = $request[$typ . "_id"];
         $user_id = $request['user_id'];
-        
+
 
         // like
-        if (DB::table('likes')->where($typ.'_id', $tweet_id)->where('user_id', $id)->doesntExist()) {
-            DB::insert('insert into likes(user_id, '.$typ.'_id, created_at) 
+        if (DB::table('likes')->where($typ . '_id', $tweet_id)->where('user_id', $id)->doesntExist()) {
+            DB::insert('insert into likes(user_id, ' . $typ . '_id, created_at) 
             values(?,?,?)', [$id, $tweet_id, $currentTimestamp]);
 
             // Retrieve the user receiving the notification
@@ -155,10 +157,10 @@ class FeedController extends Controller {
 
             // Send Notification
             Notification::sendNow($notifiableUser, new UserNotifications($id, $tweet_id, $typ, 'like'));
-        } 
+        }
         // unlike
         else {
-            DB::delete('delete from likes where user_id = ? and '.$typ.'_id = ?', [$id, $tweet_id]);
+            DB::delete('delete from likes where user_id = ? and ' . $typ . '_id = ?', [$id, $tweet_id]);
         }
 
         return redirect()->back();
@@ -188,131 +190,132 @@ class FeedController extends Controller {
         $notifiableUser = User::find($user_id);
 
         // Send Notification
-        Notification::sendNow($notifiableUser, new UserNotifications($id, $retweet_id, 'retweet','retweet'));
+        Notification::sendNow($notifiableUser, new UserNotifications($id, $retweet_id, 'retweet', 'retweet'));
 
         return Redirect::back();
     }
 
     // Edit Tweets
     public function editTweet(Request $request)
-{ 
-    // image Validation
-    $request->validate([
-        'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
-    ]);
+    {
+        // image Validation
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
 
-    $id = $request->id;
-    $editTweetText = $request->editTweetText;
+        $id = $request->id;
+        $editTweetText = $request->editTweetText;
 
-    // Empty Tweet after Update Validation
-    if (strlen(trim($editTweetText)) === 0) {
-        if (trim(is_null($request['editImg']))) {
-            $request->validate([
-                'editTweetText' => 'required',
-                'image' => 'required'
-            ]);
+        // Empty Tweet after Update Validation
+        if (strlen(trim($editTweetText)) === 0) {
+            if (trim(is_null($request['editImg']))) {
+                $request->validate([
+                    'editTweetText' => 'required',
+                    'image' => 'required'
+                ]);
+            } else {
+                // image without text
+                $image =  base64_encode(file_get_contents($request->file('editImg')->path()));
+                DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => "", 'img' => $image]);
+            }
         } else {
-            // image without text
-            $image =  base64_encode(file_get_contents($request->file('editImg')->path()));
-            DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => "", 'img' => $image]);
+            if (!is_null($request['editImg'])) {
+                $image =  base64_encode(file_get_contents($request->file('editImg')->path()));
+            } else {
+                $image = null;
+            }
+
+            DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => $editTweetText, 'img' => $image]);
         }
-    } else {
-        if (!is_null($request['editImg'])) {
-            $image =  base64_encode(file_get_contents($request->file('editImg')->path()));
-        } else {
-            $image = null;
-        }
-        
-        DB::table('tweets')->where('tweet_id', $id)->update(['tweet' => $editTweetText, 'img' => $image]);
+
+        return redirect()->route('feed');
     }
 
-    return redirect()->route('feed');
-}
-
     // Delete Tweet
-    public function MyTweetDelete(Request $request){
-        
+    public function MyTweetDelete(Request $request)
+    {
+
         $id = $request->id;
         DB::delete("delete from tweets where tweet_id = '$id'");
-        
+
 
         return redirect()->route('feed');
     }
 
     // Hide Tweet
 
-    public function hideTweetFeed(Request $request){
-        
+    public function hideTweetFeed(Request $request)
+    {
+
         $id = $request->id;
         $typ = $request->typ;
-        $table = $typ."s";
+        $table = $typ . "s";
 
-        $userId = DB::table($table)->where($typ.'_id', $id)->value('user_id');
+        $userId = DB::table($table)->where($typ . '_id', $id)->value('user_id');
 
-        $tweet = DB::select("select * from ".$table." where ".$typ."_id ='$id'");
-        $tweetVis = DB::table($table)->where($typ.'_id', $id)->value('own_visibility');
+        $tweet = DB::select("select * from " . $table . " where " . $typ . "_id ='$id'");
+        $tweetVis = DB::table($table)->where($typ . '_id', $id)->value('own_visibility');
 
-        if($tweetVis == 0){
-            DB::update("update ".$table." set own_visibility = 1 where ".$typ."_id = '$id'");
-        }else{
-            DB::update("update ".$table." set own_visibility = 0 where ".$typ."_id = '$id'");
+        if ($tweetVis == 0) {
+            DB::update("update " . $table . " set own_visibility = 1 where " . $typ . "_id = '$id'");
+        } else {
+            DB::update("update " . $table . " set own_visibility = 0 where " . $typ . "_id = '$id'");
         }
-        
+
         return redirect()->back();
     }
 
 
     //Edit Comment
     public function editComment(Request $request)
-    { 
-
-    $id= $request->id;
-    $editCommentText= $request->editCommentText;
-
-    DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
-
-    return Redirect::back();
+    {
+        $id = $request->id;
+        $editCommentText = $request->editCommentText;
+        DB::table('comments')->where('comment_id', $id)->update(['comment' => $editCommentText]);
+        return Redirect::back();
     }
 
     //Edit Retweets
     public function editRetweet(Request $request)
-    { 
+    {
 
-    $id= $request->retweet_id;
-    $editRetweetText= $request->editRetweetText;
+        $id = $request->retweet_id;
+        $editRetweetText = $request->editRetweetText;
 
-    DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editRetweetText]);
+        DB::table('retweets')->where('retweet_id', $id)->update(['retweet_text' => $editRetweetText]);
 
-    return Redirect::back();
+        return Redirect::back();
     }
 
     // Delete Tweet
-    public function MyCommentDelete(Request $request){
-        
+    public function MyCommentDelete(Request $request)
+    {
+
         $id = $request->id;
         DB::delete("delete from comments where comment_id = '$id'");
 
-        
+
 
         return redirect()->route('feed');
     }
 
     // Delete Retweet
-    public function MyRetweetDelete(Request $request){
-        
+    public function MyRetweetDelete(Request $request)
+    {
+
         $id = $request->id;
         DB::delete("delete from retweets where retweet_id = '$id'");
-        
+
 
         return redirect()->route('feed');
     }
 
     // Sortierungen
-    
+
     public function index(Request $request)
     {
         $sort = $request->input('sort', 'default');
-    
+
         $query = "SELECT id, user_id, created_at, typ
                   FROM (
                       SELECT 'tweet' as typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(likes.like_id) AS like_count
@@ -329,22 +332,22 @@ class FeedController extends Controller {
                       WHERE retweets.deleted_at IS NULL AND retweets.visibility = true AND retweets.own_visibility = true
                       GROUP BY retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at
                   ) AS combined";
-    
+
         if ($sort === 'likes') {
             $query .= " ORDER BY like_count DESC";
         }
-    
+
         $tweets = DB::select($query);
-    
+
         // Rest of your code to render the tweets or perform further operations
-    
+
         return view('feed', compact('tweets'));
     }
 
     public function index1(Request $request)
     {
         $sort = $request->input('sort', 'default');
-    
+
         $query = "SELECT id, user_id, created_at, typ, visibility, deleted_at
         from (
             SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility,  deleted_at
@@ -355,26 +358,26 @@ class FeedController extends Controller {
                 from retweets
         ) as feedTmp
         where deleted_at is null and visibility = 1 and own_visibility = 1";
-        
 
-                  
-    
+
+
+
         if ($sort === 'time') {
-            
+
             $query .= " ORDER BY created_at DESC";
         }
-    
+
         $tweets = DB::select($query);
-    
+
         // Rest of your code to render the tweets or perform further operations
-    
+
         return view('feed', compact('tweets'));
     }
 
     public function index2(Request $request)
     {
         $sort = $request->input('sort', 'default');
-    
+
         $query = "SELECT id, user_id ,created_at , typ
                                     FROM (
                                         SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(comments.comment_id) AS comment_count
@@ -391,26 +394,26 @@ class FeedController extends Controller {
                                             WHERE retweets.deleted_at IS NULL AND retweets.visibility = true AND retweets.own_visibility = true
                                              GROUP BY retweets.retweet_id, retweets.user_id, retweets.retweet_text, retweets.created_at
                                         ) AS combined";
-        
 
-                  
-    
+
+
+
         if ($sort === 'comments') {
-            
+
             $query .= " ORDER BY comment_count DESC";
         }
-    
+
         $tweets = DB::select($query);
-    
+
         // Rest of your code to render the tweets or perform further operations
-    
+
         return view('feed', compact('tweets'));
     }
-    
+
     public function index3(Request $request)
     {
         $sort = $request->input('sort', 'default');
-    
+
         $query = "SELECT id, user_id, created_at , typ
                                     FROM (
                                         SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at, COUNT(retweets.retweet_id) AS retweet_count
@@ -426,17 +429,17 @@ class FeedController extends Controller {
                                             WHERE retweets.deleted_at IS NULL AND retweets.visibility = true AND retweets.own_visibility = true
                                         ) AS combined
                                     ";
-        
 
-                  
-    
+
+
+
         if ($sort === 'retweet') {
-            
+
             $query .= " ORDER BY retweet_count DESC";
         }
-    
+
         $tweets = DB::select($query);
-    
+
         // Rest of your code to render the tweets or perform further operations
         return view('feed', compact('tweets'));
     }
@@ -449,13 +452,13 @@ class FeedController extends Controller {
 
         // Search in Tweets
         $tweets = DB::table('tweets')
-                    ->where('tweet', 'like', "%$query%")
-                    ->get();
+            ->where('tweet', 'like', "%$query%")
+            ->get();
 
         // Search in Retweets
         $retweets = DB::table('retweets')
-                      ->where('retweet_text', 'like', "%$query%")
-                      ->get();
+            ->where('retweet_text', 'like', "%$query%")
+            ->get();
 
         // Search in Comments
         $comments = DB::table('comments')
@@ -477,7 +480,7 @@ class FeedController extends Controller {
     // search return table 
     public function searchOnFeed(Request $request)
     {
-        $closeSearch = true; 
+        $closeSearch = true;
 
         // query from search bar
         $search = $request->input('query');
@@ -500,20 +503,20 @@ class FeedController extends Controller {
 
         $tweets = DB::select($query);
         $noResults = empty($tweets);
-       
-        if($tweets == NULL){ // no results found
-            return view('feed', compact('noResults','closeSearch'));
 
-        }else{ // results found
-            return view('feed', compact('tweets', 'noResults','closeSearch'));
+        if ($tweets == NULL) { // no results found
+            return view('feed', compact('noResults', 'closeSearch'));
+        } else { // results found
+            return view('feed', compact('tweets', 'noResults', 'closeSearch'));
         }
     }
 
-    public function closeSearch(){
+    public function closeSearch()
+    {
         $closeSearch = false;
-        $noResults = false; 
+        $noResults = false;
 
-        return view('feed', compact('noResults','closeSearch'));
+        return view('feed', compact('noResults', 'closeSearch'));
     }
 
     // show tweet
@@ -522,12 +525,12 @@ class FeedController extends Controller {
         $closeSearch = true;
 
         // deleted tweets aren't shown
-        if($typ == 'tweet'){
-            $query ="SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at
-                        FROM tweets WHERE tweets.tweet_id = ".$id;
-        }else{
+        if ($typ == 'tweet') {
+            $query = "SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at
+                        FROM tweets WHERE tweets.tweet_id = " . $id;
+        } else {
             $query = "SELECT 'retweet' AS typ, retweets.retweet_id AS id, retweets.user_id, retweets.retweet_text, retweets.created_at
-                        FROM retweets WHERE retweets.retweet_id = ".$id;
+                        FROM retweets WHERE retweets.retweet_id = " . $id;
         }
 
         // mark notification as read
@@ -535,10 +538,9 @@ class FeedController extends Controller {
             ->where('id', $notificationId)
             ->update(['read_at' => now()]);
 
-        $tweets= DB::select($query);
+        $tweets = DB::select($query);
         return view('feed', compact('tweets', 'closeSearch'));
     }
-    
-//--------------------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------------------
 }
-?>

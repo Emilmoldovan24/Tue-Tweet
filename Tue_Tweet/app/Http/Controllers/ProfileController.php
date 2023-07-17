@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserNotifications;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -46,7 +47,6 @@ class ProfileController extends Controller
 
             // Send Notification
             Notification::sendNow($notifiableUser, new UserNotifications($following_user_id, NULL, NULL, 'follow'));
-
         }
         // unfollow
         else {
@@ -274,17 +274,23 @@ class ProfileController extends Controller
 
     public function postPassword(Request $request)
     {
-        // empty Username Post, max and unique Validation
         $request->validate([
-            'user_password' => 'required|max:120|min:4|unique:users'
+            'old_password' => 'required',
+            'user_password' => 'required|min:4'
         ]);
 
-        $id = Auth::id();
-        $user_password =  $request->user_password;
-        DB::table('users')->where('id', $id)->update(['user_password' => bcrypt($user_password)]);
+        $user = Auth::user();
 
-        return redirect()->route('settings');
+        if (Hash::check($request->old_password, $user->user_password)) {
+            $user->user_password = bcrypt($request->user_password);
+            $user->save();
+            return redirect()->route('settings');
+        } else {
+            return back()->withErrors(['old_password' => 'Incorrect old password.'])->withInput();
+        }
     }
+
+
 
     // Function: Safe Twitter Data as .txt file
     public function safeFile(Request $request)
