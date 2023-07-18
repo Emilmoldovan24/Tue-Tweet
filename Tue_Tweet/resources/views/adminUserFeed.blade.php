@@ -217,22 +217,26 @@
                                     '<br>';
                                 if($user->deleted_at == NULL){
                                     ?>
-                <button class="back btn btn-light"
-                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button>
-                <?php
+                                <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button>
+                                <?php
                                 }else{
                                     ?>
 
-                <button class="back btn btn-light"
-                    onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button>
-                <?php
+                                <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button>
+                                <?php
                                 }
                                 ?>
 
-                <button class="back btn btn-light"
-                    onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user
-                    information</button> <?php
-                    ?>
+                    <button class="back btn btn-light"
+                            onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
+                    <form method="post"  class="back btn btn-light" type = "submit"
+                            action="{{ route('passChangeVerify')}}"  >
+                            <input type="text" name="email" id='email' value=>
+                            <input type="submit" value= "Send password reset">
+                            <input type="hidden" name="_token" value="{{  Session::token() }}">
+                        </form>
             </div>
             <?php         
                 }
