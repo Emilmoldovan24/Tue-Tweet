@@ -10,41 +10,40 @@
 </head>
 
 <style>
-    body {
+body {
         background-color:  #E7E7E7;
         /* background: rgb(2, 0, 36);
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
-    }
-    .container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .main-content {
-        margin: 20px 0;
-        flex-basis: 25%;
-        position: sticky;
-        top: 70px;
-        align-self: flex-start;
-        width: 50%;
-    }
-    .navbar {
+.main-content {
+    margin: 20px 0;
+    flex-basis: 25%;       
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+    width: 50%;
+}
+.navbar {
     background-color: #a71b28;
     color: red;
 }
-    .tuetweetlogo {
-
-width: 180px;
-border-radius: 9px;
-margin-right: 10px;
+.tuetweetlogo {
+    width: 180px;
+    border-radius: 9px;
+    margin-right: 10px;
 }
 .adminDash {
     color: white;
     font-size: 2,5vw; /* Standard-Schriftgröße */
-  max-font-size: 30px; /* Maximale Schriftgröße */
-  min-font-size: 25px; /* Minimale Schriftgröße */
+    max-font-size: 30px; /* Maximale Schriftgröße */
+    min-font-size: 25px; /* Minimale Schriftgröße */
 }
 .list-group .list-group-item.list-group-item-action {
     background-color: #a71b28;
@@ -98,12 +97,12 @@ margin-right: 10px;
                         <?php
                             $admin_id = Auth::id();
                             $admin_name = DB::table('admins')->where('id', $admin_id)->value('adminname');
-                            $admin_super =  $admin_name = DB::table('admins')->where('super_admin', $admin_id)->value('super_admin');
+                            $admin_super = DB::table('admins')->where('super_admin', $admin_id)->value('super_admin');
                             ?>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">Current: {{$admin_name}}</h5>
+                            <h5 class="card-title">Logged-In: {{$admin_name}}</h5>
                         </div>
                     </div>
                 </div>

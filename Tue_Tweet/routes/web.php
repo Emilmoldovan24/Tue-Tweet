@@ -126,7 +126,7 @@ Route::get('/adminUsers', [
 Route::get('/adminCreate', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminCreate',
     'as' => 'adminCreate'
-]);
+])->middleware('superAdmin');
 
 // AdminLogOut
 Route::get('/adminLogout', [
