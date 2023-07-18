@@ -450,10 +450,12 @@ Route::get('/showTweet/{id}/{typ}/{notificationId}', [
 Route::get('/{username}', function ($username) {
     // Überprüfe, ob der Benutzername existiert
     $user = User::where('username', $username)->first();
-    if(Auth::id() == $user->id){
+
+    if ($user) {
         return view('profile', ['username' => $user->username]);
     } else {
-        return response('Do not look into other peoples accounts!!', 401);
+        // Benutzername existiert nicht, zeige eine entsprechende Fehlermeldung oder leite auf eine andere Seite weiter
+        abort(404);
     }
 })->middleware('loggedIn');
 
