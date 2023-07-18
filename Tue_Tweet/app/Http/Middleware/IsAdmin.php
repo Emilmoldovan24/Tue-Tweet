@@ -19,7 +19,13 @@ class IsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            return $next($request);
+            $admin = Admin::where('email', $request->email)->first();
+            if($admin){
+                return $next($request);
+            } else {
+                return response('Unauthorized.', 401);
+            }
+
         } else {
             return redirect()->route('adminLogin');
         }
