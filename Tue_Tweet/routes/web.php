@@ -150,7 +150,7 @@ Route::post('/adminCreate', [
 Route::post('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminLogIn',
     'as' => 'adminLogin'
-])->middleware('notLoggedIn');
+]);
 
 // Delete Admin
 Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete')->middleware('superAdmin');;

@@ -20,7 +20,7 @@ class IsAdmin
     {
         if (Auth::check()) {
             $admin = Admin::where('email', $request->email)->first();
-            if($admin){
+            if(Auth::guard('admin')){
                 return $next($request);
             } else {
                 return response('Unauthorized.', 401);

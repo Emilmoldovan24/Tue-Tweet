@@ -19,7 +19,7 @@ class NotLoggedIn
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            return response('Unauthorized.', 401);
+            return response('You must log out first.', 401);
         } else {
             return $next($request);
         }
