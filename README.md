@@ -51,6 +51,10 @@ After you have installed this, please follow these instructions:
 *     php artisan serve
 
 Now you can open and use the app with *http://127.0.0.1:8000* in your favourite browser.  
+
+## Database Schema
+* Look at the ER-Diagram of the twitterdatabase:
+*  [ER-Diagram.pdf](https://github.com/Emilmoldovan24/Tue-Tweet/files/12079104/ER-Diagram.pdf)
     
 
 ## Responsibilities
