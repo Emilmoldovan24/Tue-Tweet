@@ -108,7 +108,7 @@ Route::post('/verify', [
 Route::get('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminLogIn',
     'as' => 'adminLogin'
-]);
+])->middleware('notLoggedIn');
 
 // AdminDash
 Route::get('/adminDash', [
@@ -144,13 +144,13 @@ Route::get('/adminFeed', [
 Route::post('/adminCreate', [
     'uses' => 'App\Http\Controllers\AdminController@postCreateAdmin',
     'as' => 'adminCreate'
-])->middleware('superAdmin');;
+])->middleware('superAdmin');
 
 // Post AdminLogIn
 Route::post('/adminLogin', [
     'uses' => 'App\Http\Controllers\AdminController@postAdminLogIn',
     'as' => 'adminLogin'
-]);
+])->middleware('notLoggedIn');
 
 // Delete Admin
 Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete')->middleware('superAdmin');;

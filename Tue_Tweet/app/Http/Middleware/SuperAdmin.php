@@ -19,13 +19,17 @@ class SuperAdmin
     public function handle(Request $request, Closure $next): Response
     {
 
-        $admin_id = Auth::id();
-        $super = DB::table('admins')->where('id', $admin_id)->value('super_admin');
+        if(Auth::check()){
+            $admin_id = Auth::id();
+            $super = DB::table('admins')->where('id', $admin_id)->value('super_admin');
 
-        if($super == 1){
+            if($super == 1){
             return $next($request);
-        }else{
+            }else{
             return response('Unauthorized.', 401);
+            }
+        } else {
+            return redirect()->route('adminLogin');
         }
         
     }

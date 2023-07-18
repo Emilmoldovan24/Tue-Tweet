@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin;
 
-class LoggedIn
+class NotLoggedIn
 {
     /**
      * Handle an incoming request.
@@ -18,12 +18,10 @@ class LoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         if (Auth::check()) {
-            $usr_id = Auth::id();
-            $super = DB::table('admins')->where('id', $admin_id)->value('super_admin');
+            return response('Unauthorized.', 401);
         } else {
-            return redirect()->route('feed');
+            return $next($request);
         }
     }
 }
