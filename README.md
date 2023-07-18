@@ -52,9 +52,11 @@ After you have installed this, please follow these instructions:
 
 Now you can open and use the app with *http://127.0.0.1:8000* in your favourite browser.  
 
-## Database Schema
+## Database Schema!
+
 * Look at the ER-Diagram of the twitterdatabase:
-*  [ER-Diagram.pdf](https://github.com/Emilmoldovan24/Tue-Tweet/files/12079104/ER-Diagram.pdf)
+* [ER-Diagram](https://github.com/Emilmoldovan24/Tue-Tweet/assets/92357718/aab35ba9-87cf-4609-9913-5eae2f5b995f)
+* Or [ER-Diagram.pdf](https://github.com/Emilmoldovan24/Tue-Tweet/files/12079104/ER-Diagram.pdf)
     
 
 ## Responsibilities
