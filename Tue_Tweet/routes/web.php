@@ -114,13 +114,13 @@ Route::get('/adminLogin', [
 Route::get('/adminDash', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminDash',
     'as' => 'adminDash'
-]);
+])->middleware('isAdmin');
 
 // AdminDash
 Route::get('/adminUsers', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminUsers',
     'as' => 'adminUsers'
-]);
+])->middleware('isAdmin');
 
 // AdminCreate
 Route::get('/adminCreate', [
@@ -138,7 +138,7 @@ Route::get('/adminLogout', [
 Route::get('/adminFeed', [
     'uses' => 'App\Http\Controllers\AdminController@getAdminFeed',
     'as' => 'adminFeed'
-]);
+])->middleware('isAdmin');
 
 // Post AdminCreate
 Route::post('/adminCreate', [
@@ -294,48 +294,48 @@ Route::post('/retweet-profile-edit', [
 Route::get('/Profile', [
     'uses' => 'App\Http\Controllers\FeedController@getProfile',
     'as' => 'profile'
-]);
+])->middleware('loggedIn');
 
 //Feed
 Route::get('/feed', [
     'uses' => 'App\Http\Controllers\FeedController@index',
     'as' => 'feed'
-]);
+])->middleware('loggedIn');
 
 // Feed with tweet id for retweet
 Route::get('/feed/{id}', [
     'uses' => 'App\Http\Controllers\FeedController@index',
     'as' => 'feedForRetweet'
-]);
+])->middleware('loggedIn');
 
 // LogOut
 Route::get('/logout', [
     'uses' => 'App\Http\Controllers\FeedController@getLogout',
     'as' => 'logout'
-]);
+])->middleware('loggedIn');
 
 // Settings
 Route::get('/settings', [
     'uses' => 'App\Http\Controllers\FeedController@getsettings',
     'as' => 'settings'
-]);
+])->middleware('loggedIn');
 
 
 
 Route::get('/tweets1', [
     'uses' => 'App\Http\Controllers\FeedController@index1',
     'as' => 'tweets.index1'
-]);
+])->middleware('loggedIn');
 
 Route::get('/tweets2', [
     'uses' => 'App\Http\Controllers\FeedController@index2',
     'as' => 'tweets.index2'
-]);
+])->middleware('loggedIn');
 
 Route::get('/tweets3', [
     'uses' => 'App\Http\Controllers\FeedController@index3',
     'as' => 'tweets.index3'
-]);
+])->middleware('loggedIn');
 
 //-----------------------------------------------------------------
 
@@ -343,103 +343,103 @@ Route::get('/tweets3', [
 Route::post('/postTweet', [
     'uses' => 'App\Http\Controllers\FeedController@postTweet',
     'as' => 'postTweet'
-]);
+])->middleware('loggedIn');
 
 // Post Retweet
 Route::post('/retweet', [
     'uses' => 'App\Http\Controllers\FeedController@postRetweet',
     'as' => 'retweet'
-]);
+])->middleware('loggedIn');
 
 // Post Retweet
 Route::post('/postRetweet', [
     'uses' => 'App\Http\Controllers\FeedController@postRetweet',
     'as' => 'postRetweet'
-]);
+])->middleware('loggedIn');
 
 // Post Comment
 Route::post('/postComment', [
     'uses' => 'App\Http\Controllers\FeedController@postComment',
     'as' => 'postComment'
-]);
+])->middleware('loggedIn');
 
 // Like/Unlike
 Route::post('/like', [
     'uses' => 'App\Http\Controllers\FeedController@postLike',
     'as' => 'like'
-]);
+])->middleware('loggedIn');
 
 // Edit Tweet
 Route::post('/tweet-edit', [
     'uses' => 'App\Http\Controllers\FeedController@editTweet',
     'as' => 'editTweet'
-]);
+])->middleware('loggedIn');
 
 // Edit Comment
 Route::post('/comment-edit', [
     'uses' => 'App\Http\Controllers\FeedController@editComment',
     'as' => 'editComment'
-]);
+])->middleware('loggedIn');
 
 // Delete Tweet
 Route::get('feed-tweet-delete/{id}', [
     'uses' => 'App\Http\Controllers\FeedController@MyTweetDelete',
     'as' => 'MyTweetDelete'
-]);
+])->middleware('loggedIn');
 
 // Delete Retweet
 Route::get('feed-retweet-delete/{id}', [
     'uses' => 'App\Http\Controllers\FeedController@MyRetweetDelete',
     'as' => 'MyRetweetDelete'
-]);
+])->middleware('loggedIn');
 
 // Edit Retweet
 Route::post('/retweet-edit', [
     'uses' => 'App\Http\Controllers\FeedController@editRetweet',
     'as' => 'editRetweet'
-]);
+])->middleware('loggedIn');
 
 //Hide Tweet Feed
 Route::get('tweet-hide2/{id}/{typ}', [
     'uses' => 'App\Http\Controllers\FeedController@hideTweetFeed',
     'as' => 'tweet.hide.feed'
-]);
+])->middleware('loggedIn');
 
 // Delete Comment
 Route::get('feed-comment-delete/{id}', [
     'uses' => 'App\Http\Controllers\FeedController@MyCommentDelete',
     'as' => 'MyCommentDelete'
-]);
+])->middleware('loggedIn');
 
 // Search
 Route::get('/search', [
     'uses' => 'App\Http\Controllers\FeedController@searchOnFeed',
     'as' => 'search'
-]);
+])->middleware('loggedIn');
 
 // close displayed tweets from search
 Route::get('/closeSearch', [
     'uses' => 'App\Http\Controllers\FeedController@closeSearch',
     'as' => 'closeSearch'
-]);
+])->middleware('loggedIn');
 
 // ReadMark
 Route::post('/mark-as-read', [
     'uses' => 'App\Http\Controllers\FeedController@markAllAsRead',
     'as' => 'mark-as-read'
-]);
+])->middleware('loggedIn');
 
 // show tweet
 Route::post('/showTweet/{id}/{typ}', [
     'uses' => 'App\Http\Controllers\FeedController@showTweet',
     'as' => 'showTweet'
-]);
+])->middleware('loggedIn');
 
 // show tweet
 Route::get('/showTweet/{id}/{typ}/{notificationId}', [
     'uses' => 'App\Http\Controllers\FeedController@showTweet',
     'as' => 'showTweet'
-]);
+])->middleware('loggedIn');
 
 
 //---------------------------------------------------------------------------------------------------------------------------
