@@ -6,17 +6,21 @@ Server: 127.0.0.1 via TCP/IP
 User: root
 Database Schema for the Tue-Tweet project
 */
-set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 -- Create of Table users
 -- table users contains the following information :
 
--- user_id     -> unique id to distinguish the users PRIMARY KEY
--- username    -> name of the user
--- email       -> email of a user to log in
--- password    -> self-created password of the user
--- profile_bio -> Self-created small text about the user
--- profile_img -> self-selected profile picture
--- created_at  -> Time when the user was created
+-- id               -> unique id to distinguish the users PRIMARY KEY
+-- username         -> name of the user
+-- email            -> email of a user to log in
+-- user_password    -> self-created password of the user 
+-- profile_bio      -> Self-created small text about the user, default null
+-- profile_img      -> self-selected profile picture, default null
+-- visibility       -> drag flag shows if the user is visible for users, default true
+-- created_at       -> timestamp when the user was created
+-- updated_at       -> timestamp when the user was last updated
+-- deleted_at       -> timestamp for softDelete
+-- activate         ->flag whether a user is still active, default true
+DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id                INT           AUTO_INCREMENT PRIMARY KEY,
   username          VARCHAR(30)   UNIQUE NOT NULL,
@@ -25,8 +29,6 @@ CREATE TABLE users (
   profile_bio       VARCHAR(255)  DEFAULT NULL,
   profile_img       LONGBLOB      DEFAULT NULL,
   visibility        BOOLEAN       DEFAULT TRUE,
-  remember_token    VARCHAR(100)  DEFAULT NULL,
-  email_verified_at DATETIME      DEFAULT NULL,
   created_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   updated_at        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at        TIMESTAMP     NULL DEFAULT NULL,
@@ -36,33 +38,34 @@ CREATE TABLE users (
 /*
 filling of users for exercise purposes
 */
+INSERT INTO users ( username, email, user_password, profile_bio, profile_img, visibility ,  created_at, updated_at) 
+VALUES( "Thomas", "thomas@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "Hi my name is Thomas, i am from Stuttgart", NULL, TRUE, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
+      ( "Klaus",  "klaus@yahoo.de",  "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "Hi my name is Klaus, i am from Esslingen",  NULL, TRUE, '2023-05-09 12:57:21','2023-05-09 12:57:21'),
+      ( "Peter",  "peter@yahoo.de",  "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "Hi my name is Peter, i am from Tübingen",   NULL, TRUE, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
+      ( "Susi",   "susi@yahoo.de",    "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "Hi my name is Susi, i am from Tübingen",    NULL, TRUE, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
+      ( "Sarah",  "sarah@yahoo.de",   "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "Hi my name is Sarah, i am from Tübingen",   NULL, TRUE, '2023-05-09 12:59:21','2023-05-09 12:59:21');
 
-INSERT INTO users ( username, email, user_password, profile_bio, profile_img, visibility , remember_token, created_at, updated_at) 
-VALUES( "Name1", "user1@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21'),
-      ( "Name2", "user2@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:57:21','2023-05-09 12:57:21'),
-      ( "Name3", "user3@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:58:21','2023-05-09 12:58:21'),
-      ( "Name4", "user4@yahoo.de", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2", "blablabla", NULL, TRUE, NULL, '2023-05-09 12:59:21','2023-05-09 12:59:21');
 
 -- Create of Table admins
 -- table users contains the following information :
 
--- admin_id     -> unique id to distinguish the users PRIMARY KEY
--- adminname    -> name of the admin
--- email       -> email of a user to log in
--- password    -> self-created password of the user
--- profile_bio -> Self-created small text about the user
--- profile_img -> self-selected profile picture
--- created_at  -> Time when the user was created
+-- id               -> unique id to distinguish the users PRIMARY KEY
+-- adminname        -> name of the admin
+-- email            -> email of a user to log in
+-- user_password    -> self-created password of the user
+-- activated        -> flag whether a admin is still active, default true
+-- super Admin      -> flag indicating if the admin is a super admin, default false
+-- created_at       -> timestamp when the admin was created
+-- deleted_at       -> timestamp for softDelete
+-- updated_at       -> timestamp when the admin was last updated
+DROP TABLE IF EXISTS admins;
 CREATE TABLE admins (
   id             INT           AUTO_INCREMENT PRIMARY KEY,
   adminname      VARCHAR(30)   UNIQUE NOT NULL,
   email          VARCHAR(50)   UNIQUE NOT NULL,
   user_password  VARCHAR(60)   NOT NULL,
-  -- profile_bio    VARCHAR(255)  DEFAULT NULL,
-  -- profile_img    LONGBLOB      DEFAULT NULL,
   activated      BOOLEAN       DEFAULT TRUE,
   super_admin    BOOLEAN       DEFAULT FALSE,
-  remember_token VARCHAR(100)  DEFAULT NULL,
   created_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   deleted_at     TIMESTAMP     NULL DEFAULT NULL,
   updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP    
@@ -71,17 +74,22 @@ CREATE TABLE admins (
 /*
 filling of users for exercise purposes
 */
-INSERT INTO admins ( adminname, email, user_password, super_admin,  remember_token, created_at , updated_at) 
-VALUES( "Admin1", "admin@1", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2" , TRUE ,  NULL, '2023-05-09 12:56:21','2023-05-09 12:56:21');
+INSERT INTO admins ( adminname, email, user_password, super_admin,   created_at , updated_at) 
+VALUES( "Admin1", "admin@1", "$2y$10$VWpj8hFUv3hkzS10l8O6buK/T/yUT7iWJ929XzCN5gYadHlo6qRs2" , TRUE ,  '2023-05-09 12:56:21','2023-05-09 12:56:21');
 
 
 -- Create of Table tweets
 -- table tweets contains the following information :
--- twee_id    -> unique id to distinguish the tweets PRIMARY KEY
--- user_id    -> user id of the user who submitted the tweet
--- tweet      -> tweet message with maximal 240 characters
--- img        -> possible image of a tweet
--- created_at -> time when the tweet was created
+-- tweet_id         -> unique id to distinguish the tweets PRIMARY KEY
+-- user_id          -> user id of the user who submitted the tweet
+-- tweet            -> tweet message with maximal 240 characters
+-- visibility       -> drag flag shows if the tweet is visible for users, default true
+-- own-visibility   -> drag flag shows if the tweet is visible for other users, default true
+-- img              -> possible image of a tweet, default null
+-- created_at       -> time when the tweet was created
+-- deleted_at       -> timestamp for softDelete
+-- activate          -> flag whether a tweet is still active, default true
+DROP TABLE IF EXISTS tweets;
 CREATE TABLE tweets (
   tweet_id              INT         AUTO_INCREMENT PRIMARY KEY,
   user_id               INT         NOT NULL,
@@ -98,25 +106,33 @@ CREATE TABLE tweets (
 filling of tweets for exercise purposes
 */
 INSERT INTO tweets ( user_id, tweet, visibility , img, created_at) 
-VALUES( 1, "First Tweet", TRUE,  NULL, '2023-05-09 14:56:21'),
-      ( 1, "Second Tweet",TRUE,  NULL, '2023-05-09 14:57:21'),
+VALUES( 1, "Yeah im the First Person who Tweets", TRUE,  NULL, '2023-05-09 14:56:21'),
+      ( 1, "Hi my name is Thomas",TRUE,  NULL, '2023-05-09 14:57:21'),
       ( 2, "Welcome to Tue-Tweet Tweet",TRUE,  NULL, '2023-05-09 15:01:21'),
-      ( 1, "Test", TRUE,  NULL, '2023-05-09 15:57:21');
+      ( 5, "Hi my name is sarah , whats up?", TRUE,  NULL, '2023-05-09 14:56:21'),
+      ( 2, "can someone explain my fault ?",TRUE,  NULL, '2023-05-09 14:57:21'),
+      ( 4, "Welcome to Tue-Tweet Tweet",TRUE,  NULL, '2023-05-09 15:01:21'),
+      ( 3, "today the food in the canteen was good ", TRUE,  NULL, '2023-05-09 15:57:21');
+
 
 -- Create of Table comments
 -- table comments contains the following information :
 -- comment_id -> unique id to distinguish the comments PRIMARY KEY
 -- user_id    -> user id of the user who submitted the comment
 -- tweet_id   -> to which tweet does the comment refer
+-- retweet_id -> to which retweet does the comment refer
 -- comment    -> text for the comment 
+-- visibility -> drag flag shows if the comment is visible for users, default true
 -- created_at -> Time at which comments were made
+-- deleted_at -> timestamp for softDelete
+-- activate   -> flag whether a comment is still active, default true
+DROP TABLE IF EXISTS comments;
 CREATE TABLE comments (
   comment_id            INT        AUTO_INCREMENT PRIMARY KEY,
   user_id               INT        NOT NULL,
   tweet_id              INT        DEFAULT NULL,
   retweet_id            INT        DEFAULT NULL,
   comment               TEXT(240)  NOT NULL,
-  notification_flag     BOOLEAN    DEFAULT TRUE,
   visibility            BOOLEAN    DEFAULT TRUE,
   created_at            TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
   deleted_at            TIMESTAMP  NULL DEFAULT NULL,
@@ -127,23 +143,31 @@ CREATE TABLE comments (
 filling of comments for exercise purposes
 */
 INSERT INTO comments ( user_id, tweet_id, comment, visibility, created_at) 
-VALUES( 1, 2, "comment to tweet 2", TRUE, '2023-05-09 15:56:21'),
-      ( 3, 4, "comment to tweet 1", TRUE,'2023-05-09 15:57:21');
+VALUES( 2, 1, "congratz", TRUE, '2023-05-09 15:56:21'),
+      ( 3, 1, "good job", TRUE, '2023-05-09 15:56:21'),
+      ( 2, 2, "Thomas Petersen", TRUE, '2023-05-09 15:56:21'),
+      ( 3, 4, "nothing , wanna go for a diner?", TRUE, '2023-05-09 15:56:21'),
+      ( 5, 7, "oh yeah so true", TRUE, '2023-05-09 15:56:21');
+
 
 
 -- Create of Table reetweets
 -- table retweets contains the following information :
--- retweet_id    -> unique id to distinguish the reetweets PRIMARY KEY
--- user_id       -> user id of the user who submitted the retweet
--- tweet_id      -> to which tweet does the retweet refer
--- retweet_text  -> text for the retweet
--- created_at    -> Time at which retweets were made
+-- retweet_id       -> unique id to distinguish the reetweets PRIMARY KEY
+-- user_id          -> user id of the user who submitted the retweet
+-- tweet_id         -> to which tweet does the retweet refer
+-- retweet_text     -> text for the retweet
+-- visibility       -> drag flag shows if the retweet is visible for users, default true
+-- own-visibility   -> drag flag shows if the retweet is visible for other users, default true
+-- created_at       -> Time at which retweets were made
+-- deleted_at       -> timestamp for softDelete
+-- activate         -> flag whether a retweet is still active, default true
+DROP TABLE IF EXISTS retweets;
 CREATE TABLE retweets (
   retweet_id   INT         AUTO_INCREMENT Primary Key,
   user_id      INT         NOT NULL,
   tweet_id     INT         NOT NULL,
   retweet_text TEXT(240)   DEFAULT NULL,
-  notification_flag        BOOLEAN     DEFAULT TRUE,
   visibility               BOOLEAN     DEFAULT TRUE,
   own_visibility           BOOLEAN     DEFAULT TRUE, 
   created_at               TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
@@ -155,22 +179,27 @@ CREATE TABLE retweets (
 filling of retweets for exercise purposes
 */
 INSERT INTO retweets ( user_id, tweet_id, retweet_text, visibility, created_at) 
-VALUES( 1, 3, "retweet to tweet 3", TRUE, '2023-05-09 18:56:21'),
-      ( 2, 2, "retweet to tweet 2", TRUE, '2023-05-09 19:57:21');
+VALUES( 1, 7, "Heal Yeah", TRUE, '2023-05-09 18:56:21'),
+      ( 1, 7, "Oh yes", TRUE, '2023-05-09 19:57:21');
+
 
 -- Create of Table likes
 -- table likes contains the following information :
 -- like_id      -> unique id to distinguish the likes PRIMARY KEY
 -- user_id      -> user id of the user who submitted the like
 -- tweet_id     -> to which tweet does the like refer
+-- retweet_id   -> to which retweet does the like refer
+-- visibility   -> drag flag shows if the like is visible for users, default true
 -- created_at   -> Time at which likes were made
+-- deleted_at   -> timestamp for softDelete
+-- activate     -> flag whether a like is still active, default true
+DROP TABLE IF EXISTS likes;
 CREATE TABLE likes (
   like_id               INT         AUTO_INCREMENT PRIMARY KEY,
   user_id               INT         NOT NULL,
   tweet_id              INT         DEFAULT NULL,
   retweet_id            INT         DEFAULT NULL,
   visibility            BOOLEAN     DEFAULT TRUE,
-  notification_flag     BOOLEAN     DEFAULT TRUE,
   created_at            TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
   deleted_at            TIMESTAMP   NULL DEFAULT NULL,
   activate              BOOLEAN     DEFAULT TRUE
@@ -184,23 +213,33 @@ VALUES( 3, 3, NULL, '2023-05-09 15:56:21'),
       ( 3, NULL, 2, '2023-05-09 15:56:21'),
       ( 2, 3, NULL, '2023-05-09 16:57:21');
 
+
 -- Create of Table follows
 -- table follows contains the following information :
 -- follow_id         -> unique id to distinguish the follows PRIMARY KEY
 -- follow_user_id    -> user who follows
 -- following_user_id -> user this is followed
+-- visibility        -> drag flag shows if the follow is visible for users, default true
 -- created_at        -> Time at which follow were made
+-- deleted_at        -> timestamp for softDelete
+-- activate          -> flag whether a follow is still active, default true
+DROP TABLE IF EXISTS follows;
 CREATE TABLE follows (
   follow_id             INT        AUTO_INCREMENT PRIMARY KEY,
   follow_user_id        INT        NOT NULL,
   following_user_id     INT        NOT NULL,
   visibility            BOOLEAN    DEFAULT TRUE,
-  notification_flag     BOOLEAN    DEFAULT TRUE,
   created_at            TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
   deleted_at            TIMESTAMP  NULL DEFAULT NULL,
   activate              BOOLEAN    DEFAULT TRUE
 );
-
+/*
+filling of likes for exercise purposes
+*/
+INSERT INTO  follows ( follow_user_id,  following_user_id, created_at) 
+VALUES( 3, 3, '2023-05-09 15:56:21'),
+      ( 1, 2, '2023-05-09 15:56:21'),
+      ( 5, 3, '2023-05-09 16:57:21');
 
 -- Constraints for the Tables
 
@@ -240,10 +279,11 @@ ADD CONSTRAINT FK_likes_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id
 
 
 /*
- Trigger for Cascading the Updates on users
+ Triggers for Cascading the Updates on users
  deleted_at
 */
 
+DROP TRIGGER IF EXISTS update_tweets_deleted_at;
 CREATE TRIGGER update_tweets_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -254,6 +294,7 @@ BEGIN
 END;
 
 
+DROP TRIGGER IF EXISTS update_comments_deleted_at;
 CREATE TRIGGER update_comments_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -263,7 +304,8 @@ BEGIN
     END IF;
 END;
 
- 
+
+DROP TRIGGER IF EXISTS update_likes_deleted_at;
 CREATE TRIGGER update_likes_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -274,6 +316,7 @@ BEGIN
 END;
 
 
+DROP TRIGGER IF EXISTS update_retweets_deleted_at;
 CREATE TRIGGER update_retweets_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -283,6 +326,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_follows_deleted_at;
 CREATE TRIGGER update_follows_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -293,9 +338,11 @@ BEGIN
 END;
 
 /*
-visibility
+ Triggers for Cascading the Updates on users
+ visibility
 */
 
+DROP TRIGGER IF EXISTS update_tweets_visibility;
 CREATE TRIGGER update_tweets_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -305,6 +352,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_comments_visibility;
 CREATE TRIGGER update_comments_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -314,6 +363,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_likes_visibility;
 CREATE TRIGGER update_likes_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -323,6 +374,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_retweets_visibility;
 CREATE TRIGGER update_retweets_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -332,6 +385,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_follows_visibility;
 CREATE TRIGGER update_follows_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -342,9 +397,11 @@ BEGIN
 END;
 
 /*
-activate
+ Triggers for Cascading the Updates on users
+ activate
 */
 
+DROP TRIGGER IF EXISTS update_tweets_activate;
 CREATE TRIGGER update_tweets_activate
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -354,6 +411,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_comments_activate;
 CREATE TRIGGER update_comments_activate
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -363,6 +422,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_likes_activate;
 CREATE TRIGGER update_likes_activate
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -372,6 +433,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_retweets_activate;
 CREATE TRIGGER update_retweets_activate
 AFTER UPDATE ON users
 FOR EACH ROW
@@ -381,6 +444,8 @@ BEGIN
     END IF;
 END;
 
+
+DROP TRIGGER IF EXISTS update_follows_activate;
 CREATE TRIGGER update_follows_activate
 AFTER UPDATE ON users
 FOR EACH ROW
