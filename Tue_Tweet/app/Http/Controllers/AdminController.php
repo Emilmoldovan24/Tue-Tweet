@@ -73,7 +73,11 @@ class AdminController extends Controller
         $admin = Admin::where('email', $request->email)->first();
         
         
-        if ($admin && Hash::check($request->user_password, $admin->user_password)) {
+
+        if (Auth::guard('admin') && Hash::check($request->user_password, $admin->user_password)) {
+            
+            
+            
                 // Admin gefunden und Passwort ist korrekt
                 $adminID = DB::table('admins')->where('email', $request->email)->value('id');
                 $adminDel = DB::table('admins')->where('id', $adminID)->value('deleted_at');
@@ -82,9 +86,9 @@ class AdminController extends Controller
                 if($adminDel != null || $adminAct == 0){
                     return redirect()->back()->withErrors(['admin_password' => 'Admin is deactivated / deleted'])->withInput();
                 }
-                
                 Auth::login($admin);
-            return redirect()->route('adminDash');
+                return redirect()->route('adminDash');
+                
         } else {
             // Admin nicht gefunden oder Passwort ist falsch
             return redirect()->back()->withErrors(['admin_password' => 'Check if the password or email is correct.'])->withInput();

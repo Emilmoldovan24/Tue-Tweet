@@ -144,7 +144,7 @@ Route::get('/adminFeed', [
 Route::post('/adminCreate', [
     'uses' => 'App\Http\Controllers\AdminController@postCreateAdmin',
     'as' => 'adminCreate'
-]);
+])->middleware('superAdmin');;
 
 // Post AdminLogIn
 Route::post('/adminLogin', [
@@ -153,16 +153,16 @@ Route::post('/adminLogin', [
 ]);
 
 // Delete Admin
-Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete');
+Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete')->middleware('superAdmin');;
 
 // Restore Admin
-Route::get('admin-restore/{id}', [AdminController::class, 'restoreAdmin'])->name('admin.restore');
+Route::get('admin-restore/{id}', [AdminController::class, 'restoreAdmin'])->name('admin.restore')->middleware('superAdmin');;
 
 // Deactivate Admin
-Route::get('admin-deactivate/{id}', [AdminController::class, 'deactivateAdmin'])->name('admin.deactivate');
+Route::get('admin-deactivate/{id}', [AdminController::class, 'deactivateAdmin'])->name('admin.deactivate')->middleware('superAdmin');;
 
 // Activate Admin
-Route::get('admin-activate/{id}', [AdminController::class, 'activateAdmin'])->name('admin.activate');
+Route::get('admin-activate/{id}', [AdminController::class, 'activateAdmin'])->name('admin.activate')->middleware('superAdmin');;
 
 // Delete Tweet
 Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');
