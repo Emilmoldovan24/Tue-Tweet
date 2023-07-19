@@ -354,6 +354,7 @@ display: none;
         .hidden.tweet.btn.btn-light {
     display: block; /* Button ab einer Bildschirmbreite von 768px anzeigen */
   }
+}
 </style>
 </head>
 
