@@ -531,8 +531,7 @@ margin-right: 10px;
                                 <div class="user-profile">
                                     <?php echo $userImgHtml; ?>
                                     <div style="display: inline-block;">
-                                    <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;"
-                                        href="/{{ $username }}">{{ $username }}</a>
+                                    <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;">{{ $username }}</a>
                                     <a> &bull; </a>
                                     <span>{{ $tweet->created_at }}</span>
                                 </div>
