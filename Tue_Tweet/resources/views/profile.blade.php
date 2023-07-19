@@ -57,7 +57,9 @@
     }
 
     .list-group {
-        width: 279px;
+        
+        /* max-width: 279px;
+        */
     }
 
     .btn.btn-light {}
@@ -87,12 +89,12 @@
     }
 
 
-    /*
+/*     
     .container {
-        display: flex;
-        justify-content: space-between;
-        padding: 13px 5%;
-    } */
+        margin-bottom: 50px;
+        padding: 0 1em;
+        margin: 0 auto;
+    }  */
 
     /*
     .left-side {
@@ -119,11 +121,13 @@
     .right-side {
 
 
-        margin: 20px 0;
-        flex-basis: 25%;
+       
+        
         position: sticky;
-        top: 70px;
-        align-self: flex-start;
+        top: 100px;
+        
+       
+        
 
 
     }
@@ -188,6 +192,8 @@
         margin: 20px 0;
         border: 3px solid #a71b28;
         width: 100%;
+        min-width: 300px;
+        overflow: hidden;
 
     }
 
@@ -328,15 +334,26 @@
 
     .share-it {
         margin-top: 15px;
+        
 
     }
-
+.share-text {
+    font-size: 28px;
+}
     .list-group .list-group-item.list-group-item-action {
         background-color: #a71b28;
         color: white;
         border-radius: 9px;
         margin: 3px;
     }
+    .hidden.tweet.btn.btn-light {
+display: none;
+    }
+
+    @media (max-width: 766px) {
+        .hidden.tweet.btn.btn-light {
+    display: block; /* Button ab einer Bildschirmbreite von 768px anzeigen */
+  }
 </style>
 </head>
 
@@ -372,11 +389,12 @@
         <div class="row">
 
 
-            <div class="col">
+   
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xxl-3 me-auto">
 
                 <div class="left-side">
 
-                    <div class="card" style="width: 18rem;">
+                    <div class="card">
                         <?php
                         $userImg = DB::table('users')
                             ->where('id', $profile_id)
@@ -385,23 +403,28 @@
                         echo "<img class='img-fluid' src='" . $profileImg . "' >";
                         ?>
 
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h5 class="card-title">@ {{ $username }}</h5>
-                            <p class="card-text">
+                            <p class="card-text text-center">
                                 {{-- Ich studiere Informatik im (xy). Semester. --}}
                                 <?php
                                 $userBio = DB::table('users')
                                     ->where('id', $profile_id)
                                     ->value('profile_bio');
                                 if (is_null($userBio) && Auth::id() == $profile_id) {
-                                    echo '<a href="' . route('settings') . '">Create your bio</a>'; // Weiß nicht ob man hier dann noch angemeldet bleibt, muss man testen!
+                               
+                                    echo '<form action="' . route('settings') . '" method="GET">';
+                                    echo '    <button type="submit" class="tweet btn btn-light">Create your Bio</button>';
+                                    echo '</form>';
+
+
                                 } else {
                                     echo $userBio;
                                 }
                                 ?>
                             </p>
                         </div>
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush text-center">
 
                             <li class="list-group-item"><i class="fa-solid fa-calendar"></i>
                                 <?php
@@ -415,9 +438,12 @@
                             </li>
 
 
-                            <li class="list-group-item"><a href="#"> {{ $profile_following }} following</a></li>
-                            <li class="list-group-item"><a href="#">{{ $profile_followers }} followers</a></li>
-
+                            <li class="list-group-item"><span>{{ $profile_following }} following</span></li>
+                            <li class="list-group-item"><span>{{ $profile_followers }} followers</span></li>
+                            <button type="button" class="hidden tweet btn btn-light" data-bs-toggle="modal"
+                data-bs-target="#PostTweetModal" style="font-size: 20px;">
+                Tweet!
+            </button>
                             <!-- Follow Button -->
                             @if (!$myProfile)
                                 <form action="{{ route('follow') }}" method="POST">
@@ -472,7 +498,8 @@
             </div>
 
 
-            <div class="col-5">
+
+            <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xxl-4">
 
                 <div class="middle-side">
 
@@ -860,15 +887,16 @@
 
 
 
-
+                    
     </div>
 
-    <div class="col">
-
+    <!-- <div class="col-4 col-md-3 col-sm-2 ms-auto"> -->
+   
+    <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xxl-3 ms-auto">
         <div class="right-side">
 
             <div class="share-it">
-                <h4>Share whats on your mind!</h4>
+                <h4 class="share-text">Share whats on your mind!</h4>
                 <button type="button" class="tweet btn btn-light" data-bs-toggle="modal"
                     data-bs-target="#PostTweetModal" style="font-size: 20px;">
                     Tweet!
@@ -882,8 +910,9 @@
 
 
 
-
+        
     </div>
+ 
     <?php
     $user_id = Auth::id();
     $user_name = DB::table('users')

@@ -35,19 +35,20 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
+ 
   margin: 0;
   color: white;
 }
 
 .container{
  margin-top: 100px;
+ margin-bottom: 100px;
   align-items: center;
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   padding: 30px;
-  max-width: 1000px;
+
   text-align: center;
 }
 

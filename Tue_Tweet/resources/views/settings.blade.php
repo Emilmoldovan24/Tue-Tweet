@@ -82,7 +82,7 @@
     </nav>
     <div class="container">
         <div class="row">
-            <div class="col-2">
+            <div class="col-3 me-auto">
                 <div class="list-group">
                     <form action="{{ route('feed') }}" method="GET">
                         <button type="submit" class="list-group-item list-group-item-action"><i
@@ -103,7 +103,7 @@
                 </div>
                 <br>
             </div>
-            <div class="col-8 offset-md-1">
+            <div class="col-8">
                 <h3>Settings</h3>
                 <hr>
                 <?php

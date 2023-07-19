@@ -53,7 +53,20 @@
 }
 </style>
 <body>
-  @section('content')
+
+  
+     <!--  SignIn   -->
+     <img class="tuetweetlogo" src="{{ asset('images/tuelogo.png') }}" alt="logo">
+     <div class="container">
+
+
+
+
+
+     <div class="col-md-6 text-center">
+     <h3>Changing your Password</h3>
+                    <div class="lead-form">
+                    @section('content')
         @if (count($errors) > 0) 
             <div class='row'>
             <div class="col">
@@ -67,27 +80,17 @@
             </div>
         </div>
         @endif 
-  
-     <!--  SignIn   -->
-     <img class="tuetweetlogo" src="{{ asset('images/tuelogo.png') }}" alt="logo">
-     <div class="container">
-
-
-
-
-
-     <div class="col-md-6 text-center">
-     <h3>Changing your Password</h3>
-                    <div class="lead-form">
                         <div class="title-box">
                             <h3>New Password:</h3>
                         </div>
 
   <form action="{{ route('passChanged')}}" method="POST">
   <div class="form-group">
-    <input type="password" name="password" id='password' value=>
+  <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password">
+   
     <h3>Confirm Password:</h3>
-    <input type="password" name="cpassword" id='cpassword' value=>
+    <input class="form-control @error('password') is-invalid @enderror" type="password" name="cpassword" id="cpassword">
+
     
 </div>
 
