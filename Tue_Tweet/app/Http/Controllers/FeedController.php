@@ -37,7 +37,7 @@ class FeedController extends Controller
     public function getLogout()
     {
         $user = Auth::user();
-        Log::info("User logged out!");
+        Log::info("$user->username logged out!");
         Auth::logout();
         return redirect()->route('welcome');
     }
