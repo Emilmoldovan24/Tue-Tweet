@@ -59,7 +59,7 @@
         background: transparent;
     }
 
-    .container {
+    /* .container {
         display: flex;
         justify-content: center;
         padding: 13px 5%;
@@ -86,7 +86,7 @@
     .main-content {
         flex-basis: 47%;
         align-self: flex-start;
-    }
+    } */
 
     .write-post-container {
         width: 100%;
@@ -171,12 +171,14 @@
 
     .post-container {
         width: 100%;
+        min-width: 337px;
         background-color: white;
         border-radius: 12px;
         padding: 20px;
         color: black;
         margin: 20px 0;
         border: 3px solid #a71b28;
+        overflow: hidden;
     }
 
     .comment-post-container {
@@ -328,13 +330,13 @@
 
     .list-group {
         margin-top: 4px;
-        width: 225px;
+      
     }
 
 
     .card-body {
-        background-color: #a71b28;
-        color: white;
+       
+        
         border-radius: 7px;
     }
 
@@ -460,16 +462,38 @@
     }
 
     .noti-box {
+        font-size: 1.7vh; /* Größe der Schrift in absoluten Einheiten */
+        text-overflow: ellipsis; /* Verkürzt den Text mit Ellipsen (...) */
+         white-space: nowrap; /* Verhindert Zeilenumbrüche */
+        overflow: hidden;
+       
+        width: 100%;
+        min-width: 200px;
+        background-color: white;
+        border-radius: 12px;
         padding-top: 5px;
         padding-left: 5px;
+        border: 3px solid #a71b28;
         margin-top: 10px;
         margin-bottom: 10px;
-        border: 3px solid #a71b28;
-        border-radius: 12px;
-        font-size: 1vw;
-        background-color: white;
+
+
+
+      
+        
+       
+   
 
     }
+    .hidden.tweet.btn.btn-light {
+display: none;
+    }
+
+    @media (max-width: 766px) {
+        .hidden.tweet.btn.btn-light {
+    display: block; /* Button ab einer Bildschirmbreite von 768px anzeigen */
+  }
+}
 </style>
 
 <body>
@@ -489,14 +513,16 @@
     <!--CONTAINER START-->
     <div class="container">
 
-
+<div class="row">
 
         <!--COLUMN 1 (LEFT-SIDEBAR-->
-        <div class="col-3">
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xxl-3 me-auto">
 
             <div class="left-sidebar">
                 <!-- Current User Icon -->
-                <div class="card" style="width: 14rem;">
+                <div class="card text-center">
+
+          
 
                     <?php
                     $user_id = Auth::id();
@@ -511,8 +537,13 @@
                     ?>
 
 
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <h5 class="card-title text-center">Hello {{ $user_name }}!</h5>
+                        <button type="button" class="hidden tweet btn btn-light" data-bs-toggle="modal"
+                data-bs-target="#PostTweetModal" style="font-size: 20px;">
+                Tweet!
+            </button>
+
 
                     </div>
                 </div>
@@ -545,8 +576,7 @@
 
 
         <!-- MIDDLE-BAR-FEED -->
-        <div class="col-5">
-
+        <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xxl-4">
 
             <div class="above-feed">
                 <div class="dropdown">
@@ -1030,9 +1060,10 @@
 
 
 <!-- RIGHT SIDE-BAR -->
-<div class="dol-3">
+<div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xxl-3 ms-auto">
     <div class="right-sidebar">
         <div class="share-it">
+            <br>
             <h4>Share whats on your mind!</h4>
             <button type="button" class="tweet btn btn-light" data-bs-toggle="modal"
                 data-bs-target="#PostTweetModal" style="font-size: 20px;">
@@ -1488,6 +1519,7 @@
         </div>
         </div>
 
+        <div>
 
         <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

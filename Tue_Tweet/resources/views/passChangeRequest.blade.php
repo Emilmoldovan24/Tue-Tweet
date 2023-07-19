@@ -88,8 +88,8 @@
 
   <form action="{{ route('passChangeVerify')}}" method="POST">
   <div class="form-group">
+  <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email">
         
-        <input type="text" name="email" id='email' value=>
         </div>
         <button type="submit" class="btn btn-light"> Submit </button>
         <input type="hidden" name="_token" value="{{  Session::token() }}">
