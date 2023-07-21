@@ -17,13 +17,15 @@
 * Can Add Tweets, Comments, Likes, Retweets.
 * Can Delete Tweets, Comments, Retweets.
 * Can Edit Tweets, Comments, Retweets.
-* Get notifications when someone comment, retweet or like tweet or follow.
-* Can add Images to Tweets.
-* Can hide Tweets from public.
-* Can follow other Users.
-* Can edit profile.
+* Get notifications when someone comments, retweets, likes, tweets or follows.
+* Can post images to tweets.
+* Can hide/unhide tweets from public
+* Can see hidden tweets on own profile page
+* Can follow other users.
+* Can edit profile information
 * Can sort the feed by: newest, most comments, most likes, most retweets.
-* Can search in feed. 
+* Can search for tweets/retweets in feed.
+* Can see another users tweets and profile (by clicking on the name)
 * Can Download his Informations(tweets,comments,retweets,likes,follows) as .txt file.
 * Can change Log-in Informations(Password , Mail). 
 
