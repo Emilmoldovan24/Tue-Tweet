@@ -312,7 +312,7 @@ class FeedController extends Controller
 
     // Sortierungen
 
-    public function index(Request $request)
+    public function sortByLike(Request $request)
     {
         $sort = $request->input('sort', 'default');
 
@@ -344,7 +344,7 @@ class FeedController extends Controller
         return view('feed', compact('tweets'));
     }
 
-    public function index1(Request $request)
+    public function sortByTime(Request $request)
     {
         $sort = $request->input('sort', 'default');
 
@@ -374,7 +374,7 @@ class FeedController extends Controller
         return view('feed', compact('tweets'));
     }
 
-    public function index2(Request $request)
+    public function sortByComments(Request $request)
     {
         $sort = $request->input('sort', 'default');
 
@@ -410,7 +410,7 @@ class FeedController extends Controller
         return view('feed', compact('tweets'));
     }
 
-    public function index3(Request $request)
+    public function sortByRetweet(Request $request)
     {
         $sort = $request->input('sort', 'default');
 

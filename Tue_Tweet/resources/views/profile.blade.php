@@ -621,9 +621,9 @@ display: none;
                                         aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                     <ul class="dropdown-menu">
                                         <li><button class="dropdown-item"><a
-                                                    href="{{ route('ProfileTweetDelete', $tweet->id) }}"
+                                                    href="{{ route('deleteTweetProfile', $tweet->id) }}"
                                                     style="text-decoration: none;">Delete</a></button></li>
-                                        <?php echo '<li><button type="button" class="dropdown-item" onclick="editProfileTweet(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditProfileTweetModal">Edit</button></li>'; ?>
+                                        <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweetProfile(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditProfileTweetModal">Edit</button></li>'; ?>
                                         <li><button class="dropdown-item">
                                                 @if ($tweet->deleted_at == null && $tweet->own_visibility == 0)
                                                     <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}"
@@ -644,7 +644,7 @@ display: none;
                                         aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                     <ul class="dropdown-menu">
                                         <li><button class="dropdown-item">
-                                                <a href="{{ route('MyProfileRetweetDelete', $tweet->id) }}"
+                                                <a href="{{ route('deleteRetweetProfile', $tweet->id) }}"
                                                     style="text-decoration: none;">Delete</a>
                                             </button>
                                         </li>
@@ -987,7 +987,7 @@ display: none;
         </form>
 
         <!-- Edit-Tweet-Modal -->
-        <form action="{{ route('editProfileTweet') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('editTweetProfile') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal fade" id="EditProfileTweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -1046,7 +1046,7 @@ display: none;
         </form>
 
         <!-- Edit-Retweet-Modal -->
-        <form action="{{ route('editProfileRetweet') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('editRetweetProfile') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal fade" id="EditProfileRetweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -1159,7 +1159,7 @@ display: none;
 
 
         <script>
-            function editProfileTweet(id, text) {
+            function editTweetProfile(id, text) {
                 document.getElementById('editProfileTweetText').value = text;
                 document.getElementById('editProfileTweetId').value = id;
             }

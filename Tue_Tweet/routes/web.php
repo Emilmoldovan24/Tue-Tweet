@@ -78,7 +78,7 @@ Route::post('/passChanged', [
 
 // Startscreen: We need in the signup.blade!
 Route::get('/welcome', [
-    'uses' => 'App\Http\Controllers\UserController@getwelcome',
+    'uses' => 'App\Http\Controllers\UserController@getWelcome',
     'as' => 'welcome'
 ]);
 
@@ -233,14 +233,14 @@ Route::post('/follow', [
 
 // Edit Tweet
 Route::post('/profileTweet-edit', [
-    'uses' => 'App\Http\Controllers\ProfileController@editProfileTweet',
-    'as' => 'editProfileTweet'
+    'uses' => 'App\Http\Controllers\ProfileController@editTweetProfile',
+    'as' => 'editTweetProfile'
 ]);
 
 // Delete Tweet
 Route::get('profile-tweet-delete/{id}', [
-    'uses' => 'App\Http\Controllers\ProfileController@ProfileTweetDelete',
-    'as' => 'ProfileTweetDelete'
+    'uses' => 'App\Http\Controllers\ProfileController@deleteTweetProfile',
+    'as' => 'deleteTweetProfile'
 ]);
 
 // Hide Tweet Profile 
@@ -252,14 +252,14 @@ Route::get('tweet-hide1/{id}', [
 
 // Edit Comment
 Route::post('/Comment-edit', [
-    'uses' => 'App\Http\Controllers\ProfileController@ProfileEditComment',
-    'as' => 'ProfileEditComment'
+    'uses' => 'App\Http\Controllers\ProfileController@editCommentProfile',
+    'as' => 'editCommentProfile'
 ]);
 
 // Delete Comment
 Route::get('profile-comment-delete/{id}', [
-    'uses' => 'App\Http\Controllers\ProfileController@ProfileCommentDelete',
-    'as' => 'ProfileCommentDelete'
+    'uses' => 'App\Http\Controllers\ProfileController@deleteCommentProfile',
+    'as' => 'deleteCommentProfile'
 ]);
 
 // Profile Retweet
@@ -276,14 +276,14 @@ Route::get('/safeFile', [
 
 // Delete Retweet
 Route::get('profile-retweet-delete/{id}', [
-    'uses' => 'App\Http\Controllers\ProfileController@MyProfileRetweetDelete',
-    'as' => 'MyProfileRetweetDelete'
+    'uses' => 'App\Http\Controllers\ProfileController@deleteRetweetProfile',
+    'as' => 'deleteRetweetProfile'
 ]);
 
 // Edit Retweet
 Route::post('/retweet-profile-edit', [
-    'uses' => 'App\Http\Controllers\ProfileController@editProfileRetweet',
-    'as' => 'editProfileRetweet'
+    'uses' => 'App\Http\Controllers\ProfileController@editRetweetProfile',
+    'as' => 'editRetweetProfile'
 ]);
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -298,13 +298,13 @@ Route::get('/Profile', [
 
 //Feed
 Route::get('/feed', [
-    'uses' => 'App\Http\Controllers\FeedController@index',
+    'uses' => 'App\Http\Controllers\FeedController@sortByLike',
     'as' => 'feed'
 ])->middleware('loggedIn');
 
 // Feed with tweet id for retweet
 Route::get('/feed/{id}', [
-    'uses' => 'App\Http\Controllers\FeedController@index',
+    'uses' => 'App\Http\Controllers\FeedController@sortByLike',
     'as' => 'feedForRetweet'
 ])->middleware('loggedIn');
 
@@ -323,18 +323,18 @@ Route::get('/settings', [
 
 
 Route::get('/tweets1', [
-    'uses' => 'App\Http\Controllers\FeedController@index1',
-    'as' => 'tweets.index1'
+    'uses' => 'App\Http\Controllers\FeedController@sortByTime',
+    'as' => 'tweets.sortByTime'
 ])->middleware('loggedIn');
 
 Route::get('/tweets2', [
-    'uses' => 'App\Http\Controllers\FeedController@index2',
-    'as' => 'tweets.index2'
+    'uses' => 'App\Http\Controllers\FeedController@sortByComments',
+    'as' => 'tweets.sortByComments'
 ])->middleware('loggedIn');
 
 Route::get('/tweets3', [
-    'uses' => 'App\Http\Controllers\FeedController@index3',
-    'as' => 'tweets.index3'
+    'uses' => 'App\Http\Controllers\FeedController@sortByRetweet',
+    'as' => 'tweets.sortByRetweet'
 ])->middleware('loggedIn');
 
 //-----------------------------------------------------------------

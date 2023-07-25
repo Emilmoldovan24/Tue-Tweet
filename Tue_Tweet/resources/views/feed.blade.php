@@ -587,10 +587,10 @@ display: none;
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('feed', ['sort' => 'likes']) }}">Likes</a>
-                        <a class="dropdown-item" href="{{ route('tweets.index1', ['sort' => 'time']) }}">Newest</a>
+                        <a class="dropdown-item" href="{{ route('tweets.sortByTime', ['sort' => 'time']) }}">Newest</a>
                         <a class="dropdown-item"
-                            href="{{ route('tweets.index2', ['sort' => 'comments']) }}">Comments</a>
-                        <a class="dropdown-item" href="{{ route('tweets.index3', ['sort' => 'retweet']) }}">Retweet</a>
+                            href="{{ route('tweets.sortByComments', ['sort' => 'comments']) }}">Comments</a>
+                        <a class="dropdown-item" href="{{ route('tweets.sortByRetweet', ['sort' => 'retweet']) }}">Retweet</a>
                     </div>
                 </div>
 

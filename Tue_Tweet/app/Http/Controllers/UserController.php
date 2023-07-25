@@ -26,7 +26,7 @@ class UserController extends Controller
     }
 
     // Route: Startscreen
-    public function getwelcome()
+    public function getWelcome()
     {
         return view('welcome');
     }
@@ -174,10 +174,8 @@ class UserController extends Controller
 
 //--------------------------------------------------------------------------------------
 
-    // Für was benutzen wir das gerade? - Julia
-    // Standardhintergrundbild für den User falls er keins hat  - Luke
-
-    //ist das gut wenn man das so macht?
+    
+    // Standardhintergrundbild für den User falls er keins hat 
     public function getUserImgHtml($userImg)
     {
         if (is_null($userImg)) {
