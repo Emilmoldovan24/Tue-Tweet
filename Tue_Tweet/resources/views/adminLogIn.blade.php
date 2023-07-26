@@ -11,6 +11,9 @@
 </head>
 
 <style>
+    body {
+        min-width: 650px;
+    }
 
     .container {
    display: flex;
@@ -31,7 +34,7 @@
 }
 
     .lead-form {
-   
+    width: 80%;
     margin: 10px auto;
     border: 2px solid;
     border-radius: 9px;
@@ -74,12 +77,10 @@
             <form action="{{ route('adminLogin')}}" method="POST">
                 <div class="form-group">
                     <label for="email"> Your E-Mail </label>
-                    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email">
-                </div>
-             @section('content')
+                    @section('content')
         @if (count($errors) > 0) 
             <div class='row'>
-            <div class="col">
+            <div class="col text-left">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>
@@ -90,6 +91,9 @@
             </div>
         </div>
         @endif
+                    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email">
+                </div>
+            
    
                 <div class="form-group">
                     <label for="user_password"> Your Password </label>

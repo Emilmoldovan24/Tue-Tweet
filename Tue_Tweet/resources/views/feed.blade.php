@@ -12,6 +12,7 @@
 <style>
     body {
         background-color: #E7E7E7;
+        min-width: 650px;
     }
 
     .navbar.navbar-expand-lg {
@@ -23,7 +24,7 @@
         padding: 5px 5%;
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 99;
         margin-bottom: 20px;
     }
 
@@ -48,6 +49,8 @@
     .post-input-container {
         padding-left: 55px;
         padding-top: 20px;
+        border: 2px solid grey;
+        border-radius: 9px;
     }
 
     .post-input-container textarea {
@@ -59,6 +62,16 @@
         background: transparent;
     }
 
+    .left-sidebar {
+position: sticky;
+top: 100px;
+}
+
+
+
+    .container {
+     
+    }
     /* .container {
         display: flex;
         justify-content: center;
@@ -179,6 +192,7 @@
         margin: 20px 0;
         border: 3px solid #a71b28;
         overflow: hidden;
+        word-wrap: break-word;
     }
 
     .comment-post-container {
@@ -189,6 +203,8 @@
         color: black;
         margin-bottom: 20px;
         padding: 10px;
+        overflow: hidden;
+        word-wrap: break-word;
     }
 
     .comment-user-profile span {
@@ -218,8 +234,11 @@
         margin-bottom: 5px;
     }
 
-    .card .img-fluid {
+    .card .img {
         border-radius: 10px;
+        min-width: 20px;
+        max-width: 300px;
+      
     }
 
     .card.mb-3 {
@@ -305,17 +324,6 @@
         margin: 10px;
     }
 
-    #pictureBox img {
-        max-width: 50%;
-        max-height: 50%;
-    }
-
-    #pictureBox {
-        display: flex;
-        border-color: black;
-        border: 2px solid;
-        border-radius: 5px;
-    }
 
     .list-group .list-group-item.list-group-item-action {
         background-color: #a71b28;
@@ -332,11 +340,14 @@
         margin-top: 4px;
       
     }
-
+    .card {
+        align-items: center;
+        margin-top: 20px;
+    }
 
     .card-body {
        
-        
+        display: inline-block;
         border-radius: 7px;
     }
 
@@ -367,6 +378,7 @@
     }
 
     .search-form {
+        margin: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -411,10 +423,10 @@
     }
 
     .custom-button {
-        padding: 10px 20px;
+        padding: 7px 15px;
         background-color: #a71b28;
         border: none;
-        border-radius: 5px;
+        border-radius: 14px;
         font-size: 16px;
         color: #333;
         cursor: pointer;
@@ -441,7 +453,11 @@
 
     .share-it {
         margin: 15px;
+        margin-bottom: 20px;
         padding: 15px;
+        position: sticky;
+        top: 15px;
+        z-index: 100;
     }
 
     .col-5 {
@@ -487,12 +503,29 @@
     }
     .hidden.tweet.btn.btn-light {
 display: none;
+max-width: 300px;
+min-width: 250px;
+    }
+    .dropdown-hidden {
+display: none;
+
+    }
+ 
+    @media (min-width: 767px) and (max-width: 992px) {
+        .activity-icons div {
+            margin-right: 13px;
+}
     }
 
     @media (max-width: 766px) {
         .hidden.tweet.btn.btn-light {
     display: block; /* Button ab einer Bildschirmbreite von 768px anzeigen */
   }
+  .dropdown-hidden {
+display: block;
+margin-top: 20px;
+
+    }
 }
 </style>
 
@@ -545,7 +578,124 @@ display: none;
             </button>
 
 
-                    </div>
+
+           
+            <script>
+    //Hidden Notifications
+    document.addEventListener('DOMContentLoaded', function() {
+  // Den Knopf-Element abrufen
+  var scrollToBottomBtn = document.getElementById('scrollToBottomBtn');
+
+  // Das Scrollen zum untersten Teil der Seite steuern
+  scrollToBottomBtn.addEventListener('click', function() {
+    // Scrollen zur untersten Position
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+});
+            </script>
+
+
+          <div class="dropdown-hidden"> 
+                <?php
+                $unreadNotifications = Auth::user()
+                    ->unreadNotifications()
+                    ->get();
+                ?>
+                @if (Auth::user()->unreadNotifications()->count() > 0)
+                    <form action="{{ route('mark-as-read') }}" method="POST">
+                        @csrf
+                        <button class="hidden noti btn btn-secondary dropdown-toggle"  id="scrollToBottomBtn" data-bs-toggle="dropdown"
+                            onclick="submitFormAndCallFunctionHidden(event)">
+                            <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
+                            <path
+                                d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z">
+                            </path>
+                            </svg>
+                            <span
+                                class="badge bg-danger">{{ Auth::user()->unreadNotifications()->count() }}</span>
+                        </button>
+                    </form>
+                @else
+                    <button type="button" class="hidden noti btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown">
+                        <i class="fa-regular fa-bell" style="color: #ffffff;"></i>
+                        <path
+                            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z">
+                        </path>
+                        </svg>
+                    </button>
+                @endif
+
+                <!-- Notification Dropdown -->
+                <div class="displayNotificationsHidden" id="displayNotificationsHidden" hidden>
+
+                   <!-- loop through all notifications -->
+                    @foreach ($unreadNotifications as $notification)
+                        <?php
+                        $noti_username = DB::table('users')
+                            ->where('id', $notification->data['user_id'])
+                            ->value('username');
+                        ?>
+
+                        @if ($notification->data['action'] == 'follow')
+                            <a class="dropdown-item" href="/{{ $noti_username }}">
+                            @else
+                                <a class="dropdown-item"
+                                    href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ'], 'notificationId' => $notification->id]) }}">
+                        @endif
+                        <div class="noti-box">
+                            <div class="row">
+
+                                <div class="col-2">
+
+                                    <?php
+                                    $notification_userImg = App\Models\User::where('id', $notification->data['user_id'])->value('profile_img');
+                                    $notification_userImg = app('App\Http\Controllers\UserController')->getUserImg($notification_userImg);
+                                    $notification_username = App\Models\User::where('id', $notification->data['user_id'])->value('username');
+                                    ?>
+                                    <img src="{{ $notification_userImg }}" alt="User Image"
+                                        style="width: 40px; height: 40px; border-radius: 50%;">
+                                </div>
+
+
+                                <div class="col-10">
+
+                                    @if ($notification->data['action'] == 'like')
+                                        <p>{{ $notification_username }} liked your tweet</p>
+                                        <p> click to see </p>
+                                    @elseif($notification->data['action'] == 'follow')
+                                        <p>{{ $notification_username }} started following you</p>
+                                        <p> click to see </p>
+                                    @else
+                                        <p>{{ $notification_username }} {{ $notification->data['action'] }}ed your
+                                            tweet</p>
+                                        <p> click to see </p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            </a>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
                 </div>
 
 
@@ -587,10 +737,10 @@ display: none;
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('feed', ['sort' => 'likes']) }}">Likes</a>
-                        <a class="dropdown-item" href="{{ route('tweets.index1', ['sort' => 'time']) }}">Newest</a>
+                        <a class="dropdown-item" href="{{ route('tweets.sortByTime', ['sort' => 'time']) }}">Newest</a>
                         <a class="dropdown-item"
-                            href="{{ route('tweets.index2', ['sort' => 'comments']) }}">Comments</a>
-                        <a class="dropdown-item" href="{{ route('tweets.index3', ['sort' => 'retweet']) }}">Retweet</a>
+                        href="{{ route('tweets.sortByComments', ['sort' => 'comments']) }}">Comments</a>
+                        <a class="dropdown-item" href="{{ route('tweets.sortByRetweet', ['sort' => 'retweet']) }}">Retweet</a>
                     </div>
                 </div>
 
@@ -1063,6 +1213,7 @@ display: none;
 <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xxl-3 ms-auto">
     <div class="right-sidebar">
         <div class="share-it">
+        <br>
             <br>
             <h4>Share whats on your mind!</h4>
             <button type="button" class="tweet btn btn-light" data-bs-toggle="modal"
@@ -1101,6 +1252,8 @@ display: none;
                     notificationOpen = !notificationOpen;
                 }
             </script>
+
+ 
 
             <!-- Notification Button -->
             <div class="dropdown">
@@ -1258,6 +1411,7 @@ display: none;
                             <div class="post-input-container">
                                 <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet"
                                     value="{{ Request::old('tweet') }}"></textarea>
+                                    </div>
                                 <div id="pictureBox"></div>
                                 <div class="add-post-links">
                                     <a href="#"><i class="fa-solid fa-camera fa-2xl"></i>
@@ -1270,7 +1424,7 @@ display: none;
                             </div>
                         </div>
                     </div>
-                </div>
+               
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-danger"> Post </button>
@@ -1318,20 +1472,21 @@ display: none;
                                     <input style="display:none" name="id" id="editTweetId">
                                     <textarea rows="3" placeholder="Edit your Tweet" name="editTweetText" id="editTweetText"
                                         value="{{ Request::old('tweet') }}"></textarea>
+                                        </div>
                                     <div id="pictureEditBox"></div>
                                     <div class="add-post-links">
                                         <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
                                         <div class="form-group">
                                             <input type="file" name="editImg" id="editImg"
                                                 value="{{ Request::old('img') }}">
-                                        </div>
+                                      
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            <button type="submit" class="btn btn-danger"> Confirm </button>
                             <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </div>
                     </div>
@@ -1409,7 +1564,7 @@ display: none;
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            <button type="submit" class="btn btn-danger"> Confirm </button>
                             <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </div>
                     </div>
@@ -1458,7 +1613,7 @@ display: none;
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                <button type="submit" class="btn btn-danger"> Confirm </button>
                                 <input type="hidden" name="_token" value="{{ Session::token() }}">
                             </div>
                         </div>
@@ -1507,7 +1662,7 @@ display: none;
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            <button type="submit" class="btn btn-danger"> Confirm </button>
                             <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </div>
                     </div>
@@ -1520,6 +1675,8 @@ display: none;
         </div>
 
         <div>
+
+
 
         <script src="https://kit.fontawesome.com/5be3771b2c.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

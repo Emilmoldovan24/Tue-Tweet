@@ -10,7 +10,9 @@
     <title>Password Change</title>
 </head>
 <style>
-
+body {
+    min-width: 650px;
+}
     .container {
    display: flex;
    justify-content: center;
@@ -63,13 +65,13 @@
 
 
 
-     <div class="col-md-6 text-center">
+     <div class="col-7 text-center">
      <h3>Changing your Password</h3>
                     <div class="lead-form">
                     @section('content')
         @if (count($errors) > 0) 
             <div class='row'>
-            <div class="col">
+            <div class="col text-left">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>

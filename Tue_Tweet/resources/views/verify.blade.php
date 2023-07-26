@@ -28,10 +28,10 @@ color: darkred;
 
 
 body {
+  min-width: 800px;
   background-color: #a71b28;
-  font-family: "Lato", sans-serif;
+
  
-  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -130,6 +130,7 @@ body {
 <body>
 
 <div class="container">
+<div class="col-12">
 <img class="tuetweetlogo" src="{{ asset('images/tuetweetwhite.png') }}" alt="logo">
     <h2>You need to verify your account</h2>
      <p>We have sent you an email containing a verification code. Please enter it below!</p>
@@ -184,6 +185,6 @@ body {
     </form>
 
       </div>
-
+      </div>
 </body>
 </html>
