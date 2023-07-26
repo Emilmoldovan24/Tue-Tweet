@@ -42,12 +42,8 @@
         display: inline-block;
     }
 
-    .card-img-top-tweet {
-        margin-top: 10px;
-        max-height: 20%;
-        max-width: 20%;
-        border-radius: 50%;
-    }
+
+
 
     .card .img {
         border-radius: 10px;
@@ -465,7 +461,7 @@ margin: 10px;
 
 
    
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xxl-3 me-auto">
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xxl-3 me-auto">
 
                 <div class="left-side">
 
