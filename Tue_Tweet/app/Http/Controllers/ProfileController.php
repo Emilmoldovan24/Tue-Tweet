@@ -21,10 +21,6 @@ class ProfileController extends Controller
     public function getProfile($username)
     {
         $profileUsername = $username;
-        /*$profile = User::where('username', $this->profileUsername)->first();
-        $profileID = $profile->id;
-        $profilePic = $profile->profile_img;
-        $profileBio = $profile->profile_bio;*/
 
         return view('profile', compact('profileUsername'));
     }
@@ -87,7 +83,7 @@ class ProfileController extends Controller
     }
 
     // Edit Tweets
-    public function editProfileTweet(Request $request)
+    public function editTweetProfile(Request $request)
     {
         // image Validation
         $request->validate([
@@ -122,7 +118,7 @@ class ProfileController extends Controller
     }
 
     // Delete Tweet
-    public function ProfileTweetDelete(Request $request)
+    public function deleteTweetProfile(Request $request)
     {
 
         $id = $request->id;
@@ -157,7 +153,7 @@ class ProfileController extends Controller
     }
 
     // Edit Comment
-    public function ProfileEditComment(Request $request)
+    public function editCommentProfile(Request $request)
     {
 
         $id = $request->id;
@@ -168,7 +164,7 @@ class ProfileController extends Controller
         return Redirect::back();
     }
 
-    public function ProfileCommentDelete(Request $request)
+    public function deleteCommentProfile(Request $request)
     {
 
         $id = $request->id;
@@ -180,7 +176,7 @@ class ProfileController extends Controller
     }
 
     // Profile Retweet
-    public function ProfileRetweet(Request $request)
+    public function retweetProfile(Request $request)
     {
         $tweet_id = $request['tweet_id'];
         Log::info('You are about to retweet Tweet ' . $tweet_id);
@@ -189,7 +185,7 @@ class ProfileController extends Controller
     }
 
     // Delete Retweet
-    public function MyProfileRetweetDelete(Request $request)
+    public function deleteRetweetProfile(Request $request)
     {
 
         $id = $request->id;
@@ -199,7 +195,7 @@ class ProfileController extends Controller
     }
 
     //Edit Retweets
-    public function editProfileRetweet(Request $request)
+    public function editRetweetProfile(Request $request)
     {
 
         $id = $request->retweet_id;
