@@ -455,9 +455,6 @@ top: 100px;
         margin: 15px;
         margin-bottom: 20px;
         padding: 15px;
-        position: sticky;
-        top: 15px;
-        z-index: 100;
     }
 
     .col-5 {
