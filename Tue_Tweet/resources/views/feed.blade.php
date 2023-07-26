@@ -735,6 +735,7 @@ margin-top: 20px;
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('feed', ['sort' => 'likes']) }}">Likes</a>
                         <a class="dropdown-item" href="{{ route('tweets.sortByTime', ['sort' => 'time']) }}">Newest</a>
+                        <a class="dropdown-item" href="{{ route('tweets.sortByTime', ['sort' => 'time']) }}">Newest</a>
                         <a class="dropdown-item"
                         href="{{ route('tweets.sortByComments', ['sort' => 'comments']) }}">Comments</a>
                         <a class="dropdown-item" href="{{ route('tweets.sortByRetweet', ['sort' => 'retweet']) }}">Retweet</a>

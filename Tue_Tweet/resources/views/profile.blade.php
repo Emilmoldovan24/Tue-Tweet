@@ -697,9 +697,9 @@ margin: 10px;
                                         aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                     <ul class="dropdown-menu">
                                         <li><button class="dropdown-item"><a
-                                        href="{{ route('deleteTweetProfile', $tweet->id) }}"
+                                                    href="{{ route('deleteTweetProfile', $tweet->id) }}"
                                                     style="text-decoration: none;">Delete</a></button></li>
-                                                    <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweetProfile(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditProfileTweetModal">Edit</button></li>'; ?>
+                                        <?php echo '<li><button type="button" class="dropdown-item" onclick="editTweetProfile(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweetText . '"') . ')" data-tweet-id="{{$tweet->id}}" data-bs-toggle="modal" data-bs-target="#EditProfileTweetModal">Edit</button></li>'; ?>
                                         <li><button class="dropdown-item">
                                                 @if ($tweet->deleted_at == null && $tweet->own_visibility == 0)
                                                     <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}"
@@ -720,7 +720,7 @@ margin: 10px;
                                         aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                     <ul class="dropdown-menu">
                                         <li><button class="dropdown-item">
-                                        <a href="{{ route('deleteRetweetProfile', $tweet->id) }}"
+                                                <a href="{{ route('MyProfileRetweetDelete', $tweet->id) }}"
                                                     style="text-decoration: none;">Delete</a>
                                             </button>
                                         </li>

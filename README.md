@@ -17,23 +17,28 @@
 * Can Add Tweets, Comments, Likes, Retweets.
 * Can Delete Tweets, Comments, Retweets.
 * Can Edit Tweets, Comments, Retweets.
-* Get notifications when someone comment, retweet or like tweet or follow.
-* Can add Images to Tweets.
-* Can hide Tweets from public.
-* Can follow other Users.
-* Can edit profile.
+* Get notifications when someone comments, retweets, likes, tweets or follows.
+* Can post images to tweets.
+* Can hide/unhide tweets from public
+* Can see hidden tweets on own profile page
+* Can follow other users.
+* Can edit profile information
 * Can sort the feed by: newest, most comments, most likes, most retweets.
-* Can search in feed. 
+* Can search for tweets/retweets in feed.
+* Can see another users tweets and profile (by clicking on the name)
 * Can Download his Informations(tweets,comments,retweets,likes,follows) as .txt file.
 * Can change Log-in Informations(Password , Mail). 
 
 ### Admins
 * One super Admin can create new Admins.
-* Can activae/deactivate Users.
+* One super Admin can delete/restore Admins.
+* One super Admin can activate/deactivate Admins.
+* Delete/restore Users.
+* Hide/unhide Users.
 * Reset User Password.
-* Delete User Tweets, Comments, Retweets
-* Hide Tweets, Comments, Retweets from public.
-* Dwownload User Infomations (tweets,comments,retweets,likes,follows) as .txt file.
+* Delete/restore User Tweets, Comments, Retweets
+* Hide/unhide User Tweets, Comments, Retweets
+* Download User Infomations (tweets,comments,retweets,likes,follows) as .txt file.
 ## Installation
 * Install [Apache](https://httpd.apache.org/docs/2.4/install.html)
 * Install [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
@@ -52,7 +57,7 @@ After you have installed this, please follow these instructions:
 
 Now you can open and use the app with *http://127.0.0.1:8000* in your favourite browser.  
 
-## Database Schema!
+## Database Schema
 
 * Look at the ER-Diagram of the twitterdatabase:
 * [ER-Diagram](https://github.com/Emilmoldovan24/Tue-Tweet/assets/92357718/aab35ba9-87cf-4609-9913-5eae2f5b995f)

@@ -67,6 +67,6 @@ class Kernel extends HttpKernel
         'superAdmin' => \App\Http\Middleware\SuperAdmin::class,
         'loggedIn' => \App\Http\Middleware\LoggedIn::class,
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
-        'notLoggedIn' => \App\Http\Middleware\notLoggedIn::class,
+        'notLoggedIn' => \App\Http\Middleware\NotLoggedIn::class,
     ];
 }
