@@ -12,6 +12,7 @@
 <style>
 body {
         background-color:  #E7E7E7;
+        min-width: 800px;
         /* background: rgb(2, 0, 36);
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 
@@ -24,11 +25,11 @@ body {
 
 .main-content {
     margin: 20px 0;
-    flex-basis: 25%;       
+    flex-basis: 50%;       
     position: sticky;
     top: 70px;
     align-self: flex-start;
-    width: 50%;
+    width: 100%;
 }
 .navbar {
     background-color: #a71b28;
@@ -49,16 +50,17 @@ body {
     background-color: #a71b28;
     color: white;
     border-radius: 9px;
-    margin: 3px;
+    margin: 6px;
 }
 
 .list-group-item i {
-    margin-right: 20px;
+   
 }
 
 .list-group-item a {
-    padding-right: 130px;
+ 
 }
+
 
 @media (max-width: 368px) {
     .adminDash {
@@ -91,25 +93,25 @@ body {
 
         <div class="main-content">
             <!-- Current admin -->
-            <div class="card mb-3" style="max-width: 540px; background-color: #a71b28; color: white;">
-                <div class="row g-0">
-                    <div class="col-md-4">
+            <div class="card" style="max-width: 820px; background-color: #a71b28; color: white;">
+             
+                    
                         <?php
                             $admin_id = Auth::id();
                             $admin_name = DB::table('admins')->where('id', $admin_id)->value('adminname');
                             $admin_super = DB::table('admins')->where('super_admin', $admin_id)->value('super_admin');
                             ?>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Logged-In: {{$admin_name}}</h5>
+                 
+                    
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-center">Logged-In: {{$admin_name}}</h5>
                         </div>
-                    </div>
-                </div>
+                    
+         
             </div>
 
             <!-- Menu Buttons -->
-            <div class="list-group">
+            <div class="list-group text-center">
                 <?php
                 if($admin_super == 1){
                     ?>

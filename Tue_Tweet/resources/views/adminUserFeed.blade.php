@@ -15,6 +15,7 @@
 <style>
     body {
         background-color: #E7E7E7;
+        min-width: 650px;
 
     }
 

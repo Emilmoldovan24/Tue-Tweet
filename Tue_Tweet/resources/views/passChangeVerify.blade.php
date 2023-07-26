@@ -10,6 +10,9 @@
     <title>Password Change</title>
 </head>
 <style>
+    body {
+        min-width: 650px;
+    }
 
     .container {
    display: flex;

@@ -18,7 +18,7 @@ body {
 
 .container {
     margin-top: 32px;
-    display: flex;
+   
 }
 
 .navbar {
@@ -65,7 +65,7 @@ margin-right: 10px;
   
   }
 }
-.left-side-content {
+/* .left-side-content {
     margin-right: 32px;
     width: 30%;
 }
@@ -80,7 +80,7 @@ margin-right: 10px;
     width: 60%;
     border-width: 5px;
 
-}
+} */
 
 .menu {}
 
@@ -118,8 +118,9 @@ margin-right: 10px;
 
 
     <div class="container">
-    <div class="col-3">
-        <div class="left-side-content">
+    <div class="row">
+        <div class="col-4 col-sm-4 col-md-2 col-lg-2 col-xxl-2  me-auto">
+            <div class="left-side-content">
              <!-- Current admin -->
             <div class="card mb-3" style="max-width: 540px; background-color: #a71b28; color: white;">
                 <div class="row g-0">
@@ -146,6 +147,7 @@ margin-right: 10px;
         </div>
         </div>
      
+    <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xxl-5"> 
         <div class="main-content">
 
             <div class="menu">
@@ -259,12 +261,29 @@ margin-right: 10px;
 
         </div>
           
-            
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xxl-4 ms-auto"> 
         <div class="right-side-content"> 
-        <div class="col-md-6 text-center">
+        <div class="text-center">
                 <div class="lead-form">
                     <div class="title-box">
                         <h3>Create new Admin</h3>
+                        {{-- Design! Fehlermeldungen --}}
+                    
+                        @if (count($errors) > 0)
+                        <div class='row text-left'>
+                            <div class="col text-left">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>
+                                        {{$error}}
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        @endif
+
                     </div>
                     <form action='{{ route("adminCreate") }}' method="POST">
                         <div class="mb-3">
@@ -293,24 +312,12 @@ margin-right: 10px;
                         <button type="submit" class="btn btn-light"> Submit </button>
                         <input type="hidden" name="_token" value="{{  Session::token() }}">
                     </form>
-                    {{-- Design! Fehlermeldungen --}}
-                        @section('content')
-                        @if (count($errors) > 0)
-                        <div class='row'>
-                            <div class="col">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>
-                                        {{$error}}
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                        @endif
+                   
                 </div>
         </div>
     </div>
+            </div>
+            </div>
             </div>
            
 </body>
