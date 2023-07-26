@@ -49,6 +49,12 @@
         border-radius: 50%;
     }
 
+    .card .img {
+        border-radius: 10px;
+        min-width: 20px;
+        max-width: 300px;
+      
+    }
     .card-img-noti {
         border-radius: 50%;
         margin-bottom: 10px;
