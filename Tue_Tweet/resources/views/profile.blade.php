@@ -720,7 +720,7 @@ margin: 10px;
                                         aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                     <ul class="dropdown-menu">
                                         <li><button class="dropdown-item">
-                                                <a href="{{ route('MyProfileRetweetDelete', $tweet->id) }}"
+                                                <a href="{{ route('deleteRetweetProfile', $tweet->id) }}"
                                                     style="text-decoration: none;">Delete</a>
                                             </button>
                                         </li>
@@ -869,7 +869,7 @@ margin: 10px;
                                 @if ($tweet->typ == 'tweet')
                                     <!-- Retweet Button -->
                                     <div class="retweet-btn">
-                                        <form action="{{ route('profileRetweet', ['tweet_id' => $tweet->id]) }}"
+                                        <form action="{{ route('retweetProfile', ['tweet_id' => $tweet->id]) }}"
                                             method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-dark"><i

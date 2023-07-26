@@ -264,8 +264,8 @@ Route::get('profile-comment-delete/{id}', [
 
 // Profile Retweet
 Route::post('profile-retweet/{tweet_id}', [
-    'uses' => 'App\Http\Controllers\ProfileController@profileRetweet',
-    'as' => 'profileRetweet'
+    'uses' => 'App\Http\Controllers\ProfileController@retweetProfile',
+    'as' => 'retweetProfile'
 ]);
 
 // safe Information as file
