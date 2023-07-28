@@ -241,6 +241,34 @@ VALUES( 3, 3, '2023-05-09 15:56:21'),
       ( 1, 2, '2023-05-09 15:56:21'),
       ( 5, 3, '2023-05-09 16:57:21');
 
+
+-- Create of Table notifications
+-- table follows contains the following information :
+-- id                -> unique id to distinguish the notifications PRIMARY KEY
+-- type              -> what type it is
+-- notifiable_type   -> what type of notification
+-- notifiable_id     -> which id of notification
+-- data              -> whitch data of notification
+-- read_at           -> timestamp for read
+-- created_at        -> timestamp for create
+-- updated_at        -> timestamp when updated
+
+DROP TABLE IF EXISTS notifications;
+CREATE TABLE notifications (
+  id                    CHAR(36)        PRIMARY KEY,
+  `type`                VARCHAR(255)    NOT NULL,
+  notifiable_type       VARCHAR(255)    NOT NULL,
+  notifiable_id         BIGINT(20)      NOT NULL,
+  `data`                TEXT            NOT NULL,
+  read_at               TIMESTAMP       NULL DEFAULT NULL,
+  created_at            TIMESTAMP       NULL DEFAULT NULL,
+  updated_at            TIMESTAMP       NULL DEFAULT NULL
+);
+
+-- Index for notifications 
+CREATE INDEX notifications_index ON notifications (notifiable_type, notifiable_id);
+
+
 -- Constraints for the Tables
 
 /*
