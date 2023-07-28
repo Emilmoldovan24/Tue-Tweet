@@ -236,7 +236,7 @@ class FeedController extends Controller
     {
 
         $id = $request->id;
-        DB::delete("delete from tweets where tweet_id = '$id'");
+        DB::delete("delete from tweets where tweet_id = ?", [$id]);
 
 
         return redirect()->route('feed');
@@ -253,13 +253,13 @@ class FeedController extends Controller
 
         $userId = DB::table($table)->where($typ . '_id', $id)->value('user_id');
 
-        $tweet = DB::select("select * from " . $table . " where " . $typ . "_id ='$id'");
+        $tweet = DB::select("select * from " . $table . " where " . $typ . "_id =?", [$id]);
         $tweetVis = DB::table($table)->where($typ . '_id', $id)->value('own_visibility');
 
         if ($tweetVis == 0) {
-            DB::update("update " . $table . " set own_visibility = 1 where " . $typ . "_id = '$id'");
+            DB::update("update " . $table . " set own_visibility = 1 where " . $typ . "_id = ?", [$id]);;
         } else {
-            DB::update("update " . $table . " set own_visibility = 0 where " . $typ . "_id = '$id'");
+            DB::update("update " . $table . " set own_visibility = 0 where " . $typ . "_id = ?", [$id]);
         }
 
         return redirect()->back();
@@ -292,7 +292,7 @@ class FeedController extends Controller
     {
 
         $id = $request->id;
-        DB::delete("delete from comments where comment_id = '$id'");
+        DB::delete("delete from comments where comment_id = ?", [$id]);
 
 
 
@@ -304,7 +304,7 @@ class FeedController extends Controller
     {
 
         $id = $request->id;
-        DB::delete("delete from retweets where retweet_id = '$id'");
+        DB::delete("delete from retweets where retweet_id = ?", [$id]);
 
 
         return redirect()->route('feed');

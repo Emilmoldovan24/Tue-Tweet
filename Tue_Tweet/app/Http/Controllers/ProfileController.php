@@ -144,9 +144,9 @@ class ProfileController extends Controller
         $tweetVis = DB::table('tweets')->where('tweet_id', $id)->value('own_visibility');
 
         if ($tweetVis == 0) {
-            DB::update("update tweets set own_visibility = 1 where tweet_id = '$id'");
+            DB::update("update tweets set own_visibility = 1 where tweet_id = ?", [$id]);
         } else {
-            DB::update("update tweets set own_visibility = 0 where tweet_id = '$id'");
+            DB::update("update tweets set own_visibility = 0 where tweet_id = ?", [$id]);
         }
 
         return redirect()->back();
@@ -168,9 +168,7 @@ class ProfileController extends Controller
     {
 
         $id = $request->id;
-        DB::delete("delete from comments where comment_id = '$id'");
-
-
+        DB::delete("delete from comments where comment_id = ?", [$id]);
 
         return redirect()->route('feed');
     }
