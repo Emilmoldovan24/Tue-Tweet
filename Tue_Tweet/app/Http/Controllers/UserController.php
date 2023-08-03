@@ -107,7 +107,7 @@ class UserController extends Controller
     } else {
         // change password of user
         $usr = User::where('email', $request->email)->first();
-        Log::debug("User $usr->username changed password!");
+        Log::info("User $usr->username changed password!");
 
         $user_password =  $request->password;
         DB::table('users')->where('email', $request->email)->update(['user_password' => bcrypt($user_password)]);
