@@ -66,7 +66,7 @@ Route::post('/passChangeVerify', [
 
 Route::get('passChange/{email}', function ($email) {
     return view('passChange', ['email' => $email]);
-})->name('passChange');
+})->name('passChange')->middleware('expiredLink');
 
 Route::post('/passChanged', [
     'uses' => 'App\Http\Controllers\UserController@postPassChange',
