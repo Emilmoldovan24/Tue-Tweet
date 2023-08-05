@@ -77,11 +77,6 @@
     .adminDash {
         color: white;
         font-size: 2, 5vw;
-        /* Standard-Schriftgröße */
-        max-font-size: 30px;
-        /* Maximale Schriftgröße */
-        min-font-size: 25px;
-        /* Minimale Schriftgröße */
     }
 
     @media (max-width: 368px) {

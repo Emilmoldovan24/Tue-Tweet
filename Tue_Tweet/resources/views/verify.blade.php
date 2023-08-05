@@ -137,52 +137,40 @@ body {
     <p>Username: {{$usr_data['username']}} </p>
     <p>Email: {{$usr_data['email']}} </p>
     <div class="code-container">
-      <form>
-      <div class="mb-3">
-    <input type="number" class="code" placeholder="Type in your code" min="0" max="999999" required>
-    </div>
-      <button type="submit" class="btn btn-danger">Verify</button>
-    </form>
- 
-    </div>
-    <div
-      id="codeCorrect">
-</div>
-<div
-      id="codeWrong">
-</div>
-    
-    <script>
-         document.querySelector('form').addEventListener('submit', function(event) {
-      event.preventDefault(); // Verhindert das Standardverhalten des Submit-Buttons
-
-      var inputs = document.querySelectorAll('.code');
-      var ScannedNumber = '';
-
-      for (var i = 0; i < inputs.length; i++) {
-        ScannedNumber += inputs[i].value;
-      }
-      
- 
-          if ({{$usr_data['randomNumber']}} == ScannedNumber) {
-            document.getElementById("codeCorrect").innerHTML = "The code is correct";
-            document.getElementById("subBut").style.display = "";
-
-          } else {
-            document.getElementById("subBut").style.display = "none"; // Button ausblenden
-            document.getElementById("codeWrong").innerHTML = "The code is NOT correct";
-          }
-        
-        });
-        </script>
-
-    <form action="{{ route('signup')}}" method="POST">
+    <form id="codeForm" method="POST" action="{{ route('signup')}}">
+        <div class="mb-3">
+            <input type="number" class="code" placeholder="Type in your code" min="0" max="999999" required>
+        </div>
         <input type='hidden' name="username" id='username' value="{{$usr_data['username']}}">
         <input type='hidden' name="email" id='email' value="{{$usr_data['email']}}">
         <input type='hidden' name="user_password" id='user_password' value="{{$usr_data['user_password']}}">
-        <button id="subBut" type="submit" class="btn btn-danger" style="display: none;">Continue</button>
+        <button id="checkBut" type="button" class="btn btn-danger">Verify</button>
         <input type="hidden" name="_token" value="{{  Session::token() }}">
     </form>
+</div>
+<div id="codeCorrect"></div>
+<div id="codeWrong"></div>
+
+<script>
+    document.getElementById("checkBut").addEventListener('click', function() {
+        var inputs = document.querySelectorAll('.code');
+        var ScannedNumber = '';
+
+        for (var i = 0; i < inputs.length; i++) {
+            ScannedNumber += inputs[i].value;
+        }
+
+        if ({{$usr_data['randomNumber']}} == ScannedNumber) {
+            document.getElementById("codeWrong").innerHTML = ""; // Leere die falsche Meldung
+            document.getElementById("codeCorrect").innerHTML = "The code is correct";
+            document.getElementById("codeForm").submit(); // Führe die Form aus, da der Code korrekt ist
+        } else {
+            document.getElementById("codeCorrect").innerHTML = ""; // Leere die korrekte Meldung
+            document.getElementById("codeWrong").innerHTML = "The code is NOT correct";
+        }
+    });
+</script>
+
 
       </div>
       </div>

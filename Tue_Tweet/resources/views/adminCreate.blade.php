@@ -12,8 +12,6 @@
 <style>
 body {
     background-color: #E7E7E7;
-    /* background: rgb(2, 0, 36);
-        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 }
 
 .container {
@@ -34,8 +32,7 @@ margin-right: 10px;
 .adminDash {
     color: white;
     font-size: 2,5vw; /* Standard-Schriftgröße */
-  max-font-size: 30px; /* Maximale Schriftgröße */
-  min-font-size: 25px; /* Minimale Schriftgröße */
+
 }
 .back.btn.btn-light{
    background-color: #a71b28;
@@ -53,7 +50,6 @@ margin-right: 10px;
  
     padding: 30px 20px;
     background-color: #a71b28;
-    /* background-color: #bf1707; */
     color: white;
 }
 @media (max-width: 368px) {
@@ -61,32 +57,15 @@ margin-right: 10px;
    display: block;
     
     
-  font-size: 25px; /* Maximale Schriftgröße */
+  font-size: 25px; 
   
   }
 }
-/* .left-side-content {
-    margin-right: 32px;
-    width: 30%;
-}
 
-.right-side-content {
-    align: right;
-    margin-left: 100px;
-    width: 60%;
-}
-
-.main-content {
-    width: 60%;
-    border-width: 5px;
-
-} */
-
-.menu {}
 
 .menu a {
     text-decoration: none;
-    ´ color: black;
+     color: black;
 
 }
 
@@ -99,9 +78,7 @@ margin-right: 10px;
     margin: 20px 0;
     border: 3px solid #a71b28;
 }
-.logged-in{
-   
-}
+
 .log-text{
     margin-left: 16px;
 }

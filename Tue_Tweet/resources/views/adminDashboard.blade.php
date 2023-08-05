@@ -13,9 +13,6 @@
 body {
         background-color:  #E7E7E7;
         min-width: 800px;
-        /* background: rgb(2, 0, 36);
-        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
-
 }
 .container {
     display: flex;
@@ -42,9 +39,7 @@ body {
 }
 .adminDash {
     color: white;
-    font-size: 2,5vw; /* Standard-Schriftgröße */
-    max-font-size: 30px; /* Maximale Schriftgröße */
-    min-font-size: 25px; /* Minimale Schriftgröße */
+    font-size: 2,5vw; 
 }
 .list-group .list-group-item.list-group-item-action {
     background-color: #a71b28;
@@ -52,15 +47,6 @@ body {
     border-radius: 9px;
     margin: 6px;
 }
-
-.list-group-item i {
-   
-}
-
-.list-group-item a {
- 
-}
-
 
 @media (max-width: 368px) {
     .adminDash {

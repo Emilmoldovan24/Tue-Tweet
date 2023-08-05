@@ -38,7 +38,6 @@
     .home-header .btn-light {
       font-size: 20px;
     margin: 20px;
-    /* background-color: #bf1707; */
     background-color: #a71b28;
     color: white;
     letter-spacing: 1px;
@@ -52,7 +51,6 @@
  
     padding: 30px 20px;
     background-color: #a71b28;
-    /* background-color: #bf1707; */
     color: white;
       }
 
@@ -144,13 +142,13 @@ body {
   </div>
   <div class="mb-3">
     <div class="form-group">
-    <label for="username"> Your User Name </label>
+    <label style="margin-bottom: 8px;" for="username"> Your User Name </label>
    <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="username" value=" {{ Request::old('username') }}">
     </div>
   </div>
   <div class="mb-3">
     <div class="form-group">
-  <label for="user_password"> Your Password </label>
+  <label style="margin-bottom: 8px;" for="user_password"> Your Password </label>
  <input class="form-control @error('user_password') is-invalid @enderror" type="password" name="user_password" id="user_password"> 
   </div>
      </div>

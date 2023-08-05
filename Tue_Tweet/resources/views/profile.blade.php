@@ -26,12 +26,6 @@
 
     }
 
-    /*    .card-img-top {
-            margin-top: 10px;
-            max-height: 80%;
-            max-width: 80%;
-            border-radius: 50%;
-        } */
     .card {
         align-items: center;
         margin-top: 20px;
@@ -60,18 +54,9 @@
         color: white;
     }
 
-    .list-group {
-        
-        /* max-width: 279px;
-        */
-    }
-
-
     .bg-dark.p-4 {
         align-items: left;
     }
-
-
 
     .post-input-container {
         padding-left: 55px;
@@ -90,41 +75,11 @@
         background: transparent;
     }
 
-
-/*     
-    .container {
-        margin-bottom: 50px;
-        padding: 0 1em;
-        margin: 0 auto;
-    }  */
-
-    /*
-    .left-side {
-        flex-basis: 25%;
-        position: sticky;
-       
-     
-
-    }
-
-    right-side {
-       
-        flex-basis: 25%;
-        position: sticky;
-       
-      
-    }
-
-    .middle-side {
-        flex-basis: 47%;
-        
-    } */
     .left-side {
           
         position: sticky;
         top: 5px;
        
-     
 
     }
     .right-side {
@@ -393,7 +348,7 @@
 
     .comment-user-profile span {
         font-size: 13px;
-        /* color: #9a9a9a; */
+   
         color: black;
     }
     .hidden.tweet.btn.btn-light {
@@ -422,7 +377,7 @@ margin: 10px;
 
     @media (max-width: 766px) {
         .hidden.tweet.btn.btn-light {
-    display: block; /* Button ab einer Bildschirmbreite von 768px anzeigen */
+    display: block; 
   }
 }
 </style>
@@ -757,9 +712,10 @@ margin: 10px;
                             <div class="retweet">
                                 <div class="tweetbox-profile">
                                     <img src="{{ $retweetedUserImg }}">
-                                    <div>
-                                        <p>{{ $retweetedUsername }}</p>
-                                        <span>{{ $retweetedTweetCreatedAt }}</span>
+                                    <div style="display: inline-block;">
+                                    <a style="text-decoration: none; color: black; font-weight: bold;" href="/{{ $retweetedUsername }}">{{ $retweetedUsername }}</a>
+                                        <a style="margin: 3px;"> &bull; </a>
+                                        <span style="margin: 1px;">{{ $retweetedTweetCreatedAt }}</span>
                                     </div>
                                 </div>
                                 @if (!is_null($tweetText))
