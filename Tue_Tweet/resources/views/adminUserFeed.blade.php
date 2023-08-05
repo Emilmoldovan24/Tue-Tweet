@@ -142,6 +142,7 @@
            if(isset($_GET['page'])){
                 if($_GET['page'] == 'deletedUsers'){ 
                    ?> <h1> All deleted users </h1>
+
             <?php 
                      foreach ($users as $user) {
                         //show all deleted users
@@ -170,9 +171,21 @@
                         }
                     }
                 }else{
-                    ?> <h1> All active users </h1> <?php 
+                     //show all not deleted users
+                    ?> <h1> All active users </h1>
+                    
+                    @if(session()->has('messageSuccess'))
+                            <div class="alert alert-success">
+                                {{ session()->get('messageSuccess') }}
+                            </div>
+                    @elseif(session()->has('messageFail'))
+                            <div class="alert alert-danger">
+                                {{ session()->get('messageFail') }}
+                            </div>
+                @endif
+                    <?php 
                     foreach ($users as $user) {
-                        //show all not deleted users
+                       
                         if($user->deleted_at == NULL){
                             ?>
             <div class="user">
@@ -193,14 +206,31 @@
                     onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user
                     information</button> <?php
                     ?>
+                <form method="post"  class="back btn btn-light" type = "submit"
+                    action="{{ route('passChangeVerify')}}"  >
+                        <input type="text" name="email" id='email' value=>
+                        <input type="submit" value= "Send password reset">
+                        <input type="hidden" name="_token" value="{{  Session::token() }}">
+                </form>                
             </div>
             <?php         
                         }
                     }
                 }
+
             //show all users
            }else{
-                ?> <h1> All users </h1> <?php 
+                ?> <h1> All users </h1>                
+                @if(session()->has('messageSuccess'))
+                            <div class="alert alert-success">
+                                {{ session()->get('messageSuccess') }}
+                            </div>
+                @elseif(session()->has('messageFail'))
+                            <div class="alert alert-danger">
+                                {{ session()->get('messageFail') }}
+                            </div>
+                @endif
+                <?php 
                 foreach ($users as $user) {
                     ?>
             <div class="user">
@@ -215,28 +245,33 @@
                                     '<br>';
                                 echo "Deleted at: $user->deleted_at".
                                     '<br>';
+                                //show delete button if user is activa
                                 if($user->deleted_at == NULL){
                                     ?>
                                 <button class="back btn btn-light"
                                     onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button>
                                 <?php
+                                //show restore button if user is deleted
                                 }else{
                                     ?>
-
                                 <button class="back btn btn-light"
                                     onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button>
                                 <?php
                                 }
                                 ?>
+                                
+                                <button class="back btn btn-light"
+                                        onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
+                                <?php 
 
-                    <button class="back btn btn-light"
-                            onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
-                    <form method="post"  class="back btn btn-light" type = "submit"
-                            action="{{ route('passChangeVerify')}}"  >
-                            <input type="text" name="email" id='email' value=>
-                            <input type="submit" value= "Send password reset">
-                            <input type="hidden" name="_token" value="{{  Session::token() }}">
-                        </form>
+                                if($user->deleted_at == NULL){ //show email reset only if user is activ?>
+                                    <form method="post"  class="back btn btn-light" type = "submit"
+                                            action="{{ route('passChangeVerify')}}"  >
+                                            <input type="text" name="email" id='email' value=>
+                                            <input type="submit" value= "Send password reset">
+                                            <input type="hidden" name="_token" value="{{  Session::token() }}">
+                                    </form>
+                                <?php } ?>
             </div>
             <?php         
                 }

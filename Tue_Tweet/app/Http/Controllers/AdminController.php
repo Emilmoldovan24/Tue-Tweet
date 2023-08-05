@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 
 class AdminController extends Controller
@@ -34,6 +37,7 @@ class AdminController extends Controller
         return redirect()->route('adminLogin');
     }
 
+    //Create Admin user
     public function postCreateAdmin(Request $request) {
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s',$currentTimeString);
@@ -63,6 +67,7 @@ class AdminController extends Controller
 
     }
 
+    //adminLogin
     public function postAdminLogIn(Request $request){
     
         $credentials = $request->validate([
@@ -71,12 +76,8 @@ class AdminController extends Controller
         ]);
         
         $admin = Admin::where('email', $request->email)->first();
-        
-        
 
         if (Auth::guard('admin') && Hash::check($request->user_password, $admin->user_password)) {
-            
-            
             
                 // Admin gefunden und Passwort ist korrekt
                 $adminID = DB::table('admins')->where('email', $request->email)->value('id');
@@ -96,6 +97,7 @@ class AdminController extends Controller
         }
     }
 
+    //----------------------------------Manage Tweets------------------------------------------------------------------------
     public function deleteTweet(Request $request){
         
         $id = $request->id;
@@ -118,6 +120,7 @@ class AdminController extends Controller
         
         return redirect()->back();
     }
+    //----------------------------------------------------------------------------------------------------------
 
     public function deleteAdmin(Request $request){
         
@@ -255,7 +258,33 @@ class AdminController extends Controller
         
         return redirect()->back();
     }
+    
 
+    // Function: Password change request
+    public function postPassChangeVerify(Request $request){
+        // email of user
+        $this->validate($request, [
+           'email' => 'required'
+        ]);
+        $usr = User::where('email', $request->email)->first();
+        if ($usr){
+            $usr_data = array('email' => $usr->email, 'username' => $usr->username);
+    
+            // sending Mail to MailTrap
+            Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
+                $message->to($usr_data['email'], $usr_data['username'])->subject('Change Password');
+                $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
+            });
+            //return to adminUserFeed with succes / fail message
+            return redirect()->back()->with('messageSuccess','E-Mail send!');
+        } else {
+            return redirect()->back()->with('messageFail','Wrong E-Mail!');
+            Log::error("Wrong email!");
+        }
+            
+    }
+
+    //Download user info
     public function safeUserInfo(Request $request){
         $id = $request->id;
         $currentTimeString = time();
