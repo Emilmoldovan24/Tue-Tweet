@@ -165,6 +165,12 @@ class UserController extends Controller
 
         if ($user && Hash::check($request->user_password, $user->user_password)) {
             // User found and right password
+            $userID = DB::table('users')->where('email', $request->email)->value('id');
+            $userDel = DB::table('users')->where('id', $userID)->value('deleted_at');
+            $userAct = DB::table('users')->where('id', $userID)->value('activate');
+            if ($userDel != null || $userAct == 0) {
+                return redirect()->back()->withErrors(['user_password' => 'User is deactivated / deleted'])->withInput();
+            }
             Auth::login($user);
             Log::info("$user->username signed in!");
             return redirect()->route('feed');
