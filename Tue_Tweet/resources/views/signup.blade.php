@@ -79,6 +79,7 @@
 
 body {
     color: black;
+    min-width: 500px;
 }
 
 .signup-btn .btn.btn-light{

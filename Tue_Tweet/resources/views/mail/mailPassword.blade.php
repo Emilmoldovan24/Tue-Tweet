@@ -50,7 +50,7 @@ body {
 <h1>Hi {{ $username }}! </h1>
 <h5>Click the following link to change your password:</h5>
 <p>
-    <a class="passLink" href="{{route('passChange',$email)}}">Click</a><br>
+    <a class="passLink" href="{{ $url }}">Click</a><br>
 </p>
 </div>
 </div>

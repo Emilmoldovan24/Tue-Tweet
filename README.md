@@ -31,11 +31,14 @@
 
 ### Admins
 * One super Admin can create new Admins.
-* Can activae/deactivate Users.
+* One super Admin can delete/restore Admins.
+* One super Admin can activate/deactivate Admins.
+* Delete/restore Users.
+* Hide/unhide Users.
 * Reset User Password.
-* Delete User Tweets, Comments, Retweets
-* Hide Tweets, Comments, Retweets from public.
-* Dwownload User Infomations (tweets,comments,retweets,likes,follows) as .txt file.
+* Delete/restore User Tweets, Comments, Retweets
+* Hide/unhide User Tweets, Comments, Retweets
+* Download User Infomations (tweets,comments,retweets,likes,follows) as .txt file.
 ## Installation
 * Install [Apache](https://httpd.apache.org/docs/2.4/install.html)
 * Install [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)

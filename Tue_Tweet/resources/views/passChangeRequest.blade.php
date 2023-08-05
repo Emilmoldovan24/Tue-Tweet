@@ -10,6 +10,9 @@
     <title>Password Change Request</title>
 </head>
 <style>
+    body {
+        min-width: 650px;
+    }
 
     .container {
    display: flex;
@@ -53,11 +56,29 @@
 }
 </style>
 <body>
-{{-- Design! Fehlermeldungen --}}
+
+
+     <!--  SignIn   -->
+     <img class="tuetweetlogo" src="{{ asset('images/tuelogo.png') }}" alt="logo">
+     <div class="container">
+
+
+
+
+     <div class="col-7 text-center">
+      
+     <h3>Password Change Request</h3>
+                    <div class="lead-form">
+                        <div class="title-box">
+                            <h3>Your E-Mail:</h3>
+                        </div>
+
+
+                        {{-- Design! Fehlermeldungen --}}
 @section('content')
         @if (count($errors) > 0) 
             <div class='row'>
-            <div class="col">
+            <div class="col text-left">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>
@@ -68,24 +89,6 @@
             </div>
         </div>
         @endif 
-
-     <!--  SignIn   -->
-     <img class="tuetweetlogo" src="{{ asset('images/tuelogo.png') }}" alt="logo">
-     <div class="container">
-
-
-
-
-     <div class="col-md-6 text-center">
-      
-     <h3>Password Change Request</h3>
-                    <div class="lead-form">
-                        <div class="title-box">
-                            <h3>Your E-Mail:</h3>
-                        </div>
-
-
-
   <form action="{{ route('passChangeVerify')}}" method="POST">
   <div class="form-group">
   <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email">

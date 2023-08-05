@@ -14,6 +14,7 @@
 <style>
 body {
     background-color:  #E7E7E7;
+    min-width: 650px;
     /* background: rgb(2, 0, 36);
         background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(209, 123, 149, 1) 0%, rgba(63, 106, 144, 1) 65%); */
 }

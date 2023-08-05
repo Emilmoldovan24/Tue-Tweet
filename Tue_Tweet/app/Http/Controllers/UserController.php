@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
@@ -74,7 +75,9 @@ class UserController extends Controller
         ]);
         $usr = User::where('email', $request->email)->first();
         if ($usr){
-            $usr_data = array('email' => $usr->email, 'username' => $usr->username);
+            $email = $usr->email;
+            $url = URL::temporarySignedRoute('passChange', now()->addSeconds(30), ['email' => $email]);
+            $usr_data = array('email' => $usr->email, 'username' => $usr->username, 'url' => $url);
 
             // sending Mail to MailTrap
             Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
@@ -107,7 +110,7 @@ class UserController extends Controller
     } else {
         // change password of user
         $usr = User::where('email', $request->email)->first();
-        Log::debug("User $usr->username changed password!");
+        Log::info("User $usr->username changed password!");
 
         $user_password =  $request->password;
         DB::table('users')->where('email', $request->email)->update(['user_password' => bcrypt($user_password)]);

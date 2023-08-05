@@ -66,7 +66,7 @@ Route::post('/passChangeVerify', [
 
 Route::get('passChange/{email}', function ($email) {
     return view('passChange', ['email' => $email]);
-})->name('passChange');
+})->name('passChange')->middleware('expiredLink');
 
 Route::post('/passChanged', [
     'uses' => 'App\Http\Controllers\UserController@postPassChange',
@@ -271,8 +271,8 @@ Route::get('profile-comment-delete/{id}', [
 
 // Profile Retweet
 Route::post('profile-retweet/{tweet_id}', [
-    'uses' => 'App\Http\Controllers\ProfileController@profileRetweet',
-    'as' => 'profileRetweet'
+    'uses' => 'App\Http\Controllers\ProfileController@retweetProfile',
+    'as' => 'retweetProfile'
 ]);
 
 // safe Information as file

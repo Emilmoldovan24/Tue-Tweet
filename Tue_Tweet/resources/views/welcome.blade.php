@@ -91,6 +91,8 @@
 
     body {
         color: black;
+        min-width: 500px;
+        
     }
 
     .signup-btn .btn.btn-light {
@@ -105,21 +107,6 @@
 
 
 
-    {{-- Design! Fehlermeldungen --}}
-    @section('content')
-        @if (count($errors) > 0)
-            <div class='row'>
-                <div class="col">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>
-                                {{ $error }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
         <section class="home-header">
 
             <div class="container">
@@ -151,6 +138,23 @@
                                 <div class="mb-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                        {{-- Design! Fehlermeldungen --}}
+    @section('content')
+        @if (count($errors) > 0)
+            <div class='row'>
+                <div class="col text-left">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>
+                                {{ $error }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+
+                                       
                                         <input class="form-control @error('email') is-invalid @enderror" type="text"
                                             name="email" id="email" value="{{ Request::old('email') }}"
                                             aria-describedby="emailHelp"> <!-- emailhelp? !-->

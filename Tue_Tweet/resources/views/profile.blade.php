@@ -13,6 +13,7 @@
 <style>
     body {
         background-color: #E7E7E7;
+        min-width: 650px;
 
     }
 
@@ -34,19 +35,22 @@
     .card {
         align-items: center;
         margin-top: 20px;
+        margin-bottom: 10px;
     }
 
     .card-body {
         display: inline-block;
     }
 
-    .card-img-top-tweet {
-        margin-top: 10px;
-        max-height: 20%;
-        max-width: 20%;
-        border-radius: 50%;
-    }
 
+
+
+    .card .img {
+        border-radius: 10px;
+        min-width: 20px;
+        max-width: 300px;
+      
+    }
     .card-img-noti {
         border-radius: 50%;
         margin-bottom: 10px;
@@ -62,11 +66,6 @@
         */
     }
 
-    .btn.btn-light {}
-
-    .card {
-        margin-bottom: 10px;
-    }
 
     .bg-dark.p-4 {
         align-items: left;
@@ -76,7 +75,10 @@
 
     .post-input-container {
         padding-left: 55px;
+        padding-right: 55px;
         padding-top: 20px;
+        border: 2px solid grey;
+        border-radius: 9px;
     }
 
     .post-input-container textarea {
@@ -117,7 +119,14 @@
         flex-basis: 47%;
         
     } */
+    .left-side {
+          
+        position: sticky;
+        top: 5px;
+       
+     
 
+    }
     .right-side {
 
 
@@ -134,7 +143,6 @@
 
     .write-post-container {
         width: 100%;
-        background: white;
         border-radius: 6px;
         padding: 20px;
         columns: #626262;
@@ -194,6 +202,7 @@
         width: 100%;
         min-width: 300px;
         overflow: hidden;
+        word-wrap: break-word;
 
     }
 
@@ -233,18 +242,15 @@
         margin-top: 10px;
     }
 
-    .like-btn {
-        display: inline-flex;
-        align-items: center;
-        margin-right: 20px;
-        margin-top: 10px;
-    }
+ 
 
     .activity-icons div i {
         display: inline-flex;
         align-items: center;
         margin-right: 5px;
+        
     }
+    
 
     .post-row a {
         color: black;
@@ -346,9 +352,73 @@
         border-radius: 9px;
         margin: 3px;
     }
+
+    .comment-user-profile {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        color: black;
+        background-color: #E7E7E7;
+
+    }
+
+    .comment-user-profile img {
+        width: 45px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .comment-user-profile p {
+        margin-bottom: -5px;
+        font-weight: 500;
+        color: white;
+        margin-right: 20px;
+    }
+
+    .comment-user-profile small {
+        font-size: 12px;
+        color: white;
+    }
+    .comment-post-container {
+        width: 90%;
+        background: #E7E7E7;
+        border-radius: 8px;
+        border: 2px solid #a71b28;
+        color: black;
+        margin-bottom: 20px;
+        padding: 10px;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+
+    .comment-user-profile span {
+        font-size: 13px;
+        /* color: #9a9a9a; */
+        color: black;
+    }
     .hidden.tweet.btn.btn-light {
 display: none;
+max-width: 300px;
+margin: 10px;
     }
+    .follow.btn.btn-light {
+        background-color: #a71b28;
+        color: white;
+        border-radius: 6px;
+        margin: 10px;
+    }
+    .unfollow.btn.btn-dark {
+      
+     
+        border-radius: 6px;
+        margin: 10px;
+    }
+
+    @media (min-width: 767px) and (max-width: 992px) {
+        .activity-icons div {
+            margin-right: 13px;
+}
+}
 
     @media (max-width: 766px) {
         .hidden.tweet.btn.btn-light {
@@ -391,7 +461,7 @@ display: none;
 
 
    
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xxl-3 me-auto">
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xxl-3 me-auto">
 
                 <div class="left-side">
 
@@ -405,7 +475,7 @@ display: none;
                         ?>
 
                         <div class="card-body text-center">
-                            <h5 class="card-title">@ {{ $username }}</h5>
+                            <h5 class="card-title"> <?php echo '@' . $username ?></h5>
                             <p class="card-text text-center">
                                 {{-- Ich studiere Informatik im (xy). Semester. --}}
                                 <?php
@@ -441,19 +511,25 @@ display: none;
 
                             <li class="list-group-item"><span>{{ $profile_following }} following</span></li>
                             <li class="list-group-item"><span>{{ $profile_followers }} followers</span></li>
+
+
+                            @if ($myProfile)
                             <button type="button" class="hidden tweet btn btn-light" data-bs-toggle="modal"
                 data-bs-target="#PostTweetModal" style="font-size: 20px;">
                 Tweet!
             </button>
+                            @endif
+
+               
                             <!-- Follow Button -->
                             @if (!$myProfile)
                                 <form action="{{ route('follow') }}" method="POST">
                                     <?php echo csrf_field(); ?>
 
                                     @if ($follow)
-                                        <button type="submit" class="btn btn-primary">Unfollow</button>
+                                        <button type="submit" class="unfollow btn btn-dark" style="font-size: 20px;">Unfollow</button>
                                     @else
-                                        <button type="submit" class="btn btn-primary">Follow</button>
+                                        <button type="submit" class="follow btn btn-light" style="font-size: 20px;">Follow</button>
                                     @endif
                                     <input type="hidden" name="follow_user_id" value="{{ $profile_id }}">
                                 </form>
@@ -793,7 +869,7 @@ display: none;
                                 @if ($tweet->typ == 'tweet')
                                     <!-- Retweet Button -->
                                     <div class="retweet-btn">
-                                        <form action="{{ route('profileRetweet', ['tweet_id' => $tweet->id]) }}"
+                                        <form action="{{ route('retweetProfile', ['tweet_id' => $tweet->id]) }}"
                                             method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-dark"><i
@@ -939,7 +1015,7 @@ display: none;
                                 <img src='{{ $user_profileImg }}'>
                                 <div>
                                     {{ $user_name }} <br>
-                                    <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                       
 
                                     {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
                                     @section('content')
@@ -963,7 +1039,10 @@ display: none;
                                 <div class="post-input-container">
                                     <textarea rows="3" placeholder="Whats on your mind?" name="tweet" id="tweet"
                                         value="{{ Request::old('tweet') }}"></textarea>
-                                    <div id="pictureBox"></div>
+                                       
+
+                        </div>
+                        <div id="pictureBox"></div>
                                     <div class="add-post-links">
                                         <a href="#"><i class="fa-solid fa-camera fa-2xl"></i>
                                             <!-- <button type="button" id="pictureBtn" class="btn btn-primary">Choose Picture</button></a> -->
@@ -974,7 +1053,6 @@ display: none;
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -999,7 +1077,7 @@ display: none;
                                     <img src="{{ $user_profileImg }}">
                                     <div>
                                         {{ $user_name }} <br>
-                                        <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                    
 
                                         {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
                                     @section('content')
@@ -1024,20 +1102,21 @@ display: none;
                                     <input style="display:none" name="id" id="editProfileTweetId">
                                     <textarea rows="3" placeholder="Edit your Tweet" name="editProfileTweetText" id="editProfileTweetText"
                                         value="{{ Request::old('tweet') }}"></textarea>
+                                        </div>
                                     <div id="pictureProfileEditBox"></div>
                                     <div class="add-post-links">
                                         <a href="#"><i class="fa-solid fa-camera fa-2xl"></i></a>
                                         <div class="form-group">
                                             <input type="file" name="editProfileImg" id="editProfileImg"
                                                 value="{{ Request::old('img') }}">
-                                        </div>
+                                      
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger"> Confirm </button>
                             <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </div>
                     </div>
@@ -1058,7 +1137,6 @@ display: none;
                                     <img src="{{ $user_profileImg }}">
                                     <div>
                                         {{ $user_name }} <br>
-                                        <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
                                         {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
                                     @section('content')
                                         @if (count($errors) > 0)
@@ -1086,8 +1164,8 @@ display: none;
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger"> Confirm </button>
                                 <input type="hidden" name="_token" value="{{ Session::token() }}">
                             </div>
                         </div>
@@ -1108,7 +1186,7 @@ display: none;
                                     <img src="{{ $user_profileImg }}">
                                     <div>
                                         {{ $user_name }} <br>
-                                        <small>Public<i class="fa-sharp fa-solid fa-caret-down"></i></small>
+                                       
                                         {{-- Design! Fehlermeldungen, andere Platzierung oder Modal bleibt offen ->wie? --}}
                                     @section('content')
                                         @if (count($errors) > 0)
@@ -1135,8 +1213,8 @@ display: none;
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger"> Confirm </button>
                                 <input type="hidden" name="_token" value="{{ Session::token() }}">
                             </div>
                         </div>
@@ -1177,6 +1255,7 @@ display: none;
                 document.getElementById('editProfileRetweetId').value = retweetProfileId;
             }
         </script>
+          
     </body>
 
     </html>
