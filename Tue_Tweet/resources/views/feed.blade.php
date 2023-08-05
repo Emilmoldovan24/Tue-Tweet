@@ -911,7 +911,7 @@
                     <div class="user-profile">
                         <?php echo $userImgHtml; ?>
                         <div style="display: inline-block;">
-                            <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;" href="/{{ $username }}">{{ $username }}</a>
+                            <a style="margin: 3px; text-decoration: none; font-weight: bold; color: black;" href="/{{ $username }}">{{ $username }}</a>
                             <a> &bull; </a>
                             <span>{{ $tweet->created_at }}</span>
                         </div>
@@ -972,9 +972,10 @@
                 <div class="retweet">
                     <div class="tweetbox-profile">
                         <img src="{{ $retweetedUserImg }}">
-                        <div>
-                            <a style="margin-right: 3px; text-decoration: none; color: black; font-weight: bold;" href="/{{ $retweetedUsername }}">{{ $retweetedUsername }}</a>
-                            <span>{{ $retweetedTweetCreatedAt }}</span>
+                        <div style="display: inline-block;">
+                           <a style="text-decoration: none; color: black; font-weight: bold;" href="/{{ $retweetedUsername }}">{{ $retweetedUsername }}</a>
+                           <a style="margin: 3px;"> &bull; </a>
+                           <span style="margin-left: -1px;">{{ $retweetedTweetCreatedAt }}</span>
                         </div>
                     </div>
                     @isset($tweetText)
@@ -1134,7 +1135,7 @@
                                 <div class="comment-user-profile">
                                     <?php echo $commiUserImgHtml; ?>
                                     <div style="display: inline-block;">
-                                        <a style="margin-right: 3px; text-decoration: none;" href="/{{ $commentUsername }}">{{ $commentUsername }}</a>
+                                        <a style="margin: 3px; text-decoration: none;" href="/{{ $commentUsername }}">{{ $commentUsername }}</a>
                                         <a> &bull; </a>
                                         <span>{{ $comment->created_at }}</span>
                                     </div>

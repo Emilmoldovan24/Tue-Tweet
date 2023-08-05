@@ -31,6 +31,7 @@
     margin: 5px; 
    font-size: 20px;
     letter-spacing: 1px;
+    border-radius: 9px;
 }
 
     .lead-form {
@@ -41,7 +42,7 @@
  
     padding: 30px 20px;
     background-color: #a71b28;
-    /* background-color: #bf1707; */
+
     color: white;
 }
 

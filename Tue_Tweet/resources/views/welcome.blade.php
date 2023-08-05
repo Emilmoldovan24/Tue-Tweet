@@ -63,7 +63,6 @@
 
         padding: 30px 20px;
         background-color: #a71b28;
-        /* background-color: #bf1707; */
         color: white;
     }
 
@@ -141,8 +140,8 @@
                                         {{-- Design! Fehlermeldungen --}}
     @section('content')
         @if (count($errors) > 0)
-            <div class='row'>
-                <div class="col text-left">
+           
+                <div class="text-left">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>
@@ -150,7 +149,7 @@
                             </li>
                         @endforeach
                     </ul>
-                </div>
+           
             </div>
         @endif
 
@@ -163,7 +162,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="user_password"> Your Password </label>
+                                        <label style="margin-bottom: 8px;" for="user_password"> Your Password </label>
                                         <input class="form-control @error('user_password') is-invalid @enderror"
                                             type="password" name="user_password" id="user_password">
                                     </div>
