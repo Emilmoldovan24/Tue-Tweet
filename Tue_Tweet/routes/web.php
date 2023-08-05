@@ -191,6 +191,13 @@ Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('
 // Safe single User info
 Route::get('safeUserInfo/{id}', [AdminController::class, 'safeUserInfo'])->name('tweet.safeUserInfo');
 
+//password change mail
+Route::post('/passChangeVerify', [
+    'uses' => 'App\Http\Controllers\AdminController@postPassChangeVerify',
+    'as' => 'passChangeVerify'
+]);
+
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // ProfileController
