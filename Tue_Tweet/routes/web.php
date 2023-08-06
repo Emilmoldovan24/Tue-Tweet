@@ -153,16 +153,16 @@ Route::post('/adminLogin', [
 ]);
 
 // Delete Admin
-Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete')->middleware('superAdmin');;
+Route::get('admin-delete/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.delete')->middleware('superAdmin');
 
 // Restore Admin
-Route::get('admin-restore/{id}', [AdminController::class, 'restoreAdmin'])->name('admin.restore')->middleware('superAdmin');;
+Route::get('admin-restore/{id}', [AdminController::class, 'restoreAdmin'])->name('admin.restore')->middleware('superAdmin');
 
 // Deactivate Admin
-Route::get('admin-deactivate/{id}', [AdminController::class, 'deactivateAdmin'])->name('admin.deactivate')->middleware('superAdmin');;
+Route::get('admin-deactivate/{id}', [AdminController::class, 'deactivateAdmin'])->name('admin.deactivate')->middleware('superAdmin');
 
 // Activate Admin
-Route::get('admin-activate/{id}', [AdminController::class, 'activateAdmin'])->name('admin.activate')->middleware('superAdmin');;
+Route::get('admin-activate/{id}', [AdminController::class, 'activateAdmin'])->name('admin.activate')->middleware('superAdmin');
 
 // Delete Tweet
 Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');
@@ -201,7 +201,7 @@ Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('
 Route::get('safeUserInfo/{id}', [AdminController::class, 'safeUserInfo'])->name('tweet.safeUserInfo');
 
 //password change mail
-Route::post('/passChangeVerify', [
+Route::post('/adminPassChangeVerify', [
     'uses' => 'App\Http\Controllers\AdminController@postPassChangeVerify',
     'as' => 'passChangeVerify'
 ]);

@@ -203,7 +203,7 @@
                     information</button> <?php
                     ?>
                 <form method="post"  class="back btn btn-light" type = "submit"
-                    action="{{ route('passChangeVerify')}}"  >
+                    action="{{ route('adminPassChangeVerify')}}"  >
                         <input type="text" name="email" id='email' value=>
                         <input type="submit" value= "Send password reset">
                         <input type="hidden" name="_token" value="{{  Session::token() }}">

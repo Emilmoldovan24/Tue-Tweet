@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Log;
 
 
 class AdminController extends Controller
@@ -329,7 +331,11 @@ class AdminController extends Controller
         ]);
         $usr = User::where('email', $request->email)->first();
         if ($usr){
-            $usr_data = array('email' => $usr->email, 'username' => $usr->username);
+            $email = $usr->email;
+            $url = URL::temporarySignedRoute('passChange', now()->addSeconds(30), ['email' => $email]);
+            Log::info($url);
+            $usr_data = array('email' => $usr->email, 'username' => $usr->username, 'url' => $url);
+            Log::info($url);
     
             // sending Mail to MailTrap
             Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
