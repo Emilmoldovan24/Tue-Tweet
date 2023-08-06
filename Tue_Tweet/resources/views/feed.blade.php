@@ -740,12 +740,20 @@
                 }
                 if (!isset($closeSearch)) {
                     $closeSearch = false;
-                } ?>
+                } 
+                if (!isset($oldSearch)) {
+                    $oldSearch = "";
+                }
+                ?>
 
                 <!-- Search Bar -->
                 <form action="{{ route('search') }}" method="GET" class="search-form">
                     <div class="search-input">
-                        <input type="text" name="query" id="query" placeholder="Enter your search query" value="{{ Request::old('query') }}">
+                        <input type="text" name="query" id="query" placeholder="Enter your search query" 
+                        <?php if ($oldSearch != "") {
+                                    echo 'value="' . $oldSearch . '"'; 
+                                }?>
+                        >
                         <button type="submit" class="search-button">
                             <i class="fas fa-search"></i>
                         </button>
