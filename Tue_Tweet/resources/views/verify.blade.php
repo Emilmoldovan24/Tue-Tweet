@@ -67,56 +67,30 @@ body {
 }
 
 .code{
-  caret-color: transparent;
   background-color: #a71b28;
   border-radius: 10px;
   border: 1px solid #eee;
   font-size: 30px;
-  font-family: "Lato", sans-serif;
   width: 90%;
   margin: 10px;
   text-align: center;
-  font-weight: 300;
   color: white;
 }
 
 
-
-.code::-webkit-outer-spin-button,
-.code::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-.code:valid {
-  border-color: #00fe10;
-  box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.25);
-}
-
 .btn{
   width: 50%;
-  font-family: "Lato", sans-serif;
   min-width: 400px;
-  display: inline-block;
   text-align: center;
   white-space: nowrap;
-  vertical-align: middle;
   user-select: none;
-  cursor: pointer;
   border: 1px solid transparent;
   margin: 0px 0px 20px 0px;
   padding: 0.775rem 0.75rem;
   font-size: 1rem;
-  line-height: 1.5;
   border-radius: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.7;
 }
 
-.btn-primary{
-  color: #fff;
-  background-color: #9861c2;
-  border-color: #9861c2;
-}
 .tuetweetlogo {
     margin-bottom: 20px;
     width: 200px;

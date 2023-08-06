@@ -66,39 +66,6 @@
         top: 100px;
     }
 
-
-
-    .container {}
-
-    /* .container {
-        display: flex;
-        justify-content: center;
-        padding: 13px 5%;
-    }
-
-    .left-sidebar {
-
-
-        flex-basis: 25%;
-        position: sticky;
-        top: 70px;
-        align-self: flex-start;
-
-    }
-
-    .right-sidebar {
-        margin: 20px 0;
-        flex-basis: 25%;
-        position: sticky;
-        top: 70px;
-        align-self: flex-start;
-    }
-
-    .main-content {
-        flex-basis: 47%;
-        align-self: flex-start;
-    } */
-
     .write-post-container {
         width: 100%;
         background: white;
@@ -191,6 +158,13 @@
         border: 3px solid #a71b28;
         overflow: hidden;
         word-wrap: break-word;
+    }
+
+    .post-container .user-profile {
+        margin-bottom: 15px;
+    }
+    .post-container .img-fluid {
+        margin-top: 15px;
     }
 
     .comment-post-container {
@@ -330,9 +304,6 @@
         margin: 3px;
     }
 
-    .list-group-item i {
-        margin-right: 20px;
-    }
 
     .list-group {
         margin-top: 4px;
@@ -342,6 +313,8 @@
     .card {
         align-items: center;
         margin-top: 20px;
+        word-wrap: break-word;
+        overflow: auto;
     }
 
     .card-body {
@@ -475,13 +448,8 @@
 
     .noti-box {
         font-size: 1.7vh;
-        /* Größe der Schrift in absoluten Einheiten */
-        text-overflow: ellipsis;
-        /* Verkürzt den Text mit Ellipsen (...) */
-        white-space: nowrap;
-        /* Verhindert Zeilenumbrüche */
-        overflow: hidden;
-
+        word-wrap: break-word;
+        overflow: auto;
         width: 100%;
         min-width: 200px;
         background-color: white;
@@ -492,15 +460,13 @@
         margin-top: 10px;
         margin-bottom: 10px;
 
-
-
-
-
-
-
-
     }
 
+.noti-box .col-10 {
+
+        overflow: hidden;
+        word-wrap: break-word;
+}
     .hidden.tweet.btn.btn-light {
         display: none;
         max-width: 300px;
@@ -639,10 +605,12 @@
                                         @else
                                         <a class="dropdown-item" href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ'], 'notificationId' => $notification->id]) }}">
                                             @endif
-                                            <div class="noti-box">
+                                          
                                                 <div class="row">
 
                                                     <div class="col-2">
+
+                                                    <div class="noti-box">
 
                                                         <?php
                                                         $notification_userImg = App\Models\User::where('id', $notification->data['user_id'])->value('profile_img');
@@ -1220,11 +1188,12 @@
                     let notificationOpen = false;
 
                     function submitFormAndCallFunction(event) {
-
+                     
                         // read all notifications when dropdown is opened
                         if (notificationOpen) {
                             event.preventDefault();
                             event.target.form.submit();
+       
                         }
 
                         // show or hide notifications
@@ -1279,9 +1248,7 @@
                             <a class="dropdown-item" href="{{ route('showTweet', ['id' => $notification->data['tweet_id'], 'typ' => $notification->data['tweet_typ'], 'notificationId' => $notification->id]) }}">
                                 @endif
                                 <div class="noti-box">
-                                    <div class="row">
-
-                                        <div class="col-2">
+                                
 
                                             <?php
                                             $notification_userImg = App\Models\User::where('id', $notification->data['user_id'])->value('profile_img');
@@ -1289,10 +1256,10 @@
                                             $notification_username = App\Models\User::where('id', $notification->data['user_id'])->value('username');
                                             ?>
                                             <img src="{{ $notification_userImg }}" alt="User Image" style="width: 40px; height: 40px; border-radius: 50%;">
-                                        </div>
+                                      
 
 
-                                        <div class="col-10">
+                                     
 
                                             @if ($notification->data['action'] == 'like')
                                             <p>{{ $notification_username }} liked your tweet</p>
@@ -1305,8 +1272,8 @@
                                                 tweet</p>
                                             <p> click to see </p>
                                             @endif
-                                        </div>
-                                    </div>
+                                       
+                                   
 
                             </a>
                     </div>
@@ -1315,31 +1282,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- Notification design examples
-<div class="card mb-3" style="width: 12rem;">
-    <img class="card-img-top"
-        src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-        alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Follow Request</h5>
-        <p class="card-text">Max Mustermann wants to follow you!</p>
-        <a href="#" class="btn btn-light">Accept</a>
-        <a href="#" class="btn btn-dark">Decline</a>
-    </div>
-</div>
-<div class="card mb-3" style="width: 12rem; margin-top: 20px;">
-    <img class="card-img-top"
-        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-        alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Comment-Response</h5>
-        <p class="card-text">Lea responded to your comment. Go see it!</p>
-        <a href="#" class="btn btn-light">Go to Post</a>
-    </div>
-</div>
--->
 
 
     </div>

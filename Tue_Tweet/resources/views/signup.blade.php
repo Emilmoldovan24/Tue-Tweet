@@ -112,13 +112,14 @@ body {
             <div class="row">
                 <div class="col-md-6">
                     <div class="promo-text-box">
-                        <h1>Already member of the community?</h1>
-                        <p>Back to the Log-in Page! </p>
+                    <h1 class="display-2">Already member of the community?</h1>
+                    <p class="lead"><strong> Back to the Log-in Page! </strong></p>
                               <!-- Button trigger modal -->
                               
         <form action="{{ route('welcome') }}" method="GET">
         <div class="signup-btn">
-            <button type="submit" class="btn btn-light"> Sign in </button>
+
+        <button type="submit" class="btn btn-light btn-lg"> Log-in </button>
             </div>
         </form>
 
@@ -126,7 +127,7 @@ body {
                 </div>
                 <div class="col-md-6 text-center">
                     <div class="lead-form">
-                        <div class="title-box">
+                        <div class="title-box mb-4">
                             <h3>Create your Account</h3>
                         </div>
 
@@ -153,7 +154,7 @@ body {
   </div>
      </div>
      <div class="submit-btn">
-     <button type="submit" class="btn btn-light"> Submit </button>
+     <button type="submit" class="btn btn-light btn-lg">Submit</button>
      </div>
     <input type="hidden" name="_token" value="{{  Session::token() }}">
 </form>
@@ -166,8 +167,8 @@ body {
                     </div>
                 </div>
                
-                <h2 class="header2">Check out the latest tweets!</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
+                <h1 class="display-4 text-center mt-3">Check out the latest tweets!</h1>
+                <div class="row row-cols-1 row-cols-md-3 text-center">
   <div class="col">
     <div class="card h-100">
       <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z3V5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60" class="card-img-top" alt="...">

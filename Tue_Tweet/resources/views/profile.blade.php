@@ -160,7 +160,12 @@
         word-wrap: break-word;
 
     }
-
+    .post-container .user-profile {
+        margin-bottom: 15px;
+    }
+    .post-container .img-fluid {
+        margin-top: 15px;
+    }
     .user-profile span {
         font-size: 13px;
         color: #9a9a9a;
@@ -235,7 +240,7 @@
         padding-left: 10px;
         padding-right: 10px;
         color: #626262;
-        margin: 5px 0;
+        margin: 20px 0;
         text-align: center;
         justify-content: space-between;
     }
