@@ -57,7 +57,7 @@ Route::get('verify/{usr_data}', function ($usr_data) {
 // Routes for Password change
 Route::get('/passChangeRequest', function () {
     return view('passChangeRequest');
-})->name('passChangeRequest');
+})->name('passChangeRequest')->middleware('notLoggedIn');
 
 Route::post('/passChangeVerify', [
     'uses' => 'App\Http\Controllers\UserController@postPassChangeVerify',

@@ -78,9 +78,7 @@ class UserController extends Controller
         if ($usr){
             $email = $usr->email;
             $url = URL::temporarySignedRoute('passChange', now()->addSeconds(30), ['email' => $email]);
-            Log::info($url);
             $usr_data = array('email' => $usr->email, 'username' => $usr->username, 'url' => $url);
-            Log::info($url);
 
             // sending Mail to MailTrap
             Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
