@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin;
+use App\Models\User;
+use Illuminate\Support\Facades\Session;
 
 class NotLoggedIn
 {

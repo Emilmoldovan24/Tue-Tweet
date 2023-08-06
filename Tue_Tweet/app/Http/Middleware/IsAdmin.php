@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Session;
 
 class IsAdmin
 {
@@ -19,8 +20,8 @@ class IsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            $admin = Admin::where('email', $request->email)->first();
-            if(Auth::guard('admin')){
+            $session = Session::all();
+            if($session['user_type'] == 'admin'){
                 return $next($request);
             } else {
                 return response('Unauthorized.', 401);

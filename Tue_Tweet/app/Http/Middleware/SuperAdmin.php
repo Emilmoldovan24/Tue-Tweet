@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Session;
 
 class SuperAdmin
 {
@@ -20,13 +21,18 @@ class SuperAdmin
     {
 
         if(Auth::check()){
-            $admin_id = Auth::id();
-            $super = DB::table('admins')->where('id', $admin_id)->value('super_admin');
+            $session = Session::all();
+            if($session['user_type'] == 'admin'){
+                $admin_id = Auth::id();
+                $super = DB::table('admins')->where('id', $admin_id)->value('super_admin');
 
-            if($super == 1){
-            return $next($request);
-            }else{
-            return response('Unauthorized.', 401);
+                if($super == 1){
+                return $next($request);
+                }else{
+                return response('Unauthorized.', 401);
+                }
+            } else {
+                return response('Unauthorized.', 401);
             }
         } else {
             return redirect()->route('adminLogin');

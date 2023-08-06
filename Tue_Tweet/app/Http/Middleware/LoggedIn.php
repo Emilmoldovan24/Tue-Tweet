@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin;
+use App\Models\User;
+use Illuminate\Support\Facades\Session;
 
 class LoggedIn
 {
@@ -19,7 +20,12 @@ class LoggedIn
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            return $next($request);
+            $session = Session::all();
+            if($session['user_type'] == 'user'){
+                return $next($request);
+            } else {
+                return response('Unauthorized.', 401);
+            }
         } else {
             return redirect()->route('welcome');
         }

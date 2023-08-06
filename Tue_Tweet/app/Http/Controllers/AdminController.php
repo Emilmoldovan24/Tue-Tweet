@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,8 @@ class AdminController extends Controller
     public function getAdminLogout()
     {
         Auth::logout();
+        Session::flush();
+        Session::regenerate();
         return redirect()->route('adminLogin');
     }
 
@@ -95,6 +98,7 @@ class AdminController extends Controller
                 return redirect()->back()->withErrors(['admin_password' => 'Admin is deactivated / deleted'])->withInput();
             }
             Auth::login($admin);
+            Session::put('user_type', 'admin');
             return redirect()->route('adminDash');
         } else {
             // Admin nicht gefunden oder Passwort ist falsch

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
@@ -39,6 +40,8 @@ class FeedController extends Controller
         $user = Auth::user();
         Log::info("$user->username logged out!");
         Auth::logout();
+        Session::flush();
+        Session::regenerate();
         return redirect()->route('welcome');
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -77,7 +78,9 @@ class UserController extends Controller
         if ($usr){
             $email = $usr->email;
             $url = URL::temporarySignedRoute('passChange', now()->addSeconds(30), ['email' => $email]);
+            Log::info($url);
             $usr_data = array('email' => $usr->email, 'username' => $usr->username, 'url' => $url);
+            Log::info($url);
 
             // sending Mail to MailTrap
             Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
@@ -147,6 +150,7 @@ class UserController extends Controller
         // Auth logIn
         $usr = User::where('email', $request->email)->first();
         Auth::login($usr);
+        Session::put('user_type', 'user');
         Log::info("User $username signed up!");
 
         return redirect()->route('feed');
@@ -172,6 +176,7 @@ class UserController extends Controller
                 return redirect()->back()->withErrors(['user_password' => 'User is deactivated / deleted'])->withInput();
             }
             Auth::login($user);
+            Session::put('user_type', 'user');
             Log::info("$user->username signed in!");
             return redirect()->route('feed');
         } else {
