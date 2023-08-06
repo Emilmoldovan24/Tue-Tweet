@@ -203,7 +203,7 @@ Route::get('safeUserInfo/{id}', [AdminController::class, 'safeUserInfo'])->name(
 //password change mail
 Route::post('/adminPassChangeVerify', [
     'uses' => 'App\Http\Controllers\AdminController@postPassChangeVerify',
-    'as' => 'passChangeVerify'
+    'as' => 'adminPassChangeVerify'
 ]);
 
 
