@@ -28,8 +28,11 @@ class ProfileController extends Controller
     // Function: Post Follow
     public function postFollow(Request $request)
     {
+        // Get Current Time
         $currentTimeString = time();
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        // Get Current User
         $following_user_id = Auth::id();
 
         $follow_user_id = $request['follow_user_id'];
@@ -133,14 +136,6 @@ class ProfileController extends Controller
     {
 
         $id = $request->id;
-        $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
-        $userDeletedAt = DB::table('users')->where('id', $userId)->value('deleted_at');
-        $userExists = 0;
-        if ($userDeletedAt == NULL) {
-            $userExists = 1;
-        }
-
-        $tweet = DB::select("select * from tweets where tweet_id ='$id'");
         $tweetVis = DB::table('tweets')->where('tweet_id', $id)->value('own_visibility');
 
         if ($tweetVis == 0) {
@@ -177,8 +172,7 @@ class ProfileController extends Controller
     public function retweetProfile(Request $request)
     {
         $tweet_id = $request['tweet_id'];
-        Log::info('You are about to retweet Tweet ' . $tweet_id);
-
+        
         return redirect()->route('feedForRetweet', ['id' => $tweet_id])->with('openRetweetModal', true);
     }
 

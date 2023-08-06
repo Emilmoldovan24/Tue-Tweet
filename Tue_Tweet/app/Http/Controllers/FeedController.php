@@ -485,6 +485,7 @@ class FeedController extends Controller
         // query from search bar
         $search = $request->input('query');
 
+        // Search in Tweets and Retweets
         $query = "SELECT id, user_id, created_at, typ
                     FROM (
                         SELECT 'tweet' AS typ, tweets.tweet_id AS id, tweets.user_id, tweets.tweet, tweets.created_at
@@ -503,6 +504,8 @@ class FeedController extends Controller
 
         $tweets = DB::select($query);
         $noResults = empty($tweets);
+
+        // old search query, to be displayed in the search bar
         $oldSearch = $search;
 
         if ($tweets == NULL) { // no results found
@@ -512,6 +515,7 @@ class FeedController extends Controller
         }
     }
 
+    // closes displayed search results
     public function closeSearch()
     {
         $closeSearch = false;
