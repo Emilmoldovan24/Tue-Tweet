@@ -273,6 +273,50 @@ class AdminController extends Controller
     }
     
 
+    public function deleteRetweet(Request $request)
+    {
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update retweets set deleted_at = '$currentTimestamp' where retweet_id = ?", [$id]);
+
+        DB::update("update retweets set visibility = 0 where retweet_id = ?", [$id]);
+
+        return redirect()->back();
+    }
+
+    public function restoreRetweet(Request $request)
+    {
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update retweets set deleted_at = null where retweet_id = ?", [$id]);
+        DB::update("update retweets set visibility = 1 where retweet_id = ?", [$id]);
+
+        return redirect()->back();
+    }
+
+    public function hideRetweet(Request $request)
+    {
+
+        $id = $request->id;
+
+        $commentVis = DB::table('retweets')->where('retweet_id', $id)->value('visibility');
+
+        if ($commentVis == 0) {
+            DB::update("update retweets set visibility = 1 where retweet_id = ?", [$id]);
+        } else {
+            DB::update("update retweets set visibility = 0 where retweet_id = ?", [$id]);
+        }
+
+
+        return redirect()->back();
+    }
+
     // Function: Password change request
     public function postPassChangeVerify(Request $request){
         // email of user
@@ -398,4 +442,5 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+
 }
