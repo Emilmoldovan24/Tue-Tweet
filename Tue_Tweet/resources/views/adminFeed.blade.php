@@ -753,7 +753,7 @@ margin-right: 10px;
             <button type="submit" class="back btn btn-light" onclick="window.location.href='adminFeed?'">Visible Tweets</button>
             <button type="submit" class="back btn btn-light" onclick="window.location.href='adminFeed?page=hiddenTweets'">Hidden Tweets</button>
             <button type="submit" class="back btn btn-light" onclick="window.location.href='adminFeed?page=deletedTweets'">Deleted Tweets</button>
-            <button type="submit" class="back btn btn-light" onclick="window.location.href='adminFeed?page=Retweets'">Retweets</button>
+            
                 
 
             </div>
@@ -791,132 +791,8 @@ margin-right: 10px;
                    $visibleFeed = false;
                    $hiddenFeed = false;
                    $deletedFeed = true;
-                    foreach ($tweets as $tweet) {
-                        if($tweet->deleted_at != NULL){
-                            $tweetID = $tweet->id;
-                            $userID = $tweet->user_id;
-                            $username = DB::table('users')->where('id', $userID)->value('username');
-                            $userImg = DB::table('users')->where('id', $userID)->value('profile_img');
-                            $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                            $likes = DB::table('likes')->where('tweet_id', $tweet->id)->count();
-                            $numComments = DB::table('comments')->where('tweet_id', $tweet->id)->count();
-                            $retweets = DB::table('retweets')->where('tweet_id', $tweet->id)->count();
-                            $tweetImg = DB::table('tweets')->where('tweet_id', $tweet->id)->value('img');
-                            ?>
-                            <div class="user">
-                                <div class="user-profile">
-                                    <?php echo $userImgHtml; ?>
-                                    <div style="display: inline-block;">
-                                    <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;">{{ $username }}</a>
-                                    <span>{{ $tweet->created_at }}</span>
-                                </div>
-                                </div>
-                                    <?php
-                                        echo "<div>
-                                    
-                                        $tweet->tweet.
-                                        <br> ";
-                                    ?>
-                                <div>
-                                <div>
-                                    @if (!is_null($tweetImg))
-                                        <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
-                                        <img class="img-fluid" src= "{{ $tweetImg }}">
-                                    @endif
-                                </div>
-                                </div>
-                                   
-                                <?php 
-                                     echo "tweetID: $tweetID".
-                                     '<br>';
-                                     
-                                     echo "userID: $userID".
-                                     '<br>';
-                                     
-                                     echo "$likes Likes / ";
-                                     
-                                     echo "$retweets Retweets".
-                                     '<br>'; 
-                                ?>
-                                
-                                <br>
-                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.restore', $tweet->id) }}'">Restore Tweet</button><br>
-                                <?php echo '<button class="back btn btn-light" onclick="displayComments('.$tweet->id.')">Show '.$numComments.' Comments</button>'; ?>
-                                
-                                <?php
-                                    
-                                    '<br>';
-                                    echo '<div class="comments" id="comments_' . $tweetID . '" hidden>';
-                                        ?>
-                                        
-                                        <div class="comment-container">
-                                            <?php
-                                            $comments = DB::select("select * from comments where tweet_id = '$tweetID' order by created_at desc");
-
-                                            foreach($comments as $comment){
-                                                
-                                                $commiUserImg = DB::table('users')->where('id', $comment->user_id)->value('profile_img');
-                                                $commiUserImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($commiUserImg);
-                                                $commentText = $comment->comment;
-                                                $username = DB::table('users')->where('id', $comment->user_id)->value('username');
-                                                ?>
-                                                <div class="comment-post-container">
-                                                    <div class="comment-user-profile">
-                                                        <?php 
-                                                            echo '<div>';
-                                                            
-                                                            if($comment->deleted_at != null){
-                                                                echo "<b> [DELETED COMMENT]</b> ";
-                                                                echo "<br>";
-                                                            }else if($comment->visibility == 0){
-                                                                echo "<b> [HIDDEN COMMENT]</b> ";
-                                                                echo "<br>";
-                                                            }else{
-                                                                echo "<br>";
-                                                            }
-                                                            echo $commiUserImgHtml; ?>
-                                                            <div style="display: inline-block;">
-                                                                <a style="margin-right: 3px; text-decoration: none;">{{ $username }}</a>
-                                                                <a> &bull; </a>
-                                                                <span>{{ $comment->created_at }}</span>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                
-
-                                                    echo "$comment->comment <br><br> ";
-
-                                                        if($comment->visibility == 0 && $comment->deleted_at == null){
-                                                            ?>
-                                                            <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.hide', $comment->comment_id) }}'">Unhide Comment</a></button>
-                                                            <?php
-                                                        }else if($comment->visibility == 1 && $comment->deleted_at == null){
-                                                            ?>
-                                                            <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.hide', $comment->comment_id) }}'">Hide Comment</a></button>
-                                                            <?php
-                                                        }
-                                                        
-                                                        if($comment->deleted_at == null){
-                                                            ?> <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.delete', $comment->comment_id) }}'">Delete Comment</a></button> <?php
-                                                        }else{
-                                                            ?> <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.restore', $comment->comment_id) }}'">Restore Comment</a></button> <?php
-                                                        }
-                                                    
-                                                echo "</div>";
-                                            }
-                                        ?></div>
-                                        </div>
-                                    </div>
-                                
-
-
-                            </div>
-                                <?php       
-                        }
                     
                     }
-                }
                 
                 if($_GET['page'] == 'hiddenTweets'){
                     ?> <h1> Hidden Tweets </h1> <?php 
@@ -925,144 +801,30 @@ margin-right: 10px;
                     $hiddenFeed = true;
                     $deletedFeed = false;
 
-
-                    foreach ($tweets as $tweet) {
-                        if(($tweet->deleted_at == NULL) && $tweet->visibility == 0){
-                            $tweetID = $tweet->id;
-                            $userID = $tweet->user_id;
-                            $username = DB::table('users')->where('id', $userID)->value('username');
-                            $userImg = DB::table('users')->where('id', $userID)->value('profile_img');
-                            $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-                            $likes = DB::table('likes')->where('tweet_id', $tweet->id)->count();
-                            $numComments = DB::table('comments')->where('tweet_id', $tweet->id)->count();
-                            $retweets = DB::table('retweets')->where('tweet_id', $tweet->id)->count();
-                            $tweetImg = DB::table('tweets')->where('tweet_id', $tweet->id)->value('img');
-                            ?>
-                            <div class="user">
-                            
-                                <div class="user-profile">
-                                    <?php echo $userImgHtml; ?>
-                                    <div style="display: inline-block;">
-                                    <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;">{{ $username }}</a>
-                                    <span>{{ $tweet->created_at }}</span>
-                                </div>
-
-                                </div>
-                                    <?php
-                                        echo "<div>
-                                    
-                                        $tweet->tweet.
-                                        <br> ";
-                                    ?>
-                                <div>
-                                    <div>
-                                        @if (!is_null($tweetImg))
-                                            <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
-                                            <img class="img-fluid" src="{{ $tweetImg }}">
-                                        @endif
-                                    </div>
-                                </div>
-                                <?php
-                                    echo "tweetID: $tweetID".
-                                    '<br>';
-                                    
-                                    echo "userID: $userID".
-                                    '<br>';
-                                    
-                                    echo "$likes Likes / ";
-                                    
-                                    echo "$retweets Retweets".
-                                    '<br>'; 
-                                            
-                                ?>
-                                
-                                <br>
-                                
-                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.hide', $tweet->id) }}'">UnHide Tweet</button>
-                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.delete', $tweet->id) }}'">Delete Tweet</button><br>
-                                
-                                <?php echo '<button class="back btn btn-light" onclick="displayComments('.$tweet->id.')">Show '.$numComments.' Comments</button>'; ?>
-                                
-                                <?php
-                                    
-                                    '<br>';
-                                    echo '<div class="comments" id="comments_' . $tweetID . '" hidden>';
-                                        ?>
-                                        
-                                        <div class="comment-container">
-                                            <?php
-                                            $comments = DB::select("select * from comments where tweet_id = '$tweetID' order by created_at desc");
-
-                                            foreach($comments as $comment){
-                                                
-                                                $commiUserImg = DB::table('users')->where('id', $comment->user_id)->value('profile_img');
-                                                $commiUserImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($commiUserImg);
-                                                $commentText = $comment->comment;
-                                                $username = DB::table('users')->where('id', $comment->user_id)->value('username');
-                                                ?>
-                                                <div class="comment-post-container">
-                                                    <div class="comment-user-profile">
-                                                        <?php 
-                                                            echo '<div>';
-                                                            
-                                                            if($comment->deleted_at != null){
-                                                                echo "<b> [DELETED COMMENT]</b> ";
-                                                                echo "<br>";
-                                                            }else if($comment->visibility == 0){
-                                                                echo "<b> [HIDDEN COMMENT]</b> ";
-                                                                echo "<br>";
-                                                            }else{
-                                                                echo "<br>";
-                                                            }
-                                                            echo $commiUserImgHtml; ?>
-                                                            <div style="display: inline-block;">
-                                                                <a style="margin-right: 3px; text-decoration: none;">{{ $username }}</a>
-                                                                <a> &bull; </a>
-                                                                <span>{{ $comment->created_at }}</span>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                
-
-                                                    echo "$comment->comment <br><br> ";
-
-                                                        if($comment->visibility == 0 && $comment->deleted_at == null){
-                                                            ?>
-                                                            <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.hide', $comment->comment_id) }}'">Unhide Comment</a></button>
-                                                            <?php
-                                                        }else if($comment->visibility == 1 && $comment->deleted_at == null){
-                                                            ?>
-                                                            <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.hide', $comment->comment_id) }}'">Hide Comment</a></button>
-                                                            <?php
-                                                        }
-                                                        
-                                                        if($comment->deleted_at == null){
-                                                            ?> <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.delete', $comment->comment_id) }}'">Delete Comment</a></button> <?php
-                                                        }else{
-                                                            ?> <button class="back btn btn-light" onclick="window.location.href='{{ route('comment.restore', $comment->comment_id) }}'">Restore Comment</a></button> <?php
-                                                        }
-                                                    
-                                                echo "</div>";
-                                            }
-                                        ?></div>
-                                        </div>
-                                    </div>
-                                    
-
-
-                            </div>
-                                <?php        
-                        }
-                    
-                    }
                 }
             }
             
-            
-            else{
-            ?> <h1> Visible Tweets </h1> 
+        {
+            ?>  
+            @if($visibleFeed)
+                <h1>Visible Tweets</h1> 
+            @endif
+                
             @foreach ($tweets as $tweet)
+            
+
+            @if($visibleFeed && ($tweet->visibility == 0 || $tweet->deleted_at != null))
+                @continue
+            @endif
+
+            @if($hiddenFeed && ($tweet->visibility == 1 || $tweet->deleted_at != null))
+                @continue
+            @endif
+
+            @if($deletedFeed && ($tweet->deleted_at == null))
+                @continue
+            @endif
+
             <?php
             //DB query for user
             $cur_user_id = Auth::id();
@@ -1077,8 +839,9 @@ margin-right: 10px;
                 ->value('profile_img');
             $userImgSrc = app('App\Http\Controllers\UserController')->getUserImg($userImg);
             $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
-            $tweet_id = $tweet->id;
+            
             $tweet_typ = (string) $tweet->typ;
+            $tweet_id = $tweet->id;
 
             if ($tweet->typ == 'tweet') {
                 // DB query for tweet
@@ -1088,6 +851,19 @@ margin-right: 10px;
                 $tweetImg = DB            ::table('tweets')
                     ->where('tweet_id', $tweet->id)
                     ->value('img');
+                $likes = DB::table('likes')
+                    ->where('tweet_id', $tweet->id)
+                    ->where('deleted_at', null)
+                    ->where('visibility', 1)
+                    ->count();
+                $numComments = DB::table('comments')
+                    ->where('tweet_id', $tweet->id)
+                    ->count();
+                $retweets = DB::table('retweets')
+                    ->where('tweet_id', $tweet->id)
+                    ->where('deleted_at', null)
+                    ->where('visibility', 1)
+                    ->count();
             } else {
                 // DB query for retweet
                 $retweetedTweet = DB::table('retweets')
@@ -1115,6 +891,14 @@ margin-right: 10px;
                 $tweetImg = DB::table('tweets')
                     ->where('tweet_id', $retweetedTweet)
                     ->value('img');
+                $likes = DB::table('likes')
+                    ->where('retweet_id', $tweet->id)
+                    ->where('deleted_at', null)
+                    ->where('visibility', 1)
+                    ->count();
+                $numComments = DB::table('comments')
+                    ->where('retweet_id', $tweet->id)
+                    ->count();
             }
             ?>
 
@@ -1133,28 +917,7 @@ margin-right: 10px;
 
                     
 
-                    {{-- selbe für Retweets --}}
-                    @if ($user_id === $cur_user_id && $tweet->typ == 'retweet')
-                    <!-- Edit and delete and hide tweet -->
-                    <div class="menu-btn-own">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><button class="dropdown-item">
-                                    <a href="{{ route('MyRetweetDelete', $tweet->id) }}" style="text-decoration: none;">Delete</a>
-                                </button></li>
-                            <?php
-                            $retweetId = $tweet->id; // ID des Retweets
-                            $retweetText = $retweetText ?? ''; // Text des Retweets (falls vorhanden)
-                            echo '<li><button type="button" class="dropdown-item" onclick="editRetweet(' . $retweetId . ', ' . htmlspecialchars('"' . $retweetText . '"') . ')" data-retweet-id="{{ $retweetId }} " data-bs-toggle="modal" data-bs-target="#EditRetweetModal">Edit</button></li>';
-                            ?>
-                            <li>
-                                <button class="dropdown-item">
-                                    <a href="{{ route('tweet.hide.feed', ['id' => $tweet->id, 'typ' => htmlspecialchars($tweet->typ)]) }}" style="text-decoration: none;">Hide Tweet</a>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    @endif
+                    
 
                 </div>
 
@@ -1162,6 +925,9 @@ margin-right: 10px;
                            
                 <!-- Display Retweet -->
                 @if ($tweet->typ == 'retweet')
+                {{'retweet ID: '.$tweet_id.''}}<br>
+                {{'user ID: '.$user_id.''}}<br>
+                {{'likes: '.$likes.''}}<br><br>
                 <p class="retweet-text">{{ $retweetText }}</p>
                 <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> {{ $username }}
                     retweeted</p>
@@ -1175,18 +941,42 @@ margin-right: 10px;
                     </div>
                     @isset($tweetText)
                     <!-- Validation fängt es schon ab, dennoch so besser -->
+                    
                     <p class="retweet-text">{{ $tweetText }}</p>
                     @endisset
                     @if (!is_null($tweetImg))
                     <?php $tweetImg = app('App\Http\Controllers\UserController')->getUserImg($tweetImg); ?>
                     <img class="img-fluid" src={{ $tweetImg }}>
                     @endif
+                    
                 </div>
+                <?php
+                        if($visibleFeed){
+                            ?>
+                            <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.hide', $tweet->id) }}'">Hide Tweet</button>
+                            <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.delete', $tweet->id) }}'">Delete Tweet</button><br>
+                            <?php
+                        }
+                        if($hiddenFeed){
+                            ?>
+                            <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.hide', $tweet->id) }}'">UnHide Tweet</button>
+                            <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.delete', $tweet->id) }}'">Delete Tweet</button><br>
+                            <?php
+                        }
+                        if($deletedFeed){
+                            ?>
+                            <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.restore', $tweet->id) }}'">Restore Tweet</button>
+                            <?php
+                        }
+                        ?>
                 @elseif($tweet->typ == 'tweet')
-                <!-- Display Tweet -->
-                @if (!is_null($tweetText))
-                <!-- Validation fängt es schon ab, dennoch so besser -->
-                {{ $tweetText }}<br>
+                <!-- Display Tweet and it's stats-->
+                @if (!is_null($tweetText))<br>
+                {{'tweet ID: '.$tweet_id.''}}<br>
+                {{'user ID: '.$user_id.''}}<br>
+                {{'retweets: '.$retweets.''}}<br>
+                {{'likes: '.$likes.''}}<br><br>
+                {{ $tweetText }}<br><br>
                 @endif
 
 
@@ -1196,50 +986,22 @@ margin-right: 10px;
                 <img class="img-fluid" src={{ $tweetImg }}>
                 @endif
                 @endif
-                <!-- Activity Icons -->
+                <!-- Buttons -->
                 <div class="post-row">
                     <div class="activity-icons">
 
                         <!-- Count Likes Comments and Retweets -->
                         <?php
                         if ($tweet->typ == 'tweet') {
-                            $likes = DB::table('likes')
-                                ->where('tweet_id', $tweet->id)
-                                ->where('deleted_at', null)
-                                ->where('visibility', 1)
-                                ->count();
-                            $numComments = DB::table('comments')
-                                ->where('tweet_id', $tweet->id)
-                                
-                                ->count();
-                            $retweets = DB::table('retweets')
-                                ->where('tweet_id', $tweet->id)
-                                ->where('deleted_at', null)
-                                ->where('visibility', 1)
-                                ->where('own_visibility', 1)
-                                ->count();
+                            
                         } elseif ($tweet->typ == 'retweet') {
-                            $likes = DB::table('likes')
-                                ->where('retweet_id', $tweet->id)
-                                ->where('deleted_at', null)
-                                ->where('visibility', 1)
-                                ->count();
-                            $numComments = DB::table('comments')
-                                ->where('retweet_id', $tweet->id)
-                                
-                                ->count();
+                            
                         }
                         ?>
 
 
-                        <!-- Comment Button (display comments if button is clicked) -->
-                        <div>
-                            
-                            <?php if($numComments != 0) {echo '<button onclick="displayComments(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweet->typ . '"') . ') " class="btn btn-dark" aria-expanded="false">show ' .$numComments.' Comments';} ?>
-                        </div>
-                        @if ($tweet->typ == 'tweet')
-                        <!-- Retweet Button -->
                         
+                        @if ($tweet->typ == 'tweet')
                         <?php
                         if($visibleFeed){
                             ?>
@@ -1258,7 +1020,12 @@ margin-right: 10px;
                             <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.restore', $tweet->id) }}'">Restore Tweet</button>
                             <?php
                         }
+                        
                         ?>
+                        <!-- Comment Button (display comments if button is clicked) -->
+                        <div>
+                            <?php if($numComments != 0) {echo '<button onclick="displayComments(' . $tweet->id . ', ' . htmlspecialchars('"' . $tweet->typ . '"') . ') " class="btn btn-dark" aria-expanded="false">show ' .$numComments.' Comments';} ?>
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -1305,8 +1072,7 @@ margin-right: 10px;
                             </div>
                         </div>
                         <?php
-                            if($comment->deleted_at != null){echo "DELETED COMMENT";}
-                            else if($comment->visibility == 0){echo "HIDDEN COMMENT";}
+                            
                             echo "$comment->comment <br><br> ";
                             if($comment->visibility == 0)
                                 {

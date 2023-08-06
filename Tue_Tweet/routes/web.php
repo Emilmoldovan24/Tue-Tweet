@@ -173,6 +173,15 @@ Route::get('tweet-restore/{id}', [AdminController::class, 'restoreTweet'])->name
 //Hide Tweet
 Route::get('tweet-hide/{id}', [AdminController::class, 'hideTweet'])->name('tweet.hide');
 
+// Delete ReTweet
+Route::get('retweet-delete/{id}', [AdminController::class, 'deleteRetweet'])->name('retweet.delete');
+
+//Restore ReTweet
+Route::get('retweet-restore/{id}', [AdminController::class, 'restoreRetweet'])->name('retweet.restore');
+
+//Hide ReTweet
+Route::get('retweet-hide/{id}', [AdminController::class, 'hideRetweet'])->name('retweet.hide');
+
 //Delete Comment
 Route::get('comment-delete/{id}', [AdminController::class, 'deleteComment'])->name('comment.delete');
 
