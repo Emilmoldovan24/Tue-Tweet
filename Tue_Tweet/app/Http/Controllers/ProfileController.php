@@ -260,6 +260,7 @@ class ProfileController extends Controller
         return redirect()->route('settings');
     }
 
+    // Updates Password
     public function postPassword(Request $request)
     {
         $request->validate([

@@ -437,12 +437,6 @@ Route::post('/mark-as-read', [
 ])->middleware('loggedIn');
 
 // show tweet
-Route::post('/showTweet/{id}/{typ}', [
-    'uses' => 'App\Http\Controllers\FeedController@showTweet',
-    'as' => 'showTweet'
-])->middleware('loggedIn');
-
-// show tweet
 Route::get('/showTweet/{id}/{typ}/{notificationId}', [
     'uses' => 'App\Http\Controllers\FeedController@showTweet',
     'as' => 'showTweet'
