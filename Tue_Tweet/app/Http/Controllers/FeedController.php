@@ -503,11 +503,12 @@ class FeedController extends Controller
 
         $tweets = DB::select($query);
         $noResults = empty($tweets);
+        $oldSearch = $search;
 
         if ($tweets == NULL) { // no results found
-            return view('feed', compact('noResults', 'closeSearch'));
+            return view('feed', compact('noResults', 'closeSearch', 'oldSearch'));
         } else { // results found
-            return view('feed', compact('tweets', 'noResults', 'closeSearch'));
+            return view('feed', compact('tweets', 'noResults', 'closeSearch', 'oldSearch'));
         }
     }
 
@@ -515,8 +516,9 @@ class FeedController extends Controller
     {
         $closeSearch = false;
         $noResults = false;
+        $oldSearch = "";
 
-        return view('feed', compact('noResults', 'closeSearch'));
+        return view('feed', compact('noResults', 'closeSearch', 'oldSearch'));
     }
 
     // show tweet
