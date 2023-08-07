@@ -133,55 +133,6 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
-    //----------------------------------------------------------------------------------------------------------
-
-    public function deleteAdmin(Request $request)
-    {
-
-        $id = $request->id;
-
-        $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
-
-        DB::update("update admins set deleted_at = '$currentTimestamp' where id = ?", [$id]);
-        DB::update("update admins set activated = 0 where id = ?", [$id]);
-
-        return redirect()->back();
-    }
-
-    public function restoreAdmin(Request $request)
-    {
-
-        $id = $request->id;
-
-        $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
-
-        DB::update("update admins set deleted_at = null where id = ?", [$id]);
-        DB::update("update admins set activated = 1 where id = ?", [$id]);
-
-        return redirect()->back();
-    }
-
-    public function activateAdmin(Request $request)
-    {
-
-        $id = $request->id;
-
-        DB::update("update admins set activated = 1 where id = ?", [$id]);
-
-        return redirect()->back();
-    }
-
-    public function deactivateAdmin(Request $request)
-    {
-
-        $id = $request->id;
-
-        DB::update("update admins set activated = 0 where id = ?", [$id]);
-
-        return redirect()->back();
-    }
 
     public function hideTweet(Request $request)
     {
@@ -250,35 +201,6 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-
-
-    public function deleteUser(Request $request)
-    {
-
-        $id = $request->id;
-
-        $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
-
-        DB::update("update users set deleted_at = '$currentTimestamp' where id = ?", [$id]);
-
-        DB::update("update tweets set visibility = 0 where user_id = ?", [$id]);
-
-        return redirect()->back();
-    }
-
-    public function restoreUser(Request $request)
-    {
-
-        $id = $request->id;
-        // $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
-        DB::update("update users set deleted_at =  null where id = ?", [$id]);
-        DB::update("update tweets set visibility = 1 where user_id = ?", [$id]);
-
-        return redirect()->back();
-    }
-    
-
     public function deleteRetweet(Request $request)
     {
         $id = $request->id;
@@ -322,6 +244,87 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+    //----------------------------------------------------------------------------------------------------------
+
+    //----------------------------------------Mange Admins------------------------------------------------------
+    public function deleteAdmin(Request $request)
+    {
+
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update admins set deleted_at = '$currentTimestamp' where id = ?", [$id]);
+        DB::update("update admins set activated = 0 where id = ?", [$id]);
+
+        return redirect()->back();
+    }
+
+    public function restoreAdmin(Request $request)
+    {
+
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update admins set deleted_at = null where id = ?", [$id]);
+        DB::update("update admins set activated = 1 where id = ?", [$id]);
+
+        return redirect()->back();
+    }
+
+    public function activateAdmin(Request $request)
+    {
+
+        $id = $request->id;
+
+        DB::update("update admins set activated = 1 where id = ?", [$id]);
+
+        return redirect()->back();
+    }
+
+    public function deactivateAdmin(Request $request)
+    {
+
+        $id = $request->id;
+
+        DB::update("update admins set activated = 0 where id = ?", [$id]);
+
+        return redirect()->back();
+    }
+    //----------------------------------------------------------------------------------------------------------
+
+
+    //--------------------------------------------Mange Users---------------------------------------------------
+
+    public function deleteUser(Request $request)
+    {
+
+        $id = $request->id;
+
+        $currentTimeString = time();
+        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
+
+        DB::update("update users set deleted_at = '$currentTimestamp' where id = ?", [$id]);
+
+        DB::update("update tweets set visibility = 0 where user_id = ?", [$id]);
+
+        return redirect()->back();
+    }
+
+    public function restoreUser(Request $request)
+    {
+
+        $id = $request->id;
+        // $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
+        DB::update("update users set deleted_at =  null where id = ?", [$id]);
+        DB::update("update tweets set visibility = 1 where user_id = ?", [$id]);
+
+        return redirect()->back();
+    }
+
 
     // Function: Password change request
     public function postPassChangeVerify(Request $request){
@@ -452,3 +455,5 @@ class AdminController extends Controller
     }
 
 }
+//----------------------------------------------------------------------------------------------------------
+    
