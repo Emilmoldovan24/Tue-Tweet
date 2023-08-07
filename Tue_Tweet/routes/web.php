@@ -165,46 +165,46 @@ Route::get('admin-deactivate/{id}', [AdminController::class, 'deactivateAdmin'])
 Route::get('admin-activate/{id}', [AdminController::class, 'activateAdmin'])->name('admin.activate')->middleware('superAdmin');
 
 // Delete Tweet
-Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete');
+Route::get('tweet-delete/{id}', [AdminController::class, 'deleteTweet'])->name('tweet.delete')->middleware('isAdmin');
 
 //Restore Tweet
-Route::get('tweet-restore/{id}', [AdminController::class, 'restoreTweet'])->name('tweet.restore');
+Route::get('tweet-restore/{id}', [AdminController::class, 'restoreTweet'])->name('tweet.restore')->middleware('isAdmin');
 
 //Hide Tweet
-Route::get('tweet-hide/{id}', [AdminController::class, 'hideTweet'])->name('tweet.hide');
+Route::get('tweet-hide/{id}', [AdminController::class, 'hideTweet'])->name('tweet.hide')->middleware('isAdmin');
 
 // Delete ReTweet
-Route::get('retweet-delete/{id}', [AdminController::class, 'deleteRetweet'])->name('retweet.delete');
+Route::get('retweet-delete/{id}', [AdminController::class, 'deleteRetweet'])->name('retweet.delete')->middleware('isAdmin');
 
 //Restore ReTweet
-Route::get('retweet-restore/{id}', [AdminController::class, 'restoreRetweet'])->name('retweet.restore');
+Route::get('retweet-restore/{id}', [AdminController::class, 'restoreRetweet'])->name('retweet.restore')->middleware('isAdmin');
 
 //Hide ReTweet
-Route::get('retweet-hide/{id}', [AdminController::class, 'hideRetweet'])->name('retweet.hide');
+Route::get('retweet-hide/{id}', [AdminController::class, 'hideRetweet'])->name('retweet.hide')->middleware('isAdmin');
 
 //Delete Comment
-Route::get('comment-delete/{id}', [AdminController::class, 'deleteComment'])->name('comment.delete');
+Route::get('comment-delete/{id}', [AdminController::class, 'deleteComment'])->name('comment.delete')->middleware('isAdmin');
 
 //Restore Comment
-Route::get('comment-restore/{id}', [AdminController::class, 'restoreComment'])->name('comment.restore');
+Route::get('comment-restore/{id}', [AdminController::class, 'restoreComment'])->name('comment.restore')->middleware('isAdmin');
 
 //Hide Comment
-Route::get('comment-hide/{id}', [AdminController::class, 'hideComment'])->name('comment.hide');
+Route::get('comment-hide/{id}', [AdminController::class, 'hideComment'])->name('comment.hide')->middleware('isAdmin');
 
 // Delete User
-Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tweet.deleteUser');
+Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tweet.deleteUser')->middleware('isAdmin');
 
 // Restore User
-Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('tweet.restoreUser');
+Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('tweet.restoreUser')->middleware('isAdmin');
 
 // Safe single User info
-Route::get('safeUserInfo/{id}', [AdminController::class, 'safeUserInfo'])->name('tweet.safeUserInfo');
+Route::get('safeUserInfo/{id}', [AdminController::class, 'safeUserInfo'])->name('tweet.safeUserInfo')->middleware('isAdmin');
 
 //password change mail
 Route::post('/adminPassChangeVerify', [
     'uses' => 'App\Http\Controllers\AdminController@postPassChangeVerify',
     'as' => 'adminPassChangeVerify'
-]);
+])->middleware('isAdmin');
 
 
 //---------------------------------------------------------------------------------------------------------------------------
