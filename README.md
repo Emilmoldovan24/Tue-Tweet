@@ -34,7 +34,7 @@
 * One super Admin can delete/restore Admins.
 * One super Admin can activate/deactivate Admins.
 * Delete/restore Users.
-* Hide/unhide Users.
+* activate/deactivate Users.
 * Reset User Password.
 * Delete/restore User Tweets, Comments, Retweets
 * Hide/unhide User Tweets, Comments, Retweets
