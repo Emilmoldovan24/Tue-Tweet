@@ -30,12 +30,12 @@ Route::get('/', function () {
 // SignUp
 Route::get('/signup', function () {
     return view('signup');
-});
+})->middleware('notLoggedIn');
 
 // Verify
 Route::get('/verify', function () {
     return view('verify');
-});
+})->middleware('notLoggedIn');
 
 // Settings
 Route::get('/settings', function () {
@@ -53,7 +53,7 @@ Route::get('/Test', function () {
 // Route for email verification 
 Route::get('verify/{usr_data}', function ($usr_data) {
     return view('verify', ['usr_data' => $usr_data]);
-});
+})->middleware('notLoggedIn');
 
 // Routes for Password change
 Route::get('/passChangeRequest', function () {
@@ -63,7 +63,7 @@ Route::get('/passChangeRequest', function () {
 Route::post('/passChangeVerify', [
     'uses' => 'App\Http\Controllers\UserController@postPassChangeVerify',
     'as' => 'passChangeVerify'
-]);
+])->middleware('notLoggedIn');
 
 Route::get('passChange/{email}', function ($email) {
     return view('passChange', ['email' => $email]);
@@ -72,7 +72,7 @@ Route::get('passChange/{email}', function ($email) {
 Route::post('/passChanged', [
     'uses' => 'App\Http\Controllers\UserController@postPassChange',
     'as' => 'passChanged'
-]);
+])->middleware('notLoggedIn');
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -82,25 +82,25 @@ Route::post('/passChanged', [
 Route::get('/welcome', [
     'uses' => 'App\Http\Controllers\UserController@getWelcome',
     'as' => 'welcome'
-]);
+])->middleware('notLoggedIn');
 
 // Post SignUp
 Route::post('/signup', [
     'uses' => 'App\Http\Controllers\UserController@postSignUp',
     'as' => 'signup'
-]);
+])->middleware('notLoggedIn');
 
 // Post SignIn
 Route::post('/signin', [
     'uses' => 'App\Http\Controllers\UserController@postSignIn',
     'as' => 'signin'
-]);
+])->middleware('notLoggedIn');
 
 // Post Verify
 Route::post('/verify', [
     'uses' => 'App\Http\Controllers\UserController@postVerify',
     'as' => 'postVerify'
-]);
+])->middleware('notLoggedIn');
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -220,92 +220,92 @@ Route::post('/adminPassChangeVerify', [
 Route::post('/postImage', [
     'uses' => 'App\Http\Controllers\ProfileController@postImage',
     'as' => 'postImage'
-]);
+])->middleware('loggedIn');
 
 // Update Bio
 Route::post('/postBio', [
     'uses' => 'App\Http\Controllers\ProfileController@postBio',
     'as' => 'postBio'
-]);
+])->middleware('loggedIn');
 
 // Update Username
 Route::post('/postUsername', [
     'uses' => 'App\Http\Controllers\ProfileController@postUsername',
     'as' => 'postUsername'
-]);
+])->middleware('loggedIn');
 
 // Update Email
 Route::post('/postEmail', [
     'uses' => 'App\Http\Controllers\ProfileController@postEmail',
     'as' => 'postEmail'
-]);
+])->middleware('loggedIn');
 
 // Update Email
 Route::post('/postPassword', [
     'uses' => 'App\Http\Controllers\ProfileController@postPassword',
     'as' => 'postPassword'
-]);
+])->middleware('loggedIn');
 
 // Follow/Unfollow
 Route::post('/follow', [
     'uses' => 'App\Http\Controllers\ProfileController@postFollow',
     'as' => 'follow'
-]);
+])->middleware('loggedIn');
 
 // Edit Tweet
 Route::post('/profileTweet-edit', [
     'uses' => 'App\Http\Controllers\ProfileController@editTweetProfile',
     'as' => 'editTweetProfile'
-]);
+])->middleware('loggedIn');
 
 // Delete Tweet
 Route::get('profile-tweet-delete/{id}', [
     'uses' => 'App\Http\Controllers\ProfileController@deleteTweetProfile',
     'as' => 'deleteTweetProfile'
-]);
+])->middleware('loggedIn');
 
 // Hide Tweet Profile 
 
 Route::get('tweet-hide1/{id}', [
     'uses' => 'App\Http\Controllers\ProfileController@hideTweetProfile',
     'as' => 'tweet.hide.profile'
-]);
+])->middleware('loggedIn');
 
 // Edit Comment
 Route::post('/Comment-edit', [
     'uses' => 'App\Http\Controllers\ProfileController@editCommentProfile',
     'as' => 'editCommentProfile'
-]);
+])->middleware('loggedIn');
 
 // Delete Comment
 Route::get('profile-comment-delete/{id}', [
     'uses' => 'App\Http\Controllers\ProfileController@deleteCommentProfile',
     'as' => 'deleteCommentProfile'
-]);
+])->middleware('loggedIn');
 
 // Profile Retweet
 Route::post('profile-retweet/{tweet_id}', [
     'uses' => 'App\Http\Controllers\ProfileController@retweetProfile',
     'as' => 'retweetProfile'
-]);
+])->middleware('loggedIn');
 
 // safe Information as file
 Route::get('/safeFile', [
     'uses' => 'App\Http\Controllers\ProfileController@safeFile',
     'as' => 'safeFile'
-]);
+])->middleware('loggedIn');
 
 // Delete Retweet
 Route::get('profile-retweet-delete/{id}', [
     'uses' => 'App\Http\Controllers\ProfileController@deleteRetweetProfile',
     'as' => 'deleteRetweetProfile'
-]);
+])->middleware('loggedIn');
 
 // Edit Retweet
 Route::post('/retweet-profile-edit', [
     'uses' => 'App\Http\Controllers\ProfileController@editRetweetProfile',
     'as' => 'editRetweetProfile'
-]);
+])->middleware('loggedIn');
 //---------------------------------------------------------------------------------------------------------------------------
 
 // FeedController

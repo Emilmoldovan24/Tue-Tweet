@@ -16,6 +16,7 @@ class NotLoggedIn
      * Handle an incoming request.
      * 
      * This middleware checks wether the user is logged in, and only lets users that are not logged in acces it. 
+     * It redirects authenticated users to their respective feeds.
      * Used for Log in pages, since an authenticated user should not be able to log in twice.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
@@ -25,7 +26,19 @@ class NotLoggedIn
         // if user is logged in, throw error
         if (Auth::check()) {
 
-            return response('You must log out first.', 401);
+            // check the session
+            $session = Session::all();
+
+            // if user type is admin, then success, else throw error
+            if($session['user_type'] == 'admin'){
+
+                return redirect()->route('adminDash');
+
+            } else {
+
+                return redirect()->route('feed');
+
+            }
 
         } else {
 
