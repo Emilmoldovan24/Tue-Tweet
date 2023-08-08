@@ -174,10 +174,15 @@
 
             <?php 
 
+            //DB query simply fetching all users
             $users = DB::select('select * from users order by created_at desc');
+
+            //booleans represent wich feed is actively being viewed
+            //used later to decide which users and buttons to show
             $allUsers = true;
             $activeUsers = false;
             $deactivatedUsers = false;
+
             //query parameters are used as buttons to set booleans that decide what users are showm
             if(isset($_GET['page'])){
                 if($_GET['page'] == 'deletedUsers'){ 
@@ -195,7 +200,7 @@
                 }
             }
 
-            //show all users
+            //show feed of users
             {
                 if($allUsers) echo("<h1> All users </h1>"); ?>          
                 @if(session()->has('messageSuccess'))
@@ -229,6 +234,7 @@
                             </div>
                             <?php
                                 //all deleted users are deactivated
+                                //marks users als deadctivated/deleted when viewing feed that displays both
                                 if($allUsers || $deactivatedUsers){
                                     if($user->deleted_at != null)
                                         echo("[DELETED USER]<br>");
@@ -250,6 +256,20 @@
                                 
                                 
                                 if($allUsers){
+                                    //show deactivate button if user is active
+                                if($user->activate == 1){
+                                    ?>
+                                <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Deactivate User</button>
+                                <?php
+                                }
+                                //show reactivate button if user is inactive nad not deleted
+                                else if($user->deleted_at == null){
+                                    ?>
+                                <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Reactivate User</button>
+                                    <?php
+                                }
                                 //show delete button if user is activ
                                 if($user->deleted_at == NULL){
                                     ?>
@@ -263,26 +283,14 @@
                                     onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button>
                                 <?php
                                 }
-                                if($user->activate == 1){
-                                    ?>
-                                <button class="back btn btn-light"
-                                    onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Deactivate User</button>
-                                <?php
-                                }
-                                else{
-                                    ?>
-                                    <button class="back btn btn-light"
-                                    onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Reactivate User</button>
-                                    <?php
-                                }
+                                
                                 ?>
                                 
                                 
                                 <?php 
 
+                                //form for sending a password reset to the user
                                 if($user->deleted_at == NULL && $user->activate == 1){ //show email reset only if user is activ?>
-                                    <button class="back btn btn-light"
-                                        onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
                                     <form method="post"  class="back btn btn-light" type = "submit"
                                             action="{{ route('adminPassChangeVerify')}}"  >
                                             <input type="text" name="email" id='email' value=>
@@ -311,11 +319,9 @@
                                     <button class="back btn btn-light"
                                     onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Deactivate User</button>
                                     <button class="back btn btn-light"
-                                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button> <br>
+                                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button> 
 
                                     <!-- passwort reset -->
-                                    <button class="back btn btn-light"
-                                        onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
                                     <form method="post"  class="back btn btn-light" type = "submit"
                                             action="{{ route('adminPassChangeVerify')}}"  >
                                             <input type="text" name="email" id='email' value=>
@@ -327,6 +333,9 @@
                                 }
 
                                 ?>
+                                <!--Button for locally downloading user info to a txt file, shown in all feeds-->
+                                <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
+                                
                     </div>
             <?php         
                 }
