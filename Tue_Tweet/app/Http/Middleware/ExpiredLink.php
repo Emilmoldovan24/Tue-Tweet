@@ -15,10 +15,15 @@ class ExpiredLink
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // if the link is not valid or has expired, throw error, else success
         if (! $request->hasValidSignature()) {
+
             return response('Link not valid.', 401);
+            
         } else {
+
             return $next($request);
+            
         }
     }
 }

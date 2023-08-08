@@ -40,6 +40,8 @@ class FeedController extends Controller
         $user = Auth::user();
         Log::info("$user->username logged out!");
         Auth::logout();
+        
+        // delete and regenrate the session
         Session::flush();
         Session::regenerate();
         return redirect()->route('welcome');

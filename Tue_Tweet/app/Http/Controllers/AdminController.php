@@ -42,8 +42,11 @@ class AdminController extends Controller
     public function getAdminLogout()
     {
         Auth::logout();
+
+        // delete and regenrate the session
         Session::flush();
         Session::regenerate();
+        
         return redirect()->route('adminLogin');
     }
 

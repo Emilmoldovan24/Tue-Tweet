@@ -48,8 +48,9 @@ Route::get('/Test', function () {
 });
 
 
+//---------------------------------------------------------------------------------------------------------------------------
 
-// Verify with UserData
+// Route for email verification 
 Route::get('verify/{usr_data}', function ($usr_data) {
     return view('verify', ['usr_data' => $usr_data]);
 });
@@ -72,6 +73,7 @@ Route::post('/passChanged', [
     'uses' => 'App\Http\Controllers\UserController@postPassChange',
     'as' => 'passChanged'
 ]);
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 // UserController
