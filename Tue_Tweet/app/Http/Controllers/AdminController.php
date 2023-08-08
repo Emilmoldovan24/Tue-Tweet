@@ -297,7 +297,7 @@ class AdminController extends Controller
     //----------------------------------------------------------------------------------------------------------
 
 
-    //--------------------------------------------Mange Users---------------------------------------------------
+    //--------------------------------------------Manage Users---------------------------------------------------
 
     public function deleteUser(Request $request)
     {
@@ -308,8 +308,8 @@ class AdminController extends Controller
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
 
         DB::update("update users set deleted_at = '$currentTimestamp' where id = ?", [$id]);
-
         DB::update("update tweets set visibility = 0 where user_id = ?", [$id]);
+        DB::update("update users set activate = 0 where id = ?", [$id]);
 
         return redirect()->back();
     }
@@ -318,11 +318,29 @@ class AdminController extends Controller
     {
 
         $id = $request->id;
-        // $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
+        
         DB::update("update users set deleted_at =  null where id = ?", [$id]);
         DB::update("update tweets set visibility = 1 where user_id = ?", [$id]);
+        DB::update("update users set activate = 1 where id = ?", [$id]);
 
         return redirect()->back();
+    }
+
+    //the same function both activates and deactivates users
+    public function deactivateUser(Request $request)
+    {
+
+        $id = $request->id;
+        $isActive = DB::table('users')->where('id', $id)->value('activate');
+
+        if($isActive == 0){
+            DB::update("update users set activate = 1 where id = ?", [$id]);
+        }else if($isActive == 1){
+            DB::update("update users set activate = 0 where id = ?", [$id]);
+        }
+
+        return redirect()->back();
+        
     }
 
 

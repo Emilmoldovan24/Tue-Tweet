@@ -79,6 +79,47 @@
         font-size: 2, 5vw;
     }
 
+    .post-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .user-profile {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        color: black;
+        background-color: white;
+
+    }
+
+    .user-profile img {
+        width: 45px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .user-profile p {
+        margin-bottom: -5px;
+        font-weight: 500;
+        color: #white;
+        margin-right: 20px;
+    }
+
+    .post-container {
+        width: 100%;
+        min-width: 337px;
+        background-color: white;
+        border-radius: 12px;
+        padding: 20px;
+        color: black;
+        margin: 20px 0;
+        border: 3px solid #a71b28;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+
     @media (max-width: 368px) {
         .adminDash {
             display: block;
@@ -119,14 +160,14 @@
         </div>
 
         <div class="main-content">
-
+            <!--3 pages for All, Active and not Active Users -->
             <div class="menu">
                 <button type="submit" class="back btn btn-light" onclick="window.location.href='adminUsers?'">All
                     Users</button>
                 <button type="submit" class="back btn btn-light"
                     onclick="window.location.href='adminUsers?page=notDeletedUsers'">Active Users</button>
                 <button type="submit" class="back btn btn-light"
-                    onclick="window.location.href='adminUsers?page=deletedUsers'">Deleted Users</button>
+                    onclick="window.location.href='adminUsers?page=deletedUsers'">Deactivated/Deleted Users</button>
 
 
             </div>
@@ -134,89 +175,29 @@
             <?php 
 
             $users = DB::select('select * from users order by created_at desc');
-            //use query parameters to check which page should be shown
-           if(isset($_GET['page'])){
+            $allUsers = true;
+            $activeUsers = false;
+            $deactivatedUsers = false;
+            //query parameters are used as buttons to set booleans that decide what users are showm
+            if(isset($_GET['page'])){
                 if($_GET['page'] == 'deletedUsers'){ 
-                   ?> <h1> All deleted users </h1>
-
-            <?php 
-                     foreach ($users as $user) {
-                        //show all deleted users
-                        if($user->deleted_at != NULL){
-                            $userID = $user->id;
-                            ?>
-            <div class="user">
-                <?php
-                echo "Username: $user->username" . '<br>';
-                echo "ID: $user->id" . '<br>';
-                echo "E-mail: $user->email" . '<br>';
-                echo "Created at: $user->created_at" . '<br>';
-                echo "Deleted at: $user->deleted_at" . '<br>';
-                ?>
-                <button class="back btn btn-light"
-                    onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button>
-                <?php
-                ?>
-
-                <button class="back btn btn-light"
-                    onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user
-                    information</button> <?php
-                    ?>
-            </div>
-            <?php         
-                        }
-                    }
-                }else{
-                     //show all not deleted users
-                    ?> <h1> All active users </h1>
-                    
-                    @if(session()->has('messageSuccess'))
-                            <div class="alert alert-success">
-                                {{ session()->get('messageSuccess') }}
-                            </div>
-                    @elseif(session()->has('messageFail'))
-                            <div class="alert alert-danger">
-                                {{ session()->get('messageFail') }}
-                            </div>
-                @endif
-                    <?php 
-                    foreach ($users as $user) {
-                       
-                        if($user->deleted_at == NULL){
-                            ?>
-            <div class="user">
-                <?php
-                echo "Username: $user->username" . '<br>';
-                echo "ID: $user->id" . '<br>';
-                echo "E-mail: $user->email" . '<br>';
-                echo "Created at: $user->created_at" . '<br>';
-                echo "Deleted at: $user->deleted_at" . '<br>';
-                ?>
-                <button class="back btn btn-light"
-                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button>
-                <?php
-                
-                ?>
-
-                <button class="back btn btn-light"
-                    onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user
-                    information</button> <?php
-                    ?>
-                <form method="post"  class="back btn btn-light" type = "submit"
-                    action="{{ route('adminPassChangeVerify')}}"  >
-                        <input type="text" name="email" id='email' value=>
-                        <input type="submit" value= "Send password reset">
-                        <input type="hidden" name="_token" value="{{  Session::token() }}">
-                </form>                
-            </div>
-            <?php         
-                        }
-                    }
+                $allUsers = false;
+                $activeUsers = false;
+                $deactivatedUsers = true;
+                ?> <h1> all deactivated or deleted users </h1>
+                <?php  
+                }else if($_GET['page'] == 'notDeletedUsers'){
+                    $allUsers = false;
+                    $activeUsers = true;
+                    $deactivatedUsers = false;
+                    ?> <h1> all active users </h1>
+                <?php         
                 }
+            }
 
             //show all users
-           }else{
-                ?> <h1> All users </h1>                
+            {
+                if($allUsers) echo("<h1> All users </h1>"); ?>          
                 @if(session()->has('messageSuccess'))
                             <div class="alert alert-success">
                                 {{ session()->get('messageSuccess') }}
@@ -228,20 +209,50 @@
                 @endif
                 <?php 
                 foreach ($users as $user) {
+                    if($activeUsers && ($user->activate == 0 || $user->deleted_at != null)){continue;}
+                    if($deactivatedUsers && $user->activate == 1){continue;}
+                    $username = $user->username;
+                    $user_id = $user->id;
+                    $userImg = $user->profile_img;
+                    $userImgSrc = app('App\Http\Controllers\UserController')->getUserImg($userImg);
+                    $userImgHtml = app('App\Http\Controllers\UserController')->getUserImgHtml($userImg);
                     ?>
-            <div class="user">
-                <?php
-                                echo "Username: $user->username".
-                                    '<br>';
-                                echo "ID: $user->id".
+                    <div class="user">
+                
+                            <div class="post-row">
+                                <div class="user-profile">
+                                    <?php echo $userImgHtml; ?>
+                                    <div style="display: inline-block;">
+                                        <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;">{{ $username }}</a>
+                                        <a> &bull; </a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                                //all deleted users are deactivated
+                                if($allUsers || $deactivatedUsers){
+                                    if($user->deleted_at != null)
+                                        echo("[DELETED USER]<br>");
+                                    else if($user->activate == 0)
+                                        echo("[DEACTIVATED USER]<br>");     
+                                }
+
+                                
+                                echo "ID: $user_id".
                                     '<br>';
                                 echo "E-mail: $user->email".
                                     '<br>';
                                 echo "Created at: $user->created_at".
                                     '<br>';
-                                echo "Deleted at: $user->deleted_at".
+                                if($user->deleted_at != null){
+                                    echo "Deleted at: $user->deleted_at".
                                     '<br>';
-                                //show delete button if user is activa
+                                }
+                                
+                                
+                                if($allUsers){
+                                //show delete button if user is activ
                                 if($user->deleted_at == NULL){
                                     ?>
                                 <button class="back btn btn-light"
@@ -254,24 +265,64 @@
                                     onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button>
                                 <?php
                                 }
+                                if($user->activate == 1){
+                                    ?>
+                                <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Deactivate User</button>
+                                <?php
+                                }
+                                else{
+                                    ?>
+                                    <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Reactivate User</button>
+                                    <?php
+                                }
                                 ?>
                                 
-                                <button class="back btn btn-light"
-                                        onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
+                                
                                 <?php 
 
                                 if($user->deleted_at == NULL){ //show email reset only if user is activ?>
+                                    <button class="back btn btn-light"
+                                        onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
                                     <form method="post"  class="back btn btn-light" type = "submit"
                                             action="{{ route('adminPassChangeVerify')}}"  >
                                             <input type="text" name="email" id='email' value=>
                                             <input type="submit" value= "Send password reset">
                                             <input type="hidden" name="_token" value="{{  Session::token() }}">
                                     </form>
-                                <?php } ?>
-            </div>
+                                <?php } 
+                                }
+
+                                else if($deactivatedUsers){
+                                    if($user->deleted_at != null){
+                                        ?>
+                                        <button class="back btn btn-light"
+                                        onclick="window.location.href='{{ route('tweet.restoreUser', $user->id) }}'">Restore user</button>
+                                        <?php
+                                    }else if($user->activate == 0 && $user->deleted_at == null){
+                                        ?>
+                                        <button class="back btn btn-light"
+                                        onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Reactivate User</button>
+                                        <?php
+                                    }
+                                    
+                                }
+                                else if($activeUsers){
+                                    ?>
+                                    <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Deactivate User</button>
+                                    <button class="back btn btn-light"
+                                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button>
+
+                                <?php
+                                }
+
+                                ?>
+                    </div>
             <?php         
                 }
-           }
+            }
             ?>
         </div>
     </div>

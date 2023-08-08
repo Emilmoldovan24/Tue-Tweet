@@ -768,7 +768,7 @@ margin-right: 10px;
                                                 from (
                                                     SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility, deleted_at
                                                         from tweets 
-                                                        where deleted_at is null 
+                                                        
                                                         UNION
                                                         SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, own_visibility, deleted_at
                                                         from retweets
@@ -914,11 +914,6 @@ margin-right: 10px;
                             <span>{{ $tweet->created_at }}</span>
                         </div>
                     </div>
-
-                    
-
-                    
-
                 </div>
 
 

@@ -197,6 +197,9 @@ Route::get('delete-user/{id}', [AdminController::class, 'deleteUser'])->name('tw
 // Restore User
 Route::get('restore-user/{id}', [AdminController::class, 'restoreUser'])->name('tweet.restoreUser')->middleware('isAdmin');
 
+// Deactivate/Reactivate User
+Route::get('deactivate-user/{id}', [AdminController::class, 'deactivateUser'])->name('tweet.deactivateUser')->middleware('isAdmin');
+
 // Safe single User info
 Route::get('safeUserInfo/{id}', [AdminController::class, 'safeUserInfo'])->name('tweet.safeUserInfo')->middleware('isAdmin');
 
