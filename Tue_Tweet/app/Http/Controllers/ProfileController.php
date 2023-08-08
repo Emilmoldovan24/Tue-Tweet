@@ -364,7 +364,7 @@ class ProfileController extends Controller
 
         Storage::put($filename, $contents);
         //safe file in root\to\Tue-Tweet\Tue_Tweet\storage\app
-        $filePath = storage_path('app\\' . $filename);
+        $filePath = storage_path('app/' . $filename);
         $fileSize = filesize($filePath);
 
         if (file_exists($filePath)) {
