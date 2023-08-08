@@ -60,13 +60,14 @@ Now you can open and use the app with *http://127.0.0.1:8000* in your favourite 
 ## Database Schema
 
 * Look at the ER-Diagram of the twitterdatabase:
-* [model2.pdf](https://github.com/Emilmoldovan24/Tue-Tweet/files/12293341/model2.pdf)
+ ![Er_diagram](https://github.com/Emilmoldovan24/Tue-Tweet/assets/92357718/c0a1bcce-eecf-452d-a46e-ff028ac6f56b)
 
 ## Responsibilities
 
 Database : Markus Holder  
 
 Authentication: Emil Moldovan
+
 
 
 User: Aya Afaghani, Julia Egyed, Luke Vallon
