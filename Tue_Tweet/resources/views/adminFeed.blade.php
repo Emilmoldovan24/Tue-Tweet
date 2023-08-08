@@ -240,35 +240,6 @@ margin-right: 10px;
 
     .container {}
 
-    /* .container {
-        display: flex;
-        justify-content: center;
-        padding: 13px 5%;
-    }
-
-    .left-sidebar {
-
-
-        flex-basis: 25%;
-        position: sticky;
-        top: 70px;
-        align-self: flex-start;
-
-    }
-
-    .right-sidebar {
-        margin: 20px 0;
-        flex-basis: 25%;
-        position: sticky;
-        top: 70px;
-        align-self: flex-start;
-    }
-
-    .main-content {
-        flex-basis: 47%;
-        align-self: flex-start;
-    } */
-
     .write-post-container {
         width: 100%;
         background: white;
@@ -396,10 +367,10 @@ margin-right: 10px;
     }
 
     .post-img {
-        width: 100%;
-        height: 500px;
+        width: 50%;
+        height: 200px;
         border-radius: 4px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .card .img {
@@ -443,11 +414,9 @@ margin-right: 10px;
         color: black;
     }
 
+    
     .retweet-text {
-        padding-left: 10px;
-        padding-right: 10px;
         padding-bottom: 1px;
-
     }
 
     .tweetbox-profile span {
@@ -530,15 +499,6 @@ margin-right: 10px;
         border-color: #a71b28;
     }
 
-    .tweet-button {
-
-        margin: ;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-    }
-
     .above-feed {
         display: flex;
         justify-content: space-between;
@@ -546,129 +506,8 @@ margin-right: 10px;
         margin-bottom: 10px;
     }
 
-    .search-form {
-        margin: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .search-input {
-        position: relative;
-    }
-
-    .search-input input {
-        padding: 10px 15px;
-        width: 300px;
-        border: none;
-        border-radius: 25px;
-        font-size: 16px;
-        outline: none;
-    }
-
-    .search-input button {
-        position: absolute;
-        right: 5px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        color: #555;
-    }
-
-    .search-input button:hover {
-        color: #333;
-    }
-
-    .search-input button i {
-        font-size: 20px;
-    }
-
-    .search-input button:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
-    }
-
-    .custom-button {
-        padding: 7px 15px;
-        background-color: #a71b28;
-        border: none;
-        border-radius: 14px;
-        font-size: 16px;
-        color: #333;
-        cursor: pointer;
-    }
-
-    .custom-button i {
-        margin-right: 5px;
-        color: white;
-    }
-
-    .custom-button:hover {
-        background-color: #ddd;
-    }
-
-    .custom-button:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
-    }
-
-    .notifications {
-        margin: 15px;
-        padding: 15px;
-    }
-
-    .share-it {
-        margin: 15px;
-        margin-bottom: 20px;
-        padding: 15px;
-    }
-
     .col-5 {
         margin-right: 20px;
-    }
-
-    .tweet.btn.btn-light {
-        background-color: #a71b28;
-        color: white;
-    }
-
-    .noti.btn.btn-secondary.dropdown-toggle {
-        background-color: #a71b28;
-    }
-
-    .search.btn.btn-secondary.dropdown-toggle {
-        background-color: #a71b28;
-    }
-
-    .noti-box {
-        font-size: 1.7vh;
-        /* Größe der Schrift in absoluten Einheiten */
-        text-overflow: ellipsis;
-        /* Verkürzt den Text mit Ellipsen (...) */
-        white-space: nowrap;
-        /* Verhindert Zeilenumbrüche */
-        overflow: hidden;
-
-        width: 100%;
-        min-width: 200px;
-        background-color: white;
-        border-radius: 12px;
-        padding-top: 5px;
-        padding-left: 5px;
-        border: 3px solid #a71b28;
-        margin-top: 10px;
-        margin-bottom: 10px;
-
-
-
-
-
-
-
-
     }
 
     .hidden.tweet.btn.btn-light {
@@ -682,24 +521,7 @@ margin-right: 10px;
 
     }
 
-    @media (min-width: 767px) and (max-width: 992px) {
-        .activity-icons div {
-            margin-right: 13px;
-        }
-    }
-
-    @media (max-width: 766px) {
-        .hidden.tweet.btn.btn-light {
-            display: block;
-            /* Button ab einer Bildschirmbreite von 768px anzeigen */
-        }
-
-        .dropdown-hidden {
-            display: block;
-            margin-top: 20px;
-
-        }
-    }
+    
 
 </style>
 
@@ -762,13 +584,11 @@ margin-right: 10px;
             <?php 
 
             
-            //$tweets = DB::select('select * from tweets order by created_at desc');
-            //$tweets = DB::select("SELECT tweet_id, user_id, created_at, 'tweet' as typ, visibility, own_visibility, deleted_at from tweets");
+            //DB query that lists tweets and retweets in the rigth order, differentiated by 'typ'
             $tweets = DB::select("SELECT id, user_id, created_at, typ, visibility, deleted_at
                                                 from (
                                                     SELECT tweet_id as id, user_id, created_at, 'tweet' as typ, visibility, own_visibility, deleted_at
                                                         from tweets 
-                                                        
                                                         UNION
                                                         SELECT retweet_id, user_id, created_at, 'retweet' as typ, visibility, own_visibility, deleted_at
                                                         from retweets
@@ -782,7 +602,7 @@ margin-right: 10px;
 
             
 
-
+            //pages function as buttons to set booleans that will decide wich tweets are shown                                    
             if(isset($_GET['page'])){
                 if($_GET['page'] == 'deletedTweets'){
                    ?> <h1> Deleted Tweets </h1> 
@@ -805,6 +625,7 @@ margin-right: 10px;
             }
             
         {
+            //booleans decide what feed is displayed by determining wich tweets to exclude from the foreach loop
             ?>  
             @if($visibleFeed)
                 <h1>Visible Tweets</h1> 
@@ -924,8 +745,6 @@ margin-right: 10px;
                 {{'user ID: '.$user_id.''}}<br>
                 {{'likes: '.$likes.''}}<br><br>
                 <p class="retweet-text">{{ $retweetText }}</p>
-                <p class="post-text-just-retweet"><i class="fa-solid fa-retweet"></i> {{ $username }}
-                    retweeted</p>
                 <div class="retweet">
                     <div class="tweetbox-profile">
                         <img src="{{ $retweetedUserImg }}">
@@ -946,6 +765,7 @@ margin-right: 10px;
                     
                 </div>
                 <?php
+                        //our feed booleans decide wich feed we are on and wich buttons we need for this feeds functionality
                         if($visibleFeed){
                             ?>
                             <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.hide', $tweet->id) }}'">Hide Tweet</button>
@@ -960,7 +780,7 @@ margin-right: 10px;
                         }
                         if($deletedFeed){
                             ?>
-                            <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.restore', $tweet->id) }}'">Restore Tweet</button>
+                            <button class="back btn btn-light" onclick="window.location.href='{{ route('retweet.restore', $tweet->id) }}'">Restore Tweet</button><br>
                             <?php
                         }
                         ?>
@@ -994,10 +814,9 @@ margin-right: 10px;
                         }
                         ?>
 
-
-                        
                         @if ($tweet->typ == 'tweet')
                         <?php
+                        //feed decides buttons to show
                         if($visibleFeed){
                             ?>
                             <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.hide', $tweet->id) }}'">Hide Tweet</button>
@@ -1012,7 +831,7 @@ margin-right: 10px;
                         }
                         if($deletedFeed){
                             ?>
-                            <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.restore', $tweet->id) }}'">Restore Tweet</button>
+                            <div> <button class="back btn btn-light" onclick="window.location.href='{{ route('tweet.restore', $tweet->id) }}'">Restore Tweet</button> </div>
                             <?php
                         }
                         
@@ -1049,6 +868,8 @@ margin-right: 10px;
                                 <?php 
                                     echo '<div>';
                                     
+                                    //there is no separate feed for hidden or deleted comments, they are simply marked as such in all three feeds
+                                    //restoring or unhiding comments does not require switching feeds
                                     if($comment->deleted_at != null){
                                         echo "<b> [DELETED COMMENT]</b> ";
                                         echo "<br>";
@@ -1069,6 +890,7 @@ margin-right: 10px;
                         <?php
                             
                             echo "$comment->comment <br><br> ";
+                            //comments status decides wich buttons should be shown and how they should be labeled
                             if($comment->visibility == 0)
                                 {
                                     ?>
