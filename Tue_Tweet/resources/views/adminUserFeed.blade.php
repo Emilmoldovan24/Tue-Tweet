@@ -224,8 +224,6 @@
                                     <?php echo $userImgHtml; ?>
                                     <div style="display: inline-block;">
                                         <a style="margin-right: 3px; text-decoration: none; font-weight: bold; color: black;">{{ $username }}</a>
-                                        <a> &bull; </a>
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -282,7 +280,7 @@
                                 
                                 <?php 
 
-                                if($user->deleted_at == NULL){ //show email reset only if user is activ?>
+                                if($user->deleted_at == NULL && $user->activate == 1){ //show email reset only if user is activ?>
                                     <button class="back btn btn-light"
                                         onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
                                     <form method="post"  class="back btn btn-light" type = "submit"
@@ -313,7 +311,17 @@
                                     <button class="back btn btn-light"
                                     onclick="window.location.href='{{ route('tweet.deactivateUser', $user->id) }}'">Deactivate User</button>
                                     <button class="back btn btn-light"
-                                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button>
+                                    onclick="window.location.href='{{ route('tweet.deleteUser', $user->id) }}'">Delete User</button> <br>
+
+                                    <!-- passwort reset -->
+                                    <button class="back btn btn-light"
+                                        onclick="window.location.href='{{ route('tweet.safeUserInfo', $user->id) }}'">Export user information</button> 
+                                    <form method="post"  class="back btn btn-light" type = "submit"
+                                            action="{{ route('adminPassChangeVerify')}}"  >
+                                            <input type="text" name="email" id='email' value=>
+                                            <input type="submit" value= "Send password reset">
+                                            <input type="hidden" name="_token" value="{{  Session::token() }}">
+                                    </form>
 
                                 <?php
                                 }
