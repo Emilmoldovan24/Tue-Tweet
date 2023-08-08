@@ -56,7 +56,7 @@ class AdminController extends Controller
         //validation
         $this->validate($request, [
             'email' => 'required|email|unique:admins',
-            'adminname' => 'required|max:120',
+            'adminname' => 'required|max:120|unique:admins',
             'user_password' => 'required|min:4'
         ]);
 
@@ -87,7 +87,7 @@ class AdminController extends Controller
         $admin = Admin::where('email', $request->email)->first();
 
 
-        if (Auth::guard('admin') && Hash::check($request->user_password, $admin->user_password)) {
+        if ($admin && Auth::guard('admin') && Hash::check($request->user_password, $admin->user_password)) {
 
 
 
@@ -309,6 +309,8 @@ class AdminController extends Controller
 
         DB::update("update users set deleted_at = '$currentTimestamp' where id = ?", [$id]);
         DB::update("update tweets set visibility = 0 where user_id = ?", [$id]);
+        DB::update("update retweets set visibility = 0 where user_id = ?", [$id]);
+        DB::update("update comments set visibility = 0 where user_id = ?", [$id]);
         DB::update("update users set activate = 0 where id = ?", [$id]);
 
         return redirect()->back();
@@ -321,6 +323,8 @@ class AdminController extends Controller
         
         DB::update("update users set deleted_at =  null where id = ?", [$id]);
         DB::update("update tweets set visibility = 1 where user_id = ?", [$id]);
+        DB::update("update retweets set visibility = 1 where user_id = ?", [$id]);
+        DB::update("update comments set visibility = 1 where user_id = ?", [$id]);
         DB::update("update users set activate = 1 where id = ?", [$id]);
 
         return redirect()->back();
