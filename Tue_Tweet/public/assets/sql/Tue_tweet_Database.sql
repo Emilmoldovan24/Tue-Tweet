@@ -303,8 +303,8 @@ ADD CONSTRAINT FK_retweets_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet
 */
 ALTER TABLE likes
 ADD CONSTRAINT FK_likes_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT FK_likes_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id) ON DELETE CASCADE ON UPDATE CASCADE;
-
+ADD CONSTRAINT FK_likes_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT FK_likes_retweets FOREIGN KEY (retweet_id) REFERENCES retweets(retweet_id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*
  Trigger for Cascading the Updates on users
