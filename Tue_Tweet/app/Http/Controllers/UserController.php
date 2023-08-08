@@ -35,13 +35,17 @@ class UserController extends Controller
 
 //--------------------------------------------------------------------------------------
 
-    // Function: Post Verify
+    /* Function: postVerify
+    *  input: request with email, username and password
+    *  output: mail sent to email with verification code, user routed to code verification
+    *
+    *  Uses laravel Mail function to send the mail
+    *
+    *  Preconditions: valid email, unique username, password 4 characters long
+    */
     public function postVerify(Request $request){
 
-        $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
-
-        // email, username and password Validation
+        // email, username and password validation
         $this->validate($request, [
             'email' => 'required|email|unique:users', 
             'username' => 'required|max:120|unique:users',
@@ -50,14 +54,16 @@ class UserController extends Controller
 
         $username_ = $request['username'];
         $email_ = $request['email'];
+        // encrypt password
         $user_password_ = bcrypt($request['user_password']);
 
-        // 6-digit code for verification
+        // 6-digit random code for verification
         $randomNumber = random_int(100000, 999999);
-
+        
+        // array of data to be sent in the email
         $usr_data = array('username' => $username_, 'email' => $email_, 'user_password' => $user_password_, 'randomNumber' => $randomNumber);
 
-        // sending Mail to MailTrap
+        // sending Mail to MailTrap with the verification code
         Mail::send('mail.mailVerify', $usr_data, function($message) use($usr_data) {
             $message->to($usr_data['email'], $usr_data['username'])->subject('Verify Email');
             $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
@@ -66,7 +72,15 @@ class UserController extends Controller
         return view('verify',compact('usr_data'));
     }
     
-    // Function: Password change request
+    /* Function: postPassChangeVerify
+    *  input: request with email
+    *  output: mail sent to email with password reset link, user routed to page asking to check mail, if email not valid throws error
+    *
+    *  Uses laravel Mail function to send the mail
+    *  Uses laravel URL function to create a temporary signed link
+    *
+    *  Preconditions: valid email of an existing account
+    */
     public function postPassChangeVerify(Request $request){
 
 
@@ -74,19 +88,28 @@ class UserController extends Controller
         $this->validate($request, [
             'email' => 'required'
         ]);
+
+        // search for the user with the given email
         $usr = User::where('email', $request->email)->first();
+
+        // if the user exists, send the mail with the link, if not throw error
         if ($usr){
-            $email = $usr->email;
-            $url = URL::temporarySignedRoute('passChange', now()->addSeconds(30), ['email' => $email]);
+
+            // create the temporary signed link for password reset
+            // IMPORTANT! The link is set to expire after 30 seconds for demonstration purposes, it would normally expire after a longer period
+            $url = URL::temporarySignedRoute('passChange', now()->addSeconds(30), ['email' => $usr->email]);
+
+            // array of data to be sent in the email
             $usr_data = array('email' => $usr->email, 'username' => $usr->username, 'url' => $url);
 
-            // sending Mail to MailTrap
+            // sending Mail to MailTrap with link
             Mail::send('mail.mailPassword', $usr_data, function($message) use($usr_data) {
                 $message->to($usr_data['email'], $usr_data['username'])->subject('Change Password');
                 $message->from('noreply@Tue-Tweet.de','Tue-Tweet');
             });
 
         return view('passChangeVerify');
+
         } else {
             return redirect()->back()->withErrors(['email' => 'Check if the email is correct.'])->withInput();
             Log::error("Wrong email!");
@@ -94,37 +117,51 @@ class UserController extends Controller
         
     }
 
-    // Function: Password change
+    /* Function: postPassChange
+    *  input: request with email, the new password, confirmed password
+    *  output: password changed if valid, else throw error
+    *
+    *  Preconditions: valid email of an existing account
+    */
     public function postPassChange(Request $request){
 
-    // password to be changed
+    // new password, confirm the new password and the email of the user
     $this->validate($request, [
         'password' => 'required|max:120|min:4',
         'cpassword' => 'required|max:120|min:4',
         'email' => 'required'
     ]);
+
+    // throw error if password and confirmed password do not match
     if($request->password != $request->cpassword){
         return redirect()->back()->withErrors(['password' => 'Passwords do not match.'])->withInput();
     }
+
+    // throw error if password is too short
     if(Str::length($request->password)<4){
         return redirect()->back()->withErrors(['password' => 'Password is too short.'])->withInput();
     } else {
-        // change password of user
-        $usr = User::where('email', $request->email)->first();
-        Log::info("User $usr->username changed password!");
 
-        $user_password =  $request->password;
-        DB::table('users')->where('email', $request->email)->update(['user_password' => bcrypt($user_password)]);
+        // find user using the email
+        $usr = User::where('email', $request->email)->first();
+
+        // change the password in the database for given user
+        DB::table('users')->where('email', $request->email)->update(['user_password' => bcrypt($request->password)]);
 
         return redirect()->route('welcome');
     }
 }
 
-    // Function: SignUp
+    /* Function: postSignUp
+    *  input: request with email, username and password
+    *  output: create new account and log in
+    *
+    *  Uses laravel Auth function to log in
+    *
+    *  Preconditions: valid email, unique username and password of at least 4 characters
+    */
     public function postSignUp(Request $request)
     {
-        $currentTimeString = time();
-        $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
 
         // email, username and password Validation
         $this->validate($request, [
@@ -139,46 +176,71 @@ class UserController extends Controller
 
         // create new User
         $user = new User();
+
+        // fill in the data of the new user
         $user->email = $email;
         $user->username = $username;
         $user->user_password = $user_password;
 
+        // save new user in database
         $user->save();
 
-        // Auth logIn
         $usr = User::where('email', $request->email)->first();
+
+        // Log in with new account
         Auth::login($usr);
+
+        // Store in the session the user type
         Session::put('user_type', 'user');
         Log::info("User $username signed up!");
 
         return redirect()->route('feed');
     } 
 
-    // Function: SignIn
+    /* Function: postSignIn
+    *  input: request with email and password
+    *  output: log in account if correct email and password, else throw error
+    *
+    *  Uses laravel Auth function to log in
+    *
+    *  Preconditions: correct email and password of an exsting account
+    */
     public function postSignIn(Request $request)
     {
-        // empty email and password Validation
+        // email and password Validation
         $this->validate($request, [
             'email' => 'required',
             'user_password' => 'required'
         ]);
 
+        // fnd user using the email
         $user = User::where('email', $request->email)->first();
 
+        // if user exists and the password is correct, continue, else throw error
         if ($user && Hash::check($request->user_password, $user->user_password)) {
-            // User found and right password
+
+            // search for information wether the user is deleted or banned 
             $userID = DB::table('users')->where('email', $request->email)->value('id');
             $userDel = DB::table('users')->where('id', $userID)->value('deleted_at');
             $userAct = DB::table('users')->where('id', $userID)->value('activate');
+
+            // if user is deleted or banned, throw error, else log in
             if ($userDel != null || $userAct == 0) {
                 return redirect()->back()->withErrors(['user_password' => 'User is deactivated / deleted'])->withInput();
             }
+
+            // log in
             Auth::login($user);
+
+            // store information about user type
             Session::put('user_type', 'user');
             Log::info("$user->username signed in!");
+
             return redirect()->route('feed');
+
         } else {
-            // User not found or wrong password 
+
+            // throw error if user does not exist or password is wrong
             return redirect()->back()->withErrors(['user_password' => 'Check if the password or email is correct.'])->withInput();
             Log::error("Wrong email or password!");
         }
