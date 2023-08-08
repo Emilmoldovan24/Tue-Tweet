@@ -307,178 +307,59 @@ ADD CONSTRAINT FK_likes_tweets FOREIGN KEY (tweet_id) REFERENCES tweets(tweet_id
 
 
 /*
- Triggers for Cascading the Updates on users
+ Trigger for Cascading the Updates on users
  deleted_at
 */
 
-DROP TRIGGER IF EXISTS update_tweets_deleted_at;
-CREATE TRIGGER update_tweets_deleted_at
+DROP TRIGGER IF EXISTS update_deleted_at;
+CREATE TRIGGER update_deleted_at
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
     IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE tweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_comments_deleted_at;
-CREATE TRIGGER update_comments_deleted_at
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL  THEN
         UPDATE comments SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_likes_deleted_at;
-CREATE TRIGGER update_likes_deleted_at
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE likes SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_retweets_deleted_at;
-CREATE TRIGGER update_retweets_deleted_at
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE retweets SET deleted_at = NEW.deleted_at WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_follows_deleted_at;
-CREATE TRIGGER update_follows_deleted_at
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.deleted_at IS NOT NULL OR NEW.deleted_at IS NULL THEN
         UPDATE follows SET deleted_at = NEW.deleted_at WHERE follow_id = NEW.id;
     END IF;
 END;
 
+
 /*
- Triggers for Cascading the Updates on users
+ Trigger for Cascading the Updates on users
  visibility
 */
 
-DROP TRIGGER IF EXISTS update_tweets_visibility;
-CREATE TRIGGER update_tweets_visibility
+DROP TRIGGER IF EXISTS update_visibility;
+CREATE TRIGGER update_visibility
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
     IF NEW.visibility <> OLD.visibility THEN
         UPDATE tweets SET visibility = NEW.visibility WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_comments_visibility;
-CREATE TRIGGER update_comments_visibility
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
         UPDATE comments SET visibility = NEW.visibility WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_likes_visibility;
-CREATE TRIGGER update_likes_visibility
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
         UPDATE likes SET visibility = NEW.visibility WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_retweets_visibility;
-CREATE TRIGGER update_retweets_visibility
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
         UPDATE retweets SET visibility = NEW.visibility WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_follows_visibility;
-CREATE TRIGGER update_follows_visibility
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.visibility <> OLD.visibility THEN
         UPDATE follows SET visibility = NEW.visibility WHERE follow_id = NEW.id;
     END IF;
 END;
 
 /*
- Triggers for Cascading the Updates on users
+ Trigger for Cascading the Updates on users
  activate
 */
 
-DROP TRIGGER IF EXISTS update_tweets_activate;
-CREATE TRIGGER update_tweets_activate
+DROP TRIGGER IF EXISTS update_activate;
+CREATE TRIGGER update_activate
 AFTER UPDATE ON users
 FOR EACH ROW
 BEGIN
     IF NEW.activate  <> OLD.activate THEN
         UPDATE tweets SET activate = NEW.activate  WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_comments_activate;
-CREATE TRIGGER update_comments_activate
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.activate <> OLD.activate  THEN
         UPDATE comments SET activate = NEW.activate  WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_likes_activate;
-CREATE TRIGGER update_likes_activate
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.activate  <> OLD.activate  THEN
         UPDATE likes SET activate  = NEW.activate  WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_retweets_activate;
-CREATE TRIGGER update_retweets_activate
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.activate  <> OLD.activate THEN
         UPDATE retweets SET activate  = NEW.activate  WHERE user_id = NEW.id;
-    END IF;
-END;
-
-
-DROP TRIGGER IF EXISTS update_follows_activate;
-CREATE TRIGGER update_follows_activate
-AFTER UPDATE ON users
-FOR EACH ROW
-BEGIN
-    IF NEW.activate  <> OLD.activate  THEN
         UPDATE follows SET activate  = NEW.activate  WHERE follow_id = NEW.id;
     END IF;
 END;
