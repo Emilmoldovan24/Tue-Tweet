@@ -458,7 +458,7 @@ class AdminController extends Controller
         //safe file in path\to\Tue-Tweet\Tue_Tweet\storage\app
         Storage::put($filename, $contents);
 
-        $filePath = storage_path('app\\' . $filename);
+        $filePath = storage_path('app/' . $filename);
         $fileSize = filesize($filePath);
 
         if (file_exists($filePath)) {
