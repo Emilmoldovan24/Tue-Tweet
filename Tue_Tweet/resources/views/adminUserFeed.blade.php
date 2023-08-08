@@ -184,13 +184,13 @@
                 $allUsers = false;
                 $activeUsers = false;
                 $deactivatedUsers = true;
-                ?> <h1> all deactivated or deleted users </h1>
+                ?> <h1> All deactivated or deleted users </h1>
                 <?php  
                 }else if($_GET['page'] == 'notDeletedUsers'){
                     $allUsers = false;
                     $activeUsers = true;
                     $deactivatedUsers = false;
-                    ?> <h1> all active users </h1>
+                    ?> <h1> All active users </h1>
                 <?php         
                 }
             }
@@ -233,9 +233,9 @@
                                 //all deleted users are deactivated
                                 if($allUsers || $deactivatedUsers){
                                     if($user->deleted_at != null)
-                                        echo("[DELETED USER]<br>");
+                                        echo("<b> [DELETED USER] </b><br>");
                                     else if($user->activate == 0)
-                                        echo("[DEACTIVATED USER]<br>");     
+                                        echo("<b>[DEACTIVATED USER] </b><br>");     
                                 }
 
                                 

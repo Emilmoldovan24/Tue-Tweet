@@ -387,6 +387,7 @@ class AdminController extends Controller
         //get user info
         $user = DB::table('users')->where('id', $id)->value('username');
         $userID = DB::table('users')->where('id', $id)->value('id');
+        $userEmail = DB::table('users')->where('id', $id)->value('email');
         $created = DB::table('users')->where('id', $id)->value('created_at');
         $deleted = DB::table('users')->where('id', $id)->value('deleted_at');
         $tweets = DB::table('tweets')->where('user_id', $id)->get();
@@ -401,6 +402,7 @@ class AdminController extends Controller
         //generate filename, creates a new file one minute after used. if used multiple times in one min it overrides the file
         $filename = $currentTimestamp . '_' . $userID . '_' . $user . '.txt';
         $contents = 'Information for user: ' . $user . ' / ID: ' . $userID . "\n\n";
+        $contents .= 'User email: ' . $userEmail . "\n\n";
         $contents .= 'User was created at: ' . $created . "\n\n";
 
         //get user tweeets
