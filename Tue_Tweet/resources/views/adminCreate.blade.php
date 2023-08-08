@@ -274,9 +274,9 @@ margin-right: 10px;
                         </div>
                         <div class="mb-3">
                             <div class="form-group">
-                                <label for="username"> Admin Name </label>
-                                <input class="form-control @error('username') is-invalid @enderror" type="text"
-                                    name="adminname" id="username" value=" {{ Request::old('username') }}">
+                                <label for="adminname"> Admin Name </label>
+                                <input class="form-control @error('adminname') is-invalid @enderror" type="text"
+                                    name="adminname" id="adminname" value=" {{ Request::old('adminname') }}">
                             </div>
                         </div>
                         <div class="mb-3">

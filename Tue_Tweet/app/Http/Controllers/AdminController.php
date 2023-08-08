@@ -59,7 +59,7 @@ class AdminController extends Controller
         //validation
         $this->validate($request, [
             'email' => 'required|email|unique:admins',
-            'adminname' => 'required|max:120',
+            'adminname' => 'required|max:120|unique:admins',
             'user_password' => 'required|min:4'
         ]);
 
@@ -90,7 +90,7 @@ class AdminController extends Controller
         $admin = Admin::where('email', $request->email)->first();
 
 
-        if (Auth::guard('admin') && Hash::check($request->user_password, $admin->user_password)) {
+        if ($admin && Auth::guard('admin') && Hash::check($request->user_password, $admin->user_password)) {
 
 
 
@@ -300,7 +300,7 @@ class AdminController extends Controller
     //----------------------------------------------------------------------------------------------------------
 
 
-    //--------------------------------------------Mange Users---------------------------------------------------
+    //--------------------------------------------Manage Users---------------------------------------------------
 
     public function deleteUser(Request $request)
     {
@@ -311,8 +311,10 @@ class AdminController extends Controller
         $currentTimestamp = date('Y-m-d H:i:s', $currentTimeString);
 
         DB::update("update users set deleted_at = '$currentTimestamp' where id = ?", [$id]);
-
         DB::update("update tweets set visibility = 0 where user_id = ?", [$id]);
+        DB::update("update retweets set visibility = 0 where user_id = ?", [$id]);
+        DB::update("update comments set visibility = 0 where user_id = ?", [$id]);
+        DB::update("update users set activate = 0 where id = ?", [$id]);
 
         return redirect()->back();
     }
@@ -321,11 +323,31 @@ class AdminController extends Controller
     {
 
         $id = $request->id;
-        // $userId = DB::table('tweets')->where('tweet_id', $id)->value('user_id');
+        
         DB::update("update users set deleted_at =  null where id = ?", [$id]);
         DB::update("update tweets set visibility = 1 where user_id = ?", [$id]);
+        DB::update("update retweets set visibility = 1 where user_id = ?", [$id]);
+        DB::update("update comments set visibility = 1 where user_id = ?", [$id]);
+        DB::update("update users set activate = 1 where id = ?", [$id]);
 
         return redirect()->back();
+    }
+
+    //the same function both activates and deactivates users
+    public function deactivateUser(Request $request)
+    {
+
+        $id = $request->id;
+        $isActive = DB::table('users')->where('id', $id)->value('activate');
+
+        if($isActive == 0){
+            DB::update("update users set activate = 1 where id = ?", [$id]);
+        }else if($isActive == 1){
+            DB::update("update users set activate = 0 where id = ?", [$id]);
+        }
+
+        return redirect()->back();
+        
     }
 
 
@@ -439,7 +461,7 @@ class AdminController extends Controller
         //safe file in path\to\Tue-Tweet\Tue_Tweet\storage\app
         Storage::put($filename, $contents);
 
-        $filePath = storage_path('app\\' . $filename);
+        $filePath = storage_path('app/' . $filename);
         $fileSize = filesize($filePath);
 
         if (file_exists($filePath)) {
