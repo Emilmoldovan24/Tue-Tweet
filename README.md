@@ -68,7 +68,7 @@ Database : Markus Holder
 
 Authentication: Emil Moldovan
 
-
+User Interface: Mouhamad Abdallah
 
 User: Aya Afaghani, Julia Egyed, Luke Vallon
 
